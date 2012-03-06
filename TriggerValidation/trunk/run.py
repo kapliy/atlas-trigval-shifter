@@ -29,79 +29,8 @@ if len(sys.argv)==2:
 _MATCH_BUGS = True
 _URLTIMEOUT = 60
 
-class Bug:
-    """ One bug """
-    _urlpat = 'https://savannah.cern.ch/bugs/index.php?%d'
-    def __init__(s,id,pattern=None,comment=None):
-        s.id = int(id)
-        s.patterns = []
-        if pattern:
-            if isinstance(pattern,list):
-                s.patterns += pattern
-            else:
-                s.patterns.append(pattern)
-        s.comment = comment
-    def fetch_comment(s):
-        """ Do on-the-fly lookup of the bug title from the bug tracker """
-        if not s.comment:
-            b = urllib2.urlopen(s.url(),timeout=_URLTIMEOUT)
-            soup = bs.BeautifulSoup(b)
-            try:
-                s.comment = str((soup.findAll('h2')[1]).contents[1])
-            except:
-                s.comment = 'CANNOT FETCH COMMENT FOR BUG %d'%(s.id)
-        return s.comment
-    def add_pattern(s,pattern):
-        s.patterns.append(pattern)
-    def url(s):
-        return s._urlpat%s.id
-
-class BugTracker:
-    """ A local mini bugtracker to quickly look up common bugs """
-    def __init__(s):
-        s.bugs = []
-    def match(s,log):
-        """ Require that all patterns match """
-        for bug in s.bugs:
-            nmatches = 0
-            for pattern in bug.patterns:
-                if re.search(pattern,log):
-                    nmatches += 1
-            if nmatches == len(bug.patterns):
-                return bug
-        return None
-    def prefill(s):
-        """ 
-        s.bugs.append( Bug(,'') )
-        """
-        s.bugs.append( Bug(86562,['ERROR preLoadFolder failed for folder /Digitization/Parameters','FATAL DetectorStore service not found']) )
-        s.bugs.append( Bug(87109,"No such file or directory: '/afs/cern.ch/user/t/tbold/public/TDTtest/attila.AOD.pool.root'") )
-        s.bugs.append( Bug(87601,"OH repository 'Histogramming-L2-Segment-1-1-iss' does not exist") )
-        s.bugs.append( Bug(88602,['TDTExampleARA.py','ReferenceError: attempt to access a null-pointer']) )
-        s.bugs.append( Bug(89464,'ERROR Upload of SMKey failed') )
-        s.bugs.append( Bug(91283,"IOError: \[Errno 2\] No such file or directory: '../BackCompAthenaTrigBStoESDAOD/AOD.pool.root' ") )
-        s.bugs.append( Bug(91264,['MissingETOutputESDList_jobOptions.py',"NameError: name 'StreamAOD' is not defined"]) )
-        s.bugs.append( Bug(91299,['trigtest.pl: FAILURE at end','<component alias="ToolSvc.CaloCompactCellTool" name="CaloCompactCellTool"']) )
-        s.bugs.append( Bug(91845,'HLTJobLib: crash ERROR intermediate file has no events') )
-        s.bugs.append( Bug(91845,['HLTJobLib:','crash ERROR intermediate file has no events']) )
-        s.bugs.append( Bug(91848,'RuntimeError: Conditions database identifier RPC_OFL is not defined') )
-        s.bugs.append( Bug(92097,'xml file does not exist: prescales1000.xml') )
-        s.bugs.append( Bug(92140,["\[Errno 2\] No such file or directory: 'AOD.pool.root'","has_key('/TRIGGER/HLT/Prescales') # they were all added at the same time'"]) )
-        s.bugs.append( Bug(92206,['FATAL: Failed to start local PMG server',"RunManager instance has no attribute 'root_controller'"]) )
-        s.bugs.append( Bug(92208,["CaloMonManager INFO Retrieved tool PublicToolHandle('CaloCellVecMon/CaloCellMon')","boost::spirit::nil_t"]) )
-        s.bugs.append( Bug(92209,'TauSliceAthenaTrigRDO__v4_top.reference: No such file or directory') )
-        s.bugs.append( Bug(92213,'could not bind handle to CondAttrListCollection to key: /TRT/Onl/ROD/Compress') )
-        s.bugs.append( Bug(92221,['EFPhotonHypo_g120_loose','TrigSteer_EF','Algorithm stack:']) )
-        s.bugs.append( Bug(92221,['EFPhotonHypo_g120_loose','cound not cd to directory:  TrigSteer_EF']) )
-        s.bugs.append( Bug(92222,'ERROR Upload of key 1 failed') )
-        s.bugs.append( Bug(92260,"IOError: \[Errno 2\] No such file or directory: '../AthenaTrigAODtoAOD_TrigNavSlimming/AOD_RSegamma.pool.root'" ) )
-        s.bugs.append( Bug(92260,"IOError: \[Errno 2\] No such file or directory: '../AthenaTrigRDOtoESDAOD/AOD.pool.root'" ) )
-        s.bugs.append( Bug(92260,"IOError: \[Errno 2\] No such file or directory: '../AthenaTrigRDOtoESDAOD/ESD.pool.root'" ) )
-        s.bugs.append( Bug(92260,"IOError: \[Errno 2\] No such file or directory: '../AthenaTrigAODtoAOD_TrigNavSqueeze/AOD_SqueezeRFTrigCaloCellMaker.pool.root'" ) )
-        s.bugs.append( Bug(92264,'ImportError: cannot import name T2CaloFastJet_a4TT_JESCalib_MultipleOutput_TEs') )
-        
-
-bugs = BugTracker()
+import Bug
+bugs = Bug.BugTracker()
 bugs.prefill()
 
 class Nightly:
@@ -179,7 +108,7 @@ class Project:
         bugid=00000
         bugurl = "none"
         bugcomment = "FIXME"
-        if t.lerror and _MATCH_BUGS:
+        if _MATCH_BUGS:
             if t.lerror:
                 bug = bugs.match(urllib2.urlopen(t.lerror,timeout=_URLTIMEOUT).read())
             if not bug and t.lextract:
@@ -192,16 +121,37 @@ class Project:
                 bugcomment = bug.fetch_comment()
         return status,bug,bugid,bugurl,bugcomment
     def process_errors(s,err):
+        """ prints the errors in a nicely formatted way """
         total = 0
         res = []
         if len(err)==0:
             res.append('    None')
             return res,total
         else:
+            ts,statuses,bugs,bugids,bugurls,bugcomments = [],[],[],[],[],[]
             for t in err:
                 total += 1
                 status,bug,bugid,bugurl,bugcomment = s.match_bugs(t)
-                res.append('    -  <a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>): [<a href="%s">bug #%s</a>] %s%s'%(t.lextract,t.name,t.lerror,t.llog,t.ltail,bugurl,bugid,status,bugcomment))
+                ts.append(t)
+                statuses.append(status)
+                bugs.append(bug)
+                bugids.append(bugid)
+                bugurls.append(bugurl)
+                bugcomments.append(bugcomment)
+            # group by bug id
+            uniquebugs = list(set(bugids))
+            for uid in uniquebugs:
+                matchedidx = [i for i,bugid in enumerate(bugids) if bugid==uid]
+                for iorder,i in enumerate(matchedidx):
+                    t = ts[i]
+                    # last test with this bug id: print bug summary
+                    if iorder==len(matchedidx)-1:
+                        offset = '       ' if len(matchedidx)>1 else '    -  '
+                        res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>):\n       [<a href="%s">bug #%s</a>] %s%s'%(offset,ts[i].lextract,ts[i].name,ts[i].lerror,ts[i].llog,ts[i].ltail,bugurls[i],bugids[i],statuses[i],bugcomments[i]))
+                    # for others, just list the bugs, one per line, with comma in the end of each line
+                    else:
+                        offset = '    -  ' if iorder==0 else '       '
+                        res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>),'%(offset,ts[i].lextract,ts[i].name,ts[i].lerror,ts[i].llog,ts[i].ltail))
         return res,total
     def report(s):
         res = []
@@ -209,15 +159,15 @@ class Project:
         res.append( '<a href="%s">%s</a> (+link to <a href="%s">yesterday\'s cache</a>):'%(s.pres_url(),s.name,s.last_url()))
         total = 0
         # athena errors
-        res.append('  Tests with ERRORs:')
+        res.append('  <u>Tests with ERRORs</u>:')
         err = [t for t in s.pres if t.is_error_athena()]
         msg,tot = s.process_errors(err); res += msg; total+=tot
         # exit errors
-        res.append('  Tests that finished without errors, but crashed on Athena exit:')
+        res.append('  <u>Tests that finished without errors, but crashed on Athena exit</u>:')
         err = [t for t in s.pres if t.is_error_exit()]
         msg,tot = s.process_errors(err); res += msg; total+=tot
         # validation errors
-        res.append('  Tests that finished and exited without errors, but post-test diff checks failed:')
+        res.append('  <u>Tests that finished and exited without errors, but post-test diff checks failed</u>:')
         err = [t for t in s.pres if t.is_error_post()]
         if len(err)==0:
             res.append('    None')
