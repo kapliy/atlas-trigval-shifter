@@ -54,6 +54,7 @@ class BugTracker:
         s.bugs.append( Bug(86562,['ERROR preLoadFolder failed for folder /Digitization/Parameters','FATAL DetectorStore service not found']) )
         s.bugs.append( Bug(87109,"No such file or directory: '/afs/cern.ch/user/t/tbold/public/TDTtest/attila.AOD.pool.root'") )
         s.bugs.append( Bug(87601,"OH repository 'Histogramming-L2-Segment-1-1-iss' does not exist") )
+        s.bugs.append( Bug(88554,['Moving to AthenaTrigRDO_chainOrder_compare','differences in tests with ordered HLT chain execution','TrigSteer_EF.TrigChainMoniValidation'],comment='Bugtracker says this bug reports small changes in HLT chain execution, which are expected.') )
         s.bugs.append( Bug(88602,['TDTExampleARA.py','ReferenceError: attempt to access a null-pointer']) )
         s.bugs.append( Bug(89464,'ERROR Upload of SMKey failed') )
         s.bugs.append( Bug(91283,"IOError: \[Errno 2\] No such file or directory: '../BackCompAthenaTrigBStoESDAOD/AOD.pool.root' ") )
@@ -62,6 +63,7 @@ class BugTracker:
         s.bugs.append( Bug(91845,'HLTJobLib: crash ERROR intermediate file has no events') )
         s.bugs.append( Bug(91845,['HLTJobLib:','crash ERROR intermediate file has no events']) )
         s.bugs.append( Bug(91848,'RuntimeError: Conditions database identifier RPC_OFL is not defined') )
+        s.bugs.append( Bug(91916,"Sequence 'L2_muon_standalone_mu24_tight_l2muonSA' got error back while executing first algorithm") )
         s.bugs.append( Bug(92097,'xml file does not exist: prescales1000.xml') )
         s.bugs.append( Bug(92140,["\[Errno 2\] No such file or directory: 'AOD.pool.root'","has_key\('/TRIGGER/HLT/Prescales'\)"]) )
         s.bugs.append( Bug(92206,['FATAL: Failed to start local PMG server',"RunManager instance has no attribute 'root_controller'"]) )
@@ -76,6 +78,8 @@ class BugTracker:
         s.bugs.append( Bug(92260,"IOError: \[Errno 2\] No such file or directory: '../AthenaTrigRDOtoESDAOD/ESD.pool.root'" ) )
         s.bugs.append( Bug(92260,"IOError: \[Errno 2\] No such file or directory: '../AthenaTrigAODtoAOD_TrigNavSqueeze/AOD_SqueezeRFTrigCaloCellMaker.pool.root'" ) )
         s.bugs.append( Bug(92264,'ImportError: cannot import name T2CaloFastJet_a4TT_JESCalib_MultipleOutput_TEs') )
+        s.bugs.append( Bug(92265,'ERROR Failed to find jet chain with name EF_j145_a4tchad') )
+        s.bugs.append( Bug(92267,['CharybdisJimmy.digit.RDO','Py:inputFilePeeker WARNING caught','raise convert_to_error\(kind, result\)']) )
 
 if __name__ == '__main__':
     import sys
@@ -85,6 +89,7 @@ if __name__ == '__main__':
     m =  bugs.match(urllib2.urlopen(sys.argv[1]).read())
     if m:
         print 'Matched: ',m.id,m.url()
+        print m.fetch_comment()
     else:
         print 'No match!'
     
