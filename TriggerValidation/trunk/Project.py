@@ -178,7 +178,7 @@ class Project:
             llog = old.llog if old.llog else DUMMY_LINK
             ltail = old.ltail if old.ltail else DUMMY_LINK
             offset = '    - '
-            res.append( '%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>) : %s [FIXED]'%(offset,lextract,old.name,lerror,llog,ltail,('[<a href="%s">bug #%s</a>]'%(bugurl,bugid))) if bugid!=0 else '' )
+            res.append( '%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>) : %s [FIXED]'%(offset,lextract,old.name,lerror,llog,ltail,('[<a href="%s">bug #%s</a>]'%(bugurl,bugid)) if bugid!=0 else '' ))
         # don't print anything if no tests were fixed
         if len(match)==0:
             res = []
