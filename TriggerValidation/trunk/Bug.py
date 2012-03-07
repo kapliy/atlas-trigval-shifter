@@ -3,6 +3,7 @@
 import re
 import BeautifulSoup as bs
 import urllib2
+
 _URLTIMEOUT = 20
 
 class Bug:
