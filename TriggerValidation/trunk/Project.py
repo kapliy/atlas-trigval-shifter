@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
-import re
-import urllib2
+import re,urllib2,time,datetime
 import BeautifulSoup as bs
 from Test import Test
 
@@ -35,6 +34,19 @@ class Project:
         res = []
         page = urllib2.urlopen(url,timeout=s.URLTIMEOUT)
         soup = bs.BeautifulSoup(page)
+        # make sure we are not accidentally looking at last week's results
+        # (e.g., if we are fetching the page before it's been updated)
+        lastupdate = str(soup.find('p').string).strip()
+        assert re.match('Last updated ',lastupdate),'Unexpected page format: cannot find "Last Updated" element'
+        # compute a delta between today and test date
+        l = lastupdate.replace('Last updated ','').replace('CET ','')
+        testdate_time = time.strptime(l)
+        testdate = datetime.datetime(*testdate_time[:6])
+        nowdate = datetime.datetime.now()
+        delta = (nowdate-testdate).days
+        #print 'DEBUG: DELTA =',delta
+        assert delta<=5,"Results on this page are older than 5 days - probably, the test hasn't finished yet"
+        # retrieve actual test table
         table = soup.find('table',id='ATNResults')
         assert table, 'Unable to find table: %s'%table
         rows = table.findAll('tr',{ "class" : "hi" })
