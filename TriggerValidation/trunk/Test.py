@@ -58,3 +58,11 @@ class Test:
         if t.name == s.name and t.overall==s.overall and t.exit==s.exit and t.error==s.error and t.exitcode==s.exitcode:
             return True
         return False
+    def fixedbug(s,t):
+        """ s = older nightly; t = current nightly"""
+        if t.name != s.name: return False
+        assert s.is_error_exit() or s.is_error_athena(),'This function should only be called from buggy tests'
+        if t.is_error_athena(): return False
+        if t.is_error_exit(): return False
+        if t.is_error_post(): return False  # let's keep this as a failure category, too
+        return True

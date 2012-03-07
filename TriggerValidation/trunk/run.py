@@ -7,7 +7,7 @@ rel = 2
 
 import common
 
-import sys,getpass
+import sys,getpass,datetime
 if len(sys.argv)==2:
     rel = int(sys.argv[1])
     assert rel>=0 and rel<=6,'Release must be an integer between 0 and 6'
@@ -34,6 +34,24 @@ if __name__=="__main__":
     else:
         f = open('index.html','w')
     print >>f,'<html><body><basefont face=""Courier New", Courier, monospace" size="10" color="green"><pre>'
+    if True:
+        print >>f,"ValShift Report"
+        print >>f,str(datetime.datetime.today()).split()[0]
+        print >>f,''
+        print >>f,'General-'
+        print >>f,''
+        print >>f,'New bug reports:'
+        print >>f,'- '
+        print >>f,''
+        print >>f,'RTT memory report:'
+        print >>f,'The following tests had a >10% increase in total memory consumption with respect to the maximum memory usage in the past 6 days:'
+        print >>f,''
+        print >>f,'Cheers,'
+        if getpass.getuser()=='antonk':
+            print >>f,'Anton'
+        else:
+            print >>f,'Validation shifter'
+        print >>f,''
     for N in X[:]:
         try:
             N.load()

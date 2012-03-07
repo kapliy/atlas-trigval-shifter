@@ -4,6 +4,8 @@ import re,urllib2,time,datetime
 import BeautifulSoup as bs
 from Test import Test
 
+DUMMY_LINK='http://www.NOT.AVAILABLE.com'
+
 class Project:
     """ One trigger validation project that has its own ATN and NICOS page
     name = { TrigP1Test , TriggerTest , TrigAnalysisTest }
@@ -107,7 +109,6 @@ class Project:
                 matchedidx = [i for i,bugid in enumerate(bugids) if bugid==uid]
                 for iorder,i in enumerate(matchedidx):
                     t = ts[i]
-                    DUMMY_LINK='http://www.NOT.AVAILABLE.com'
                     lextract = ts[i].lextract if ts[i].lextract else DUMMY_LINK
                     lerror = ts[i].lerror if ts[i].lerror else DUMMY_LINK
                     llog = ts[i].llog if ts[i].llog else DUMMY_LINK
@@ -128,26 +129,57 @@ class Project:
         res.append( '<a href="%s">%s</a> (+link to <a href="%s">yesterday\'s cache</a>):'%(s.pres_url(),s.name,s.last_url()))
         total = 0
         # athena errors
-        res.append('  <u>Tests with ERRORs</u>:')
         err = [t for t in s.pres if t.is_error_athena()]
-        msg,tot = s.process_errors(err); res += msg; total+=tot
+        msg,tot = s.process_errors(err);
+        if tot>0:
+            res.append('  <i>Tests with ERRORs</i>:')
+            res += msg; total+=tot
         # exit errors
-        res.append('  <u>Tests that finished without errors, but crashed on Athena exit</u>:')
         err = [t for t in s.pres if t.is_error_exit()]
-        msg,tot = s.process_errors(err); res += msg; total+=tot
+        msg,tot = s.process_errors(err);
+        if tot>0:
+            res.append('  <i>Tests that finished without errors, but crashed on Athena exit</i>:')
+            res += msg; total+=tot
         # validation errors
-        res.append('  <u>Tests that finished and exited without errors, but post-test diff checks failed</u>:')
         err = [t for t in s.pres if t.is_error_post()]
-        if len(err)==0:
-            res.append('    None')
-        else:
+        if len(err)!=0:
+            res.append('  <i>Tests that finished and exited without errors, but post-test diff checks failed</i>:')
             for t in err:
                 status = '' if any([l.samebug(t) for l in s.last]) else ' [<b>NEW</b>]'
                 total += 1
                 res.append('    - <a href="%s">%s</a>%s'%(t.lextract,t.name,status))
-        # if there were no errors, just say so
+        # if there were no errors of any kind, just say so
         if total==0:
             res = res[0:2]
             res.append('  All OK!')
+        # summarize bugs that were fixed since previous release
+        res += s.fixed_error_report()
         return res
-
+    def fixed_error_report(s):
+        """ Returns a list of tests that were fixed between previous and current releases """
+        res = []
+        # yesterday's errors:
+        err = [t for t in s.last if t.is_error_athena() or t.is_error_exit()]
+        # yesterday's errors that were fixed, and their matches in today's release
+        fixed = [] # yesterday's test
+        match = [] # today's test
+        for t in err:
+            # today's corresponding tests (if fixed)
+            matches = [pres for pres in s.pres if t.fixedbug(pres)]
+            assert len(matches) in (0,1), 'Found tests with duplicate names'
+            if len(matches)==1:
+                fixed.append(t)
+                match.append(matches[0])
+        res.append("  <i>Link to yesterday's broken tests that passed successfully today (as of rel_%d)</i>:"%s.rel)
+        for t,old in zip(match,fixed):
+            status,bug,bugid,bugurl,bugcomment = s.match_bugs(old)
+            lextract = old.lextract if old.lextract else DUMMY_LINK
+            lerror = old.lerror if old.lerror else DUMMY_LINK
+            llog = old.llog if old.llog else DUMMY_LINK
+            ltail = old.ltail if old.ltail else DUMMY_LINK
+            offset = '    - '
+            res.append( '%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>) : %s [FIXED]'%(offset,lextract,old.name,lerror,llog,ltail,('[<a href="%s">bug #%s</a>]'%(bugurl,bugid))) if bugid!=0 else '' )
+        # don't print anything if no tests were fixed
+        if len(match)==0:
+            res = []
+        return res
