@@ -5,7 +5,9 @@ import BeautifulSoup as bs
 from Test import Test
 
 DUMMY_LINK='http://www.NOT.AVAILABLE.com'
-NEWSTATUS='[<b>NEW</b>] '
+NEWSTATUS='[<b><FONT style="BACKGROUND-COLOR: FF6666">NEW</FONT></b>] '
+FIXEDSTATUS='[<b><FONT style="BACKGROUND-COLOR: 99FF00">FIXED</FONT></b>] '
+
 
 class Project:
     """ One trigger validation project that has its own ATN and NICOS page
@@ -19,7 +21,6 @@ class Project:
     def __init__(s,name,atn):
         s.name = name
         s.atn = atn
-        s.soup = None
         s.pres = []
         s.last = []
         s.pres_soup = None
@@ -62,6 +63,7 @@ class Project:
         print '--> Loading ATN project:',s.name
         s.pres,s.pres_soup = s.get_tests_from_url(s.pres_url())
         s.last,s.last_soup = s.get_tests_from_url(s.last_url())
+        return True
     def dump(s):
         if s.pres_soup:
             print s.soup.prettify()
@@ -106,12 +108,12 @@ class Project:
                 bugcomments.append(bugcomment)
             # group by bug id
             uniquebugs = list(set(bugids))
-            for uid in uniquebugs:                
+            for uid in uniquebugs:
                 matchedidx = [i for i,bugid in enumerate(bugids) if bugid==uid]
                 # see if all or some tests in this bug group are NEW
                 nnew_statuses = [statuses[i] for i in matchedidx if statuses[i]==NEWSTATUS]
                 ntotal_statuses = [statuses[i] for i in matchedidx]
-                status_summary = NEWSTATUS if len(nnew_statuses)==len(ntotal_statuses) else '[<b>NEW</b>](some are old)'
+                status_summary = NEWSTATUS if len(nnew_statuses)==len(ntotal_statuses) else NEWSTATUS+'(some are old) '
                 if len(nnew_statuses)==0: status_summary=''
                 # loop over tests in this bug group
                 for iorder,i in enumerate(matchedidx):
@@ -152,7 +154,7 @@ class Project:
         if len(err)!=0:
             res.append('  <i>Tests that finished and exited without errors, but post-test diff checks failed</i>:')
             for t in err:
-                status = '' if any([l.samebug(t) for l in s.last]) else ' [<b>NEW</b>]'
+                status = '' if any([l.samebug(t) for l in s.last]) else ' '+NEWSTATUS
                 total += 1
                 res.append('    - <a href="%s">%s</a>%s'%(t.lextract,t.name,status))
         # if there were no errors of any kind, just say so
@@ -162,7 +164,7 @@ class Project:
         # summarize bugs that were fixed since previous release
         res += s.fixed_error_report()
         return res
-    def fixed_error_report(s):
+    def fixed_error_report_old(s):
         """ Returns a list of tests that were fixed between previous and current releases """
         res = []
         # yesterday's errors:
@@ -185,7 +187,57 @@ class Project:
             llog = old.llog if old.llog else DUMMY_LINK
             ltail = old.ltail if old.ltail else DUMMY_LINK
             offset = '    - '
-            res.append( '%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>) : %s [FIXED]'%(offset,lextract,old.name,lerror,llog,ltail,('[<a href="%s">bug #%s</a>]'%(bugurl,bugid)) if bugid!=0 else '' ))
+            res.append( '%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>) : %s %s'%(offset,lextract,old.name,lerror,llog,ltail,('[<a href="%s">bug #%s</a>]'%(bugurl,bugid)) if bugid!=0 else '',FIXEDSTATUS) )
+        # don't print anything if no tests were fixed
+        if len(match)==0:
+            res = []
+        return res
+    def fixed_error_report(s):
+        """ Returns a list of tests that were fixed between previous and current releases """
+        res = []
+        # yesterday's errors:
+        err = [t for t in s.last if t.is_error_athena() or t.is_error_exit()]
+        # yesterday's errors that were fixed, and their matches in today's release
+        fixed = [] # yesterday's test
+        match = [] # corresponding today's test
+        bugs = []
+        bugids = []
+        bugurls = []
+        bugcomments = []
+        for t in err:
+            # today's corresponding tests (if fixed)
+            matches = [pres for pres in s.pres if t.fixedbug(pres)]
+            assert len(matches) in (0,1), 'Found tests with duplicate names'
+            if len(matches)==1:
+                fixed.append(t)
+                match.append(matches[0])
+                status,bug,bugid,bugurl,bugcomment = s.match_bugs(t)
+                bugs.append(bug)
+                bugids.append(bugid)
+                bugurls.append(bugurl)
+                bugcomments.append(bugcomment)
+        res.append("  <i>Link to yesterday's broken tests that passed successfully today (as of rel_%d)</i>:"%s.rel)
+        # group by bug id
+        uniquebugs = list(set(bugids))
+        for uid in uniquebugs:
+            matchedidx = [i for i,bugid in enumerate(bugids) if bugid==uid]
+            # loop over tests in this bug group
+            for iorder,i in enumerate(matchedidx):
+                t = match[i]
+                old = fixed[i]
+                lextract = old.lextract if old.lextract else DUMMY_LINK
+                lerror = old.lerror if old.lerror else DUMMY_LINK
+                llog = old.llog if old.llog else DUMMY_LINK
+                ltail = old.ltail if old.ltail else DUMMY_LINK
+                # last test with this bug id: print bug summary
+                if iorder==len(matchedidx)-1:
+                    # special handling for the case of one test only affected by this bug
+                    offset = '       ' if len(matchedidx)>1 else '    -  '
+                    res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>):\n       [<a href="%s">bug #%s</a>] %s%s'%(offset,lextract,old.name,lerror,llog,ltail,bugurls[i],bugids[i],FIXEDSTATUS,bugcomments[i]))
+                # for others, just list the bugs, one per line, with comma in the end of each line
+                else:
+                    offset = '    -  ' if iorder==0 else '       '
+                    res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>),'%(offset,lextract,old.name,lerror,llog,ltail))
         # don't print anything if no tests were fixed
         if len(match)==0:
             res = []

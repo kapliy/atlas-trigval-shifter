@@ -13,17 +13,17 @@ if len(sys.argv)==2:
     rel = int(sys.argv[1])
     assert rel>=0 and rel<=6,'Release must be an integer between 0 and 6'
 
-from Nightly import Nightly
-Nightly.rel = rel
-from Project import Project
-Project.rel = rel
+import Nightly
+Nightly.Nightly.rel = rel
+import Project
+Project.Project.rel = rel
 from Test import Test
 from Bug import BugTracker
 if MATCH_BUGS:
-    Project.MATCH_BUGS = True
+    Project.Project.MATCH_BUGS = True
     bugs = BugTracker()
     bugs.prefill()
-    Project.bugs = bugs
+    Project.Project.bugs = bugs
 
 # Load the list of nightlies that we need to validate
 from configure_nightlies import X    
@@ -48,8 +48,8 @@ if __name__=="__main__":
         print >>f,'The following tests had a >10% increase in total memory consumption with respect to the maximum memory usage in the past 6 days:'
         print >>f,''
         print >>f,'Detailed report is below.'
-        print >>f,'Failures that were NOT present in yesterday’s release are marked with [NEW].'
-        print >>f,'Failures that were fixed between yesterday and today are marked with [FIXED]'
+        print >>f,'Failures that were NOT present in yesterday’s release are marked with %s.'%(Project.NEWSTATUS)
+        print >>f,'Failures that were fixed between yesterday and today are marked with %s.'%(Project.FIXEDSTATUS)
         print >>f,''
         print >>f,'Cheers,'
         if getpass.getuser()=='antonk':
@@ -62,6 +62,7 @@ if __name__=="__main__":
             N.load()
         except:
             print 'WARNING: skipping release',N.name
+            # raise # enable for debugging
             continue
         for l in N.report():
             print >>f,l
