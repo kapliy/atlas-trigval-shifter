@@ -1,0 +1,89 @@
+#!/usr/bin/env python
+
+# enable tab completion
+try:
+    import readline
+except ImportError:
+    print "Module readline not available."
+else:
+    import rlcompleter
+    readline.parse_and_bind("tab: complete")
+
+import sys,re
+import urllib2,httplib
+import BeautifulSoup as bs
+
+THRESHOLD=1.1
+
+rel = 2
+if len(sys.argv)==2:
+    rel = int(sys.argv[1])
+    assert rel>=0 and rel<=6,'Release must be an integer between 0 and 6'
+
+urls = []
+urls.append(['TriggerTest','http://atlas-project-trigger-release-validation.web.cern.ch/atlas-project-trigger-release-validation/www/perfmonrtt/TriggerTest.html'])
+urls.append(['TrigP1Test','http://atlas-project-trigger-release-validation.web.cern.ch/atlas-project-trigger-release-validation/www/perfmonrtt/TrigP1Test.html'])
+
+url = urls[0]
+
+print 'Downloading RTT table for:',url[0]
+soup = bs.BeautifulSoup( urllib2.urlopen(url[1]) if url[1][0:4]=='http' else open(url[1]) )
+table = soup.table
+rows = table.findAll('tr')
+
+print 'Parsing RTT table for:',url[0]
+testName='UNKNOWN'
+stats = {}
+
+def mems_to_tuple(m):
+    """ Parses a string 2035M/35.0k into two tuples """
+    pair = m.split('/')
+    tot=-1
+    per=-1
+    if len(pair)==2 and pair[0]!='n':
+        tot = float(pair[0][:-1])
+        if pair[0][-1]=='M': tot*=1E6
+        if pair[0][-1]=='k': tot*=1E3
+        per = float(pair[1][:-1])
+        if pair[1][-1]=='M': per*=1E6
+        if pair[1][-1]=='k': per*=1E3
+    return (tot,per)
+        
+for row in rows[1:]:
+    elm = row.find('td',{ "class" : "testName" })
+    if elm:
+        testName = str(elm.string)
+        continue
+    try:
+        build = str(row['id'])
+    except:
+        print 'Finished test',testName
+        continue
+    if not build:
+        print 'WARNING: skipping row:',row
+        continue
+    td = row.findAll('td')
+    mems = [ (str(cell.span.string) if cell.string not in ('?','n/a') else 'NONE') for cell in td[1:8]]
+    if testName not in stats:
+        stats[testName] = {}
+    stats[testName][build] = [mems_to_tuple(z) for z in mems]
+        
+def prel(r):
+    """ A simple function to return previous release """
+    return r-1 if r>0 else 6
+
+print '=================================================='
+print 'REPORTING TESTS WITH >10% INCREASE IN MEMORY USAGE'
+print '=================================================='
+for testName in stats.keys():
+    for build in stats[testName].keys():
+        res = stats[testName][build]
+        pres = res[rel]
+        oldtot = max([data[0] for i,data in enumerate(res) if i!=rel])
+        newtot = max([data[0] for i,data in enumerate(res) if i==rel])
+        yestot = max([data[0] for i,data in enumerate(res) if i==prel(rel)])
+        if newtot>0 and newtot/oldtot > THRESHOLD:
+            print 'TEST=%27s BUILD=%22s  -  MAX_LAST_WEEK=|%d MB| YESTERDAY=|%s MB| TODAY=|%d MB|'%(testName,build,oldtot/1e6,yestot/1e6 if yestot>0 else 'N/A',newtot/1e6)
+print '=================================================='
+print 'DONE'
+print '=================================================='
