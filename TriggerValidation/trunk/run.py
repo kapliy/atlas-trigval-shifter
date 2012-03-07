@@ -34,7 +34,7 @@ if __name__=="__main__":
         f = open('/hep/public_html/VAL/index.html','w')
     else:
         f = open('index.html','w')
-    print >>f,'<html><body><basefont face=""Courier New", Courier, monospace" size="10" color="green"><pre>'
+    print >>f,'<html><body><pre>'
     if True:
         print >>f,"ValShift Report"
         print >>f,str(datetime.datetime.today()).split()[0]
@@ -55,7 +55,7 @@ if __name__=="__main__":
         if getpass.getuser()=='antonk':
             print >>f,'Anton'
         else:
-            print >>f,'Validation shifter'
+            print >>f,'Superman'
         print >>f,''
     for N in X[:]:
         try:
