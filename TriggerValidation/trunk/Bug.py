@@ -51,6 +51,7 @@ class BugTracker:
     def prefill(s):
         """ 
         s.bugs.append( Bug(,'') )
+        s.bugs.append( Bug(,['','']) )
         """
         s.bugs.append( Bug(86562,['ERROR preLoadFolder failed for folder /Digitization/Parameters','FATAL DetectorStore service not found']) )
         s.bugs.append( Bug(87109,"No such file or directory: '/afs/cern.ch/user/t/tbold/public/TDTtest/attila.AOD.pool.root'") )
@@ -61,9 +62,11 @@ class BugTracker:
         s.bugs.append( Bug(91283,"IOError: \[Errno 2\] No such file or directory: '../BackCompAthenaTrigBStoESDAOD/AOD.pool.root' ") )
         s.bugs.append( Bug(91264,['MissingETOutputESDList_jobOptions.py',"NameError: name 'StreamAOD' is not defined"]) )
         s.bugs.append( Bug(91299,['trigtest.pl: FAILURE at end','<component alias="ToolSvc.CaloCompactCellTool" name="CaloCompactCellTool"']) )
+        s.bugs.append( Bug(91681,['None is not the expected type for: JobProperties.Global.DetDescrVersion',"Auto-configured ConditionsTag '' from inputFileSummary"]) )
         s.bugs.append( Bug(91845,'HLTJobLib: crash ERROR intermediate file has no events') )
         s.bugs.append( Bug(91845,['HLTJobLib:','crash ERROR intermediate file has no events']) )
         s.bugs.append( Bug(91848,'RuntimeError: Conditions database identifier RPC_OFL is not defined') )
+        s.bugs.append( Bug(91903,['FATAL Folder /TRIGGER/LVL1/BunchGroupContent does not exist','ERROR Unable to initialize service "DetectorStore"']) )
         s.bugs.append( Bug(91916,"Sequence 'L2_muon_standalone_mu24_tight_l2muonSA' got error back while executing first algorithm") )
         s.bugs.append( Bug(92097,'xml file does not exist: prescales1000.xml') )
         s.bugs.append( Bug(92140,["\[Errno 2\] No such file or directory: 'AOD.pool.root'","has_key\('/TRIGGER/HLT/Prescales'\)"]) )
@@ -81,7 +84,6 @@ class BugTracker:
         s.bugs.append( Bug(92264,'ImportError: cannot import name T2CaloFastJet_a4TT_JESCalib_MultipleOutput_TEs') )
         s.bugs.append( Bug(92265,'ERROR Failed to find jet chain with name EF_j145_a4tchad') )
         s.bugs.append( Bug(92267,['CharybdisJimmy.digit.RDO','Py:inputFilePeeker WARNING caught','raise convert_to_error\(kind, result\)']) )
-
 if __name__ == '__main__':
     import sys
     assert len(sys.argv)==2,'USAGE: %s http://url.to.logfile'

@@ -2,7 +2,7 @@
 
 # enable bug lookup functionality
 MATCH_BUGS = True
-# choose default release (to be over-ridden on command line)
+# choose default release (may be over-ridden on command line)
 rel = 2
 
 import common
