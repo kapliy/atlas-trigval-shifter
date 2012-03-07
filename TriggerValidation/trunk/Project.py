@@ -5,6 +5,7 @@ import BeautifulSoup as bs
 from Test import Test
 
 DUMMY_LINK='http://www.NOT.AVAILABLE.com'
+NEWSTATUS='[<b>NEW</b>] '
 
 class Project:
     """ One trigger validation project that has its own ATN and NICOS page
@@ -68,7 +69,7 @@ class Project:
         """ Look up the bugs in local BugTracker, as well as yesterday's cache 
         Uses log error extract, summary extract, and full log tail to do the matching
         """
-        status = '' if any([l.samebug(t) for l in s.last]) else '[<b>NEW</b>] '
+        status = '' if any([l.samebug(t) for l in s.last]) else NEWSTATUS
         bug = None
         bugid=00000
         bugurl = "none"
@@ -105,8 +106,14 @@ class Project:
                 bugcomments.append(bugcomment)
             # group by bug id
             uniquebugs = list(set(bugids))
-            for uid in uniquebugs:
+            for uid in uniquebugs:                
                 matchedidx = [i for i,bugid in enumerate(bugids) if bugid==uid]
+                # see if all or some tests in this bug group are NEW
+                nnew_statuses = [statuses[i] for i in matchedidx if statuses[i]==NEWSTATUS]
+                ntotal_statuses = [statuses[i] for i in matchedidx]
+                status_summary = NEWSTATUS if len(nnew_statuses)==len(ntotal_statuses) else '[<b>NEW</b>](some are old)'
+                if len(nnew_statuses)==0: status_summary=''
+                # loop over tests in this bug group
                 for iorder,i in enumerate(matchedidx):
                     t = ts[i]
                     lextract = ts[i].lextract if ts[i].lextract else DUMMY_LINK
@@ -117,7 +124,7 @@ class Project:
                     if iorder==len(matchedidx)-1:
                         # special handling for the case of one test only affected by this bug
                         offset = '       ' if len(matchedidx)>1 else '    -  '
-                        res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>):\n       [<a href="%s">bug #%s</a>] %s%s'%(offset,lextract,ts[i].name,lerror,llog,ltail,bugurls[i],bugids[i],statuses[i],bugcomments[i]))
+                        res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>):\n       [<a href="%s">bug #%s</a>] %s%s'%(offset,lextract,ts[i].name,lerror,llog,ltail,bugurls[i],bugids[i],status_summary,bugcomments[i]))
                     # for others, just list the bugs, one per line, with comma in the end of each line
                     else:
                         offset = '    -  ' if iorder==0 else '       '
