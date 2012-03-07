@@ -13,18 +13,30 @@ import sys,re
 import urllib2,httplib
 import BeautifulSoup as bs
 
-THRESHOLD=1.1
-
-rel = 2
-if len(sys.argv)==2:
-    rel = int(sys.argv[1])
-    assert rel>=0 and rel<=6,'Release must be an integer between 0 and 6'
-
 urls = []
 urls.append(['TriggerTest','http://atlas-project-trigger-release-validation.web.cern.ch/atlas-project-trigger-release-validation/www/perfmonrtt/TriggerTest.html'])
 urls.append(['TrigP1Test','http://atlas-project-trigger-release-validation.web.cern.ch/atlas-project-trigger-release-validation/www/perfmonrtt/TrigP1Test.html'])
+urls.append(['TrigAnalysisTest','http://atlas-project-trigger-release-validation.web.cern.ch/atlas-project-trigger-release-validation/www/perfmonrtt/TrigAnalysisTest.html'])
 
-url = urls[0]
+
+rel = 3
+rtt = 0
+THRESHOLD=1.1
+
+if len(sys.argv)>=2:
+    rel = int(sys.argv[1])
+    assert rel>=0 and rel<=6,'Release must be an integer between 0 and 6'
+    print 'Changed release to:',rel
+if len(sys.argv)>=3:
+    rtt = int(sys.argv[2])
+    assert rtt<len(urls),'rtt index has a maximum value of %d'%len(urls)
+    print 'Changed rtt index to:',rtt
+if len(sys.argv)>=4:
+    THRESHOLD = float(sys.argv[3])
+    assert THRESHOLD>=1.0 and THRESHOLD<=2.0,'THRESHOLD must be between 1.0 and 2.0'
+    print 'Changed threshold to: %.1f%%'%((THRESHOLD-1.0)*100.0)
+
+url = urls[rtt]
 
 print 'Downloading RTT table for:',url[0]
 soup = bs.BeautifulSoup( urllib2.urlopen(url[1]) if url[1][0:4]=='http' else open(url[1]) )
