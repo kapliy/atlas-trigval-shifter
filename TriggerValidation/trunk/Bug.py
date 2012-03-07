@@ -56,6 +56,7 @@ class BugTracker:
         s.bugs.append( Bug(86562,['ERROR preLoadFolder failed for folder /Digitization/Parameters','FATAL DetectorStore service not found']) )
         s.bugs.append( Bug(87109,"No such file or directory: '/afs/cern.ch/user/t/tbold/public/TDTtest/attila.AOD.pool.root'") )
         s.bugs.append( Bug(87601,"OH repository 'Histogramming-L2-Segment-1-1-iss' does not exist") )
+        s.bugs.append( Bug(88042,["IS repository 'Histogramming-L2-Segment-1-1-iss' does not exist",'is::repository_var is::server::resolve']) )
         s.bugs.append( Bug(88554,['Moving to AthenaTrigRDO_chainOrder_compare','differences in tests with ordered HLT chain execution','TrigSteer_EF.TrigChainMoniValidation'],comment='Bugtracker says this bug reports small changes in HLT chain execution, which are expected.') )
         s.bugs.append( Bug(88602,['TDTExampleARA.py','ReferenceError: attempt to access a null-pointer']) )
         s.bugs.append( Bug(89464,'ERROR Upload of SMKey failed') )
@@ -70,6 +71,9 @@ class BugTracker:
         s.bugs.append( Bug(91916,"Sequence 'L2_muon_standalone_mu24_tight_l2muonSA' got error back while executing first algorithm") )
         s.bugs.append( Bug(92097,'xml file does not exist: prescales1000.xml') )
         s.bugs.append( Bug(92140,["\[Errno 2\] No such file or directory: 'AOD.pool.root'","has_key\('/TRIGGER/HLT/Prescales'\)"]) )
+        s.bugs.append( Bug(92163,['RpcLv1SLRawMonManager','Py:RAWtoESD','ERROR Athena received signal 11. Exit code reset to Athena exit code 139']) )
+        s.bugs.append( Bug(92163,'attempt to redefine type of "RPC_DCSConditionsTool" \(was: RPC_DCSConditionsTool, new: RPC_DCSConditionsTool\)',comment='This is similar to bug 92163 in that it occurs in RPC monitoring, but this time the error is with "RPC_DCSConditionsTool"') )
+        s.bugs.append( Bug(92166,['No valid proxy for object TauRecContainer','HLTMonManager','ManagedMonitorToolBase::fillHists']) )
         s.bugs.append( Bug(92206,['FATAL: Failed to start local PMG server',"RunManager instance has no attribute 'root_controller'"]) )
         s.bugs.append( Bug(92208,["CaloMonManager INFO Retrieved tool PublicToolHandle\('CaloCellVecMon/CaloCellMon'\)","boost::spirit::nil_t"]) )
         s.bugs.append( Bug(92209,'TauSliceAthenaTrigRDO__v4_top.reference: No such file or directory') )
@@ -81,9 +85,14 @@ class BugTracker:
         s.bugs.append( Bug(92260,"IOError: \[Errno 2\] No such file or directory: '../AthenaTrigRDOtoESDAOD/AOD.pool.root'" ) )
         s.bugs.append( Bug(92260,"IOError: \[Errno 2\] No such file or directory: '../AthenaTrigRDOtoESDAOD/ESD.pool.root'" ) )
         s.bugs.append( Bug(92260,"IOError: \[Errno 2\] No such file or directory: '../AthenaTrigAODtoAOD_TrigNavSqueeze/AOD_SqueezeRFTrigCaloCellMaker.pool.root'" ) )
+        s.bugs.append( Bug(92260,"IOError: \[Errno 2\] No such file or directory: '../BackCompAthenaTrigBStoESDAOD/AOD.pool.root'" ) )
         s.bugs.append( Bug(92264,'ImportError: cannot import name T2CaloFastJet_a4TT_JESCalib_MultipleOutput_TEs') )
         s.bugs.append( Bug(92265,'ERROR Failed to find jet chain with name EF_j145_a4tchad') )
         s.bugs.append( Bug(92267,['CharybdisJimmy.digit.RDO','Py:inputFilePeeker WARNING caught','raise convert_to_error\(kind, result\)']) )
+        s.bugs.append( Bug(92272,['L2PhotonHypo_g15_loose','carcore size is 10 but needs 9']) )
+        s.bugs.append( Bug(92273,['Last incident: EFEventLoopMgr:EndRun','FATAL Unchecked StatusCode in exit from lib /lib/libc.so.6']) )
+        s.bugs.append( Bug(92298,["No such file or directory: 'ESD.pool.root'",'TrigEDMCheck']) )
+        
 if __name__ == '__main__':
     import sys
     assert len(sys.argv)==2,'USAGE: %s http://url.to.logfile'
