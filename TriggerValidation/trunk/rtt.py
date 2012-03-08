@@ -19,7 +19,7 @@ urls.append(['TrigP1Test','http://atlas-project-trigger-release-validation.web.c
 urls.append(['TrigAnalysisTest','http://atlas-project-trigger-release-validation.web.cern.ch/atlas-project-trigger-release-validation/www/perfmonrtt/TrigAnalysisTest.html'])
 
 
-rel = 3
+rel = 4
 rtt = 0
 THRESHOLD=1.1
 
