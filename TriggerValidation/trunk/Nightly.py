@@ -18,6 +18,8 @@ class Nightly:
         s.nicoslinks = None
         s.errorpackages = []
         s.errorlinks    = []
+        # keep track of new bug reports
+        s.new_bugs = []
     def add(s,project):
         s.projects.append(project)
     def load(s):
@@ -72,4 +74,6 @@ class Nightly:
                 res.append('<a href="%s">%s</a>'%(blink,package))
         for p in s.projects:
             res += p.report()
+            s.new_bugs += p.new_bugs
+        s.new_bugs = list(set(s.new_bugs))
         return res

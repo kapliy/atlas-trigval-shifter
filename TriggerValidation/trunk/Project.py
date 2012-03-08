@@ -25,6 +25,7 @@ class Project:
         s.last = []
         s.pres_soup = None
         s.last_soup = None
+        s.new_bugs = []
     def prel(s,r):
         """ A simple function to return previous release """
         return r-1 if r>0 else 6
@@ -100,6 +101,10 @@ class Project:
             for t in err:
                 total += 1
                 status,bug,bugid,bugurl,bugcomment = s.match_bugs(t)
+                # separately keep track of "new" bug reports. Note that this functionality
+                # depends on the user to separately add these bugs via bugs.add_new().
+                if bug and bug.new==True and not bug in s.new_bugs:
+                    s.new_bugs.append(bug)
                 ts.append(t)
                 statuses.append(status)
                 bugs.append(bug)

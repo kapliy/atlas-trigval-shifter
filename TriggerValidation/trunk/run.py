@@ -25,6 +25,9 @@ if MATCH_BUGS:
     bugs.prefill()
     Project.Project.bugs = bugs
 
+# add new bugs here, but sweep them into Bug.py in the end of the shift
+#bugs.add()
+    
 # Load the list of nightlies that we need to validate
 from configure_nightlies import X    
 
@@ -34,7 +37,7 @@ if __name__=="__main__":
         f = open('/hep/public_html/VAL/index.html','w')
     else:
         f = open('index.html','w')
-    print >>f,'<html><body><pre>'
+    print >>f,'<html><head><title>Trigger Validation Shift Report: rel_%d</title></head><body><pre>'%rel
     if True:
         print >>f,"ValShift Report"
         print >>f,str(datetime.datetime.today()).split()[0]
@@ -42,7 +45,8 @@ if __name__=="__main__":
         print >>f,'General-'
         print >>f,''
         print >>f,'New bug reports:'
-        print >>f,'- '
+        for bug in bugs.new_bugs():
+            print >>f,'- [<a href="%s">bug #%d</a>] : %s'%(bug.url(),bug.id,bug.fetch_comment())
         print >>f,''
         print >>f,'RTT memory report:'
         print >>f,'The following tests had a >10% increase in total memory consumption with respect to the maximum memory usage in the past 6 days:'
