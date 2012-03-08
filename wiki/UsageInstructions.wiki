@@ -1,0 +1,15 @@
+#summary Instructions for running the scripts and producing Trigger Validation Shift reports.
+
+= Introduction =
+
+This package includes two scripts: 
+  * *./run.py* - generates an HTML page that will form the basis of your shift report. This includes some introductory sentences, as well as a detailed report of all failed tests and corresponding bugs.
+  * *./rtt.py* - parses the RTT summary page and reports all tests that used a lot of memory with respect to previous few days.
+
+
+= Details =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
