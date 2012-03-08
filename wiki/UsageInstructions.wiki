@@ -6,10 +6,19 @@ This package includes two scripts:
   * *./run.py* - generates an HTML page that will form the basis of your shift report. This includes some introductory sentences, as well as a detailed report of all failed tests and corresponding bugs.
   * *./rtt.py* - parses the RTT summary page and reports all tests that used a lot of memory with respect to previous few days.
 
+= Suggested procedure =
+  # Make sure _configure_nightlies.py_ contains all nightlies that you are expected to check, per instructions posted on the trigger [https://twiki.cern.ch/twiki/bin/viewauth/Atlas/TriggerValidation twiki])
+  # Change release number in *run.py* and *rtt.py* (the variable name is _rel_)
+  # Run _./run.py_. Note that if some nightlies haven't finished running the unit tests, the script will still produce a shift report for those nightlies that have finished. Note that the output is saved directly to an html file.
+  # Run _./rtt.py 0_, and then the same with an argument "1" and "2". Each time, it will print a report containing the memory usage regressions. Note that the output is dumped to screen - you will need to manually copy it into your shift report.
 
-= Details =
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+= Code Organization =
+
+*Nightly --> Project --> Test <-- Bug*
+
+  * *Nightly (Nightly.py) * - refers to one ATLAS nightly (17.1.X.Y-VAL-P1HLT, 17.X.0 etc). You can find a complete list of all available nightlies on the [http://atlas-computing.web.cern.ch/atlas-computing/links/distDirectory/nightlies/global/nightly.html NICOS global page] ("Nightly Title" column). The nightlies that are the subject of your validation shift should be listed in _configure_nightlies.py_.
+  * *Project (Project.py) * - refers to a test suit project associated with a given nightly (!TrigP1Test, !TriggerTest, or !TrigAnalysisTest). For each project in a given nightly, you must provide a link to its ATN test summary page in _configure_nightlies.py_.
+  * *Test (Test.py)* - refers to one unit test within a Project. For example, this [http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/17.1.X.Y.Z-VAL/AtlasCAFHLT/rel_4/NICOS_area/NICOS_atntest171XYZVALAtlasCAFHLT32BS5G4AtlasCAFHLTOpt/triggertest_testconfiguration_work/ ATN page] for !TriggerTest project shows several unit tests that should be checked by the shifter.
+  * *Bug (Bug.py)* - refers to a specific bug on the [https://savannah.cern.ch/bugs/?group=atlas-trig Savannah] bug tracker.
+  * *!BugTracker (Bug.py)* - refers to a local repository of bugs hardcoded in Bug.py. Basically, all common bugs that appeared in the last few days are entered into this local bug database along with unique "greppable" strings that can be used to identify each bug from the log files.
