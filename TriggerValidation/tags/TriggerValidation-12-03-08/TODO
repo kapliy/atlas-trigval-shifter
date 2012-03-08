@@ -1,0 +1,3 @@
+* Caching of log fragments
+* Caching of bug "comment" field
+* Parsing of NICOS test results to make sure ATN is displaying everything.
