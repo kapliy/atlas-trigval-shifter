@@ -75,6 +75,7 @@ class BugTracker:
         s.bugs.append( Bug(92163,'attempt to redefine type of "RPC_DCSConditionsTool" \(was: RPC_DCSConditionsTool, new: RPC_DCSConditionsTool\)',comment='This is similar to bug 92163 in that it occurs in RPC monitoring, but this time the error is with "RPC_DCSConditionsTool"') )
         s.bugs.append( Bug(92166,['No valid proxy for object TauRecContainer','HLTMonManager','ManagedMonitorToolBase::fillHists']) )
         s.bugs.append( Bug(92206,['FATAL: Failed to start local PMG server',"RunManager instance has no attribute 'root_controller'"]) )
+        s.bugs.append( Bug(92206,['FATAL: Failed to start RM server',"RunManager instance has no attribute 'root_controller'"]) )
         s.bugs.append( Bug(92208,["CaloMonManager INFO Retrieved tool PublicToolHandle\('CaloCellVecMon/CaloCellMon'\)","boost::spirit::nil_t"]) )
         s.bugs.append( Bug(92209,'TauSliceAthenaTrigRDO__v4_top.reference: No such file or directory') )
         s.bugs.append( Bug(92213,'could not bind handle to CondAttrListCollection to key: /TRT/Onl/ROD/Compress') )
