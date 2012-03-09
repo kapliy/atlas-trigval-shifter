@@ -65,4 +65,4 @@ class Test:
         if t.is_error_athena(): return False
         if t.is_error_exit(): return False
         if t.is_error_post(): return False  # let's keep this as a failure category, too
-        return True
+        return True if s.overall == 'OK' else False

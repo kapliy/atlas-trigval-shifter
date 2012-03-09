@@ -76,14 +76,30 @@ class Project:
         bug = None
         bugid=00000
         bugurl = "none"
-        bugcomment = "FIXME"
+        bugcomment = '<font color="yellow">FIXME</font>'
         if s.MATCH_BUGS:
             if t.lerror:
-                bug = s.bugs.match(urllib2.urlopen(t.lerror,timeout=s.URLTIMEOUT).read())
+                try:
+                    bug = s.bugs.match(urllib2.urlopen(t.lerror,timeout=s.URLTIMEOUT).read())
+                except (urllib2.HTTPError,urllib2.URLError) as e :
+                    print 'WARNING: the following test log link leads to "404 page not found":'
+                    print '   ',t.lerror
+                    bug = None
             if not bug and t.lextract:
-                bug = s.bugs.match(urllib2.urlopen(t.lextract,timeout=s.URLTIMEOUT).read())
+                try:
+                    bug = s.bugs.match(urllib2.urlopen(t.lextract,timeout=s.URLTIMEOUT).read())
+                except (urllib2.HTTPError,urllib2.URLError) as e :
+                    print 'WARNING: the following test log link leads to "404 page not found":'
+                    print '   ',t.lextract
+                    bug = None
             if not bug and t.ltail:
-                bug = s.bugs.match(urllib2.urlopen(t.ltail,timeout=s.URLTIMEOUT).read())
+                try:
+                    bug = s.bugs.match(urllib2.urlopen(t.ltail,timeout=s.URLTIMEOUT).read())
+                except (urllib2.HTTPError,urllib2.URLError) as e :
+                    print 'ERROR: the following test log link leads to "404 page not found":'
+                    print '   ',t.ltail
+                    print '   ','THIS BUG CANNOT BE MATCHED'
+                    bug = None
             if bug:
                 bugid=bug.id
                 bugurl = bug.url()

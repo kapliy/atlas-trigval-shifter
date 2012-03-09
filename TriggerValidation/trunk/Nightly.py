@@ -70,8 +70,13 @@ class Nightly:
         res.append( '' + '='*len(s.name) )
         if len(s.errorpackages)>0:
             res.append('<font color="red">Build errors:</font>')
+            iprinted=0
             for package,blink in zip(s.errorpackages,s.errorlinks):
                 res.append('<a href="%s">%s</a>'%(blink,package))
+                iprinted += 1
+                if iprinted>=10:
+                    res.append( '... and more (please check the build links above)' )
+                    break
         for p in s.projects:
             res += p.report()
             s.new_bugs += p.new_bugs

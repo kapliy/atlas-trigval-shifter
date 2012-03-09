@@ -90,7 +90,6 @@ class BugTracker:
         s.add(91681,['None is not the expected type for: JobProperties.Global.DetDescrVersion',"Auto-configured ConditionsTag '' from inputFileSummary"])
         s.add(91845,'HLTJobLib: crash ERROR intermediate file has no events')
         s.add(91845,['HLTJobLib:','crash ERROR intermediate file has no events'])
-        s.add(91848,'RuntimeError: Conditions database identifier RPC_OFL is not defined')
         s.add(91903,['FATAL Folder /TRIGGER/LVL1/BunchGroupContent does not exist','ERROR Unable to initialize service "DetectorStore"'])
         s.add(91916,"Sequence 'L2_muon_standalone_mu24_tight_l2muonSA' got error back while executing first algorithm")
         s.add(92097,'xml file does not exist: prescales1000.xml')
@@ -117,6 +116,7 @@ class BugTracker:
         s.add(92272,['L2PhotonHypo_g15_loose','carcore size is 10 but needs 9'])
         s.add(92273,['Last incident: EFEventLoopMgr:EndRun','FATAL Unchecked StatusCode in exit from lib /lib/libc.so.6'])
         s.add(92298,["No such file or directory: 'ESD.pool.root'",'TrigEDMCheck'])
+        s.add(92397,'RuntimeError: Conditions database identifier RPC_OFL is not defined',comment='Conditions database identifier RPC_OFL is not defined for standalone_cosmic test. Note that this was originally assigned to bug [91848]')
         
 if __name__ == '__main__':
     import sys

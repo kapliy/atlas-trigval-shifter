@@ -25,8 +25,11 @@ if MATCH_BUGS:
     bugs.prefill()
     Project.Project.bugs = bugs
 
-# add new bugs here, but sweep them into Bug.py in the end of the shift
-#bugs.add()
+# ADD NEW BUGS HERE
+# (but sweep them into Bug.py BugTracker::prefill() at the end of the shift)
+#bugs.add_new()
+bugs.add_new(92407,['CRITICAL stopped by user interrupt','CRITICAL stopped by user interrupt','CRITICAL stopped by user interrupt','BackCompAthenaTrigBStoESDAOD'])
+bugs.add_new(92413,['Start of HLT Processing in EF','Current algorithm: TrigSteer_EF','Segmentation fault'])
     
 # Load the list of nightlies that we need to validate
 from configure_nightlies import X    
