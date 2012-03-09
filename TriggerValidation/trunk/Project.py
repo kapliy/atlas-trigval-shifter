@@ -76,7 +76,7 @@ class Project:
         bug = None
         bugid=00000
         bugurl = "none"
-        bugcomment = '<font color="yellow">FIXME</font>'
+        bugcomment = '<font style="BACKGROUND-COLOR: yellow">FIXME</font>'
         if s.MATCH_BUGS:
             if t.lerror:
                 try:
