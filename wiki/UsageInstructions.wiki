@@ -42,3 +42,8 @@ Basically, once you identify a unique pattern in the log extract (either tail or
 If the pattern was entered correctly, you should see a match.
 
 Be very careful not to add too-general patterns that might match the wrong bug. If unsure, you can always include multiple pattern fragments - the pattern matching machinery will require that *all* fragments must match in a given log file. Also, make sure to escape "[","]","(",")" and other special regex characters.
+
+You usually don't need to give a human-readable description of the bug; that information (i.e., the bug title0 is automatically fetched from the Savannah tracker. However, sometimes it's useful to provide an explicit note. In that case, just set the "comment=" variable when you add an entry for a new bug.
+{{{
+bugs.add(88554,['Moving to AthenaTrigRDO_chainOrder_compare','differences in tests with ordered HLT chain execution','TrigSteer_EF.TrigChainMoniValidation'],comment='Bugtracker says this bug reports small changes in HLT chain execution, which are expected.')
+}}}
