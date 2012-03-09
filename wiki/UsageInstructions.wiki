@@ -29,7 +29,7 @@ If you detect a test failure that could not be matched against the existing bug 
 
 Basically, once you identify a unique pattern in the log extract (either tail or error extracts are fine), add them via _BugTracker.add()_. You can quickly test this addition by running:
 {{{
-./Bug.py http://www.link.to.bug.log.extract
+./Bug.py http://www.link.to/bug/log/extract
 }}}
 If the pattern was entered correctly, you should see a match.
 
