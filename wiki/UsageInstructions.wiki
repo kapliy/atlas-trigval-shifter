@@ -29,7 +29,7 @@ This package includes two scripts:
 = Adding new bugs =
 If you detect a test failure that could not be matched against the existing bug database in _Bug.py_, please add a corresponding entry for future users. It is also likely that this would save you time tomorrow, because bugs are rarely fixed within one day of appearance.
 
-Basically, once you identify a unique pattern in the log extract (either tail or error extracts are fine), add them via _BugTracker.add()_. You can quickly test this addition by running:
+Basically, once you identify a unique pattern in the log extract (either tail or error extracts are fine), add them via _!BugTracker.add()_. You can quickly test this addition by running:
 {{{
 ./Bug.py http://www.link.to/bug/log/extract
 }}}
