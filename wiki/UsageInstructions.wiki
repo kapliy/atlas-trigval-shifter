@@ -14,7 +14,7 @@ This package includes two scripts:
   # Run _./rtt.py 0_, and then the same with an argument "1" and "2". Each time, it will print a report containing all memory usage regressions. Note that the output is dumped to screen - you will need to manually copy it into your shift report.
 
 
-= Code Organization =
+= Code organization =
 
 *Nightly --> Project --> Test <-- Bug*
 
@@ -23,3 +23,14 @@ This package includes two scripts:
   * *Test (Test.py)* - refers to one unit test within a Project. For example, this [http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/17.1.X.Y.Z-VAL/AtlasCAFHLT/rel_4/NICOS_area/NICOS_atntest171XYZVALAtlasCAFHLT32BS5G4AtlasCAFHLTOpt/triggertest_testconfiguration_work/ ATN page] for !TriggerTest project shows several unit tests that should be checked by the shifter.
   * *Bug (Bug.py)* - refers to a specific bug on the [https://savannah.cern.ch/bugs/?group=atlas-trig Savannah] bug tracker.
   * *!BugTracker (Bug.py)* - refers to a local repository of bugs hardcoded in Bug.py. Basically, all common bugs that appeared in the last few days are entered into this local bug database along with unique "greppable" strings that can be used to identify each bug from the log files.
+
+= Adding new bugs =
+If you detect a test failure that could not be matched against the existing bug database in _Bug.py_, please add a corresponding entry for future users. It is also likely that this would save you time tomorrow, because bugs are rarely fixed within one day of appearance.
+
+Basically, once you identify a unique pattern in the log extract (either tail or error extracts are fine), add them via _BugTracker.add()_. You can quickly test this addition by running:
+{{{
+./Bug.py http://www.link.to.bug.log.extract
+}}}
+If the pattern was entered correctly, you should see a match.
+
+Be very careful not to add too-general patterns that might match the wrong bug. Also, make sure to escape "[","]","(",")" and other special regex characters.
