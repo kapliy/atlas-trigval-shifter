@@ -52,3 +52,12 @@ You usually don't need to give a human-readable description of the bug; that inf
 {{{
 bugs.add(88554,['Moving to AthenaTrigRDO_chainOrder_compare','differences in tests with ordered HLT chain execution','TrigSteer_EF.TrigChainMoniValidation'],comment='Bugtracker says this bug reports small changes in HLT chain execution, which are expected.')
 }}}
+
+= In case of problems =
+By default, the code is configured to gracefully skip all nightlies that cause a fatal error. In this case, a message similar to the following one is printed to screen:
+{{{
+WARNING: skipping release 17.1.X.Y.Z-VAL2-AtlasCAFHLT (32-bit)
+}}}
+Most often, this happens when one of the test suites hasn't finished running yet. In particular, the VAL2-AtlasCAFHLT sometimes only finishes around noon (Chicago time).
+
+If you waited long enough and still cannot process a particular release, you can enable a detailed traceback by re-raising the exception near the bottom of run.py (search for _enable for debugging_).
