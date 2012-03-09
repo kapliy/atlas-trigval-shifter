@@ -4,7 +4,7 @@
 # enable bug lookup functionality
 MATCH_BUGS = True
 # choose default release (may be over-ridden on command line)
-rel = 4
+rel = 5
 
 import common
 
