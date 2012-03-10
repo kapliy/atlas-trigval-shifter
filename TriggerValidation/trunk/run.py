@@ -4,7 +4,7 @@
 # enable bug lookup functionality
 MATCH_BUGS = True
 # choose default release (may be over-ridden on command line)
-rel = 5
+rel = 0
 
 import common
 
@@ -27,9 +27,7 @@ if MATCH_BUGS:
 
 # ADD NEW BUGS HERE
 # (but sweep them into Bug.py BugTracker::prefill() at the end of the shift)
-#bugs.add_new()
-bugs.add_new(92407,['CRITICAL stopped by user interrupt','CRITICAL stopped by user interrupt','CRITICAL stopped by user interrupt','BackCompAthenaTrigBStoESDAOD'])
-bugs.add_new(92413,['Start of HLT Processing in EF','Current algorithm: TrigSteer_EF','Segmentation fault'])
+#bugs.add_new(,[''])
     
 # Load the list of nightlies that we need to validate
 from configure_nightlies import X    
@@ -47,9 +45,10 @@ if __name__=="__main__":
         print >>f,''
         print >>f,'General-'
         print >>f,''
-        print >>f,'New bug reports:'
-        for bug in bugs.new_bugs():
-            print >>f,'- [<a href="%s">bug #%d</a>] : %s'%(bug.url(),bug.id,bug.fetch_comment())
+        if len(bugs.new_bugs())>0:
+            print >>f,'New bug reports:'
+            for bug in bugs.new_bugs():
+                print >>f,'- [<a href="%s">bug #%d</a>] : %s'%(bug.url(),bug.id,bug.fetch_comment())
         print >>f,''
         print >>f,'RTT memory report:'
         print >>f,'The following tests had a >10% increase in total memory consumption with respect to the maximum memory usage in the past 6 days:'
