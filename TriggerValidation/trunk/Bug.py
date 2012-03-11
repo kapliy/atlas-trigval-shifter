@@ -123,6 +123,8 @@ class BugTracker:
         s.add(92435,['include file MissingET/MissingETOutputAODList_jobOptions.py can not be found'])
         s.add(92436,['AntiKt6TowerJets','fastjet::ClusterSequenceArea::initialize_and_run_cswa'])
         s.add(92437,["'D3PDMakerFlags' object has no attribute 'CompressionLevel'"])
+        s.add(92449,['DataHeader_p','object has no attribute','File "./TDTExampleARA.py"'])
+
         
 if __name__ == '__main__':
     import sys
