@@ -76,6 +76,9 @@ class BugTracker:
         s.add(,'')
         s.add(,['',''])
         """
+        s.add(-1, 'CRITICAL stopped by user interrupt','User interrupt')
+        s.add(-1, 'KeyboardInterrupt','User interrupt')
+        s.add(-2, 'APPLICATION_DIED_UNEXPECTEDLY','Worker process failed')
         s.add(86562,['ERROR preLoadFolder failed for folder /Digitization/Parameters','FATAL DetectorStore service not found'])
         s.add(87109,"No such file or directory: '/afs/cern.ch/user/t/tbold/public/TDTtest/attila.AOD.pool.root'",comment='AthenaTrigAOD_TDT_fixedAOD fails with missing input file. According the the bug report, this has been fixed in TrigAnalysistest-00-03-24.')
         s.add(88042,"OH repository 'Histogramming-L2-Segment-1-1-iss' does not exist") # 87601 is also appropriate, but closed as duplicate
@@ -101,11 +104,13 @@ class BugTracker:
         s.add(92206,['FATAL: Failed to start RM server',"RunManager instance has no attribute 'root_controller'"])
         s.add(92208,["CaloMonManager INFO Retrieved tool PublicToolHandle\('CaloCellVecMon/CaloCellMon'\)","boost::spirit::nil_t"])
         s.add(92209,'TauSliceAthenaTrigRDO__v4_top.reference: No such file or directory')
-        s.add(92213,'could not bind handle to CondAttrListCollection to key: /TRT/Onl/ROD/Compress','InDetTRTRodDecoder callback registration failed, but Athena job complete succesfully')
-        s.add(92221,['EFPhotonHypo_g120_loose','TrigSteer_EF','Algorithm stack:'])
-        s.add(92221,['EFPhotonHypo_g120_loose','cound not cd to directory:  TrigSteer_EF'])
+        s.add(92213,'could not bind handle to CondAttrListCollection to key: /TRT/Onl/ROD/Compress','InDetTRTRodDecoder callback registration failed, but Athena job completes successfully')
+        #the following matches too generally.  can't see old log to make it more specific
+        #s.add(92221,['EFPhotonHypo_g120_loose','TrigSteer_EF','Algorithm stack:'])
+        #s.add(92221,['EFPhotonHypo_g120_loose','cound not cd to directory:  TrigSteer_EF'])
         s.add(92222,'ERROR Upload of key 1 failed')
-#        s.add(92225,['Core dump from CoreDumpSvc','inlined at ../src/HLTBjetMonTool.cxx','HLTBjetMonTool::fill()'])
+        s.add(92225,['Core dump from CoreDumpSvc','inlined at ../src/HLTBjetMonTool.cxx','HLTBjetMonTool::fill()'],'Segfault in HLTBjetMonTool, submitted to open bug, but may be a new problem')
+
         s.add(92260,"IOError: \[Errno 2\] No such file or directory: '../AthenaTrigAODtoAOD_TrigNavSlimming/AOD_RSegamma.pool.root'" )
         s.add(92260,"IOError: \[Errno 2\] No such file or directory: '../AthenaTrigRDOtoESDAOD/AOD.pool.root'" )
         s.add(92260,"IOError: \[Errno 2\] No such file or directory: '../AthenaTrigRDOtoESDAOD/ESD.pool.root'" )
@@ -125,6 +130,7 @@ class BugTracker:
         s.add(92436,['AntiKt6TowerJets','fastjet::ClusterSequenceArea::initialize_and_run_cswa'])
         s.add(92437,["'D3PDMakerFlags' object has no attribute 'CompressionLevel'"])
         s.add(92449,['DataHeader_p','object has no attribute','File "./TDTExampleARA.py"'])
+
 
         
 if __name__ == '__main__':

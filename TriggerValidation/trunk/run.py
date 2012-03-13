@@ -4,7 +4,7 @@
 # enable bug lookup functionality
 MATCH_BUGS = True
 # choose default release (may be over-ridden on command line)
-rel = 1
+rel = 2
 
 import common
 
@@ -28,8 +28,12 @@ if MATCH_BUGS:
 # ADD NEW BUGS HERE
 # (but sweep them into Bug.py BugTracker::prefill() at the end of the shift)
 #bugs.add_new(,[''])
-bugs.add_new(92225,['Core dump from CoreDumpSvc','inlined at ../src/HLTBjetMonTool.cxx','HLTBjetMonTool::fill()'],'Segfault in HLTBjetMonTool, submitted to open bug, but may be a new problem')
-
+bugs.add_new(92165,["No such file or directory: '../AllPT_physicsV4_rerun/ef_Default_setup.txt'"],"CheckKeysV4 test failing because previous test (AllPT_physicsV4_rerun) has no output")
+bugs.add_new(92501,['invalid next size','ibTrigTauDiscriminant'],"Invalid read in TrigTauDiscriBuilder")
+bugs.add_new(92516,['AthMasterSeq', 'AthAlgSeq','TrigSteer_EF','EFBMuMuFex_DiMu_noOS','stack trace'],"Segfault in EFBMuMuFex_DiMu_noOS--fix to be in TrigBphysHypo-00-03-07")
+bugs.add_new(92532,"ERROR FATAL No input BS file could be found matching '../AthenaTrigRDOtoBS/raw*.data'")
+bugs.add_new(92536,"HLTJobLib:       crash ERROR HLTProcess: could not find any files starting")
+# Load the list of nightlies that we need to validate
 # Load the list of nightlies that we need to validate
 from configure_nightlies import X    
 

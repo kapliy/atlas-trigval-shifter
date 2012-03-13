@@ -22,7 +22,7 @@ urls.append(['TrigAnalysisTest','http://atlas-project-trigger-release-validation
 rel = 1
 rtt = 0
 THRESHOLD=1.1
-
+useMax=False
 if len(sys.argv)>=2:
     rtt = int(sys.argv[1])
     assert rtt<len(urls),'rtt index has a maximum value of %d'%len(urls)
@@ -35,6 +35,12 @@ if len(sys.argv)>=4:
     rel = int(sys.argv[3])
     assert rel>=0 and rel<=6,'Release must be an integer between 0 and 6'
     print 'Changed release to:',rel
+if len(sys.argv)>=5:
+    useMax = bool(sys.argv[4])
+    if useMax:
+        print "Using maximum of last week for comparison"
+    else:
+        print "Using minimum of last week for comparison"
 
 url = urls[rtt]
 
@@ -99,15 +105,32 @@ for testName in stats.keys():
         pres = res[rel]
         oldtot = max([data[0] for i,data in enumerate(res) if i!=rel])
         oldavg = avg([data[0] for i,data in enumerate(res) if i!=rel and data[0]>0])
+        if len([data[0] for i,data in enumerate(res) if i!=rel and data[0]> 0]) > 0:
+            
+            oldmin = min([data[0] for i,data in enumerate(res) if i!=rel and data[0]> 0])
+        else:
+            #print "using average! %s" %oldavg
+            oldmin = oldavg
         newtot = max([data[0] for i,data in enumerate(res) if i==rel])
         yestot = max([data[0] for i,data in enumerate(res) if i==prel(rel)])
-        if newtot>0 and newtot/oldtot > THRESHOLD:
+      
+        
+        if useMax and newtot>0 and newtot/oldtot > THRESHOLD:
             print '- %s (%s):'%(testName,build)
             '{0:<4}'.format(999)
             print '   TODAY            = |{0:<4} MB|'.format(newtot)
             print '   YESTERDAY        = |{0:<4} MB|'.format(yestot if yestot>0 else 'N/A')
             print '   AVG_LAST_WEEK    = |{0:<4} MB|'.format(oldavg)
             print '   MAX_LAST_WEEK    = |{0:<4} MB|'.format(oldtot)
+            print '   MIN_LAST_WEEK    = |{0:<4} MB|'.format(oldmin)
+        if not useMax and newtot>0 and  newtot/oldmin > THRESHOLD:
+            print '- %s (%s):'%(testName,build)
+            '{0:<4}'.format(999)
+            print '   TODAY            = |{0:<4} MB|'.format(newtot)
+            print '   YESTERDAY        = |{0:<4} MB|'.format(yestot if yestot>0 else 'N/A')
+            print '   AVG_LAST_WEEK    = |{0:<4} MB|'.format(oldavg)
+            print '   MAX_LAST_WEEK    = |{0:<4} MB|'.format(oldtot)
+            print '   MIN_LAST_WEEK    = |{0:<4} MB|'.format(oldmin)
 print '=================================================='
 print 'DONE'
 print '=================================================='
