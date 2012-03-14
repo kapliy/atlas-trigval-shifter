@@ -164,7 +164,9 @@ class Project:
                     # for others, just list the bugs, one per line, with comma in the end of each line
                     else:
                         offset = '    -  ' if iorder==0 else '       '
-                        res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>),'%(offset,lextract,ts[i].name,lerror,llog,ltail))
+                        if bugids[i] >= 0:
+                            res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>),'%(offset,lextract,ts[i].name,lerror,llog,ltail))
+                        
         return res,total
     def report(s):
         res = []
@@ -270,7 +272,10 @@ class Project:
                 if iorder==len(matchedidx)-1:
                     # special handling for the case of one test only affected by this bug
                     offset = '       ' if len(matchedidx)>1 else '    -  '
-                    res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>):\n       [<a href="%s">bug #%s</a>] %s%s'%(offset,lextract,old.name,lerror,llog,ltail,bugurls[i],bugids[i],FIXEDSTATUS,bugcomments[i]))
+                    if bugids[i] >= 0:
+                        res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>):\n       [<a href="%s">bug #%s</a>] %s%s'%(offset,lextract,old.name,lerror,llog,ltail,bugurls[i],bugids[i],FIXEDSTATUS,bugcomments[i]))
+                    else:
+                        res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>):\n       [Exit Category #%s] %s%s'%(offset,lextract,old.name,lerror,llog,ltail,bugids[i],FIXEDSTATUS,bugcomments[i]))
                 # for others, just list the bugs, one per line, with comma in the end of each line
                 else:
                     offset = '    -  ' if iorder==0 else '       '
