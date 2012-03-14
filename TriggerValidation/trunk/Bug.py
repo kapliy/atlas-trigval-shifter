@@ -79,6 +79,7 @@ class BugTracker:
         s.add(-1, 'CRITICAL stopped by user interrupt','User interrupt')
         s.add(-1, 'KeyboardInterrupt','User interrupt')
         s.add(-2, 'APPLICATION_DIED_UNEXPECTEDLY','Worker process failed')
+        s.add(-3, 'received fatal signal 15','Job recieved kill signal')
         s.add(86562,['ERROR preLoadFolder failed for folder /Digitization/Parameters','FATAL DetectorStore service not found'])
         s.add(87109,"No such file or directory: '/afs/cern.ch/user/t/tbold/public/TDTtest/attila.AOD.pool.root'",comment='AthenaTrigAOD_TDT_fixedAOD fails with missing input file. According the the bug report, this has been fixed in TrigAnalysistest-00-03-24.')
         s.add(88042,"OH repository 'Histogramming-L2-Segment-1-1-iss' does not exist") # 87601 is also appropriate, but closed as duplicate
@@ -87,6 +88,8 @@ class BugTracker:
         s.add(88554,['Moving to AthenaTrigRDO_chainOrder_compare','differences in tests with ordered HLT chain execution','TrigSteer_EF.TrigChainMoniValidation'],comment='Bugtracker says this bug reports small changes in HLT chain execution, which are expected.')
         s.add(88602,['TDTExampleARA.py','ReferenceError: attempt to access a null-pointer'])
         s.add(89464,'ERROR Upload of SMKey failed')
+        s.add(90593,'ERROR ServiceLocatorHelper::createService: wrong interface id IID_3596816672 for service JobIDSvc','Root+python problem when reading ESDs')
+
         s.add(91283,"IOError: \[Errno 2\] No such file or directory: '../BackCompAthenaTrigBStoESDAOD/AOD.pool.root' ")
         s.add(91264,['MissingETOutputESDList_jobOptions.py',"NameError: name 'StreamAOD' is not defined"])
         s.add(91299,['trigtest.pl: FAILURE at end','<component alias="ToolSvc.CaloCompactCellTool" name="CaloCompactCellTool"'])
@@ -99,6 +102,7 @@ class BugTracker:
         s.add(92140,["\[Errno 2\] No such file or directory: 'AOD.pool.root'","has_key\('/TRIGGER/HLT/Prescales'\)"])
         s.add(92163,['RpcLv1SLRawMonManager','Py:RAWtoESD','ERROR Athena received signal 11. Exit code reset to Athena exit code 139'])
         s.add(92163,'attempt to redefine type of "RPC_DCSConditionsTool" \(was: RPC_DCSConditionsTool, new: RPC_DCSConditionsTool\)',comment='This is similar to bug 92163 in that it occurs in RPC monitoring, but this time the error is with "RPC_DCSConditionsTool"')
+        s.add(92165,["No such file or directory: '../AllPT_physicsV4_rerun/ef_Default_setup.txt'"],"CheckKeysV4 test failing because previous test (AllPT_physicsV4_rerun) has no output")
         s.add(92166,['No valid proxy for object TauRecContainer','HLTMonManager','ManagedMonitorToolBase::fillHists'])
         s.add(92206,['FATAL: Failed to start local PMG server',"RunManager instance has no attribute 'root_controller'"])
         s.add(92206,['FATAL: Failed to start RM server',"RunManager instance has no attribute 'root_controller'"])
@@ -122,7 +126,8 @@ class BugTracker:
         s.add(92267,['CharybdisJimmy.digit.RDO','Py:inputFilePeeker WARNING caught','raise convert_to_error\(kind, result\)'])
         s.add(92272,['L2PhotonHypo_g15_loose','carcore size is 10 but needs 9'])
         s.add(92273,['Last incident: EFEventLoopMgr:EndRun','FATAL Unchecked StatusCode in exit from lib /lib/libc.so.6'])
-        s.add(92298,["No such file or directory: 'ESD.pool.root'",'TrigEDMCheck'])
+        s.add(92298,["No such file or directory: 'ESD.pool.root'",'testAthenaP1ESD_TrigEDMCheck_data.py'], "Upstream test failed or timed out")
+        s.add(92298,["No such file or directory: 'ESD.pool.root'",'testAthenaP1ESD_TrigDecTool.py'], "Upstream test failed or timed out")
         s.add(92397,'RuntimeError: Conditions database identifier RPC_OFL is not defined',comment='Conditions database identifier RPC_OFL is not defined for standalone_cosmic test. Note that this was originally assigned to bug [91848]')
         s.add(92407,['CRITICAL stopped by user interrupt','CRITICAL stopped by user interrupt','CRITICAL stopped by user interrupt','BackCompAthenaTrigBStoESDAOD'])
         s.add(92413,['Start of HLT Processing in EF','Current algorithm: TrigSteer_EF','Segmentation fault'])
@@ -130,6 +135,10 @@ class BugTracker:
         s.add(92436,['AntiKt6TowerJets','fastjet::ClusterSequenceArea::initialize_and_run_cswa'])
         s.add(92437,["'D3PDMakerFlags' object has no attribute 'CompressionLevel'"])
         s.add(92449,['DataHeader_p','object has no attribute','File "./TDTExampleARA.py"'])
+        s.add(92501,['invalid next size','libTrigTauDiscriminant.so'],"Invalid read in TrigTauDiscriBuilder")
+        s.add(92516,['AthMasterSeq', 'AthAlgSeq','TrigSteer_EF','EFBMuMuFex_DiMu_noOS','stack trace'],"Segfault in EFBMuMuFex_DiMu_noOS--fix to be in TrigBphysHypo-00-03-07")
+        s.add(92532,"ERROR FATAL No input BS file could be found matching '../AthenaTrigRDOtoBS")
+        s.add(92536,"HLTJobLib:       crash ERROR HLTProcess: could not find any files starting")
 
 
         

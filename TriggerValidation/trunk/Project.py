@@ -8,6 +8,7 @@ DUMMY_LINK='http://www.NOT.AVAILABLE.com'
 NEWSTATUS='[<b><FONT style="BACKGROUND-COLOR: FF6666">NEW</FONT></b>] '
 FIXEDSTATUS='[<b><FONT style="BACKGROUND-COLOR: 99FF00">FIXED</FONT></b>] '
 
+searchFullLog=True
 
 class Project:
     """ One trigger validation project that has its own ATN and NICOS page
@@ -100,6 +101,14 @@ class Project:
                     print '   ',t.ltail
                     print '   ','THIS BUG CANNOT BE MATCHED'
                     bug = None
+            if not bug and t.llog and searchFullLog:
+                try:
+                    bug = s.bugs.match(urllib2.urlopen(t.llog,timeout=s.URLTIMEOUT).read())
+                except (urllib2.HTTPError,urllib2.URLError) as e :
+                    print 'ERROR: the following test log link leads to "404 page not found":'
+                    print '   ',t.llog
+                    print '   ','THIS BUG CANNOT BE MATCHED'
+                    bug = None
             if bug:
                 bugid=bug.id
                 bugurl = bug.url()
@@ -147,7 +156,11 @@ class Project:
                     if iorder==len(matchedidx)-1:
                         # special handling for the case of one test only affected by this bug
                         offset = '       ' if len(matchedidx)>1 else '    -  '
-                        res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>):\n       [<a href="%s">bug #%s</a>] %s%s'%(offset,lextract,ts[i].name,lerror,llog,ltail,bugurls[i],bugids[i],status_summary,bugcomments[i]))
+                        if bugids[i] >= 0:
+                            res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>):\n       [<a href="%s">bug #%s</a>] %s%s'%(offset,lextract,ts[i].name,lerror,llog,ltail,bugurls[i],bugids[i],status_summary,bugcomments[i]))
+                        else:
+                            res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>):\n       [Exit Category #%s] %s%s'%(offset,lextract,ts[i].name,lerror,llog,ltail,bugids[i],status_summary,bugcomments[i]))
+ 
                     # for others, just list the bugs, one per line, with comma in the end of each line
                     else:
                         offset = '    -  ' if iorder==0 else '       '
@@ -208,7 +221,10 @@ class Project:
             llog = old.llog if old.llog else DUMMY_LINK
             ltail = old.ltail if old.ltail else DUMMY_LINK
             offset = '    - '
-            res.append( '%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>) : %s %s'%(offset,lextract,old.name,lerror,llog,ltail,('[<a href="%s">bug #%s</a>]'%(bugurl,bugid)) if bugid!=0 else '',FIXEDSTATUS) )
+            if bugid >= 0:
+                res.append( '%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>) : %s %s'%(offset,lextract,old.name,lerror,llog,ltail,('[<a href="%s">bug #%s</a>]'%(bugurl,bugid)) if bugid!=0 else '',FIXEDSTATUS) )
+            else:
+                res.append( '%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>) : %s %s'%(offset,lextract,old.name,lerror,llog,ltail,('[Exit Category #%s]'%(bugid)) if bugid!=0 else '',FIXEDSTATUS) )
         # don't print anything if no tests were fixed
         if len(match)==0:
             res = []
