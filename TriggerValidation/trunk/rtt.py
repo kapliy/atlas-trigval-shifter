@@ -14,8 +14,8 @@ import urllib2,httplib
 import BeautifulSoup as bs
 
 urls = []
-urls.append(['TriggerTest','http://atlas-project-trigger-release-validation.web.cern.ch/atlas-project-trigger-release-validation/www/perfmonrtt/TriggerTest.html'])
 urls.append(['TrigP1Test','http://atlas-project-trigger-release-validation.web.cern.ch/atlas-project-trigger-release-validation/www/perfmonrtt/TrigP1Test.html'])
+urls.append(['TriggerTest','http://atlas-project-trigger-release-validation.web.cern.ch/atlas-project-trigger-release-validation/www/perfmonrtt/TriggerTest.html'])
 urls.append(['TrigAnalysisTest','http://atlas-project-trigger-release-validation.web.cern.ch/atlas-project-trigger-release-validation/www/perfmonrtt/TrigAnalysisTest.html'])
 
 

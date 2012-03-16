@@ -8,7 +8,7 @@ DUMMY_LINK='http://www.NOT.AVAILABLE.com'
 NEWSTATUS='[<b><FONT style="BACKGROUND-COLOR: FF6666">NEW</FONT></b>] '
 FIXEDSTATUS='[<b><FONT style="BACKGROUND-COLOR: 99FF00">FIXED</FONT></b>] '
 
-searchFullLog=True
+searchFullLog=False
 
 class Project:
     """ One trigger validation project that has its own ATN and NICOS page

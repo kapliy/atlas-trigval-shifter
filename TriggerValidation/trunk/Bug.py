@@ -139,6 +139,16 @@ class BugTracker:
         s.add(92516,['AthMasterSeq', 'AthAlgSeq','TrigSteer_EF','EFBMuMuFex_DiMu_noOS','stack trace'],"Segfault in EFBMuMuFex_DiMu_noOS--fix to be in TrigBphysHypo-00-03-07")
         s.add(92532,"ERROR FATAL No input BS file could be found matching '../AthenaTrigRDOtoBS")
         s.add(92536,"HLTJobLib:       crash ERROR HLTProcess: could not find any files starting")
+        s.add(92551,["NameError: name 'L2PhotonHypo_g12_loose' is not defined"])
+        s.add(92595,["WARNING Chain L2_mu4T_j75_c4cchad aborting with error code ABORT_CHAIN"])
+        s.add(92596,["CSCHackL2ROBListWriter_j10_empty_larcalib","ERROR Could not find RoI descriptor"])
+        s.add(92598,["corrupted unsorted chunks:"])
+        #s.add(92603,["FATAL Unchecked StatusCode in exit from lib /lib/libc.so.6"])
+        s.add(92615,["WARNING Chain L2_2mu4T_DiMu_l2muonSA aborting with error code ABORT_CHAIN UNKNOWN"])
+        s.add(92616,["Signal handler: athCode=8"],"Job Segfaulted, please check cause")
+        s.add(92632,"message=inputBSFile=link_to_file_from_P1HLT.data: link_to_file_from_P1HLT.data not found")
+
+
 
 
         

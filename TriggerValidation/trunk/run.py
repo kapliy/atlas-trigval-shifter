@@ -4,7 +4,7 @@
 # enable bug lookup functionality
 MATCH_BUGS = True
 # choose default release (may be over-ridden on command line)
-rel = 3
+rel = 5
 
 import common
 
@@ -28,10 +28,12 @@ if MATCH_BUGS:
 # ADD NEW BUGS HERE
 # (but sweep them into Bug.py BugTracker::prefill() at the end of the shift)
 #bugs.add_new(,[''])
-bugs.add_new(92551,["NameError: name 'L2PhotonHypo_g12_loose' is not defined"])
-bugs.add_new(92595,["WARNING Chain L2_mu4T_j75_c4cchad aborting with error code ABORT_CHAIN"])
-bugs.add_new(92596,["CSCHackL2ROBListWriter_j10_empty_larcalib","ERROR Could not find RoI descriptor"])
-bugs.add_new(92598,["corrupted unsorted chunks:"])
+bugs.add_new(92645,"CRITICAL stopped by user interrupt")
+bugs.add_new(92662,["Current algorithm: Kt5TopoJets","(floating point invalid operation)"])
+bugs.add_new(92675,["Algorithm stack:","EFMissingET_Fex_noiseSupp"])
+bugs.add_new(92675,["FATAL Unchecked StatusCode","EFMissingET_Fex_noiseSupp"])
+bugs.add_new(92675,["Algorithm stack:","EFMissingET_Fex_2sidednoiseSupp"])
+bugs.add_new(92675,["FATAL Unchecked StatusCode","EFMissingET_Fex_2sidednoiseSupp"])
 # Load the list of nightlies that we need to validate
 # Load the list of nightlies that we need to validate
 from configure_nightlies import X    
@@ -55,7 +57,7 @@ if __name__=="__main__":
                 print >>f,'- [<a href="%s">bug #%d</a>] : %s'%(bug.url(),bug.id,bug.fetch_comment())
         print >>f,''
         print >>f,'RTT memory report:'
-        print >>f,'The following tests had a >10% increase in total memory consumption with respect to the maximum memory usage in the past 6 days:'
+        print >>f,'The following tests had a >8% increase in total memory consumption with respect to the minimum memory usage in the past 6 days:'
         print >>f,''
         print >>f,'Detailed report is below.'
         print >>f,'Failures that were NOT present in yesterday’s release are marked with %s.'%(Project.NEWSTATUS)
