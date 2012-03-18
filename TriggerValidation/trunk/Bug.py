@@ -147,6 +147,12 @@ class BugTracker:
         s.add(92615,["WARNING Chain L2_2mu4T_DiMu_l2muonSA aborting with error code ABORT_CHAIN UNKNOWN"])
         s.add(92616,["Signal handler: athCode=8"],"Job Segfaulted, please check cause")
         s.add(92632,"message=inputBSFile=link_to_file_from_P1HLT.data: link_to_file_from_P1HLT.data not found")
+        s.add(92645,"CRITICAL stopped by user interrupt")
+        s.add(92662,["Current algorithm: Kt5TopoJets","(floating point invalid operation)"])
+        s.add(92675,["Algorithm stack:","EFMissingET_Fex_noiseSupp"])
+        s.add(92675,["FATAL Unchecked StatusCode","EFMissingET_Fex_noiseSupp"])
+        s.add(92675,["Algorithm stack:","EFMissingET_Fex_2sidednoiseSupp"])
+        s.add(92675,["FATAL Unchecked StatusCode","EFMissingET_Fex_2sidednoiseSupp"])
 
 
 

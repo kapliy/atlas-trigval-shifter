@@ -4,7 +4,7 @@
 # enable bug lookup functionality
 MATCH_BUGS = True
 # choose default release (may be over-ridden on command line)
-rel = 5
+rel = 6
 
 import common
 
@@ -27,13 +27,7 @@ if MATCH_BUGS:
 
 # ADD NEW BUGS HERE
 # (but sweep them into Bug.py BugTracker::prefill() at the end of the shift)
-#bugs.add_new(,[''])
-bugs.add_new(92645,"CRITICAL stopped by user interrupt")
-bugs.add_new(92662,["Current algorithm: Kt5TopoJets","(floating point invalid operation)"])
-bugs.add_new(92675,["Algorithm stack:","EFMissingET_Fex_noiseSupp"])
-bugs.add_new(92675,["FATAL Unchecked StatusCode","EFMissingET_Fex_noiseSupp"])
-bugs.add_new(92675,["Algorithm stack:","EFMissingET_Fex_2sidednoiseSupp"])
-bugs.add_new(92675,["FATAL Unchecked StatusCode","EFMissingET_Fex_2sidednoiseSupp"])
+bugs.add_new(92680,['ERROR IN CHAIN: EF Chain counter 414 used 2 times while can only once, will print them all'])
 # Load the list of nightlies that we need to validate
 # Load the list of nightlies that we need to validate
 from configure_nightlies import X    
