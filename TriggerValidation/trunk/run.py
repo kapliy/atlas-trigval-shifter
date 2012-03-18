@@ -4,7 +4,7 @@
 # enable bug lookup functionality
 MATCH_BUGS = True
 # choose default release (may be over-ridden on command line)
-rel = 6
+rel = 0
 
 import common
 
@@ -27,7 +27,9 @@ if MATCH_BUGS:
 
 # ADD NEW BUGS HERE
 # (but sweep them into Bug.py BugTracker::prefill() at the end of the shift)
-bugs.add_new(92680,['ERROR IN CHAIN: EF Chain counter 414 used 2 times while can only once, will print them all'])
+bugs.add_new(92699,["Current algorithm: TrigDiMuon_FS","Algorithm stack: "])
+
+
 # Load the list of nightlies that we need to validate
 # Load the list of nightlies that we need to validate
 from configure_nightlies import X    
@@ -57,11 +59,11 @@ if __name__=="__main__":
         print >>f,'Failures that were NOT present in yesterday’s release are marked with %s.'%(Project.NEWSTATUS)
         print >>f,'Failures that were fixed between yesterday and today are marked with %s.'%(Project.FIXEDSTATUS)
         print >>f,''
-        print >>f,'Cheers,'
         if getpass.getuser()=='antonk':
+            print >>f,'Cheers,'
             print >>f,'Anton'
         else:
-            print >>f,'Superman'
+            print >>f,''
         print >>f,''
     for N in X[:]:
         try:

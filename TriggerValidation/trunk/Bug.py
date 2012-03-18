@@ -153,6 +153,8 @@ class BugTracker:
         s.add(92675,["FATAL Unchecked StatusCode","EFMissingET_Fex_noiseSupp"])
         s.add(92675,["Algorithm stack:","EFMissingET_Fex_2sidednoiseSupp"])
         s.add(92675,["FATAL Unchecked StatusCode","EFMissingET_Fex_2sidednoiseSupp"])
+        s.add(92680,['ERROR IN CHAIN: EF Chain counter 414 used 2 times while can only once, will print them all'])
+        s.add(92699,["Current algorithm: TrigDiMuon_FS","Algorithm stack: "])
 
 
 
