@@ -4,7 +4,7 @@
 # enable bug lookup functionality
 MATCH_BUGS = True
 # choose default release (may be over-ridden on command line)
-rel = 0
+rel = 1
 
 import common
 
@@ -27,10 +27,8 @@ if MATCH_BUGS:
 
 # ADD NEW BUGS HERE
 # (but sweep them into Bug.py BugTracker::prefill() at the end of the shift)
-bugs.add_new(92699,["Current algorithm: TrigDiMuon_FS","Algorithm stack: "])
+#bugs.add_new(,[""])
 
-
-# Load the list of nightlies that we need to validate
 # Load the list of nightlies that we need to validate
 from configure_nightlies import X    
 

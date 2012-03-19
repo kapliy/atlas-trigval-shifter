@@ -89,13 +89,13 @@ class BugTracker:
         s.add(88602,['TDTExampleARA.py','ReferenceError: attempt to access a null-pointer'])
         s.add(89464,'ERROR Upload of SMKey failed')
         s.add(90593,'ERROR ServiceLocatorHelper::createService: wrong interface id IID_3596816672 for service JobIDSvc','Root+python problem when reading ESDs')
-
+        s.add(90638,["if not ':' in connection:","argument of type 'NoneType' is not iterable","JobProperties.Rec.Trigger.triggerDbConnection which has not been set"],'TypeError at AthenaDBConfigRDO. Note that the bug report suggests the problem is due to conflict in TMXML build (bug 90665)') # tricky
+        s.add(90677,['differences found in XML and DB trigger configuration tests','REGTEST events accepted by chain'],'Differences between DB and XML jobs because the job from the DB did not run, because of the missing/corrupted sqlite file.') # tricky
         s.add(91283,"IOError: \[Errno 2\] No such file or directory: '../BackCompAthenaTrigBStoESDAOD/AOD.pool.root' ")
         s.add(91264,['MissingETOutputESDList_jobOptions.py',"NameError: name 'StreamAOD' is not defined"])
         s.add(91299,['trigtest.pl: FAILURE at end','<component alias="ToolSvc.CaloCompactCellTool" name="CaloCompactCellTool"'])
         s.add(91681,['None is not the expected type for: JobProperties.Global.DetDescrVersion',"Auto-configured ConditionsTag '' from inputFileSummary"])
         s.add(91845,'HLTJobLib: crash ERROR intermediate file has no events')
-        s.add(91845,['HLTJobLib:','crash ERROR intermediate file has no events'])
         s.add(91903,['FATAL Folder /TRIGGER/LVL1/BunchGroupContent does not exist','ERROR Unable to initialize service "DetectorStore"'])
         s.add(91916,"Sequence 'L2_muon_standalone_mu24_tight_l2muonSA' got error back while executing first algorithm")
         s.add(92097,'xml file does not exist: prescales1000.xml')
@@ -129,7 +129,7 @@ class BugTracker:
         s.add(92298,["No such file or directory: 'ESD.pool.root'",'testAthenaP1ESD_TrigEDMCheck_data.py'], "Upstream test failed or timed out")
         s.add(92298,["No such file or directory: 'ESD.pool.root'",'testAthenaP1ESD_TrigDecTool.py'], "Upstream test failed or timed out")
         s.add(92397,'RuntimeError: Conditions database identifier RPC_OFL is not defined',comment='Conditions database identifier RPC_OFL is not defined for standalone_cosmic test. Note that this was originally assigned to bug [91848]')
-        s.add(92407,['CRITICAL stopped by user interrupt','CRITICAL stopped by user interrupt','CRITICAL stopped by user interrupt','BackCompAthenaTrigBStoESDAOD'])
+        s.add(92407,['CRITICAL stopped by user interrupt','BackCompAthenaTrigBStoESDAOD'])
         s.add(92413,['Start of HLT Processing in EF','Current algorithm: TrigSteer_EF','Segmentation fault'])
         s.add(92435,['include file MissingET/MissingETOutputAODList_jobOptions.py can not be found'])
         s.add(92436,['AntiKt6TowerJets','fastjet::ClusterSequenceArea::initialize_and_run_cswa'])
@@ -147,19 +147,16 @@ class BugTracker:
         s.add(92615,["WARNING Chain L2_2mu4T_DiMu_l2muonSA aborting with error code ABORT_CHAIN UNKNOWN"])
         s.add(92616,["Signal handler: athCode=8"],"Job Segfaulted, please check cause")
         s.add(92632,"message=inputBSFile=link_to_file_from_P1HLT.data: link_to_file_from_P1HLT.data not found")
-        s.add(92645,"CRITICAL stopped by user interrupt")
-        s.add(92662,["Current algorithm: Kt5TopoJets","(floating point invalid operation)"])
+        s.add(92662,["Current algorithm: Kt5TopoJets","\(floating point invalid operation\)"])
         s.add(92675,["Algorithm stack:","EFMissingET_Fex_noiseSupp"])
         s.add(92675,["FATAL Unchecked StatusCode","EFMissingET_Fex_noiseSupp"])
         s.add(92675,["Algorithm stack:","EFMissingET_Fex_2sidednoiseSupp"])
         s.add(92675,["FATAL Unchecked StatusCode","EFMissingET_Fex_2sidednoiseSupp"])
         s.add(92680,['ERROR IN CHAIN: EF Chain counter 414 used 2 times while can only once, will print them all'])
         s.add(92699,["Current algorithm: TrigDiMuon_FS","Algorithm stack: "])
+        s.add(92719,["Trigger menu inconsistent, aborting","Available HLT counter","TrigSteering/pureSteering_menu.py"])
 
 
-
-
-        
 if __name__ == '__main__':
     import sys
     assert len(sys.argv)==2,'USAGE: %s http://url.to.logfile'

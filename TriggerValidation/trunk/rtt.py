@@ -21,7 +21,7 @@ urls.append(['TrigAnalysisTest','http://atlas-project-trigger-release-validation
 
 rel = 1
 rtt = 0
-THRESHOLD=1.1
+THRESHOLD=1.08
 useMax=False
 if len(sys.argv)>=2:
     rtt = int(sys.argv[1])
@@ -97,7 +97,7 @@ def prel(r):
     return r-1 if r>0 else 6
 
 print '=================================================='
-print 'REPORTING TESTS WITH >10% INCREASE IN MEMORY USAGE'
+print 'REPORTING TESTS WITH >%.1f%% INCREASE IN MEMORY USAGE'%((THRESHOLD-1.0)*100.0)
 print '=================================================='
 for testName in stats.keys():
     for build in stats[testName].keys():
@@ -106,14 +106,12 @@ for testName in stats.keys():
         oldtot = max([data[0] for i,data in enumerate(res) if i!=rel])
         oldavg = avg([data[0] for i,data in enumerate(res) if i!=rel and data[0]>0])
         if len([data[0] for i,data in enumerate(res) if i!=rel and data[0]> 0]) > 0:
-            
             oldmin = min([data[0] for i,data in enumerate(res) if i!=rel and data[0]> 0])
         else:
             #print "using average! %s" %oldavg
             oldmin = oldavg
         newtot = max([data[0] for i,data in enumerate(res) if i==rel])
         yestot = max([data[0] for i,data in enumerate(res) if i==prel(rel)])
-      
         
         if useMax and newtot>0 and newtot/oldtot > THRESHOLD:
             print '- %s (%s):'%(testName,build)
