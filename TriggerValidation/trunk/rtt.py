@@ -13,16 +13,17 @@ import sys,re
 import urllib2,httplib
 import BeautifulSoup as bs
 
+rel = 2
+rtt = 0
+THRESHOLD=1.08
+useMax=False
+
 urls = []
 urls.append(['TrigP1Test','http://atlas-project-trigger-release-validation.web.cern.ch/atlas-project-trigger-release-validation/www/perfmonrtt/TrigP1Test.html'])
 urls.append(['TriggerTest','http://atlas-project-trigger-release-validation.web.cern.ch/atlas-project-trigger-release-validation/www/perfmonrtt/TriggerTest.html'])
 urls.append(['TrigAnalysisTest','http://atlas-project-trigger-release-validation.web.cern.ch/atlas-project-trigger-release-validation/www/perfmonrtt/TrigAnalysisTest.html'])
 
 
-rel = 1
-rtt = 0
-THRESHOLD=1.08
-useMax=False
 if len(sys.argv)>=2:
     rtt = int(sys.argv[1])
     assert rtt<len(urls),'rtt index has a maximum value of %d'%len(urls)

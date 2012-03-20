@@ -38,6 +38,8 @@ class Bug:
             try:
                 soup = bs.BeautifulSoup(b)
                 s.comment = str((soup.findAll('h2')[1]).contents[1])
+                if s.comment[0:2]==': ':
+                    s.comment = s.comment[2:]
             except:
                 s.comment = NOCOMMENT
         return s.comment

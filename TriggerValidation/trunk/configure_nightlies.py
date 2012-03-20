@@ -12,6 +12,29 @@ N.add(Project('TrigAnalysisTest',''))
 X.append(N)
 """
 
+# allow the user to select a subset of nightlies to be processed
+# ALL - run over all enabled nightliers
+# PART1 - CAFHLT and P1HLT that finished at 11 PM Chicago time
+# PART2 - the largest fraction of the report; nightlies that finish by morning Chicago time
+# PART3 - VAL2 releases that finish by noon Chicago time
+ALL,PART1,PART2,PART3 = range(4)
+import sys
+nightly_sel = ALL
+if len(sys.argv)>=3:
+    v = sys.argv[2]
+    if v=='ALL': nightly_sel = ALL
+    elif v in ('PART1','HLT','VAL'): nightly_sel = PART1
+    elif v=='PART2': nightly_sel = PART2
+    elif v in ('PART3','VAL2'): nightly_sel = PART3
+    else:
+        try:
+            nightly_sel = int(v)
+        except:
+            nightly_sel = ALL
+    if nightly_sel < ALL or nightly_sel > PART3:
+        nightly_sel = ALL
+print 'Nighlies selector =',nightly_sel
+
 from Nightly import Nightly
 from Project import Project
 
@@ -21,75 +44,91 @@ X = []
 N = Nightly('17.1.X.Y-VAL-P1HLT (32-bit)')
 N.add(Project('TrigP1Test','http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/17.1.X.Y-VAL/AtlasP1HLT/rel_%d/NICOS_area/NICOS_atntest171XYVALP1HLT32BS5G4P1HLTOpt/trigp1test_testconfiguration_work/'))
 N.add(Project('TriggerTest','http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/17.1.X.Y-VAL/AtlasP1HLT/rel_%d/NICOS_area/NICOS_atntest171XYVALP1HLT32BS5G4P1HLTOpt/triggertest_testconfiguration_work/'))
-X.append(N)
+if nightly_sel in (PART1,ALL):
+    X.append(N)
 
 N = Nightly('17.1.X.Y.Z-VAL-AtlasCAFHLT (32-bit)')
 N.add(Project('TrigP1Test','http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/17.1.X.Y.Z-VAL/AtlasCAFHLT/rel_%d/NICOS_area/NICOS_atntest171XYZVALAtlasCAFHLT32BS5G4AtlasCAFHLTOpt/trigp1test_testconfiguration_work/'))
 N.add(Project('TriggerTest','http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/17.1.X.Y.Z-VAL/AtlasCAFHLT/rel_%d/NICOS_area/NICOS_atntest171XYZVALAtlasCAFHLT32BS5G4AtlasCAFHLTOpt/triggertest_testconfiguration_work/'))
-X.append(N)
+if nightly_sel in (PART1,ALL):
+    X.append(N)
 
 N = Nightly('17.1.X.Y-VAL2-P1HLT (32-bit)')
 N.add(Project('TrigP1Test','http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/17.1.X.Y-VAL2/AtlasP1HLT/rel_%d/NICOS_area/NICOS_atntest171XYVAL2P1HLT32BS5G4P1HLTOpt/trigp1test_testconfiguration_work/'))
 N.add(Project('TriggerTest','http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/17.1.X.Y-VAL2/AtlasP1HLT/rel_%d/NICOS_area/NICOS_atntest171XYVAL2P1HLT32BS5G4P1HLTOpt/triggertest_testconfiguration_work/'))
-X.append(N)
+if nightly_sel in (PART3,ALL):
+    X.append(N)
 
 N = Nightly('17.1.X.Y.Z-VAL2-AtlasCAFHLT (32-bit)')
 N.add(Project('TrigP1Test','http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/17.1.X.Y.Z-VAL2/AtlasCAFHLT/rel_%d/NICOS_area/NICOS_atntest171XYZVAL2AtlasCAFHLT32BS5G4AtlasCAFHLTOpt/trigp1test_testconfiguration_work/'))
 # the following may need to be commented out because TriggerTest is not always present in this nightly.
 N.add(Project('TriggerTest','http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/17.1.X.Y.Z-VAL2/AtlasCAFHLT/rel_%d/NICOS_area/NICOS_atntest171XYZVAL2AtlasCAFHLT32BS5G4AtlasCAFHLTOpt/triggertest_testconfiguration_work/'))
-X.append(N)
+if nightly_sel in (PART3,ALL):
+    X.append(N)
 
 N = Nightly('17.1.X.Y-VAL-Prod (32-bit)')
 N.add(Project('TrigP1Test','http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/17.1.X.Y-VAL/AtlasProduction/rel_%d/NICOS_area/NICOS_atntest171XYVALProd32BS5G4ProdOpt/trigp1test_testconfiguration_work/'))
 N.add(Project('TriggerTest','http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/17.1.X.Y-VAL/AtlasProduction/rel_%d/NICOS_area/NICOS_atntest171XYVALProd32BS5G4ProdOpt/triggertest_testconfiguration_work/'))
 N.add(Project('TrigAnalysisTest','http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/17.1.X.Y-VAL/AtlasProduction/rel_%d/NICOS_area/NICOS_atntest171XYVALProd32BS5G4ProdOpt/triganalysistest_testconfiguration_work/'))
-#X.append(N)  # I was asked to only check the 64-bit cache
+if nightly_sel in (PART2,ALL):
+    pass
+    #X.append(N)  # deprecated since 17.2.X.Y-VAL started running
 
 N = Nightly('17.1.X.Y-VAL-Prod (64-bit)')
 N.add(Project('TrigP1Test','http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/17.1.X.Y-VAL/AtlasProduction/rel_%d/NICOS_area/NICOS_atntest171XYVALProd64BS5G4ProdOpt/trigp1test_testconfiguration_work/'))
 N.add(Project('TriggerTest','http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/17.1.X.Y-VAL/AtlasProduction/rel_%d/NICOS_area/NICOS_atntest171XYVALProd64BS5G4ProdOpt/triggertest_testconfiguration_work/'))
 N.add(Project('TrigAnalysisTest','http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/17.1.X.Y-VAL/AtlasProduction/rel_%d/NICOS_area/NICOS_atntest171XYVALProd64BS5G4ProdOpt/triganalysistest_testconfiguration_work/'))
-#X.append(N)
+if nightly_sel in (PART2,ALL):
+    pass
+    #X.append(N) # deprecated since 17.2.X.Y-VAL started running
 
 
 N = Nightly('17.2.X.Y-VAL-Prod (32-bit)')
 N.add(Project('TrigP1Test','http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/17.2.X.Y-VAL/AtlasProduction/rel_%d/NICOS_area/NICOS_atntest172XYVALProd32BS5G4ProdOpt/trigp1test_testconfiguration_work/'))
 N.add(Project('TriggerTest','http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/17.2.X.Y-VAL/AtlasProduction/rel_%d/NICOS_area/NICOS_atntest172XYVALProd32BS5G4ProdOpt/triggertest_testconfiguration_work/'))
 N.add(Project('TrigAnalysisTest','http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/17.2.X.Y-VAL/AtlasProduction/rel_%d/NICOS_area/NICOS_atntest172XYVALProd32BS5G4ProdOpt/triganalysistest_testconfiguration_work/'))
-#X.append(N)  # I was asked to only check the 64-bit cache
+if nightly_sel in (PART2,ALL):
+    pass
+    #X.append(N)  # I was asked to only check the 64-bit cache
 
 N = Nightly('17.2.X.Y-VAL-Prod (64-bit)')
 N.add(Project('TrigP1Test','http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/17.2.X.Y-VAL/AtlasProduction/rel_%d/NICOS_area/NICOS_atntest172XYVALProd64BS5G4ProdOpt/trigp1test_testconfiguration_work/'))
 N.add(Project('TriggerTest','http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/17.2.X.Y-VAL/AtlasProduction/rel_%d/NICOS_area/NICOS_atntest172XYVALProd64BS5G4ProdOpt/triggertest_testconfiguration_work/'))
 N.add(Project('TrigAnalysisTest','http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/17.2.X.Y-VAL/AtlasProduction/rel_%d/NICOS_area/NICOS_atntest172XYVALProd64BS5G4ProdOpt/triganalysistest_testconfiguration_work/'))
-X.append(N)
+if nightly_sel in (PART2,ALL):
+    X.append(N)
 
 # lower-priority releases
 N = Nightly('17.1.X (32-bit)')
 N.add(Project('TrigP1Test','http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/17.1.X/AtlasHLT/rel_%d/NICOS_area/NICOS_atntest171X32BS5G4AtlasHLTOpt/trigp1test_testconfiguration_work/'))
 N.add(Project('TriggerTest','http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/17.1.X/AtlasTrigger/rel_%d/NICOS_area/NICOS_atntest171X32BS5G4TrgOpt/triggertest_testconfiguration_work/'))
 N.add(Project('TrigAnalysisTest','http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/17.1.X/AtlasAnalysis/rel_%d/NICOS_area/NICOS_atntest171X32BS5G4AnlOpt/triganalysistest_testconfiguration_work/'))
-#X.append(N)
+if nightly_sel in (PART2,ALL):
+    X.append(N) # was disabled in lauren's nightly_sels
 
 N = Nightly('17.1.X-VAL (32-bit)')
 N.add(Project('TrigP1Test','http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/17.1.X-VAL/AtlasHLT/rel_%d/NICOS_area/NICOS_atntest171XVAL32BS5G4AtlasHLTOpt/trigp1test_testconfiguration_work/'))
 N.add(Project('TriggerTest','http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/17.1.X-VAL/AtlasTrigger/rel_%d/NICOS_area/NICOS_atntest171XVAL32BS5G4TrgOpt/triggertest_testconfiguration_work/'))
 N.add(Project('TrigAnalysisTest','http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/17.1.X-VAL/AtlasAnalysis/rel_%d/NICOS_area/NICOS_atntest171XVAL32BS5G4AnlOpt/triganalysistest_testconfiguration_work/'))
-X.append(N)
+if nightly_sel in (PART2,ALL):
+    X.append(N)
 
 N = Nightly('17.2.X (64-bit)')
 N.add(Project('TrigP1Test','http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/17.2.X/AtlasHLT/rel_%d/NICOS_area/NICOS_atntest172X64BS5G4AtlasHLTOpt/trigp1test_testconfiguration_work/'))
 N.add(Project('TriggerTest','http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/17.2.X/AtlasTrigger/rel_%d/NICOS_area/NICOS_atntest172X64BS5G4TrgOpt/triggertest_testconfiguration_work/'))
 N.add(Project('TrigAnalysisTest','http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/17.2.X/AtlasAnalysis/rel_%d/NICOS_area/NICOS_atntest172X64BS5G4AnlOpt/triganalysistest_testconfiguration_work/'))
-X.append(N)
+if nightly_sel in (PART2,ALL):
+    X.append(N)
 
 N = Nightly('17.2.X-VAL (64-bit)')
 N.add(Project('TrigP1Test','http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/17.2.X-VAL/AtlasHLT/rel_%d/NICOS_area/NICOS_atntest172XVAL64BS5G4AtlasHLTOpt/trigp1test_testconfiguration_work/'))
 N.add(Project('TriggerTest','http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/17.2.X-VAL/AtlasTrigger/rel_%d/NICOS_area/NICOS_atntest172XVAL64BS5G4TrgOpt/triggertest_testconfiguration_work/'))
 N.add(Project('TrigAnalysisTest','http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/17.2.X-VAL/AtlasAnalysis/rel_%d/NICOS_area/NICOS_atntest172XVAL64BS5G4AnlOpt/triganalysistest_testconfiguration_work/'))
-X.append(N)
+if nightly_sel in (PART2,ALL):
+    X.append(N)
 
 N = Nightly('17.X.0 (64-bit)')
 N.add(Project('TriggerTest','http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/dev/AtlasTrigger/rel_%d/NICOS_area/NICOS_atntest17X064BS5G4TrgOpt/triggertest_testconfiguration_work/'))
 N.add(Project('TrigAnalysisTest','http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/dev/AtlasAnalysis/rel_%d/NICOS_area/NICOS_atntest17X064BS5G4AnlOpt/triganalysistest_testconfiguration_work/'))
-X.append(N)
+if nightly_sel in (PART2,ALL):
+    X.append(N)
