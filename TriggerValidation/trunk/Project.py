@@ -97,7 +97,7 @@ class Project:
                 try:
                     bug = s.bugs.match(urllib2.urlopen(t.ltail,timeout=s.URLTIMEOUT).read())
                 except (urllib2.HTTPError,urllib2.URLError) as e :
-                    print 'ERROR: the following test log link leads to "404 page not found":'
+                    print '%s: the following test log link leads to "404 page not found":'%('WARNING' if searchFullLog else 'ERROR')
                     print '   ',t.ltail
                     print '   ','THIS BUG CANNOT BE MATCHED'
                     bug = None
