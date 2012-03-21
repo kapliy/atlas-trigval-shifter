@@ -4,7 +4,7 @@
 # enable bug lookup functionality
 MATCH_BUGS = True
 # choose default release (may be over-ridden on command line)
-rel = 2
+rel = 3
 
 import common
 import sys,getpass,datetime
@@ -28,10 +28,7 @@ if MATCH_BUGS:
 # ADD NEW BUGS HERE
 # (but sweep them into Bug.py BugTracker::prefill() at the end of the shift)
 #bugs.add_new(,[""])
-#bugs.add_new(92746,["who=ToolSvc.HLTBjetMon",'acronym=TRF_UNKNOWN','Unknown exception caught, while filling histograms'],'Error in HLTBjetMon. This bug is already assigned to a b-slice expert.')
-bugs.add_new(92746,["HLTBjetMon",'Unknown exception caught, while filling histograms'],'Error in HLTBjetMon. This bug is already assigned to a b-slice expert.')   # CAREFUL: THIS MATCHES TOO GENERALLY
-bugs.add_new(92757,["chain L2_g100_etcut_g50_etcut with has no matching LVL1 item L1_2EM14L1_2EM14",'Trigger menu inconsistent, aborting'])
-bugs.add_new(92734,["TrigConfConsistencyChecker","ERROR SAX error while parsing exceptions xml file, line 43, column 13"],'SAX error while parsing exceptions xml file')
+bugs.add_new(92830,["Non identical keys found. See diff_smk_1654_1655.xml, l2_diff.txt and ef_diff.txt","TrigL2MuonSA::RpcDataPreparator"])
 
 # Load the list of nightlies that we need to validate
 from configure_nightlies import X    
