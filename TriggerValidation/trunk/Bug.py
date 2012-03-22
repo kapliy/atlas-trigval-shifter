@@ -111,12 +111,8 @@ class BugTracker:
         s.add(92208,["CaloMonManager INFO Retrieved tool PublicToolHandle\('CaloCellVecMon/CaloCellMon'\)","boost::spirit::nil_t"])
         s.add(92209,'TauSliceAthenaTrigRDO__v4_top.reference: No such file or directory')
         s.add(92213,'could not bind handle to CondAttrListCollection to key: /TRT/Onl/ROD/Compress','InDetTRTRodDecoder callback registration failed, but Athena job completes successfully')
-        #the following matches too generally.  can't see old log to make it more specific
-        #s.add(92221,['EFPhotonHypo_g120_loose','TrigSteer_EF','Algorithm stack:'])
-        #s.add(92221,['EFPhotonHypo_g120_loose','cound not cd to directory:  TrigSteer_EF'])
         s.add(92222,'ERROR Upload of key 1 failed')
         s.add(92225,['Core dump from CoreDumpSvc','inlined at ../src/HLTBjetMonTool.cxx','HLTBjetMonTool::fill()'],'Segfault in HLTBjetMonTool, submitted to open bug, but may be a new problem')
-
         s.add(92260,"IOError: \[Errno 2\] No such file or directory: '../AthenaTrigAODtoAOD_TrigNavSlimming/AOD_RSegamma.pool.root'" )
         s.add(92260,"IOError: \[Errno 2\] No such file or directory: '../AthenaTrigRDOtoESDAOD/AOD.pool.root'" )
         s.add(92260,"IOError: \[Errno 2\] No such file or directory: '../AthenaTrigRDOtoESDAOD/ESD.pool.root'" )
@@ -145,7 +141,6 @@ class BugTracker:
         s.add(92595,["WARNING Chain L2_mu4T_j75_c4cchad aborting with error code ABORT_CHAIN"])
         s.add(92596,["CSCHackL2ROBListWriter_j10_empty_larcalib","ERROR Could not find RoI descriptor"])
         s.add(92598,["corrupted unsorted chunks:"])
-        #s.add(92603,["FATAL Unchecked StatusCode in exit from lib /lib/libc.so.6"])
         s.add(92615,["WARNING Chain L2_2mu4T_DiMu_l2muonSA aborting with error code ABORT_CHAIN UNKNOWN"])
         s.add(92616,["Signal handler: athCode=8"],"Job Segfaulted, please check cause")
         s.add(92632,"message=inputBSFile=link_to_file_from_P1HLT.data: link_to_file_from_P1HLT.data not found")
@@ -161,7 +156,10 @@ class BugTracker:
         s.add(92746,["HLTBjetMon",'Unknown exception caught, while filling histograms'],'Error in HLTBjetMon. This bug is already assigned to a b-slice expert.')   # CAREFUL: THIS MATCHES TOO GENERALLY. DELETE AFTER APRIL 1!
         s.add(92757,["chain L2_g100_etcut_g50_etcut with has no matching LVL1 item L1_2EM14L1_2EM14",'Trigger menu inconsistent, aborting'])
         s.add(92814,["Unable to initialize Algorithm TrigSteer_L2",'ERROR Configuration error','T2IDTauHypo_tau',])
-        
+        s.add(92830,["Non identical keys found. See diff_smk_","l2_diff.txt and ef_diff.txt","TrigL2MuonSA::RpcDataPreparator"])
+        s.add(92881,["Failed in LArFebRodMap::set",'barrel_ec out of range ,pos_neg out of range ,em_hec_fcal out of range'])
+        return #LAST
+
 if __name__ == '__main__':
     import sys
     assert len(sys.argv)==2,'USAGE: %s http://url.to.logfile'

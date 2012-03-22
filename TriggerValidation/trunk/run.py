@@ -4,7 +4,7 @@
 # enable bug lookup functionality
 MATCH_BUGS = True
 # choose default release (may be over-ridden on command line)
-rel = 3
+rel = 5
 
 import common
 import sys,getpass,datetime
@@ -28,7 +28,6 @@ if MATCH_BUGS:
 # ADD NEW BUGS HERE
 # (but sweep them into Bug.py BugTracker::prefill() at the end of the shift)
 #bugs.add_new(,[""])
-bugs.add_new(92830,["Non identical keys found. See diff_smk_1654_1655.xml, l2_diff.txt and ef_diff.txt","TrigL2MuonSA::RpcDataPreparator"])
 
 # Load the list of nightlies that we need to validate
 from configure_nightlies import X    
