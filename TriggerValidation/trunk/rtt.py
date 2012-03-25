@@ -13,9 +13,9 @@ import sys,re
 import urllib2,httplib
 import BeautifulSoup as bs
 
-rel = 5
+rel = 0
 rtt = 0
-THRESHOLD=1.08
+THRESHOLD=1.10
 useMax=False
 
 urls = []

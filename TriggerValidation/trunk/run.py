@@ -4,7 +4,7 @@
 # enable bug lookup functionality
 MATCH_BUGS = True
 # choose default release (may be over-ridden on command line)
-rel = 5
+rel = 0
 
 import common
 import sys,getpass,datetime
@@ -28,6 +28,8 @@ if MATCH_BUGS:
 # ADD NEW BUGS HERE
 # (but sweep them into Bug.py BugTracker::prefill() at the end of the shift)
 #bugs.add_new(,[""])
+bugs.add_new(92952,["following input TEs don't appear as output TE: EM10"])
+bugs.add_new(92952,["AttributeError: When merging chains: \['EF_e20vhT_tight1', 'EF_g6T_etcut'\] this were missing: \['EF_g6T_etcut'\]"])
 
 # Load the list of nightlies that we need to validate
 from configure_nightlies import X    
@@ -52,7 +54,7 @@ if __name__=="__main__":
                 print >>f,'- [<a href="%s">bug #%d</a>] : %s'%(bug.url(),bug.id,bug.fetch_comment())
         print >>f,''
         print >>f,'RTT memory report:'
-        print >>f,'The following tests had a >8% increase in total memory consumption with respect to the minimum memory usage in the past 6 days:'
+        print >>f,'The following tests had a >10% increase in total memory consumption with respect to the minimum memory usage in the past 6 days:'
         print >>f,''
         print >>f,'Detailed report is below.'
         print >>f,'Failures that were NOT present in yesterday’s release are marked with %s.'%(Project.NEWSTATUS)

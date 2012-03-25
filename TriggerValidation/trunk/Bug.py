@@ -18,6 +18,7 @@ class Bug:
             else:
                 s.patterns.append(pattern)
         s.comment = comment
+        s.seen = False
         s.new = False
     def _urlopen(s,url):
         """ Since Savannah is sometimes unstable, we sometimes need to try several times """
@@ -61,11 +62,18 @@ class BugTracker:
                 if re.search(pattern,log):
                     nmatches += 1
             if nmatches == len(bug.patterns):
+                bug.seen = True
                 return bug
         return None
     def new_bugs(s):
         """ Returns all bugs labeled as 'new' - i.e., newly created bug reports """
         return [bug for bug in s.bugs if bug.new==True]
+    def seen_bugs(s):
+        """ Returns all bugs labeled as 'new' - i.e., newly created bug reports """
+        return [bug for bug in s.bugs if bug.seen==True]
+    def new_seen_bugs(s):
+        """ Returns all bugs labeled as 'new' - i.e., newly created bug reports """
+        return [bug for bug in s.bugs if bug.new==True and bug.seen==True]
     def add(s,bugid,pattern,comment=None):
         """ Use this function to add pre-filled (aka known) bugs """
         s.bugs.append( Bug(bugid,pattern,comment) )
@@ -81,7 +89,8 @@ class BugTracker:
         s.add(-1, 'CRITICAL stopped by user interrupt','User interrupt')
         s.add(-1, 'KeyboardInterrupt','User interrupt')
         s.add(-2, 'APPLICATION_DIED_UNEXPECTEDLY','Worker process failed')
-        s.add(-3, 'received fatal signal 15','Job recieved kill signal')
+        s.add(-3, 'received fatal signal 15','Job recieved SIGTERM signal')
+        s.add(-3, ['Signal handler: Killing','with 15'],'Job recieved SIGTERM signal')
         s.add(86562,['ERROR preLoadFolder failed for folder /Digitization/Parameters','FATAL DetectorStore service not found'])
         s.add(87109,"No such file or directory: '/afs/cern.ch/user/t/tbold/public/TDTtest/attila.AOD.pool.root'",comment='AthenaTrigAOD_TDT_fixedAOD fails with missing input file. According the the bug report, this has been fixed in TrigAnalysistest-00-03-24.')
         s.add(88042,"OH repository 'Histogramming-L2-Segment-1-1-iss' does not exist") # 87601 is also appropriate, but closed as duplicate
@@ -142,7 +151,6 @@ class BugTracker:
         s.add(92596,["CSCHackL2ROBListWriter_j10_empty_larcalib","ERROR Could not find RoI descriptor"])
         s.add(92598,["corrupted unsorted chunks:"])
         s.add(92615,["WARNING Chain L2_2mu4T_DiMu_l2muonSA aborting with error code ABORT_CHAIN UNKNOWN"])
-        s.add(92616,["Signal handler: athCode=8"],"Job Segfaulted, please check cause")
         s.add(92632,"message=inputBSFile=link_to_file_from_P1HLT.data: link_to_file_from_P1HLT.data not found")
         s.add(92662,["Current algorithm: Kt5TopoJets","\(floating point invalid operation\)"])
         s.add(92675,["Algorithm stack:","EFMissingET_Fex_noiseSupp"])
@@ -153,12 +161,19 @@ class BugTracker:
         s.add(92699,["Current algorithm: TrigDiMuon_FS","Algorithm stack: "])
         s.add(92719,["Trigger menu inconsistent, aborting","Available HLT counter","TrigSteering/pureSteering_menu.py"])
         s.add(92734,["TrigConfConsistencyChecker","ERROR SAX error while parsing exceptions xml file, line 43, column 13"],'SAX error while parsing exceptions xml file')
-        s.add(92746,["HLTBjetMon",'Unknown exception caught, while filling histograms'],'Error in HLTBjetMon. This bug is already assigned to a b-slice expert.')   # CAREFUL: THIS MATCHES TOO GENERALLY. DELETE AFTER APRIL 1!
+        s.add(92746,["HLTBjetMon",'Unknown exception caught, while filling histograms'],'Error in HLTBjetMon. This bug is already assigned to a b-slice expert.')   # REMOVE ME!
         s.add(92757,["chain L2_g100_etcut_g50_etcut with has no matching LVL1 item L1_2EM14L1_2EM14",'Trigger menu inconsistent, aborting'])
         s.add(92814,["Unable to initialize Algorithm TrigSteer_L2",'ERROR Configuration error','T2IDTauHypo_tau',])
         s.add(92830,["Non identical keys found. See diff_smk_","l2_diff.txt and ef_diff.txt","TrigL2MuonSA::RpcDataPreparator"])
         s.add(92881,["Failed in LArFebRodMap::set",'barrel_ec out of range ,pos_neg out of range ,em_hec_fcal out of range'])
-        return #LAST
+        s.add(92901,["HLT/HLTTestApps/i686-slc5-gcc43-opt/libhlttestapps_ers_streams.so",'lib/libhistmon.so','\[stack\]']) # may be too general
+        s.add(92938,["TrigSteer_EF","FATAL Errors were too severe in this event will abort the job"]) # REMOVE ME
+        s.add(91772,["Floating point exception",'InDetSiSpTrackFinder','RAWtoESD has completed running of Athena with exit code -8','InDet::SiCombinatorialTrackFinder_xk::initialize'],comment='FPE in InDetSiSpTrackFinder::initialize with vector<double> as properties')
+        s.add(92952,["following input TEs don't appear as output TE: EM6"])
+        s.add(92952,["ERROR the element: \['tau20_medium_bdt', 'tau20_medium1_bdt', 'tau29_medium_bdt', 'tau29_medium1_bdt'\] is not allowed"])
+        # General crashes (should be in the end of bug list!)
+        s.add(92616,["Signal handler: athCode=8"],"Job Segfaulted, please check cause")
+        return
 
 if __name__ == '__main__':
     import sys

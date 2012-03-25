@@ -45,7 +45,7 @@ class Project:
         lastupdate = str(soup.find('p').string).strip()
         assert re.match('Last updated ',lastupdate),'Unexpected page format: cannot find "Last Updated" element'
         # compute a delta between today and test date
-        l = lastupdate.replace('Last updated ','').replace('CET ','')
+        l = lastupdate.replace('Last updated ','').replace('CET ','').replace('CEST ','')
         testdate_time = time.strptime(l)
         testdate = datetime.datetime(*testdate_time[:6])
         nowdate = datetime.datetime.now()
