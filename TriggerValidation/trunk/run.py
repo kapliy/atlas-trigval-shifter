@@ -4,7 +4,7 @@
 # enable bug lookup functionality
 MATCH_BUGS = True
 # choose default release (may be over-ridden on command line)
-rel = 0
+rel = 1
 
 import common
 import sys,getpass,datetime
@@ -28,8 +28,7 @@ if MATCH_BUGS:
 # ADD NEW BUGS HERE
 # (but sweep them into Bug.py BugTracker::prefill() at the end of the shift)
 #bugs.add_new(,[""])
-bugs.add_new(92952,["following input TEs don't appear as output TE: EM10"])
-bugs.add_new(92952,["AttributeError: When merging chains: \['EF_e20vhT_tight1', 'EF_g6T_etcut'\] this were missing: \['EF_g6T_etcut'\]"])
+bugs.add_new(92994,["Py:LArCalibMenu",'ERROR template chain with sig_id=g15_loose is not defined at level EF'])
 
 # Load the list of nightlies that we need to validate
 from configure_nightlies import X    

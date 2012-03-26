@@ -169,8 +169,9 @@ class BugTracker:
         s.add(92901,["HLT/HLTTestApps/i686-slc5-gcc43-opt/libhlttestapps_ers_streams.so",'lib/libhistmon.so','\[stack\]']) # may be too general
         s.add(92938,["TrigSteer_EF","FATAL Errors were too severe in this event will abort the job"]) # REMOVE ME
         s.add(91772,["Floating point exception",'InDetSiSpTrackFinder','RAWtoESD has completed running of Athena with exit code -8','InDet::SiCombinatorialTrackFinder_xk::initialize'],comment='FPE in InDetSiSpTrackFinder::initialize with vector<double> as properties')
-        s.add(92952,["following input TEs don't appear as output TE: EM6"])
+        s.add(92952,["following input TEs don't appear as output TE: EM"])
         s.add(92952,["ERROR the element: \['tau20_medium_bdt', 'tau20_medium1_bdt', 'tau29_medium_bdt', 'tau29_medium1_bdt'\] is not allowed"])
+        s.add(92952,["AttributeError: When merging chains: \['EF_e20vhT_tight1', 'EF_g6T_etcut'\] this were missing: \['EF_g6T_etcut'\]"])
         # General crashes (should be in the end of bug list!)
         s.add(92616,["Signal handler: athCode=8"],"Job Segfaulted, please check cause")
         return

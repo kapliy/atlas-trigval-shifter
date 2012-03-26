@@ -13,7 +13,7 @@ import sys,re
 import urllib2,httplib
 import BeautifulSoup as bs
 
-rel = 0
+rel = 1
 rtt = 0
 THRESHOLD=1.10
 useMax=False
@@ -100,6 +100,7 @@ def prel(r):
 print '=================================================='
 print 'REPORTING TESTS WITH >%.1f%% INCREASE IN MEMORY USAGE'%((THRESHOLD-1.0)*100.0)
 print '=================================================='
+print url[0]+':'
 for testName in stats.keys():
     for build in stats[testName].keys():
         res = stats[testName][build]
