@@ -172,6 +172,7 @@ class BugTracker:
         s.add(92952,["following input TEs don't appear as output TE: EM"])
         s.add(92952,["ERROR the element: \['tau20_medium_bdt', 'tau20_medium1_bdt', 'tau29_medium_bdt', 'tau29_medium1_bdt'\] is not allowed"])
         s.add(92952,["AttributeError: When merging chains: \['EF_e20vhT_tight1', 'EF_g6T_etcut'\] this were missing: \['EF_g6T_etcut'\]"])
+        s.add(92994,["Py:LArCalibMenu",'ERROR template chain with sig_id=g15_loose is not defined at level EF'])
         # General crashes (should be in the end of bug list!)
         s.add(92616,["Signal handler: athCode=8"],"Job Segfaulted, please check cause")
         return

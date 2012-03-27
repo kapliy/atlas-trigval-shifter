@@ -4,7 +4,7 @@
 # enable bug lookup functionality
 MATCH_BUGS = True
 # choose default release (may be over-ridden on command line)
-rel = 1
+rel = 2
 
 import common
 import sys,getpass,datetime
@@ -28,7 +28,6 @@ if MATCH_BUGS:
 # ADD NEW BUGS HERE
 # (but sweep them into Bug.py BugTracker::prefill() at the end of the shift)
 #bugs.add_new(,[""])
-bugs.add_new(92994,["Py:LArCalibMenu",'ERROR template chain with sig_id=g15_loose is not defined at level EF'])
 
 # Load the list of nightlies that we need to validate
 from configure_nightlies import X    
