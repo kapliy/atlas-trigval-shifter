@@ -153,10 +153,10 @@ class BugTracker:
         s.add(92615,["WARNING Chain L2_2mu4T_DiMu_l2muonSA aborting with error code ABORT_CHAIN UNKNOWN"])
         s.add(92632,"message=inputBSFile=link_to_file_from_P1HLT.data: link_to_file_from_P1HLT.data not found")
         s.add(92662,["Current algorithm: Kt5TopoJets","\(floating point invalid operation\)"])
-        s.add(92675,["Algorithm stack:","EFMissingET_Fex_noiseSupp"])
-        s.add(92675,["FATAL Unchecked StatusCode","EFMissingET_Fex_noiseSupp"])
-        s.add(92675,["Algorithm stack:","EFMissingET_Fex_2sidednoiseSupp"])
-        s.add(92675,["FATAL Unchecked StatusCode","EFMissingET_Fex_2sidednoiseSupp"])
+        #s.add(92675,["Algorithm stack:","EFMissingET_Fex_noiseSupp"]) #DELETEME
+        #s.add(92675,["FATAL Unchecked StatusCode","EFMissingET_Fex_noiseSupp"]) #DELETEME
+        #s.add(92675,["Algorithm stack:","EFMissingET_Fex_2sidednoiseSupp"]) #DELETEME
+        #s.add(92675,["FATAL Unchecked StatusCode","EFMissingET_Fex_2sidednoiseSupp"]) #DELETEME
         s.add(92680,['ERROR IN CHAIN: EF Chain counter 414 used 2 times while can only once, will print them all'])
         s.add(92699,["Current algorithm: TrigDiMuon_FS","Algorithm stack: "])
         s.add(92719,["Trigger menu inconsistent, aborting","Available HLT counter","TrigSteering/pureSteering_menu.py"])
@@ -173,6 +173,7 @@ class BugTracker:
         s.add(92952,["ERROR the element: \['tau20_medium_bdt', 'tau20_medium1_bdt', 'tau29_medium_bdt', 'tau29_medium1_bdt'\] is not allowed"])
         s.add(92952,["AttributeError: When merging chains: \['EF_e20vhT_tight1', 'EF_g6T_etcut'\] this were missing: \['EF_g6T_etcut'\]"])
         s.add(92994,["Py:LArCalibMenu",'ERROR template chain with sig_id=g15_loose is not defined at level EF'])
+        s.add(92449,["Can't find branch EventInfo_p3_McEventInfo in tree MetaData","'name=Segmentation fault \(invalid memory reference\)' 'signum=11' "])
         # General crashes (should be in the end of bug list!)
         s.add(92616,["Signal handler: athCode=8"],"Job Segfaulted, please check cause")
         return
