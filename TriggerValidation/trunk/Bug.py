@@ -176,6 +176,7 @@ class BugTracker:
         s.add(92449,["Can't find branch EventInfo_p3_McEventInfo in tree MetaData","'name=Segmentation fault \(invalid memory reference\)' 'signum=11' "])
         s.add(93048,["AttributeError: 'MboySvcConfig' object has no attribute 'DoAlignementFit'"])
         s.add(93049,["Chain L2_j30_c4ccem_L1TAU_HVtrk_LOF aborting with error code ABORT_CHAIN UNKNOWN BAD_JOB_SETUP at step"])
+        s.add(93061,["L2MuonJetHypo","ERROR The number of Muons attached to the TE is not 1"])
         # General crashes (should be in the end of bug list!)
         s.add(92616,["Signal handler: athCode=8"],"Job Segfaulted, please check cause")
         return
