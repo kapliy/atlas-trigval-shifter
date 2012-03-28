@@ -4,7 +4,7 @@
 # enable bug lookup functionality
 MATCH_BUGS = True
 # choose default release (may be over-ridden on command line)
-rel = 2
+rel = 3
 
 import common
 import sys,getpass,datetime
@@ -28,8 +28,7 @@ if MATCH_BUGS:
 # ADD NEW BUGS HERE
 # (but sweep them into Bug.py BugTracker::prefill() at the end of the shift)
 #bugs.add_new(,[""])
-bugs.add_new(93048,["AttributeError: 'MboySvcConfig' object has no attribute 'DoAlignementFit'"])
-bugs.add_new(93049,["Chain L2_j30_c4ccem_L1TAU_HVtrk_LOF aborting with error code ABORT_CHAIN UNKNOWN BAD_JOB_SETUP at step"])
+bugs.add_new(93061,["L2MuonJetHypo","ERROR The number of Muons attached to the TE is not 1"])
 
 # Load the list of nightlies that we need to validate
 from configure_nightlies import X    

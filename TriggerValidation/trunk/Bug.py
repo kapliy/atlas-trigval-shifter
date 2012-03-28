@@ -174,6 +174,8 @@ class BugTracker:
         s.add(92952,["AttributeError: When merging chains: \['EF_e20vhT_tight1', 'EF_g6T_etcut'\] this were missing: \['EF_g6T_etcut'\]"])
         s.add(92994,["Py:LArCalibMenu",'ERROR template chain with sig_id=g15_loose is not defined at level EF'])
         s.add(92449,["Can't find branch EventInfo_p3_McEventInfo in tree MetaData","'name=Segmentation fault \(invalid memory reference\)' 'signum=11' "])
+        s.add(93048,["AttributeError: 'MboySvcConfig' object has no attribute 'DoAlignementFit'"])
+        s.add(93049,["Chain L2_j30_c4ccem_L1TAU_HVtrk_LOF aborting with error code ABORT_CHAIN UNKNOWN BAD_JOB_SETUP at step"])
         # General crashes (should be in the end of bug list!)
         s.add(92616,["Signal handler: athCode=8"],"Job Segfaulted, please check cause")
         return
