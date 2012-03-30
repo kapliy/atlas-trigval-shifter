@@ -81,16 +81,18 @@ class BugTracker:
         """ Use this function to add new bugs in run.py - these will be reported separately at the top of the shift report """
         s.add(bugid,pattern,comment)
         s.bugs[-1].new = True
-    def prefill(s):
-        """ 
-        s.add(,'')
-        s.add(,['',''])
-        """
+    def prefill_genpurpose(s):
         s.add(-1, 'CRITICAL stopped by user interrupt','User interrupt')
         s.add(-1, 'KeyboardInterrupt','User interrupt')
         s.add(-2, 'APPLICATION_DIED_UNEXPECTEDLY','Worker process failed')
         s.add(-3, 'received fatal signal 15','Job recieved SIGTERM signal')
         s.add(-3, ['Signal handler: Killing','with 15'],'Job recieved SIGTERM signal')
+        #s.add(-4,"Signal handler: athCode=8","Job Segfaulted, please check cause '<font style=\"BACKGROUND-COLOR: yellow\">FIXME</font>'")
+    def prefill(s):
+        """ 
+        s.add(,'')
+        s.add(,['',''])
+        """
         s.add(86562,['ERROR preLoadFolder failed for folder /Digitization/Parameters','FATAL DetectorStore service not found'])
         s.add(87109,"No such file or directory: '/afs/cern.ch/user/t/tbold/public/TDTtest/attila.AOD.pool.root'",comment='AthenaTrigAOD_TDT_fixedAOD fails with missing input file. According the the bug report, this has been fixed in TrigAnalysistest-00-03-24.')
         s.add(88042,"OH repository 'Histogramming-L2-Segment-1-1-iss' does not exist") # 87601 is also appropriate, but closed as duplicate
@@ -161,13 +163,13 @@ class BugTracker:
         s.add(92699,["Current algorithm: TrigDiMuon_FS","Algorithm stack: "])
         s.add(92719,["Trigger menu inconsistent, aborting","Available HLT counter","TrigSteering/pureSteering_menu.py"])
         s.add(92734,["TrigConfConsistencyChecker","ERROR SAX error while parsing exceptions xml file, line 43, column 13"],'SAX error while parsing exceptions xml file')
-        s.add(92746,["HLTBjetMon",'Unknown exception caught, while filling histograms'],'Error in HLTBjetMon. This bug is already assigned to a b-slice expert.')   # REMOVE ME!
+        #s.add(92746,["HLTBjetMon",'Unknown exception caught, while filling histograms'],'Error in HLTBjetMon. This bug is already assigned to a b-slice expert.')   # REMOVE ME!
         s.add(92757,["chain L2_g100_etcut_g50_etcut with has no matching LVL1 item L1_2EM14L1_2EM14",'Trigger menu inconsistent, aborting'])
         s.add(92814,["Unable to initialize Algorithm TrigSteer_L2",'ERROR Configuration error','T2IDTauHypo_tau',])
         s.add(92830,["Non identical keys found. See diff_smk_","l2_diff.txt and ef_diff.txt","TrigL2MuonSA::RpcDataPreparator"])
         s.add(92881,["Failed in LArFebRodMap::set",'barrel_ec out of range ,pos_neg out of range ,em_hec_fcal out of range'])
-        s.add(92901,["HLT/HLTTestApps/i686-slc5-gcc43-opt/libhlttestapps_ers_streams.so",'lib/libhistmon.so','\[stack\]']) # may be too general
-        s.add(92938,["TrigSteer_EF","FATAL Errors were too severe in this event will abort the job"]) # REMOVE ME
+        #s.add(92901,["HLT/HLTTestApps/i686-slc5-gcc43-opt/libhlttestapps_ers_streams.so",'lib/libhistmon.so','\[stack\]']) # may be too general
+        #s.add(92938,["TrigSteer_EF","FATAL Errors were too severe in this event will abort the job"]) # REMOVE ME
         s.add(91772,["Floating point exception",'InDetSiSpTrackFinder','RAWtoESD has completed running of Athena with exit code -8','InDet::SiCombinatorialTrackFinder_xk::initialize'],comment='FPE in InDetSiSpTrackFinder::initialize with vector<double> as properties')
         s.add(92952,["following input TEs don't appear as output TE: EM"])
         s.add(92952,["ERROR the element: \['tau20_medium_bdt', 'tau20_medium1_bdt', 'tau29_medium_bdt', 'tau29_medium1_bdt'\] is not allowed"])
@@ -177,8 +179,8 @@ class BugTracker:
         s.add(93048,["AttributeError: 'MboySvcConfig' object has no attribute 'DoAlignementFit'"])
         s.add(93049,["Chain L2_j30_c4ccem_L1TAU_HVtrk_LOF aborting with error code ABORT_CHAIN UNKNOWN BAD_JOB_SETUP at step"])
         s.add(93061,["L2MuonJetHypo","ERROR The number of Muons attached to the TE is not 1"])
-        # General crashes (should be in the end of bug list!)
-        s.add(92616,["Signal handler: athCode=8"],"Job Segfaulted, please check cause")
+        s.add(93195,["ERROR","No conversion CscRDO to stream","Could not create Rep for DataObject"])
+        s.prefill_genpurpose()
         return
 
 if __name__ == '__main__':
