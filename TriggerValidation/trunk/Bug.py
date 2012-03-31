@@ -54,9 +54,9 @@ class BugTracker:
     def __init__(s):
         s.bugs = []
     def match(s,log):
-        """ Require that all patterns match """
+        """ Require that all patterns match. Matching is done bottom-up (i.e. newest bugs are matched first) """
         #print log
-        for bug in s.bugs:
+        for bug in reversed(s.bugs):
             nmatches = 0
             for pattern in bug.patterns:
                 if re.search(pattern,log):
@@ -90,9 +90,11 @@ class BugTracker:
         #s.add(-4,"Signal handler: athCode=8","Job Segfaulted, please check cause '<font style=\"BACKGROUND-COLOR: yellow\">FIXME</font>'")
     def prefill(s):
         """ 
+        Note that bugs will be matched bottom-up. That is, newer bugs should be put at the bottom and will get matched first
         s.add(,'')
         s.add(,['',''])
         """
+        s.prefill_genpurpose()
         s.add(86562,['ERROR preLoadFolder failed for folder /Digitization/Parameters','FATAL DetectorStore service not found'])
         s.add(87109,"No such file or directory: '/afs/cern.ch/user/t/tbold/public/TDTtest/attila.AOD.pool.root'",comment='AthenaTrigAOD_TDT_fixedAOD fails with missing input file. According the the bug report, this has been fixed in TrigAnalysistest-00-03-24.')
         s.add(88042,"OH repository 'Histogramming-L2-Segment-1-1-iss' does not exist") # 87601 is also appropriate, but closed as duplicate
@@ -180,7 +182,7 @@ class BugTracker:
         s.add(93049,["Chain L2_j30_c4ccem_L1TAU_HVtrk_LOF aborting with error code ABORT_CHAIN UNKNOWN BAD_JOB_SETUP at step"])
         s.add(93061,["L2MuonJetHypo","ERROR The number of Muons attached to the TE is not 1"])
         s.add(93195,["ERROR","No conversion CscRDO to stream","Could not create Rep for DataObject"])
-        s.prefill_genpurpose()
+        s.add(93231,["AttributeError: JobPropertyContainer:: JobProperties.MuonDQAFlagsCont does not have property doMuonTrkPhysMon"])
         return
 
 if __name__ == '__main__':
