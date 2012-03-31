@@ -183,6 +183,7 @@ class BugTracker:
         s.add(93061,["L2MuonJetHypo","ERROR The number of Muons attached to the TE is not 1"])
         s.add(93195,["ERROR","No conversion CscRDO to stream","Could not create Rep for DataObject"])
         s.add(93231,["AttributeError: JobPropertyContainer:: JobProperties.MuonDQAFlagsCont does not have property doMuonTrkPhysMon"])
+        s.add(93239,["decodeCreateSvcNameList: Cannot create service AGDD2GeoSvc/AGDD2GeoSvc"])
         return
 
 if __name__ == '__main__':
