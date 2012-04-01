@@ -5,6 +5,8 @@
 MATCH_BUGS = True
 # choose default release (may be over-ridden on command line)
 rel = 0
+# compare with the dby(day-before-yesterday) release, rather than yesterday?
+dby = False
 
 import common
 import sys,getpass,datetime
@@ -13,17 +15,22 @@ if len(sys.argv)>=2:
     rel = int(sys.argv[1])
     assert rel>=0 and rel<=6,'Release must be an integer between 0 and 6'
 
+if len(sys.argv)>=4:
+    dby = True
+    print 'INFO: using Day-Before-Yesterday nightly instead of Yesterday'
+    print '      (this is useful if yesterday nightly build failed)'
+
 import Nightly
 Nightly.Nightly.rel = rel
 import Project
 Project.Project.rel = rel
+Project.Project.dby = dby
 from Test import Test
 from Bug import BugTracker
-if MATCH_BUGS:
-    Project.Project.MATCH_BUGS = True
-    bugs = BugTracker()
-    bugs.prefill()
-    Project.Project.bugs = bugs
+Project.Project.MATCH_BUGS = MATCH_BUGS
+bugs = BugTracker()
+bugs.prefill()
+Project.Project.bugs = bugs
 
 # ADD NEW BUGS HERE
 # (but sweep them into Bug.py BugTracker::prefill() at the end of the shift)

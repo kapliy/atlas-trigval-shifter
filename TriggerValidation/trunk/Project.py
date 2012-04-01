@@ -19,6 +19,7 @@ class Project:
     URLTIMEOUT = 60
     bugs = None
     MATCH_BUGS = False
+    dby = False
     def __init__(s,name,atn):
         s.name = name
         s.atn = atn
@@ -29,7 +30,10 @@ class Project:
         s.new_bugs = []
     def prel(s,r):
         """ A simple function to return previous release """
-        return r-1 if r>0 else 6
+        if s.dby: # use day-before-yesterday:
+            return r-1 if r>0 else 6
+        else:     # use yesterday:
+            return r-2 if r>1 else (5 if r==0 else 6)
     def pres_url(s):
         return s.atn%s.rel
     def any_url(s,r):
@@ -51,7 +55,7 @@ class Project:
         nowdate = datetime.datetime.now()
         delta = (nowdate-testdate).days
         #print 'DEBUG: DELTA =',delta
-        assert delta<=5,"Results on this page are older than 5 days - probably, the test hasn't finished yet"
+        assert delta<=4,"Results on this page are older than 5 days - probably, the test hasn't finished yet"
         # retrieve actual test table
         table = soup.find('table',id='ATNResults')
         assert table, 'Unable to find table: %s'%table
