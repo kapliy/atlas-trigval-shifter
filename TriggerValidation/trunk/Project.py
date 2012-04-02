@@ -30,9 +30,9 @@ class Project:
         s.new_bugs = []
     def prel(s,r):
         """ A simple function to return previous release """
-        if s.dby: # use day-before-yesterday:
+        if not s.dby: # use yesterday:
             return r-1 if r>0 else 6
-        else:     # use yesterday:
+        else:         # use day-before-yesterday:
             return r-2 if r>1 else (5 if r==0 else 6)
     def pres_url(s):
         return s.atn%s.rel
@@ -55,6 +55,7 @@ class Project:
         nowdate = datetime.datetime.now()
         delta = (nowdate-testdate).days
         #print 'DEBUG: DELTA =',delta
+        #print 'DEBUG: URL =',url
         assert delta<=4,"Results on this page are older than 5 days - probably, the test hasn't finished yet"
         # retrieve actual test table
         table = soup.find('table',id='ATNResults')

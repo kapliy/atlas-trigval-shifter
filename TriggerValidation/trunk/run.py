@@ -4,7 +4,7 @@
 # enable bug lookup functionality
 MATCH_BUGS = True
 # choose default release (may be over-ridden on command line)
-rel = 0
+rel = 1
 # compare with the dby(day-before-yesterday) release, rather than yesterday?
 dby = False
 
@@ -76,7 +76,7 @@ if __name__=="__main__":
             N.load()
         except:
             print 'WARNING: skipping release',N.name
-            # raise # enable for debugging
+            raise # enable for debugging
             continue
         for l in N.report():
             print >>f,l
