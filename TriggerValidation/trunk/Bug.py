@@ -136,7 +136,8 @@ class BugTracker:
         s.add(92265,'ERROR Failed to find jet chain with name EF_j145_a4tchad')
         s.add(92267,['CharybdisJimmy.digit.RDO','Py:inputFilePeeker WARNING caught','raise convert_to_error\(kind, result\)'])
         s.add(92272,['L2PhotonHypo_g15_loose','carcore size is 10 but needs 9'])
-        s.add(92273,['Last incident: EFEventLoopMgr:EndRun','FATAL Unchecked StatusCode in exit from lib /lib/libc.so.6'])
+        s.add(92273,['Last incident: EFEventLoopMgr:EndRun','FATAL Unchecked StatusCode in exit from lib /lib/libc.so.6']) # may be too general
+        s.add(92273,['Last incident: EFEventLoopMgr:EndRun','FATAL Unchecked StatusCode in exit from lib /lib64/libc.so.6']) # may be too general
         s.add(92298,["No such file or directory: 'ESD.pool.root'",'testAthenaP1ESD_TrigEDMCheck_data.py'], "Upstream test failed or timed out")
         s.add(92298,["No such file or directory: 'ESD.pool.root'",'testAthenaP1ESD_TrigDecTool.py'], "Upstream test failed or timed out")
         s.add(92397,'RuntimeError: Conditions database identifier RPC_OFL is not defined',comment='Conditions database identifier RPC_OFL is not defined for standalone_cosmic test. Note that this was originally assigned to bug [91848]')
@@ -184,6 +185,10 @@ class BugTracker:
         s.add(93195,["ERROR","No conversion CscRDO to stream","Could not create Rep for DataObject"])
         s.add(93231,["AttributeError: JobPropertyContainer:: JobProperties.MuonDQAFlagsCont does not have property doMuonTrkPhysMon"])
         s.add(93239,["decodeCreateSvcNameList: Cannot create service AGDD2GeoSvc/AGDD2GeoSvc"])
+        s.add(93292,["ImportError: cannot import name T2CaloFastJet_a4TT_MultipleOutput_TEs","ERROR Error in configuration of JetSlice"])
+        s.add(93294,["CRITICAL Trigger connection alias 'None' is not defined","You are attempting to access the jobproperty JobProperties.Rec.Trigger.triggerDbConnection which has not been set","KeyError: 'techno'",'leaving with code 8: "an unknown exception occurred"'])
+        s.add(93305,["INFO Creating event stream from file list \['root://eosatlas//eos/atlas/atlascerngroupdisk/trig-daq/validation/test_data/data11_7TeV.00191628.physics_eb_zee_zmumu._0001.data'\]","Parameters = 'name=Segmentation fault \(invalid memory reference\)' 'signum=11'"])
+        s.add(93307,["trigtest.pl --cleardir --test AllPT_physicsV4_run_stop_run --rundir AllPT_physicsV4_run_stop_run --conf TrigP1Test.conf","Algorithm stack: <EMPTY>","FATAL Unchecked StatusCode in exit from lib /lib/libc.so.6"]) # careful: may be too general
         return
 
 if __name__ == '__main__':
