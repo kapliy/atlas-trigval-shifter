@@ -88,6 +88,7 @@ class BugTracker:
         s.add(-3, 'received fatal signal 15','Job recieved SIGTERM signal')
         s.add(-3, ['Signal handler: Killing','with 15'],'Job recieved SIGTERM signal')
         #s.add(-4,"Signal handler: athCode=8","Job Segfaulted, please check cause '<font style=\"BACKGROUND-COLOR: yellow\">FIXME</font>'")
+        s.add(-5, 'ATN_TIME_LIMIT','Job timed out')
     def prefill(s):
         """ 
         Note that bugs will be matched bottom-up. That is, newer bugs should be put at the bottom and will get matched first
@@ -100,6 +101,7 @@ class BugTracker:
         s.add(88042,"OH repository 'Histogramming-L2-Segment-1-1-iss' does not exist") # 87601 is also appropriate, but closed as duplicate
         s.add(88042,["IS repository 'Histogramming-EF-Segment-1-1-iss' does not exist"]) # not sure if this is indeed the same bug
         s.add(88042,["IS repository 'Histogramming-L2-Segment-1-1-iss' does not exist",'is::repository_var is::server::resolve'])
+        s.add(88042,["IS repository 'RunParams' does not exist"])
         s.add(88554,['Moving to AthenaTrigRDO_chainOrder_compare','differences in tests with ordered HLT chain execution','TrigSteer_EF.TrigChainMoniValidation'],comment='Bugtracker says this bug reports small changes in HLT chain execution, which are expected.')
         s.add(88602,['TDTExampleARA.py','ReferenceError: attempt to access a null-pointer'])
         s.add(89464,'ERROR Upload of SMKey failed')
@@ -189,6 +191,21 @@ class BugTracker:
         s.add(93294,["CRITICAL Trigger connection alias 'None' is not defined","You are attempting to access the jobproperty JobProperties.Rec.Trigger.triggerDbConnection which has not been set","KeyError: 'techno'",'leaving with code 8: "an unknown exception occurred"'])
         s.add(93305,["INFO Creating event stream from file list \['root://eosatlas//eos/atlas/atlascerngroupdisk/trig-daq/validation/test_data/data11_7TeV.00191628.physics_eb_zee_zmumu._0001.data'\]","Parameters = 'name=Segmentation fault \(invalid memory reference\)' 'signum=11'"])
         s.add(93307,["trigtest.pl --cleardir --test AllPT_physicsV4_run_stop_run --rundir AllPT_physicsV4_run_stop_run --conf TrigP1Test.conf","Algorithm stack: <EMPTY>","FATAL Unchecked StatusCode in exit from lib /lib/libc.so.6"]) # careful: may be too general
+        s.add(93315,["trigtest.pl --cleardir --test AllMT_physicsV4_menu --rundir AllMT_physicsV4_menu --conf TrigP1Test.conf","double free or corruption (!prev)","glibc detected"])
+        s.add(93342,"FATAL ../src/JetVtxTrackHelper.cxx:154")
+        s.add(93348,["LArRawChannelBuilder","ERROR Can't retrieve LArDigitContainer with key FREEfrom StoreGate."])
+        s.add(93375,["L2_j30_c4ccem_2L1MU4_HV_EMPTY", "'T2CaloJet_Jet_noise':ABORT_CHAIN UNKNOWN BAD_JOB_SETUP","got error back while executing first algorithm"])
+        s.add(93444,["IncludeError: include file CBNT_Particle/CBNT_Particle_jobOptions.py can not be found","AthenaTrigRDO"])
+        s.add(93461,["muFast_Mcal.*Error in opening muon calibration buffer","MuonCalBufferSize"])
+        s.add(93477,["EGammaStream_TagAndProbeForwardElectronFilter       ERROR Inconsistent configuration of the input container keys!","ERROR Unable to initialize Algorithm EGammaStream_TagAndProbeForwardElectronFilter"])
+        s.add(93495,["pure virtual method called","terminate called without an active exception","~MagFieldAthenaSvc ../src/MagFieldAthenaSvc.cxx:109","~MagFieldAthenaSvc ../src/MagFieldAthenaSvc.cxx:109"])
+        s.add(93502,["No module named InDetVertexMonitoring.InDetVertexMonitoringConf","DataQualitySteering_jobOptions.py: exception when setting up inner detector monitoring"])
+        s.add(93503,["AttributeError: 'DQMonFlagsCont' object has no attribute 'doMuonTrkPhysMon'"])
+        s.add(93505,["Blob2ToolConstants"]) # too general?
+        s.add(93509,["segmentation violation","HLTConfigSvc::updatePrescaleSets","in DataModelAthenaPool::DataVectorConvert::initialize"])
+        s.add(93520,["AttributeError: 'InDetGlobalTrackMonTool' object has no attribute 'checkRate'"])
+        s.add(93534,["Application 'ROS-Segment-1:voatlas62' has a problem that cannot be ignored."])
+
         return
 
 if __name__ == '__main__':

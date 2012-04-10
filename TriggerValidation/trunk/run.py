@@ -6,7 +6,7 @@ MATCH_BUGS = True
 # Set to false to die on first exception (and print detailed error summary)
 SKIP_ERRORS = True
 # choose default release (may be over-ridden on command line)
-rel = 2
+rel = 3
 # compare with the dby(day-before-yesterday) release, rather than yesterday?
 dby = False
 
@@ -37,6 +37,11 @@ Project.Project.bugs = bugs
 # ADD NEW BUGS HERE
 # (but sweep them into Bug.py BugTracker::prefill() at the end of the shift)
 #bugs.add_new(,[""])
+bugs.add_new(93534,["Application 'ROS-Segment-1:voatlas62' has a problem that cannot be ignored."])
+
+bugs.add_new(-102,["ERROR No RunNumber stored in InputFile!","Reading magnetic field for run","a number is required, not NoneType"])
+bugs.add_new(-100,["At least one of the jobs (XML or DB reading) has not been completed! Exit."])
+bugs.add_new(-101,["PropagationException: return code: 1280"])
 
 # Load the list of nightlies that we need to validate
 from configure_nightlies import X    
