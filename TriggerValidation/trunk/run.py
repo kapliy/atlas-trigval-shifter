@@ -6,7 +6,7 @@ MATCH_BUGS = True
 # Set to false to die on first exception (and print detailed error summary)
 SKIP_ERRORS = True
 # choose default release (may be over-ridden on command line)
-rel = 3
+rel = 4
 # compare with the dby(day-before-yesterday) release, rather than yesterday?
 dby = False
 
@@ -37,11 +37,15 @@ Project.Project.bugs = bugs
 # ADD NEW BUGS HERE
 # (but sweep them into Bug.py BugTracker::prefill() at the end of the shift)
 #bugs.add_new(,[""])
-bugs.add_new(93534,["Application 'ROS-Segment-1:voatlas62' has a problem that cannot be ignored."])
 
-bugs.add_new(-102,["ERROR No RunNumber stored in InputFile!","Reading magnetic field for run","a number is required, not NoneType"])
-bugs.add_new(-100,["At least one of the jobs (XML or DB reading) has not been completed! Exit."])
-bugs.add_new(-101,["PropagationException: return code: 1280"])
+bugs.add_new(93658,["ES_WrongFileFormat: file is of no know format", "IOError: Invalid file or format at '../AllMT_physicsV4_caf/AllMT_mcV4_caf-1._0001.data'"])
+
+bugs.add_new(-1,["ImportError: No module named egammaPerformance.egammaPerformanceConf"],"Consequence of failure to build egammaPerformance")
+bugs.add_new(-1,["IncludeError: include file egammaPerformance/egammaMonitoring_jobOptions.py can not be found"],"Consequence of failure to build egammaPerformance")
+bugs.add_new(-1,["IncludeError: include file InDetPriVxCBNT/InDetPriVxCBNT_jobOptions.py can not be found"],"Consequence of failure to build egammaPerformance") # NOT TRUE?
+
+#bugs.add_new(-102,["ERROR No RunNumber stored in InputFile","Reading magnetic field for run","a number is required, not NoneType"],'FIXME2')
+#bugs.add_new(-101,["PropagationException: return code: 1280"],'FIXME2')
 
 # Load the list of nightlies that we need to validate
 from configure_nightlies import X    
