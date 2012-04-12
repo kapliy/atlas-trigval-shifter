@@ -6,7 +6,7 @@ MATCH_BUGS = True
 # Set to false to die on first exception (and print detailed error summary)
 SKIP_ERRORS = True
 # choose default release (may be over-ridden on command line)
-rel = 4
+rel = 5
 # compare with the dby(day-before-yesterday) release, rather than yesterday?
 dby = False
 
@@ -37,8 +37,6 @@ Project.Project.bugs = bugs
 # ADD NEW BUGS HERE
 # (but sweep them into Bug.py BugTracker::prefill() at the end of the shift)
 #bugs.add_new(,[""])
-
-bugs.add_new(93658,["ES_WrongFileFormat: file is of no know format", "IOError: Invalid file or format at '../AllMT_physicsV4_caf/AllMT_mcV4_caf-1._0001.data'"])
 
 bugs.add_new(-1,["ImportError: No module named egammaPerformance.egammaPerformanceConf"],"Consequence of failure to build egammaPerformance")
 bugs.add_new(-1,["IncludeError: include file egammaPerformance/egammaMonitoring_jobOptions.py can not be found"],"Consequence of failure to build egammaPerformance")

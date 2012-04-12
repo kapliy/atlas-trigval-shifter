@@ -216,7 +216,7 @@ class BugTracker:
         s.add(93633,["IncludeError: include file CaloRecEx/CaloRecOutputItemList_jobOptions.py can not be found"])
         s.add(93634,["ImportError: No module named part_lhl2ef_opt"])
         s.add(93636,["OPEN ERROR  boost::_bi::bind_t","Io::FileAttr const"])
-
+        s.add(93658,["ES_WrongFileFormat: file is of no know format", "IOError: Invalid file or format at '../AllMT_physicsV4_caf/AllMT_mcV4_caf-1._0001.data'"])
         return
 
 if __name__ == '__main__':
