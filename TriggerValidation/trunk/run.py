@@ -6,7 +6,7 @@ MATCH_BUGS = True
 # Set to false to die on first exception (and print detailed error summary)
 SKIP_ERRORS = True
 # choose default release (may be over-ridden on command line)
-rel = 5
+rel = 0
 # compare with the dby(day-before-yesterday) release, rather than yesterday?
 dby = False
 
@@ -38,12 +38,7 @@ Project.Project.bugs = bugs
 # (but sweep them into Bug.py BugTracker::prefill() at the end of the shift)
 #bugs.add_new(,[""])
 
-bugs.add_new(-1,["ImportError: No module named egammaPerformance.egammaPerformanceConf"],"Consequence of failure to build egammaPerformance")
-bugs.add_new(-1,["IncludeError: include file egammaPerformance/egammaMonitoring_jobOptions.py can not be found"],"Consequence of failure to build egammaPerformance")
-bugs.add_new(-1,["IncludeError: include file InDetPriVxCBNT/InDetPriVxCBNT_jobOptions.py can not be found"],"Consequence of failure to build egammaPerformance") # NOT TRUE?
-
-#bugs.add_new(-102,["ERROR No RunNumber stored in InputFile","Reading magnetic field for run","a number is required, not NoneType"],'FIXME2')
-#bugs.add_new(-101,["PropagationException: return code: 1280"],'FIXME2')
+bugs.add_new(-1,'ImportError: No module named TrigMuonD3PDMaker','Consequence of failure to build TrigMuonD3PDMaker')
 
 # Load the list of nightlies that we need to validate
 from configure_nightlies import X    

@@ -217,6 +217,12 @@ class BugTracker:
         s.add(93634,["ImportError: No module named part_lhl2ef_opt"])
         s.add(93636,["OPEN ERROR  boost::_bi::bind_t","Io::FileAttr const"])
         s.add(93658,["ES_WrongFileFormat: file is of no know format", "IOError: Invalid file or format at '../AllMT_physicsV4_caf/AllMT_mcV4_caf-1._0001.data'"])
+        s.add(93711,['WARNING IPC partition "part_lhl2ef_AtlasCAFHLT_rel_nightly" is not valid','Timeout reached waiting for transition to CONNECTED'])
+        s.add(93713,['INFO RAWtoESD has completed running of Athena with exit code -11','Current algorithm: EGammaStream_ProbeElectronFilter'])
+        s.add(93735,["ERROR Upload of key 2 failed"])
+        s.add(93736,["ERROR attempt to add a duplicate \(TopAlg.BeamBackgroundFiller\) ... dupe ignored"])
+        s.add(93740,["IncludeError: include file InDetPriVxCBNT/InDetPriVxCBNT_jobOptions.py can not be found"])
+        s.add(93741,["ERROR Unable to build inputFileSummary from any of the specified input files","TimeoutError","KeyError: 'eventdata_itemsDic'"])
         return
 
 if __name__ == '__main__':
