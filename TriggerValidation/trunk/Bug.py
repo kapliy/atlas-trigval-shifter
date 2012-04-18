@@ -89,6 +89,7 @@ class BugTracker:
         s.add(-3, ['Signal handler: Killing','with 15'],'Job recieved SIGTERM signal')
         #s.add(-4,"Signal handler: athCode=8","Job Segfaulted, please check cause '<font style=\"BACKGROUND-COLOR: yellow\">FIXME</font>'")
         s.add(-5, 'ATN_TIME_LIMIT','Job timed out')
+
     def prefill(s):
         """ 
         Note that bugs will be matched bottom-up. That is, newer bugs should be put at the bottom and will get matched first
@@ -98,13 +99,14 @@ class BugTracker:
         s.prefill_genpurpose()
         s.add(86562,['ERROR preLoadFolder failed for folder /Digitization/Parameters','FATAL DetectorStore service not found'])
         s.add(87109,"No such file or directory: '/afs/cern.ch/user/t/tbold/public/TDTtest/attila.AOD.pool.root'",comment='AthenaTrigAOD_TDT_fixedAOD fails with missing input file. According the the bug report, this has been fixed in TrigAnalysistest-00-03-24.')
-        s.add(88042,"OH repository 'Histogramming-L2-Segment-1-1-iss' does not exist") # 87601 is also appropriate, but closed as duplicate
+        s.add(88042,['Partition "athena_mon" does not exist'])
         s.add(88042,["IS repository 'Histogramming-EF-Segment-1-1-iss' does not exist"]) # not sure if this is indeed the same bug
         s.add(88042,["IS repository 'Histogramming-L2-Segment-1-1-iss' does not exist",'is::repository_var is::server::resolve'])
-        s.add(88042,["IS repository 'RunParams' does not exist"])
-        s.add(88042,['Partition "athena_mon" does not exist'])
-        s.add(88042,['object "RunParams" of the "is/repository" type is not published'])
-        s.add(88554,['Moving to AthenaTrigRDO_chainOrder_compare','differences in tests with ordered HLT chain execution','TrigSteer_EF.TrigChainMoniValidation'],comment='Bugtracker says this bug reports small changes in HLT chain execution, which are expected.')
+        s.add(88042,"OH repository 'Histogramming-L2-Segment-1-1-iss' does not exist") # 87601 is also appropriate, but closed as duplicate
+        # not sure if the errors below are also the same as bug 88042:
+        #s.add(88042,["IS repository 'RunParams' does not exist"])
+        #s.add(88042,['object "RunParams" of the "is/repository" type is not published'])
+        s.add(88554,['Moving to AthenaTrigRDO_chainOrder_compare','differences in tests with ordered HLT chain execution','TrigSteer_EF.TrigChainMoniValidation'])
         s.add(88602,['TDTExampleARA.py','ReferenceError: attempt to access a null-pointer'])
         s.add(89464,'ERROR Upload of SMKey failed')
         s.add(90593,'ERROR ServiceLocatorHelper::createService: wrong interface id IID_3596816672 for service JobIDSvc','Root+python problem when reading ESDs')
@@ -196,6 +198,7 @@ class BugTracker:
         s.add(93294,["CRITICAL Trigger connection alias 'None' is not defined","You are attempting to access the jobproperty JobProperties.Rec.Trigger.triggerDbConnection which has not been set","KeyError: 'techno'",'leaving with code 8: "an unknown exception occurred"'])
         s.add(93305,["INFO Creating event stream from file list \['root://eosatlas//eos/atlas/atlascerngroupdisk/trig-daq/validation/test_data/data11_7TeV.00191628.physics_eb_zee_zmumu._0001.data'\]","Parameters = 'name=Segmentation fault \(invalid memory reference\)' 'signum=11'"])
         s.add(93307,["trigtest.pl --cleardir --test AllPT_physicsV4_run_stop_run --rundir AllPT_physicsV4_run_stop_run --conf TrigP1Test.conf","Algorithm stack: <EMPTY>","FATAL Unchecked StatusCode in exit from lib /lib/libc.so.6"]) # careful: may be too general
+        s.add(93307,["Last incident: InputMetaDataStore:StoreCleared","Algorithm stack: <EMPTY>","FATAL Unchecked StatusCode in exit from lib /lib/libc.so.6"]) # careful: may be too general
         s.add(93315,["trigtest.pl --cleardir --test AllMT_physicsV4_menu --rundir AllMT_physicsV4_menu --conf TrigP1Test.conf","double free or corruption (!prev)","glibc detected"])
         s.add(93342,"FATAL ../src/JetVtxTrackHelper.cxx:154")
         s.add(93348,["LArRawChannelBuilder","ERROR Can't retrieve LArDigitContainer with key FREEfrom StoreGate."])
@@ -223,6 +226,9 @@ class BugTracker:
         s.add(93736,["ERROR attempt to add a duplicate \(TopAlg.BeamBackgroundFiller\) ... dupe ignored"])
         s.add(93740,["IncludeError: include file InDetPriVxCBNT/InDetPriVxCBNT_jobOptions.py can not be found"])
         s.add(93741,["ERROR Unable to build inputFileSummary from any of the specified input files","TimeoutError","KeyError: 'eventdata_itemsDic'"])
+        s.add(93747,["ERROR CaloCondBlobBase::getObjVersion: Invalid Blob"])
+        s.add(93771,['was caused by: ERROR TrigDiMuon_FS','was caused by: ERROR TrigSteer_L2.Navigation'])
+        s.add(92598,['/afs/cern.ch/atlas/software/builds/AtlasEvent/17.1.4/Event/FourMom/i686-slc5-gcc43-opt/libFourMom.so','\[stack\]']) #FIXE DELETEME!
         return
 
 if __name__ == '__main__':

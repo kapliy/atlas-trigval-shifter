@@ -6,7 +6,7 @@ MATCH_BUGS = True
 # Set to false to die on first exception (and print detailed error summary)
 SKIP_ERRORS = True
 # choose default release (may be over-ridden on command line)
-rel = 0
+rel = 3
 # compare with the dby(day-before-yesterday) release, rather than yesterday?
 dby = False
 
@@ -38,7 +38,8 @@ Project.Project.bugs = bugs
 # (but sweep them into Bug.py BugTracker::prefill() at the end of the shift)
 #bugs.add_new(,[""])
 
-bugs.add_new(-1,'ImportError: No module named TrigMuonD3PDMaker','Consequence of failure to build TrigMuonD3PDMaker')
+
+#bugs.add_new(-1,'ImportError: No module named TrigMuonD3PDMaker','Consequence of failure to build TrigMuonD3PDMaker')
 
 # Load the list of nightlies that we need to validate
 from configure_nightlies import X    

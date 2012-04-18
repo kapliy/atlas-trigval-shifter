@@ -13,7 +13,7 @@ import sys,re
 import urllib2,httplib
 import BeautifulSoup as bs
 
-rel = 0
+rel = 3
 rtt = 0
 THRESHOLD=1.10
 useMax=False
