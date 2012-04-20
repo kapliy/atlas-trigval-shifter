@@ -87,8 +87,7 @@ class BugTracker:
         s.add(-2, 'APPLICATION_DIED_UNEXPECTEDLY','Worker process failed')
         s.add(-3, 'received fatal signal 15','Job recieved SIGTERM signal')
         s.add(-3, ['Signal handler: Killing','with 15'],'Job recieved SIGTERM signal')
-        #s.add(-4,"Signal handler: athCode=8","Job Segfaulted, please check cause '<font style=\"BACKGROUND-COLOR: yellow\">FIXME</font>'")
-        s.add(-5, 'ATN_TIME_LIMIT','Job timed out')
+        s.add(-4, 'ATN_TIME_LIMIT','Job timed out')
 
     def prefill(s):
         """ 
@@ -197,8 +196,7 @@ class BugTracker:
         s.add(93292,["ImportError: cannot import name T2CaloFastJet_a4TT_MultipleOutput_TEs","ERROR Error in configuration of JetSlice"])
         s.add(93294,["CRITICAL Trigger connection alias 'None' is not defined","You are attempting to access the jobproperty JobProperties.Rec.Trigger.triggerDbConnection which has not been set","KeyError: 'techno'",'leaving with code 8: "an unknown exception occurred"'])
         s.add(93305,["INFO Creating event stream from file list \['root://eosatlas//eos/atlas/atlascerngroupdisk/trig-daq/validation/test_data/data11_7TeV.00191628.physics_eb_zee_zmumu._0001.data'\]","Parameters = 'name=Segmentation fault \(invalid memory reference\)' 'signum=11'"])
-        s.add(93307,["trigtest.pl --cleardir --test AllPT_physicsV4_run_stop_run --rundir AllPT_physicsV4_run_stop_run --conf TrigP1Test.conf","Algorithm stack: <EMPTY>","FATAL Unchecked StatusCode in exit from lib /lib/libc.so.6"]) # careful: may be too general
-        s.add(93307,["Last incident: InputMetaDataStore:StoreCleared","Algorithm stack: <EMPTY>","FATAL Unchecked StatusCode in exit from lib /lib/libc.so.6"]) # careful: may be too general
+        s.add(93307,["Last incident: InputMetaDataStore:StoreCleared","Algorithm stack: <EMPTY>","FATAL Unchecked StatusCode in exit from lib /lib/libc.so.6"])
         s.add(93315,["trigtest.pl --cleardir --test AllMT_physicsV4_menu --rundir AllMT_physicsV4_menu --conf TrigP1Test.conf","double free or corruption (!prev)","glibc detected"])
         s.add(93342,"FATAL ../src/JetVtxTrackHelper.cxx:154")
         s.add(93348,["LArRawChannelBuilder","ERROR Can't retrieve LArDigitContainer with key FREEfrom StoreGate."])
@@ -228,7 +226,17 @@ class BugTracker:
         s.add(93741,["ERROR Unable to build inputFileSummary from any of the specified input files","TimeoutError","KeyError: 'eventdata_itemsDic'"])
         s.add(93747,["ERROR CaloCondBlobBase::getObjVersion: Invalid Blob"])
         s.add(93771,['was caused by: ERROR TrigDiMuon_FS','was caused by: ERROR TrigSteer_L2.Navigation'])
-        s.add(92598,['/afs/cern.ch/atlas/software/builds/AtlasEvent/17.1.4/Event/FourMom/i686-slc5-gcc43-opt/libFourMom.so','\[stack\]']) #FIXE DELETEME!
+        s.add(92598,['glibc detected','free\(\): corrupted unsorted chunks:','Backtrace','boost9re_detail26basic_regex_implementation'])
+        s.add(93833,["AttributeError: 'D3PD__VectorFillerTool' object has no attribute 'JetTag_SoftMuonInfoMuonAssoc_target'"])
+        s.add(93870,['Core dump from CoreDumpSvc','Caught signal 11\(Segmentation fault\)','Last incident: InputMetaDataStore:StoreCleared'])
+        s.add(93877,['Current algorithm: StreamAOD','stacktrace ../src/SealDebug.cxx:738'])
+        s.add(93877,['Current algorithm: GlobalMonManager','stacktrace ../src/SealDebug.cxx:738','ERROR Athena received signal 11. Exit code reset to Athena exit code 139'])
+        s.add(93886,'At least one of the jobs \(ascending/descending chain counter\) has not been completed\! Exit.')
+        s.add(93887,['WARNING Unpacking  of L2 chains failed','Current algorithm: GlobalMonManager','pool::PersistencySvc::DatabaseHandler::readObject'])
+        s.add(93888,"TypeError: interpretConnection\(\) got an unexpected keyword argument 'resolveAlias'")
+        s.add(93889,"NameError: name 'StreamESD' is not defined")
+        s.add(93897,['LArL2ROBListWriter_j10_empty_larcalib','L1CaloTileHackL2ROBListWriter_j10_empty_larcalib','ERROR Could not find RoI descriptor - labels checked : TrigT2CaloEgamma initialRoI'])
+        
         return
 
 if __name__ == '__main__':

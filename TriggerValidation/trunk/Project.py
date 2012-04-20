@@ -8,8 +8,6 @@ DUMMY_LINK='http://www.NOT.AVAILABLE.com'
 NEWSTATUS='[<b><FONT style="BACKGROUND-COLOR: FF6666">NEW</FONT></b>] '
 FIXEDSTATUS='[<b><FONT style="BACKGROUND-COLOR: 99FF00">FIXED</FONT></b>] '
 
-searchFullLog=False
-
 class Project:
     """ One trigger validation project that has its own ATN and NICOS page
     name = { TrigP1Test , TriggerTest , TrigAnalysisTest }
@@ -20,6 +18,11 @@ class Project:
     bugs = None
     MATCH_BUGS = False
     dby = False
+    # special settings for matching bugs in full logs (that are huge)
+    full_enable=True       # enable at the beginning?
+    full_counter=0         # counter for number of times we downloaded a full log
+    full_maxsize=50        # maximum size of "full log" to be downloadable, in megabytes
+    full_nmax=10           # after full_nmax full logs are downloaded, full_enabled will be set to False
     def __init__(s,name,atn):
         s.name = name
         s.atn = atn
@@ -102,18 +105,31 @@ class Project:
                 try:
                     bug = s.bugs.match(urllib2.urlopen(t.ltail,timeout=s.URLTIMEOUT).read())
                 except (urllib2.HTTPError,urllib2.URLError) as e :
-                    print '%s: the following test log link leads to "404 page not found":'%('WARNING' if searchFullLog else 'ERROR')
+                    print '%s: the following test log link leads to "404 page not found":'%('WARNING' if s.full_enable else 'ERROR')
                     print '   ',t.ltail
                     print '   ','THIS BUG CANNOT BE MATCHED'
                     bug = None
-            if not bug and t.llog and searchFullLog:
+            if not bug and t.llog and s.full_enable:
                 try:
-                    bug = s.bugs.match(urllib2.urlopen(t.llog,timeout=s.URLTIMEOUT).read())
+                    # only check full logs if they are under 50 MB in size
+                    site = urllib2.urlopen(t.llog,timeout=s.URLTIMEOUT)
+                    meta = site.info()
+                    nmbX = meta.getheaders("Content-Length")[0]
+                    nmb = int(nmbX)/1024/1024
+                    if nmb < s.full_maxsize:
+                        s.full_counter += 1
+                        bug = s.bugs.match(site.read())
                 except (urllib2.HTTPError,urllib2.URLError) as e :
                     print 'ERROR: the following test log link leads to "404 page not found":'
                     print '   ',t.llog
                     print '   ','THIS BUG CANNOT BE MATCHED'
                     bug = None
+                # if we exceeded the maximum number of times to download a full log, disable further attempts
+                # this is here to prevent cases where a build failure causes a gazillion ATN test crashes,
+                # in which case checking full log for each of them would take forever. So limit it to full_nmax attempts.
+                if s.full_counter>=s.full_nmax:
+                    print 'WARNING: disabling full-log matching because maximum number of full-log downloads has been reached:',s.full_nmax
+                    s.full_enable = False
             if bug:
                 bugid=bug.id
                 bugurl = bug.url()
