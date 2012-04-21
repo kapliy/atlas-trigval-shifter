@@ -64,4 +64,4 @@ WARNING: skipping release 17.1.X.Y.Z-VAL2-AtlasCAFHLT (32-bit)
 }}}
 Most often, this happens when one of the test suites hasn't finished running yet. In particular, the VAL2-AtlasCAFHLT sometimes only finishes around noon (Chicago time).
 
-If you waited long enough and still cannot process a particular release, you can enable a detailed traceback by re-raising the exception, which can be accomplished by setting SKIP_ERRORS=False at the top of run.py.
+If you waited long enough and still cannot process a particular release, you can enable a detailed traceback by re-raising the exception, which can be accomplished by setting SKIP_ERRORS=False at the top of run.py. It will print a line number that caused the crash, and you'll be able to add additional debug printouts just before it to further understand the cause of the problem.
