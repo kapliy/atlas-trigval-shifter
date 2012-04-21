@@ -12,6 +12,7 @@ This package includes two scripts:
   * A unix machine (either Linux or Mac)
   * A recent Python installation (2.6 or above)
   * [http://www.crummy.com/software/BeautifulSoup/ BeautifulSoup]
+    * Note that you must install Beautiful Soup 3, and not the newer Beautiful Soup 4 version!
     * Make sure you can _import !BeautifulSoup_ inside the interpreter
 
 = Suggested procedure =
