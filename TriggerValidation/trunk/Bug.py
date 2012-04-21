@@ -179,7 +179,7 @@ class BugTracker:
         s.add(92814,["Unable to initialize Algorithm TrigSteer_L2",'ERROR Configuration error','T2IDTauHypo_tau',])
         s.add(92830,["Non identical keys found. See diff_smk_","l2_diff.txt and ef_diff.txt","TrigL2MuonSA::RpcDataPreparator"])
         s.add(92881,["Failed in LArFebRodMap::set",'barrel_ec out of range ,pos_neg out of range ,em_hec_fcal out of range'])
-        #s.add(92901,["HLT/HLTTestApps/i686-slc5-gcc43-opt/libhlttestapps_ers_streams.so",'lib/libhistmon.so','\[stack\]']) # may be too general
+        s.add(92901,["/bin/python: malloc\(\): memory corruption:",'glibc detected','/lib/libc.so.6\(__libc_malloc','libboost_thread-gcc43-mt-1_44.so.1.44.0\(thread_proxy','ZN14OHRootProvider7publishERK3TH1RKSsiRKSt6vectorISt4pairISsSsESaIS7_EE'],'Malloc memory corruption')
         #s.add(92938,["TrigSteer_EF","FATAL Errors were too severe in this event will abort the job"]) # REMOVE ME
         s.add(91772,["Floating point exception",'InDetSiSpTrackFinder','RAWtoESD has completed running of Athena with exit code -8','InDet::SiCombinatorialTrackFinder_xk::initialize'],comment='FPE in InDetSiSpTrackFinder::initialize with vector<double> as properties')
         s.add(92952,["following input TEs don't appear as output TE: EM"])
