@@ -236,7 +236,13 @@ class BugTracker:
         s.add(93888,"TypeError: interpretConnection\(\) got an unexpected keyword argument 'resolveAlias'")
         s.add(93889,"NameError: name 'StreamESD' is not defined")
         s.add(93897,['LArL2ROBListWriter_j10_empty_larcalib','L1CaloTileHackL2ROBListWriter_j10_empty_larcalib','ERROR Could not find RoI descriptor - labels checked : TrigT2CaloEgamma initialRoI'])
-        
+        s.add(93944,['Current algorithm: L2SecVtx_JetB'])
+        s.add(93986,["AttributeError: 'FreeStore' object has no attribute 'l2_BjetFex_IDScan'"])
+        s.add(93963,['histFolder = "InDetGlobal/PrimaryVertexMultiplicity"'])
+        s.add(93987,["No such file or directory: 'HLTconfig_MC_pp_v4_loose_mc_prescale_17.2.2.2.xml'",'ServiceMgr.HLTConfigSvc.getAlgorithmsByLevel\(\)','doc = ET.parse\(self.XMLMenuFile\)'])
+        s.add(93990,["TriggerMenuSQLiteFile_17.1.6.sqlite' file is NOT found in DATAPATH, exiting"])
+        s.add_new(94001,["AttributeError: 'TileDQFragMonTool' object has no attribute 'TileRawChannelContainer'"])
+        s.add_new(94033,["ATLAS_DBA.LOGON_AUDIT_TRIGGER' is invalid and failed re-validation"])
         return
 
 if __name__ == '__main__':
