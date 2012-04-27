@@ -105,19 +105,19 @@ class Project:
                 try:
                     bug = s.bugs.match(urllib2.urlopen(t.ltail,timeout=s.URLTIMEOUT).read())
                 except (urllib2.HTTPError,urllib2.URLError) as e :
-                    print '%s: the following test log link leads to "404 page not found":'%('WARNING' if s.full_enable else 'ERROR')
+                    print '%s: the following test log link leads to "404 page not found":'%('WARNING' if Project.full_enable else 'ERROR')
                     print '   ',t.ltail
                     print '   ','THIS BUG CANNOT BE MATCHED'
                     bug = None
-            if not bug and t.llog and s.full_enable:
+            if not bug and t.llog and Project.full_enable:
                 try:
                     # only check full logs if they are under 50 MB in size
                     site = urllib2.urlopen(t.llog,timeout=s.URLTIMEOUT)
                     meta = site.info()
                     nmbX = meta.getheaders("Content-Length")[0]
                     nmb = int(nmbX)/1024/1024
-                    if nmb < s.full_maxsize:
-                        s.full_counter += 1
+                    if nmb < Project.full_maxsize:
+                        Project.full_counter += 1
                         bug = s.bugs.match(site.read())
                 except (urllib2.HTTPError,urllib2.URLError) as e :
                     print 'ERROR: the following test log link leads to "404 page not found":'
@@ -127,9 +127,9 @@ class Project:
                 # if we exceeded the maximum number of times to download a full log, disable further attempts
                 # this is here to prevent cases where a build failure causes a gazillion ATN test crashes,
                 # in which case checking full log for each of them would take forever. So limit it to full_nmax attempts.
-                if s.full_counter>=s.full_nmax:
-                    print 'WARNING: disabling full-log matching because maximum number of full-log downloads has been reached:',s.full_nmax
-                    s.full_enable = False
+                if Project.full_counter>=Project.full_nmax:
+                    print 'WARNING: disabling full-log matching because maximum number of full-log downloads has been reached:',Project.full_nmax
+                    Project.full_enable = False
             if bug:
                 bugid=bug.id
                 bugurl = bug.url()
