@@ -88,6 +88,7 @@ class BugTracker:
         s.add(-3, 'received fatal signal 15','Job recieved SIGTERM signal')
         s.add(-3, ['Signal handler: Killing','with 15'],'Job recieved SIGTERM signal')
         s.add(-4, 'ATN_TIME_LIMIT','Job timed out')
+       # s.add_new(94082,["getRegistryEntries: read", "CLIDRegistry entries for module ALL","ClassIDSvc"]) #FIXME
 
     def prefill(s):
         """ 
@@ -240,9 +241,20 @@ class BugTracker:
         s.add(93986,["AttributeError: 'FreeStore' object has no attribute 'l2_BjetFex_IDScan'"])
         s.add(93963,['histFolder = "InDetGlobal/PrimaryVertexMultiplicity"'])
         s.add(93987,["No such file or directory: 'HLTconfig_MC_pp_v4_loose_mc_prescale_17.2.2.2.xml'",'ServiceMgr.HLTConfigSvc.getAlgorithmsByLevel\(\)','doc = ET.parse\(self.XMLMenuFile\)'])
-        s.add(93990,["TriggerMenuSQLiteFile_17.1.6.sqlite' file is NOT found in DATAPATH, exiting"])
-        s.add_new(94001,["AttributeError: 'TileDQFragMonTool' object has no attribute 'TileRawChannelContainer'"])
-        s.add_new(94033,["ATLAS_DBA.LOGON_AUDIT_TRIGGER' is invalid and failed re-validation"])
+        s.add(93990,["TriggerMenuSQLiteFile","sqlite' file is NOT found in DATAPATH, exiting"])
+        s.add(94001,["AttributeError: 'TileDQFragMonTool' object has no attribute 'TileRawChannelContainer'"])
+        s.add(94033,["ATLAS_DBA.LOGON_AUDIT_TRIGGER' is invalid and failed re-validation"])
+        s.add(94081,["Current algorithm: StreamBS"])
+        s.add(94049,["ERROR Can't retrieve offline RawChannel from TES"])
+        s.add(94084,["LVL1CTP::CTPSLink::getCTPToRoIBWords","Current algorithm: RoIBuilder"])
+        s.add(94087,["StatusCodeSv","FATAL Unchecked StatusCode in TrigJetRec::hltExecute"])
+        s.add(94088,['corrupted double-linked list','The object "RunParams" of the'])
+        s.add(94089,["Current algorithm: TrigJetRec_AntiKt4_lctopo"])
+        s.add(93196,["ToolSvc.TrigTSerializer","MuonFeatureContainer_p3","ERROR Errors while decoding"])
+        s.add(94120,["ERROR no handler for tech","FileMgr"])
+        s.add(92976,["ERROR EF chains that recursively call L2 sequences","TrigConfConsistencyChecker"])
+        s.add(41910,["ToolSvc.InDetTrigPrdAssociationTool","ERROR track already found in cache"])
+        s.add(94016,["No such file or directory:","'HLTconfig_MC_pp_v4_loose_mc_prescale","xml'"])
         return
 
 if __name__ == '__main__':
