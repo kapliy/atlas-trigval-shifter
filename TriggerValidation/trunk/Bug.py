@@ -108,7 +108,7 @@ class BugTracker:
         #s.add(88042,['object "RunParams" of the "is/repository" type is not published'])
         s.add(88554,['Moving to AthenaTrigRDO_chainOrder_compare','differences in tests with ordered HLT chain execution','TrigSteer_EF.TrigChainMoniValidation'])
         s.add(88602,['TDTExampleARA.py','ReferenceError: attempt to access a null-pointer'])
-        s.add(89464,'ERROR Upload of SMKey failed')
+        s.add(89464,['TriggerTool.jar','ERROR Upload of SMKey failed'])
         s.add(90593,'ERROR ServiceLocatorHelper::createService: wrong interface id IID_3596816672 for service JobIDSvc','Root+python problem when reading ESDs')
         s.add(90638,["if not ':' in connection:","argument of type 'NoneType' is not iterable","JobProperties.Rec.Trigger.triggerDbConnection which has not been set"],'TypeError at AthenaDBConfigRDO. Note that the bug report suggests the problem is due to conflict in TMXML build (bug 90665)') # tricky
         s.add(90677,['differences found in XML and DB trigger configuration tests','REGTEST events accepted by chain'],'Differences between DB and XML jobs because the job from the DB did not run, because of the missing/corrupted sqlite file.') # tricky
@@ -145,8 +145,8 @@ class BugTracker:
         s.add(92265,'ERROR Failed to find jet chain with name EF_j145_a4tchad')
         s.add(92267,['CharybdisJimmy.digit.RDO','Py:inputFilePeeker WARNING caught','raise convert_to_error\(kind, result\)'])
         s.add(92272,['L2PhotonHypo_g15_loose','carcore size is 10 but needs 9'])
-        s.add(92273,['Last incident: EFEventLoopMgr:EndRun','FATAL Unchecked StatusCode in exit from lib /lib/libc.so.6']) # may be too general
-        s.add(92273,['Last incident: EFEventLoopMgr:EndRun','FATAL Unchecked StatusCode in exit from lib /lib64/libc.so.6']) # may be too general
+        s.add(92273,'Last incident: EFEventLoopMgr:EndRun')
+        s.add(92273,"/src/MeasuredAtaStraightLine.cxx:108")
         s.add(92298,["No such file or directory: 'ESD.pool.root'",'testAthenaP1ESD_TrigEDMCheck_data.py'], "Upstream test failed or timed out")
         s.add(92298,["No such file or directory: 'ESD.pool.root'",'testAthenaP1ESD_TrigDecTool.py'], "Upstream test failed or timed out")
         s.add(92397,'RuntimeError: Conditions database identifier RPC_OFL is not defined',comment='Conditions database identifier RPC_OFL is not defined for standalone_cosmic test. Note that this was originally assigned to bug [91848]')
@@ -255,6 +255,13 @@ class BugTracker:
         s.add(92976,["ERROR EF chains that recursively call L2 sequences","TrigConfConsistencyChecker"])
         s.add(41910,["ToolSvc.InDetTrigPrdAssociationTool","ERROR track already found in cache"])
         s.add(94016,["No such file or directory:","'HLTconfig_MC_pp_v4_loose_mc_prescale","xml'"])
+        s.add(94152,['TriggerTool.jar','ERROR Upload of SMKey failed']) # in reality, one needs to look inside <DIR>/uploadSMK.log  
+        s.add(94173,["Py:TriggerPythonConfig","ERROR Chain L2_je255 defined 2 times with 2 variants"])
+        s.add(94176,["L2EFChain_mu_EFFSonly","'TrigMuonEFCombinerDiMuonMassHypoConfig' is not defined"])
+        s.add(94185,"ImportError: No module named egammaD3PDAnalysisConf")
+        s.add(94190,["AthenaPoolConverter","ERROR poolToObject: Could not get object for Token","ERROR Standard std::exception is caught handling incident","ERROR POOL read failed"])
+        s.add(94192,["Non identical keys found. See diff_smk_","l2_diff.txt and ef_diff.txt","L2SecVtx_JetB.TrigInDetVxInJetTool.VertexFitterTool"])
+        s.add(94223,"RuntimeError: key 'outputNTUP_TRIGFile' is not defined in ConfigDic")
         return
 
 if __name__ == '__main__':
