@@ -109,7 +109,7 @@ class BugTracker:
         s.add(88554,['Moving to AthenaTrigRDO_chainOrder_compare','differences in tests with ordered HLT chain execution','TrigSteer_EF.TrigChainMoniValidation'])
         s.add(88602,['TDTExampleARA.py','ReferenceError: attempt to access a null-pointer'])
         s.add(89464,['TriggerTool.jar','ERROR Upload of SMKey failed'])
-        s.add(90593,'ERROR ServiceLocatorHelper::createService: wrong interface id IID_3596816672 for service JobIDSvc','Root+python problem when reading ESDs')
+        s.add(90593,['ERROR ServiceLocatorHelper::createService: wrong interface id IID_3596816672 for service JobIDSvc','Root+python problem when reading ESDs'])
         s.add(90638,["if not ':' in connection:","argument of type 'NoneType' is not iterable","JobProperties.Rec.Trigger.triggerDbConnection which has not been set"],'TypeError at AthenaDBConfigRDO. Note that the bug report suggests the problem is due to conflict in TMXML build (bug 90665)') # tricky
         s.add(90677,['differences found in XML and DB trigger configuration tests','REGTEST events accepted by chain'],'Differences between DB and XML jobs because the job from the DB did not run, because of the missing/corrupted sqlite file.') # tricky
         s.add(91283,"IOError: \[Errno 2\] No such file or directory: '../BackCompAthenaTrigBStoESDAOD/AOD.pool.root' ")
@@ -141,6 +141,7 @@ class BugTracker:
         s.add(92260,"AssertionError: problem picking a data reader for file","../AthenaTrigRDOtoBS/raw.data")
         s.add(92260,["Unable to fill inputFileSummary from file ../AthenaTrigRDOtoESDAOD/ESD.pool.root. File is probably empty"])
         s.add(92260,["Unable to fill inputFileSummary from file ../AthenaTrigRDOtoESDAOD/AOD.pool.root. File is probably empty"])
+        s.add(92260,["Unable to fill inputFileSummary from file ../AthenaTrigRDOtoAOD/AOD.pool.root. File is probably empty"])
         s.add(92264,'ImportError: cannot import name T2CaloFastJet_a4TT_JESCalib_MultipleOutput_TEs')
         s.add(92265,'ERROR Failed to find jet chain with name EF_j145_a4tchad')
         s.add(92267,['CharybdisJimmy.digit.RDO','Py:inputFilePeeker WARNING caught','raise convert_to_error\(kind, result\)'])
@@ -241,7 +242,7 @@ class BugTracker:
         s.add(93986,["AttributeError: 'FreeStore' object has no attribute 'l2_BjetFex_IDScan'"])
         s.add(93963,['histFolder = "InDetGlobal/PrimaryVertexMultiplicity"'])
         s.add(93987,["No such file or directory: 'HLTconfig_MC_pp_v4_loose_mc_prescale_17.2.2.2.xml'",'ServiceMgr.HLTConfigSvc.getAlgorithmsByLevel\(\)','doc = ET.parse\(self.XMLMenuFile\)'])
-        s.add(93990,["TriggerMenuSQLiteFile","sqlite' file is NOT found in DATAPATH, exiting"])
+        s.add(93990,["TriggerMenuSQLiteFile","sqlite' file is NOT found in DATAPATH, exiting"]) # they have only fixed it in rel 1. probably we don't need to report this unless this bug reappeared in rel 1 again.
         s.add(94001,["AttributeError: 'TileDQFragMonTool' object has no attribute 'TileRawChannelContainer'"])
         s.add(94033,["ATLAS_DBA.LOGON_AUDIT_TRIGGER' is invalid and failed re-validation"])
         s.add(94081,["Current algorithm: StreamBS"])
@@ -249,6 +250,7 @@ class BugTracker:
         s.add(94084,["LVL1CTP::CTPSLink::getCTPToRoIBWords","Current algorithm: RoIBuilder"])
         s.add(94087,["StatusCodeSv","FATAL Unchecked StatusCode in TrigJetRec::hltExecute"])
         s.add(94088,['corrupted double-linked list','The object "RunParams" of the'])
+        s.add(94088,'The object "RunParams" of the "is/repository" type is not published')
         s.add(94089,["Current algorithm: TrigJetRec_AntiKt4_lctopo"])
         s.add(93196,["ToolSvc.TrigTSerializer","MuonFeatureContainer_p3","ERROR Errors while decoding"])
         s.add(94120,["ERROR no handler for tech","FileMgr"])
@@ -261,7 +263,24 @@ class BugTracker:
         s.add(94185,"ImportError: No module named egammaD3PDAnalysisConf")
         s.add(94190,["AthenaPoolConverter","ERROR poolToObject: Could not get object for Token","ERROR Standard std::exception is caught handling incident","ERROR POOL read failed"])
         s.add(94192,["Non identical keys found. See diff_smk_","l2_diff.txt and ef_diff.txt","L2SecVtx_JetB.TrigInDetVxInJetTool.VertexFitterTool"])
-        s.add(94223,"RuntimeError: key 'outputNTUP_TRIGFile' is not defined in ConfigDic")
+        s.add(94223,"WARNING D3PDProdFlags not availabl. Only OK if you're using job transforms without the AtlasAnalysis project.")
+        s.add(94261,"IncludeError: include file MuonTrkPhysMonitoring/MuonTrkPhysDQA_options.py can not be found")
+        s.add(94273,["ERROR: Can't find branch EventInfo_p3_McEventInfo in tree MetaData","ERROR ServiceLocatorHelper::createService: wrong interface id IID"])
+        s.add(94320,["HLTAutoKey_PrimVx","of type \[VxContainer\] is INCONSISTENT. The element does not seem to be in the container. This link can not be written"])
+        s.add(94339,["/afs/cern.ch/sw/lcg/external/Python/","/bin/python: corrupted double-linked list"]) # this bug can only be found in full log file
+        s.add(94342,["TrigMuonEFTrackBuilderConfig_SeededFS","Core dump from CoreDumpSvc","Caught signal 11\(Segmentation fault\)"])
+        s.add(94342,["EFTrigMissingETMuon_Fex","Core dump from CoreDumpSvc","Caught signal 11\(Segmentation fault\)"])
+        s.add(94343,["SystemError: problem in C\+\+; program state has been reset"])
+        s.add(94349,["Py:GenerateMenu.py","ERROR Error in configuration of JetSlice","ImportError: No module named HIJetRec.HIJetRecConf"])
+        s.add(94350,["Py:LArCalibMenu","ERROR template chain with sig_id=j","is not defined at level L2"])
+        s.add(94362,"ImportError: No module named tauRec.tauRecFlags")
+        s.add(94362,"ImportError: No module named TrigTauRec.TrigTauRecConfig")
+        s.add(94387,"IOError: \[Errno 2\] No such file or directory: 'RDO.201489._000001.pool.root.1'")
+        s.add(94394,"ToolSvc.EFTrigEgammaPhotonCutIDTool_ForcePhoConv  ERROR vector size is 9 but needs combined")
+        s.add(94403,["RuntimeError: \[dynlibs\]daq::dynlibs::DynamicLibrary::DynamicLibrary","Dynamic library libTrigServices not found"])
+        s.add(94428,["import D3PDMakerCoreCompsConf","ImportError: No module named D3PDMakerCoreCompsConf"])
+        s.add(94429,"ImportError: No module named TrigBphysMonitoring.TrigBphysMonitoringConfig")
+        s.add_new(94435,["ES_WrongFileFormat: file is of no know format. Abort.EventStorage reading problem: file is of no know format. Abort.","virtual EventStackLayer"])
         return
 
 if __name__ == '__main__':
