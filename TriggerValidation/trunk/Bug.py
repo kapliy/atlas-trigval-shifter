@@ -267,7 +267,8 @@ class BugTracker:
         s.add(94261,"IncludeError: include file MuonTrkPhysMonitoring/MuonTrkPhysDQA_options.py can not be found")
         s.add(94273,["ERROR: Can't find branch EventInfo_p3_McEventInfo in tree MetaData","ERROR ServiceLocatorHelper::createService: wrong interface id IID"])
         s.add(94320,["HLTAutoKey_PrimVx","of type \[VxContainer\] is INCONSISTENT. The element does not seem to be in the container. This link can not be written"])
-        s.add(94339,["/afs/cern.ch/sw/lcg/external/Python/","/bin/python: corrupted double-linked list"]) # this bug can only be found in full log file
+        #s.add(94339,["/afs/cern.ch/sw/lcg/external/Python/","/bin/python: corrupted double-linked list"])
+        s.add(94339,["__libc_malloc","libMuonMDT_CnvTools.so","/bin/python: corrupted double-linked list"]) # this bus can only be found in full log file
         s.add(94342,["TrigMuonEFTrackBuilderConfig_SeededFS","Core dump from CoreDumpSvc","Caught signal 11\(Segmentation fault\)"])
         s.add(94342,["EFTrigMissingETMuon_Fex","Core dump from CoreDumpSvc","Caught signal 11\(Segmentation fault\)"])
         s.add(94343,["SystemError: problem in C\+\+; program state has been reset"])
@@ -291,10 +292,15 @@ class BugTracker:
         s.add(94473,"ImportError: No module named TrigL2MissingET.TrigL2MissingETConfig")
         s.add(94474,"ImportError: No module named TrigT2CaloTau.TrigT2CaloTauConfig")
         s.add(94483,["Py:athenaMT", "CRITICAL Caught an untreated exception - OverflowError: bad numeric conversion: positive overflow"])
-        s.add(94536,["ers::Issue::Issue\(const ers::Context\&, const std::exception\&\) at ers/src/Issue.cxx:91","std::bad_alloc"])
-        s.add(94537,['CORBA::Object\* ipc::util::resolve\(...\) at ipc/src/util.cc:369','The object "RunParams" of the "is/repository" type is not published in the "athena_mon" partition'])
+        s.add(94507,["Current algorithm: TrigSteer_","../src/TrigLBNHist.cxx:92",'TrigLBNHist<TH1I>::Fill'])
+        s.add(94507,['Core dump from CoreDumpSvc','Current algorithm: TrigSteer_','Last incident: Lvl2EventLoopMgr:BeginEvent','Event counter: 104']) # this is tricky: stack trace is often absent in these logs. But in one case, it was printed, and it matched bug 94507
+        s.add(94507,['Core dump from CoreDumpSvc','Current algorithm: TrigSteer_','Last incident: EFEventLoopMgr:BeginEvent','Event counter: 95'])
+        #s.add(94536,["ers::Issue::Issue\(const ers::Context\&, const std::exception\&\) at ers/src/Issue.cxx:91","std::bad_alloc"]) # marked INVALID
+        s.add(94562,['HLTConfigSvc::updatePrescaleSets','Current algorithm: TrigSteer_EF','std::bad_alloc'])
+        #s.add(94537,['CORBA::Object\* ipc::util::resolve\(...\) at ipc/src/util.cc:369','The object "RunParams" of the "is/repository" type is not published in the "athena_mon" partition'])
         s.add(94542,['File "/build/atnight/localbuilds/nightlies/17.2.X-VAL/AtlasReconstruction/rel_nightly/InstallArea/python/PATJobTransforms/BaseOfCompositeTrf.py", line 40, in ConfigureCommonInternalSubSteps','raise RuntimeError',"key '\%s' is not defined in ConfigDic","RuntimeError: key 'outputNTUP_TRIGFile' is not defined in ConfigDic"])
         s.add(94543,"tech: ROOT  desc: HIST  flags: INVALID  i_flags: WRITE")
+        s.add_new(94595,['THistSvc','ERROR already registered an object with identifier','EXPERT/TrigSteer_'])
         return
 
 if __name__ == '__main__':

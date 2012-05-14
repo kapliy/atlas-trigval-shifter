@@ -6,7 +6,7 @@ MATCH_BUGS = True
 # Set to false to die on first exception (and print detailed error summary)
 SKIP_ERRORS = True
 # choose default release (may be over-ridden on command line)
-rel = 0
+rel = 1
 # compare with the dby(day-before-yesterday) release, rather than yesterday?
 dby = False
 
@@ -28,7 +28,7 @@ import Project
 Project.Project.rel = rel
 Project.Project.dby = dby
 # tweaks for *full* log matching:
-Project.Project.full_enable = True
+Project.Project.full_enable = False
 Project.Project.full_nmax   = 12    # increase this if you really NEED to match more full logs
 from Test import Test
 from Bug import BugTracker
