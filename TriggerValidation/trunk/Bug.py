@@ -99,7 +99,7 @@ class BugTracker:
         s.prefill_genpurpose()
         s.add(86562,['ERROR preLoadFolder failed for folder /Digitization/Parameters','FATAL DetectorStore service not found'])
         s.add(87109,"No such file or directory: '/afs/cern.ch/user/t/tbold/public/TDTtest/attila.AOD.pool.root'",comment='AthenaTrigAOD_TDT_fixedAOD fails with missing input file. According the the bug report, this has been fixed in TrigAnalysistest-00-03-24.')
-        s.add(88042,['Partition "athena_mon" does not exist'])
+        #s.add(88042,['Partition "athena_mon" does not exist'])
         s.add(88042,["IS repository 'Histogramming-EF-Segment-1-1-iss' does not exist"]) # not sure if this is indeed the same bug
         s.add(88042,["IS repository 'Histogramming-L2-Segment-1-1-iss' does not exist",'is::repository_var is::server::resolve'])
         s.add(88042,"OH repository 'Histogramming-L2-Segment-1-1-iss' does not exist") # 87601 is also appropriate, but closed as duplicate
@@ -158,7 +158,7 @@ class BugTracker:
         s.add(92437,["'D3PDMakerFlags' object has no attribute 'CompressionLevel'"])
         s.add(92449,['DataHeader_p','object has no attribute','File "./TDTExampleARA.py"'])
         s.add(92501,['invalid next size','libTrigTauDiscriminant.so'],"Invalid read in TrigTauDiscriBuilder")
-        s.add(92516,['AthMasterSeq', 'AthAlgSeq','TrigSteer_EF','EFBMuMuFex_DiMu_noOS','stack trace'],"Segfault in EFBMuMuFex_DiMu_noOS--fix to be in TrigBphysHypo-00-03-07")
+        #s.add(92516,['AthMasterSeq', 'AthAlgSeq','TrigSteer_EF','EFBMuMuFex_DiMu_noOS','stack trace'],"Segfault in EFBMuMuFex_DiMu_noOS--fix to be in TrigBphysHypo-00-03-07") # too general
         s.add(92532,"ERROR FATAL No input BS file could be found matching '../AthenaTrigRDOtoBS")
         s.add(92536,"HLTJobLib:       crash ERROR HLTProcess: could not find any files starting")
         s.add(92551,["NameError: name 'L2PhotonHypo_g12_loose' is not defined"])
@@ -222,7 +222,7 @@ class BugTracker:
         s.add(93658,["ES_WrongFileFormat: file is of no know format", "IOError: Invalid file or format at '../AllMT_physicsV4_caf/AllMT_mcV4_caf-1._0001.data'"])
         s.add(93711,['WARNING IPC partition "part_lhl2ef_AtlasCAFHLT_rel_nightly" is not valid','Timeout reached waiting for transition to CONNECTED'])
         s.add(93713,['INFO RAWtoESD has completed running of Athena with exit code -11','Current algorithm: EGammaStream_ProbeElectronFilter'])
-        s.add(93735,["ERROR Upload of key 2 failed"])
+        #s.add(93735,["ERROR Upload of key 2 failed"]) # in reality, one needs to look inside <DIR>/uploadSMK.log  
         s.add(93736,["ERROR attempt to add a duplicate \(TopAlg.BeamBackgroundFiller\) ... dupe ignored"])
         s.add(93740,["IncludeError: include file InDetPriVxCBNT/InDetPriVxCBNT_jobOptions.py can not be found"])
         s.add(93741,["ERROR Unable to build inputFileSummary from any of the specified input files","TimeoutError","KeyError: 'eventdata_itemsDic'"])
@@ -230,7 +230,7 @@ class BugTracker:
         s.add(93771,['was caused by: ERROR TrigDiMuon_FS','was caused by: ERROR TrigSteer_L2.Navigation'])
         s.add(92598,['glibc detected','free\(\): corrupted unsorted chunks:','Backtrace','boost9re_detail26basic_regex_implementation'])
         s.add(93833,["AttributeError: 'D3PD__VectorFillerTool' object has no attribute 'JetTag_SoftMuonInfoMuonAssoc_target'"])
-        s.add(93870,['Core dump from CoreDumpSvc','Caught signal 11\(Segmentation fault\)','Last incident: InputMetaDataStore:StoreCleared'])
+        s.add(93870,['Core dump from CoreDumpSvc','Caught signal 11\(Segmentation fault\)','Last incident: InputMetaDataStore:StoreCleared']) # somewhat general
         s.add(93877,['Current algorithm: StreamAOD','stacktrace ../src/SealDebug.cxx:738'])
         s.add(93877,['Current algorithm: GlobalMonManager','stacktrace ../src/SealDebug.cxx:738','ERROR Athena received signal 11. Exit code reset to Athena exit code 139'])
         s.add(93886,'At least one of the jobs \(ascending/descending chain counter\) has not been completed\! Exit.')
@@ -238,26 +238,26 @@ class BugTracker:
         s.add(93888,"TypeError: interpretConnection\(\) got an unexpected keyword argument 'resolveAlias'")
         s.add(93889,"NameError: name 'StreamESD' is not defined")
         s.add(93897,['LArL2ROBListWriter_j10_empty_larcalib','L1CaloTileHackL2ROBListWriter_j10_empty_larcalib','ERROR Could not find RoI descriptor - labels checked : TrigT2CaloEgamma initialRoI'])
-        s.add(93944,['Current algorithm: L2SecVtx_JetB'])
+        #s.add(93944,['Current algorithm: L2SecVtx_JetB']) #uninformative stack trace
         s.add(93986,["AttributeError: 'FreeStore' object has no attribute 'l2_BjetFex_IDScan'"])
-        s.add(93963,['histFolder = "InDetGlobal/PrimaryVertexMultiplicity"'])
+        #s.add(93963,['histFolder = "InDetGlobal/PrimaryVertexMultiplicity"'])
         s.add(93987,["No such file or directory: 'HLTconfig_MC_pp_v4_loose_mc_prescale_17.2.2.2.xml'",'ServiceMgr.HLTConfigSvc.getAlgorithmsByLevel\(\)','doc = ET.parse\(self.XMLMenuFile\)'])
-        s.add(93990,["TriggerMenuSQLiteFile","sqlite' file is NOT found in DATAPATH, exiting"]) # they have only fixed it in rel 1. probably we don't need to report this unless this bug reappeared in rel 1 again.
+        s.add(93990,["TriggerMenuSQLiteFile","sqlite' file is NOT found in DATAPATH, exiting"])
         s.add(94001,["AttributeError: 'TileDQFragMonTool' object has no attribute 'TileRawChannelContainer'"])
         s.add(94033,["ATLAS_DBA.LOGON_AUDIT_TRIGGER' is invalid and failed re-validation"])
-        s.add(94081,["Current algorithm: StreamBS"])
+        #s.add(94081,["Current algorithm: StreamBS"]) #uninformatie stack trace
         s.add(94049,["ERROR Can't retrieve offline RawChannel from TES"])
         s.add(94084,["LVL1CTP::CTPSLink::getCTPToRoIBWords","Current algorithm: RoIBuilder"])
         s.add(94087,["StatusCodeSv","FATAL Unchecked StatusCode in TrigJetRec::hltExecute"])
         #s.add(94088,['corrupted double-linked list','The object "RunParams" of the'])
         #s.add(94088,'The object "RunParams" of the "is/repository" type is not published')
-        s.add(94089,["Current algorithm: TrigJetRec_AntiKt4_lctopo"])
+        #s.add(94089,["Current algorithm: TrigJetRec_AntiKt4_lctopo"]) #uninforative stack trace
         s.add(93196,["ToolSvc.TrigTSerializer","MuonFeatureContainer_p3","ERROR Errors while decoding"])
         s.add(94120,["ERROR no handler for tech","FileMgr"])
         s.add(92976,["ERROR EF chains that recursively call L2 sequences","TrigConfConsistencyChecker"])
         s.add(41910,["ToolSvc.InDetTrigPrdAssociationTool","ERROR track already found in cache"])
         s.add(94016,["No such file or directory:","'HLTconfig_MC_pp_v4_loose_mc_prescale","xml'"])
-        s.add(94152,['TriggerTool.jar','ERROR Upload of SMKey failed']) # in reality, one needs to look inside <DIR>/uploadSMK.log  
+        #s.add(94152,['TriggerTool.jar','ERROR Upload of SMKey failed']) # in reality, one needs to look inside <DIR>/uploadSMK.log  
         s.add(94173,["Py:TriggerPythonConfig","ERROR Chain L2_je255 defined 2 times with 2 variants"])
         s.add(94176,["L2EFChain_mu_EFFSonly","'TrigMuonEFCombinerDiMuonMassHypoConfig' is not defined"])
         s.add(94185,"ImportError: No module named egammaD3PDAnalysisConf")
@@ -268,9 +268,9 @@ class BugTracker:
         s.add(94273,["ERROR: Can't find branch EventInfo_p3_McEventInfo in tree MetaData","ERROR ServiceLocatorHelper::createService: wrong interface id IID"])
         s.add(94320,["HLTAutoKey_PrimVx","of type \[VxContainer\] is INCONSISTENT. The element does not seem to be in the container. This link can not be written"])
         #s.add(94339,["/afs/cern.ch/sw/lcg/external/Python/","/bin/python: corrupted double-linked list"])
-        s.add(94339,["__libc_malloc","libMuonMDT_CnvTools.so","/bin/python: corrupted double-linked list"]) # this bus can only be found in full log file
+        s.add(94339,["__libc_malloc","libMuonMDT_CnvTools.so","/bin/python: corrupted double-linked list"]) # this bug can only be found in full log file
         s.add(94342,["TrigMuonEFTrackBuilderConfig_SeededFS","Core dump from CoreDumpSvc","Caught signal 11\(Segmentation fault\)"])
-        s.add(94342,["EFTrigMissingETMuon_Fex","Core dump from CoreDumpSvc","Caught signal 11\(Segmentation fault\)"])
+        #s.add(94342,["EFTrigMissingETMuon_Fex","Core dump from CoreDumpSvc","Caught signal 11\(Segmentation fault\)"]) # another bug
         s.add(94343,["SystemError: problem in C\+\+; program state has been reset"])
         s.add(94349,["Py:GenerateMenu.py","ERROR Error in configuration of JetSlice","ImportError: No module named HIJetRec.HIJetRecConf"])
         s.add(94350,["Py:LArCalibMenu","ERROR template chain with sig_id=j","is not defined at level L2"])
@@ -283,6 +283,7 @@ class BugTracker:
         s.add(94429,"ImportError: No module named TrigBphysMonitoring.TrigBphysMonitoringConfig")
         s.add(94435,["ES_WrongFileFormat: file is of no know format. Abort.EventStorage reading problem: file is of no know format. Abort.","virtual EventStackLayer"])
         s.add(94443,"ERROR Running command `rc_sendcommand -ppart_lhl2ef_AtlasCAFHLT_rel_nightly -nRootController exit' has produced an error")
+        # TODO: delete the following batch of ImportError's once they are fixed
         s.add(94465,"ImportError: No module named JetRecTools.JetRecToolsConf")
         s.add(94467,"ImportError: No module named TrigT2CaloEgammaConf")
         s.add(94469,"ImportError: No module named TrigmuIsoConf")
@@ -298,9 +299,18 @@ class BugTracker:
         #s.add(94536,["ers::Issue::Issue\(const ers::Context\&, const std::exception\&\) at ers/src/Issue.cxx:91","std::bad_alloc"]) # marked INVALID
         s.add(94562,['HLTConfigSvc::updatePrescaleSets','Current algorithm: TrigSteer_EF','std::bad_alloc'])
         #s.add(94537,['CORBA::Object\* ipc::util::resolve\(...\) at ipc/src/util.cc:369','The object "RunParams" of the "is/repository" type is not published in the "athena_mon" partition'])
-        s.add(94542,['File "/build/atnight/localbuilds/nightlies/17.2.X-VAL/AtlasReconstruction/rel_nightly/InstallArea/python/PATJobTransforms/BaseOfCompositeTrf.py", line 40, in ConfigureCommonInternalSubSteps','raise RuntimeError',"key '\%s' is not defined in ConfigDic","RuntimeError: key 'outputNTUP_TRIGFile' is not defined in ConfigDic"])
+        s.add(94542,["RuntimeError: key 'outputNTUP_TRIGFile' is not defined in ConfigDic"])
         s.add(94543,"tech: ROOT  desc: HIST  flags: INVALID  i_flags: WRITE")
-        s.add_new(94595,['THistSvc','ERROR already registered an object with identifier','EXPERT/TrigSteer_'])
+        s.add(94595,['THistSvc','ERROR already registered an object with identifier','EXPERT/TrigSteer_'])
+        s.add(94598,['Last incident: EFEventLoopMgr:BeginEvent','Current algorithm: EFTrigMissingETMuon_Fex_FEB']) # uninformative stack trace
+        s.add(94598,['Last incident: EFEventLoopMgr:BeginEvent','Current algorithm: EFTrigMissingETMuon_Fex']) # uninformative stack trace
+        s.add(94599,['corrupted double-linked list','cfree','libeformat.so']) # uninformative stack trace
+        s.add(94599,['double free or corruption','cfree','_ZN4Cint8Internal18G__BufferReservoirD1Ev']) # uninformative stack trace
+        s.add(94610,['EventStorage::file_end_record ESLOriginalFile::currentFileFER','data10_7TeV.00152845.physics_MinBias.merge.RAW._lb0250._0003.1','GUID not present in BS file'])
+        s.add(94611,['Current algorithm: MuGirl','msFit ../src/GlobalFitTool.cxx:571'])
+        s.add(94654,['ImportError: cannot import name LVL1CTP__CBNTAA_CTP_RDO'])
+        s.add_new(94667,['in CoreDumpSvcHandler::action','at ../src/root/OHRootProvider.cxx:136'])
+        s.add_new(94668,['Current algorithm: TrigSteer_EF','Current trigger chain: <NONE>','Event counter: 91'])
         return
 
 if __name__ == '__main__':
