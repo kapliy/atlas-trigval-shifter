@@ -27,10 +27,12 @@ Nightly.Nightly.rel = rel
 import Project
 Project.Project.rel = rel
 Project.Project.dby = dby
+Project.Project.SKIP_ERRORS = SKIP_ERRORS
 # tweaks for *full* log matching:
-Project.Project.full_enable = False
-Project.Project.full_nmax   = 12    # increase this if you really NEED to match more full logs
+Project.Project.full_enable = True
+Project.Project.full_nmax   = 10    # increase this if you really NEED to match more full logs
 from Test import Test
+Test.CHECK_NICOS = True
 from Bug import BugTracker
 Project.Project.MATCH_BUGS = MATCH_BUGS
 bugs = BugTracker()

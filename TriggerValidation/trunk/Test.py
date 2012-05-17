@@ -5,6 +5,7 @@ import re
 class Test:
     """ One ATN test along with test results and log pointers """
     urlbase=''
+    CHECK_NICOS = False
     def __init__(s,urlbase):
         s.urlbase=urlbase
         s.name = 'EMPTY'
@@ -19,8 +20,15 @@ class Test:
         s.ldir = None
         s.ltail = None
         s.llog = None
-    def initAtn(s,row):
-        """ Initializes one ATN test from a BeautifulSoup-formatted table row """
+        # information from NICOS summary page for the same test
+        s.nicoserr = False
+        s.nicoswarn = False
+        s.lnicos = None
+    def initAtn(s,row,nicoslogs={}):
+        """ Initializes one ATN test from two pieces of information:
+        - a BeautifulSoup-formatted table row
+        - a map (indexed by test name), containing for each test its NICOS info: (iserror,iswarning,nicoslink)
+        """
         s.row = v = row.findAll('td')
         assert len(v)==14,'Expecting 14 columns in ATN results table but found: %d'%len(v)
         s.name = str(v[0].contents[0].string)
@@ -41,12 +49,30 @@ class Test:
         if s.overall != 'SKIP' and len(logs)==2:
             s.ltail = s.urlbase + str(logs[0]['href'])
             s.llog = s.urlbase + str(logs[1]['href'])
+        # nicos information
+        tnicos = nicoslogs.get(s.name)
+        if tnicos:
+            s.nicoserr = tnicos[0]
+            s.nicoswarn = tnicos[1]
+            s.lnicos = tnicos[2]
+        else:
+            # assert False
+            pass
     def __str__(s):
         return '%s\t %s %s %s'%(s.name,s.overall,s.exit,s.error)
-    def is_error_athena(s):
+    def is_error_athena_nonicos(s):
         nafail = (s.error == 'N/A') and (s.exit=='FAIL') and (s.overall=='ERROR')
         timeout = (s.exit=='TIMEOUT')
         return True if (re.match('FAIL',s.error) or nafail or timeout) else False
+    def is_error_athena_nicos(s):
+        """ this is tricky: we only want to accept nicos errors IF the test is totally fine in ATN """
+        if s.is_error_athena_nonicos(): return False
+        if re.match('FAIL',s.exit): return False
+        if re.match('ERROR',s.overall): return False
+        nicoserr = s.CHECK_NICOS and s.nicoserr
+        return True if nicoserr else False
+    def is_error_athena(s):
+        return True if ( s.is_error_athena_nonicos() or s.is_error_athena_nicos() ) else False
     def is_error_exit(s):
         if s.is_error_athena(): return False
         return True if re.match('FAIL',s.exit) else False

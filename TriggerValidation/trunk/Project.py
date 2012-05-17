@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import re,urllib2,time,datetime
+import sys,os,re,urllib2,time,datetime
 import BeautifulSoup as bs
 from Test import Test
 
@@ -17,6 +17,7 @@ class Project:
     URLTIMEOUT = 60
     bugs = None
     MATCH_BUGS = False
+    SKIP_ERRORS = True
     dby = False
     # special settings for matching bugs in full logs (that are huge)
     full_enable=True       # enable at the beginning?
@@ -26,6 +27,8 @@ class Project:
     def __init__(s,name,atn):
         s.name = name
         s.atn = atn
+        s.pres_nicoslink = None
+        s.last_nicoslink = None
         s.pres = []
         s.last = []
         s.pres_soup = None
@@ -60,19 +63,56 @@ class Project:
         #print 'DEBUG: DELTA =',delta
         #print 'DEBUG: URL =',url
         assert delta<=4,"Results on this page are older than 5 days - probably, the test hasn't finished yet"
+        # retrieve links to NICOS logs that are grepped before truncation
+        # the following parameters exploit the layout of NICOS summary page as seen in May 2012
+        TABLE_INDEX = 2
+        COLOR_ERROR = '#E87DA8'
+        COLOR_WARNING = '#FA9EB0'
+        nicoslogs = {}  # key = test_name; value = [iserror,iswarning,nicoslink]
+        nicoslink = None
+        try:
+            nicoslink = (soup.findAll('p')[1]).findAll('a')[0]['href']
+            #print nicoslink
+            data = urllib2.urlopen(nicoslink)
+            soupn = bs.BeautifulSoup(data.read())
+            table = soupn.findAll('table',{'cellspacing':'0','cellpadding':'5'})[TABLE_INDEX]
+            rows = table.findAll('tr')
+            assert len(rows)>0,'Cannot find any records in NICOS build summary table'
+            for row in rows[1:]:
+                links = row.findAll('a')
+                if len(links)!=2:
+                    break # break out on the last row
+                # only look at tests that correspond to current Project
+                tname_full = (links[0].string).strip()
+                if not re.match(s.name,tname_full):
+                    continue
+                tname = tname_full.split('#')[1]
+                nicosdir = os.path.dirname(nicoslink)
+                tlink = nicosdir + '/' + links[0].get('href')
+                tcolor = row.get('bgcolor')
+                iserror = (tcolor==COLOR_ERROR)
+                iswarning = (tcolor==COLOR_WARNING)
+                # sometimes, the same test appears multiple times
+                if not tname in nicoslogs:
+                    nicoslogs[tname] = (iserror,iswarning,tlink)
+        except:
+            print 'WARNING: unable to retrieve NICOS logs for Project [%s]. Will continue using ATN logs only'%s.name
+            if not s.SKIP_ERRORS:
+                raise
+            pass
         # retrieve actual test table
         table = soup.find('table',id='ATNResults')
         assert table, 'Unable to find table: %s'%table
         rows = table.findAll('tr',{ "class" : "hi" })
         for row in rows:
             t = Test(urlbase=url)
-            t.initAtn(row)
+            t.initAtn(row,nicoslogs)
             res.append(t)
-        return res,soup
+        return res,soup,nicoslink
     def load(s):
         print '--> Loading ATN project:',s.name
-        s.pres,s.pres_soup = s.get_tests_from_url(s.pres_url())
-        s.last,s.last_soup = s.get_tests_from_url(s.last_url())
+        s.pres,s.pres_soup,s.pres_nicoslink = s.get_tests_from_url(s.pres_url())
+        s.last,s.last_soup,s.last_nicoslink = s.get_tests_from_url(s.last_url())
         return True
     def dump(s):
         if s.pres_soup:
@@ -91,24 +131,35 @@ class Project:
                 try:
                     bug = s.bugs.match(urllib2.urlopen(t.lerror,timeout=s.URLTIMEOUT).read())
                 except (urllib2.HTTPError,urllib2.URLError) as e :
-                    print 'WARNING: the following test log link leads to "404 page not found":'
+                    print 'WARNING: the following error-grep link leads to "404 page not found":'
                     print '   ',t.lerror
                     bug = None
             if not bug and t.lextract:
                 try:
                     bug = s.bugs.match(urllib2.urlopen(t.lextract,timeout=s.URLTIMEOUT).read())
                 except (urllib2.HTTPError,urllib2.URLError) as e :
-                    print 'WARNING: the following test log link leads to "404 page not found":'
+                    print 'WARNING: the following error-summary link leads to "404 page not found":'
                     print '   ',t.lextract
                     bug = None
             if not bug and t.ltail:
                 try:
                     bug = s.bugs.match(urllib2.urlopen(t.ltail,timeout=s.URLTIMEOUT).read())
                 except (urllib2.HTTPError,urllib2.URLError) as e :
-                    print '%s: the following test log link leads to "404 page not found":'%('WARNING' if Project.full_enable else 'ERROR')
+                    print 'WARNING: the following tail link leads to "404 page not found":'
                     print '   ',t.ltail
                     print '   ','THIS BUG CANNOT BE MATCHED'
                     bug = None
+            if not bug and t.lnicos:
+                try:
+                    bug = s.bugs.match(urllib2.urlopen(t.lnicos,timeout=s.URLTIMEOUT).read())
+                except (urllib2.HTTPError,urllib2.URLError) as e :
+                    print '%s: the following NICOS link leads to "404 page not found":'%('WARNING' if Project.full_enable else 'ERROR')
+                    print '   ',t.lnicos
+                    print '   ','THIS BUG CANNOT BE MATCHED'
+                    bug = None
+                # special fake bug number for unmatched NICOS-only bugs
+                if not bug and t.is_error_athena_nicos():
+                    bugid=1
             if not bug and t.llog and Project.full_enable:
                 try:
                     # only check full logs if they are under 50 MB in size
@@ -173,26 +224,27 @@ class Project:
                     lerror = ts[i].lerror if ts[i].lerror else DUMMY_LINK
                     llog = ts[i].llog if ts[i].llog else DUMMY_LINK
                     ltail = ts[i].ltail if ts[i].ltail else DUMMY_LINK
+                    lnicos = ts[i].lnicos if ts[i].lnicos else DUMMY_LINK
                     # last test with this bug id: print bug summary
                     if iorder==len(matchedidx)-1:
                         # special handling for the case of one test only affected by this bug
                         offset = '       ' if len(matchedidx)>1 else '    -  '
                         if bugids[i] >= 0:
-                            res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>):\n       [<a href="%s">bug #%s</a>] %s%s'%(offset,lextract,ts[i].name,lerror,llog,ltail,bugurls[i],bugids[i],status_summary,bugcomments[i]))
+                            res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>)(<a href="%s">nicos</a>):\n       [<a href="%s">bug #%s</a>] %s%s'%(offset,lextract,ts[i].name,lerror,llog,ltail,lnicos,bugurls[i],bugids[i],status_summary,bugcomments[i]))
                         else:
-                            res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>):\n       [Exit Category #%s] %s%s'%(offset,lextract,ts[i].name,lerror,llog,ltail,bugids[i],status_summary,bugcomments[i]))
+                            res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>)(<a href="%s">nicos</a>):\n       [Exit Category #%s] %s%s'%(offset,lextract,ts[i].name,lerror,llog,ltail,lnicos,bugids[i],status_summary,bugcomments[i]))
  
                     # for others, just list the bugs, one per line, with comma in the end of each line
                     else:
                         offset = '    -  ' if iorder==0 else '       '
                         if bugids[i] >= 0:
-                            res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>),'%(offset,lextract,ts[i].name,lerror,llog,ltail))
+                            res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>)(<a href="%s">nicos</a>),'%(offset,lextract,ts[i].name,lerror,llog,ltail,lnicos))
                         
         return res,total
     def report(s):
         res = []
         res.append('')
-        res.append( '<a href="%s">%s</a> (+link to <a href="%s">yesterday\'s cache</a>):'%(s.pres_url(),s.name,s.last_url()))
+        res.append( '%s [<a href="%s">ATN</a> , <a href="%s">NICOS</a>]   +yesterday\'s links: [<a href="%s">ATN</a> , <a href="%s">NICOS</a>]:'%(s.name,s.pres_url(),s.pres_nicoslink,s.last_url(),s.last_nicoslink))
         total = 0
         # athena errors
         err = [t for t in s.pres if t.is_error_athena()]
@@ -243,11 +295,12 @@ class Project:
             lerror = old.lerror if old.lerror else DUMMY_LINK
             llog = old.llog if old.llog else DUMMY_LINK
             ltail = old.ltail if old.ltail else DUMMY_LINK
+            lnicos = old.lnicos if old.lnicos else DUMMY_LINK
             offset = '    - '
             if bugid >= 0:
-                res.append( '%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>) : %s %s'%(offset,lextract,old.name,lerror,llog,ltail,('[<a href="%s">bug #%s</a>]'%(bugurl,bugid)) if bugid!=0 else '',FIXEDSTATUS) )
+                res.append( '%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>)(<a href="%s">nicos</a>) : %s %s'%(offset,lextract,old.name,lerror,llog,ltail,lnicos,('[<a href="%s">bug #%s</a>]'%(bugurl,bugid)) if bugid!=0 else '',FIXEDSTATUS) )
             else:
-                res.append( '%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>) : %s %s'%(offset,lextract,old.name,lerror,llog,ltail,('[Exit Category #%s]'%(bugid)) if bugid!=0 else '',FIXEDSTATUS) )
+                res.append( '%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>)(<a href="%s">nicos</a>) : %s %s'%(offset,lextract,old.name,lerror,llog,ltail,lnicos,('[Exit Category #%s]'%(bugid)) if bugid!=0 else '',FIXEDSTATUS) )
         # don't print anything if no tests were fixed
         if len(match)==0:
             res = []
@@ -289,18 +342,19 @@ class Project:
                 lerror = old.lerror if old.lerror else DUMMY_LINK
                 llog = old.llog if old.llog else DUMMY_LINK
                 ltail = old.ltail if old.ltail else DUMMY_LINK
+                lnicos = old.lnicos if old.lnicos else DUMMY_LINK
                 # last test with this bug id: print bug summary
                 if iorder==len(matchedidx)-1:
                     # special handling for the case of one test only affected by this bug
                     offset = '       ' if len(matchedidx)>1 else '    -  '
                     if bugids[i] >= 0:
-                        res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>):\n       [<a href="%s">bug #%s</a>] %s%s'%(offset,lextract,old.name,lerror,llog,ltail,bugurls[i],bugids[i],FIXEDSTATUS,bugcomments[i]))
+                        res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>)(<a href="%s">nicos</a>):\n       [<a href="%s">bug #%s</a>] %s%s'%(offset,lextract,old.name,lerror,llog,ltail,lnicos,bugurls[i],bugids[i],FIXEDSTATUS,bugcomments[i]))
                     else:
-                        res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>):\n       [Exit Category #%s] %s%s'%(offset,lextract,old.name,lerror,llog,ltail,bugids[i],FIXEDSTATUS,bugcomments[i]))
+                        res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>)(<a href="%s">nicos</a>):\n       [Exit Category #%s] %s%s'%(offset,lextract,old.name,lerror,llog,ltail,lnicos,bugids[i],FIXEDSTATUS,bugcomments[i]))
                 # for others, just list the bugs, one per line, with comma in the end of each line
                 else:
                     offset = '    -  ' if iorder==0 else '       '
-                    res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>),'%(offset,lextract,old.name,lerror,llog,ltail))
+                    res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>)(<a href="%s">nicos</a>),'%(offset,lextract,old.name,lerror,llog,ltail,lnicos))
         # don't print anything if no tests were fixed
         if len(match)==0:
             res = []

@@ -82,14 +82,22 @@ class BugTracker:
         s.add(bugid,pattern,comment)
         s.bugs[-1].new = True
     def prefill_genpurpose(s):
+        """ General failure conditions """
         s.add(-1, 'CRITICAL stopped by user interrupt','User interrupt')
         s.add(-1, 'KeyboardInterrupt','User interrupt')
         s.add(-2, 'APPLICATION_DIED_UNEXPECTEDLY','Worker process failed')
         s.add(-3, 'received fatal signal 15','Job recieved SIGTERM signal')
         s.add(-3, ['Signal handler: Killing','with 15'],'Job recieved SIGTERM signal')
         s.add(-4, 'ATN_TIME_LIMIT','Job timed out')
-       # s.add_new(94082,["getRegistryEntries: read", "CLIDRegistry entries for module ALL","ClassIDSvc"]) #FIXME
-
+    def prefill_nicos(s):
+        """ Special bugs that are only picked up by NICOS - and are not present in the ATN summary page """
+        s.add(94697,['ls: \*rel_\[0-6\].data.xml: No such file or directory'],'NICOS HARMLESS WARNING: missing *rel_[0-6].data.xml')
+        s.add(94697,["python: can't open file 'checkFileTrigSize_RTT.py'"],'NICOS HARMLESS WARNING: cannot find checkFileTrigSize_RTT.py')
+        s.add(94697,["sh: voms-proxy-info: command not found"],'NICOS HARMLESS WARNING: voms-proxy-info command not found')
+        s.add(-5, ['\.reference: No such file or directory','wc:','old/reference'],'NICOS: MISSING REFERENCE FILE')
+        s.add(-5, ['\.reference: No such file or directory','wc:','checkcounts test warning: Unable to open reference'],'NICOS: MISSING REFERENCE FILE')
+        s.add(-6, ['These errors occured: ROOTCOMP_MISMATCH \(4\)','trigtest.pl: FAILURE at end'],'NICOS: ROOTCOMP MISMATCH')
+        s.add(-7, ['NICOS NOTICE: POSSIBLE FAILURE \(ERROR\) : LOGFILE LARGE and TRUNCATED'],'NICOS: LOGFILE TRUNCATED')
     def prefill(s):
         """ 
         Note that bugs will be matched bottom-up. That is, newer bugs should be put at the bottom and will get matched first
@@ -97,6 +105,7 @@ class BugTracker:
         s.add(,['',''])
         """
         s.prefill_genpurpose()
+        s.prefill_nicos()
         s.add(86562,['ERROR preLoadFolder failed for folder /Digitization/Parameters','FATAL DetectorStore service not found'])
         s.add(87109,"No such file or directory: '/afs/cern.ch/user/t/tbold/public/TDTtest/attila.AOD.pool.root'",comment='AthenaTrigAOD_TDT_fixedAOD fails with missing input file. According the the bug report, this has been fixed in TrigAnalysistest-00-03-24.')
         #s.add(88042,['Partition "athena_mon" does not exist'])
@@ -293,9 +302,11 @@ class BugTracker:
         s.add(94473,"ImportError: No module named TrigL2MissingET.TrigL2MissingETConfig")
         s.add(94474,"ImportError: No module named TrigT2CaloTau.TrigT2CaloTauConfig")
         s.add(94483,["Py:athenaMT", "CRITICAL Caught an untreated exception - OverflowError: bad numeric conversion: positive overflow"])
-        s.add(94507,["Current algorithm: TrigSteer_","../src/TrigLBNHist.cxx:92",'TrigLBNHist<TH1I>::Fill'])
-        s.add(94507,['Core dump from CoreDumpSvc','Current algorithm: TrigSteer_','Last incident: Lvl2EventLoopMgr:BeginEvent','Event counter: 104']) # this is tricky: stack trace is often absent in these logs. But in one case, it was printed, and it matched bug 94507
-        s.add(94507,['Core dump from CoreDumpSvc','Current algorithm: TrigSteer_','Last incident: EFEventLoopMgr:BeginEvent','Event counter: 95'])
+        s.add(94507,["TH1::Fill","../src/TrigLBNHist.cxx:92"])
+        s.add(94507,["TrigLBNHist<TH1I>::Fill","../src/TrigLBNHist.cxx:92"])
+        ##s.add(94507,['Core dump from CoreDumpSvc','Current algorithm: TrigSteer_','Last incident: Lvl2EventLoopMgr:BeginEvent','Event counter: 104']) # this is tricky: stack trace is often absent in these logs. But in one case, it was printed, and it matched bug 94507
+        ##s.add(94507,['Core dump from CoreDumpSvc','Current algorithm: TrigSteer_','Last incident: EFEventLoopMgr:BeginEvent','Event counter: 95'])
+        #s.add(94668,['Current algorithm: TrigSteer_EF','Current trigger chain: <NONE>','Event counter: 91']) # uninformative stack trace. This is 94507
         #s.add(94536,["ers::Issue::Issue\(const ers::Context\&, const std::exception\&\) at ers/src/Issue.cxx:91","std::bad_alloc"]) # marked INVALID
         s.add(94562,['HLTConfigSvc::updatePrescaleSets','Current algorithm: TrigSteer_EF','std::bad_alloc'])
         #s.add(94537,['CORBA::Object\* ipc::util::resolve\(...\) at ipc/src/util.cc:369','The object "RunParams" of the "is/repository" type is not published in the "athena_mon" partition'])
@@ -310,7 +321,6 @@ class BugTracker:
         s.add(94611,['Current algorithm: MuGirl','msFit ../src/GlobalFitTool.cxx:571'])
         s.add(94654,['ImportError: cannot import name LVL1CTP__CBNTAA_CTP_RDO'])
         s.add(94667,['in CoreDumpSvcHandler::action','at ../src/root/OHRootProvider.cxx:136'])
-        s.add(94668,['Current algorithm: TrigSteer_EF','Current trigger chain: <NONE>','Event counter: 91']) # uninformative stack trace
         return
 
 if __name__ == '__main__':

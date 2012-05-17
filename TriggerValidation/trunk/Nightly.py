@@ -14,7 +14,7 @@ class Nightly:
     def __init__(s,name):
         s.name = name
         s.projects = []
-        # link and contents of the NICOS page
+        # link and contents of the NICOS *build* page
         s.nicoslinks = None
         s.errorpackages = []
         s.errorlinks    = []
