@@ -309,8 +309,8 @@ class BugTracker:
         s.add(94610,['EventStorage::file_end_record ESLOriginalFile::currentFileFER','data10_7TeV.00152845.physics_MinBias.merge.RAW._lb0250._0003.1','GUID not present in BS file'])
         s.add(94611,['Current algorithm: MuGirl','msFit ../src/GlobalFitTool.cxx:571'])
         s.add(94654,['ImportError: cannot import name LVL1CTP__CBNTAA_CTP_RDO'])
-        s.add_new(94667,['in CoreDumpSvcHandler::action','at ../src/root/OHRootProvider.cxx:136'])
-        s.add_new(94668,['Current algorithm: TrigSteer_EF','Current trigger chain: <NONE>','Event counter: 91'])
+        s.add(94667,['in CoreDumpSvcHandler::action','at ../src/root/OHRootProvider.cxx:136'])
+        s.add(94668,['Current algorithm: TrigSteer_EF','Current trigger chain: <NONE>','Event counter: 91']) # uninformative stack trace
         return
 
 if __name__ == '__main__':
