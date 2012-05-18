@@ -53,6 +53,8 @@ echo "" >> ${DEST}/rtt.txt
 
 nskip=`grep -c 'skipping release' ${DEST}/log.txt`
 if [ "${nskip}" == "0" ]; then
-    echo "All nightlies finished successfully on `date`" | mail -s "TrigVal shifts: REL = ${rel} PART = ${part}" ${MYEMAIL}
+    echo "All nightlies finished successfully on `date`" >> ${DEST}/log.txt
+    echo '<a href="http://hep.uchicago.edu/~antonk/VAL/">http://hep.uchicago.edu/~antonk/VAL</a>' >> ${DEST}/log.txt
+    cat ${DEST}/log.txt | mail -s "`date +%D`: TrigVal shifts: REL = ${rel} PART = ${part}" ${MYEMAIL}
 fi
 echo "DONE"

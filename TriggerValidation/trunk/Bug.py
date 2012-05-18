@@ -270,7 +270,7 @@ class BugTracker:
         s.add(94173,["Py:TriggerPythonConfig","ERROR Chain L2_je255 defined 2 times with 2 variants"])
         s.add(94176,["L2EFChain_mu_EFFSonly","'TrigMuonEFCombinerDiMuonMassHypoConfig' is not defined"])
         s.add(94185,"ImportError: No module named egammaD3PDAnalysisConf")
-        s.add(94190,["AthenaPoolConverter","ERROR poolToObject: Could not get object for Token","ERROR Standard std::exception is caught handling incident","ERROR POOL read failed"])
+        s.add(94190,["ERROR poolToObject: Could not get object for Token","ConditionsContainerTRTCond::StrawStatusContainerTemplate"])
         s.add(94192,["Non identical keys found. See diff_smk_","l2_diff.txt and ef_diff.txt","L2SecVtx_JetB.TrigInDetVxInJetTool.VertexFitterTool"])
         s.add(94223,"WARNING D3PDProdFlags not availabl. Only OK if you're using job transforms without the AtlasAnalysis project.")
         s.add(94261,"IncludeError: include file MuonTrkPhysMonitoring/MuonTrkPhysDQA_options.py can not be found")
