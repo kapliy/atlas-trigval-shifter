@@ -265,45 +265,13 @@ class Project:
             for t in err:
                 status = '' if any([l.samebug(t) for l in s.last]) else ' '+NEWSTATUS
                 total += 1
-                res.append('    - <a href="%s">%s</a>%s'%(t.lextract,t.name,status))
+                res.append('    - <a href="%s">%s</a> (<a href="%s">nicos</a>)%s'%(t.lextract,t.name,t.lnicos,status))
         # if there were no errors of any kind, just say so
         if total==0:
             res = res[0:2]
             res.append('  All OK!')
         # summarize bugs that were fixed since previous release
         res += s.fixed_error_report()
-        return res
-    def fixed_error_report_old(s):
-        """ Returns a list of tests that were fixed between previous and current releases """
-        res = []
-        # yesterday's errors:
-        err = [t for t in s.last if t.is_error_athena() or t.is_error_exit()]
-        # yesterday's errors that were fixed, and their matches in today's release
-        fixed = [] # yesterday's test
-        match = [] # today's test
-        for t in err:
-            # today's corresponding tests (if fixed)
-            matches = [pres for pres in s.pres if t.fixedbug(pres)]
-            assert len(matches) in (0,1), 'Found tests with duplicate names'
-            if len(matches)==1:
-                fixed.append(t)
-                match.append(matches[0])
-        res.append("  <i>Link to yesterday's broken tests that passed successfully today (as of rel_%d)</i>:"%s.rel)
-        for t,old in zip(match,fixed):
-            status,bug,bugid,bugurl,bugcomment = s.match_bugs(old)
-            lextract = old.lextract if old.lextract else DUMMY_LINK
-            lerror = old.lerror if old.lerror else DUMMY_LINK
-            llog = old.llog if old.llog else DUMMY_LINK
-            ltail = old.ltail if old.ltail else DUMMY_LINK
-            lnicos = old.lnicos if old.lnicos else DUMMY_LINK
-            offset = '    - '
-            if bugid >= 0:
-                res.append( '%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>)(<a href="%s">nicos</a>) : %s %s'%(offset,lextract,old.name,lerror,llog,ltail,lnicos,('[<a href="%s">bug #%s</a>]'%(bugurl,bugid)) if bugid!=0 else '',FIXEDSTATUS) )
-            else:
-                res.append( '%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>)(<a href="%s">nicos</a>) : %s %s'%(offset,lextract,old.name,lerror,llog,ltail,lnicos,('[Exit Category #%s]'%(bugid)) if bugid!=0 else '',FIXEDSTATUS) )
-        # don't print anything if no tests were fixed
-        if len(match)==0:
-            res = []
         return res
     def fixed_error_report(s):
         """ Returns a list of tests that were fixed between previous and current releases """

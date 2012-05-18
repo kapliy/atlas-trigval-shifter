@@ -239,7 +239,7 @@ class BugTracker:
         s.add(93771,['was caused by: ERROR TrigDiMuon_FS','was caused by: ERROR TrigSteer_L2.Navigation'])
         s.add(92598,['glibc detected','free\(\): corrupted unsorted chunks:','Backtrace','boost9re_detail26basic_regex_implementation'])
         s.add(93833,["AttributeError: 'D3PD__VectorFillerTool' object has no attribute 'JetTag_SoftMuonInfoMuonAssoc_target'"])
-        s.add(93870,['Core dump from CoreDumpSvc','Caught signal 11\(Segmentation fault\)','Last incident: InputMetaDataStore:StoreCleared']) # somewhat general
+        #s.add(93870,['Core dump from CoreDumpSvc','Caught signal 11\(Segmentation fault\)','Last incident: InputMetaDataStore:StoreCleared']) # somewhat general
         s.add(93877,['Current algorithm: StreamAOD','stacktrace ../src/SealDebug.cxx:738'])
         s.add(93877,['Current algorithm: GlobalMonManager','stacktrace ../src/SealDebug.cxx:738','ERROR Athena received signal 11. Exit code reset to Athena exit code 139'])
         s.add(93886,'At least one of the jobs \(ascending/descending chain counter\) has not been completed\! Exit.')
@@ -321,6 +321,7 @@ class BugTracker:
         s.add(94611,['Current algorithm: MuGirl','msFit ../src/GlobalFitTool.cxx:571'])
         s.add(94654,['ImportError: cannot import name LVL1CTP__CBNTAA_CTP_RDO'])
         s.add(94667,['in CoreDumpSvcHandler::action','at ../src/root/OHRootProvider.cxx:136'])
+        s.add(94713,['LArRawConditionsDict2_gen_rflx.cpp:35473','Reflex::LiteralString::Remove'])
         return
 
 if __name__ == '__main__':

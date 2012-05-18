@@ -6,7 +6,7 @@ MATCH_BUGS = True
 # Set to false to die on first exception (and print detailed error summary)
 SKIP_ERRORS = True
 # choose default release (may be over-ridden on command line)
-rel = 4
+rel = 5
 # compare with the dby(day-before-yesterday) release, rather than yesterday?
 dby = False
 
@@ -29,7 +29,7 @@ Project.Project.rel = rel
 Project.Project.dby = dby
 Project.Project.SKIP_ERRORS = SKIP_ERRORS
 # tweaks for *full* log matching:
-Project.Project.full_enable = True
+Project.Project.full_enable = False
 Project.Project.full_nmax   = 10    # increase this if you really NEED to match more full logs
 from Test import Test
 Test.CHECK_NICOS = True
@@ -49,7 +49,7 @@ from configure_nightlies import X
 # Dump shift report to an html file
 if __name__=="__main__":
     if getpass.getuser()=='antonk':
-        f = open('/hep/public_html/VAL/index.html','w')
+        f = open('/hep/public_html/VAL/index2.html','w')
     else:
         f = open('index.html','w')
     print >>f,'<html><head><title>Trigger Validation Shift Report: rel_%d</title></head><body>'%rel
