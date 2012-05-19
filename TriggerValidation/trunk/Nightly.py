@@ -69,7 +69,7 @@ class Nightly:
         res.append('%s %s'%(s.name,rel))
         res.append( '' + '='*len(s.name) )
         if len(s.errorpackages)>0:
-            res.append('<font color="red">Build errors:</font>')
+            res.append('<font color="#FF6666">Build errors:</font>')
             iprinted=0
             for package,blink in zip(s.errorpackages,s.errorlinks):
                 res.append('<a href="%s">%s</a>'%(blink,package))

@@ -33,10 +33,14 @@ else
     part=3
 fi
 
+# get the latest version of the code:
+svn update
+
 echo "PWD = $PWD"
 echo "DEST = ${DEST}"
 echo "REL = ${rel}   PART = ${part}"
 
+# Prepare the shift report
 ./run.py ${rel} ${part} &> ${DEST}/log.txt
 cp ${DEST}/index2.html ${DEST}/index_stable.html
 

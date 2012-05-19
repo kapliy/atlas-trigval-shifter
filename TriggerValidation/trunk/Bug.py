@@ -92,9 +92,9 @@ class BugTracker:
         s.add(-4, ['test killed as time quota spent, test warning is issued','nicos_kill_fam'],'Job timed out')
     def prefill_nicos(s):
         """ Special bugs that are only picked up by NICOS - and are not present in the ATN summary page """
-        s.add(94697,['ls: \*rel_\[0-6\].data.xml: No such file or directory'],'NICOS HARMLESS WARNING: missing *rel_[0-6].data.xml')
-        s.add(94697,["python: can't open file 'checkFileTrigSize_RTT.py'"],'NICOS HARMLESS WARNING: cannot find checkFileTrigSize_RTT.py')
-        s.add(94697,["sh: voms-proxy-info: command not found"],'NICOS HARMLESS WARNING: voms-proxy-info command not found')
+        s.add(94697,['href="#prblm"\>ls: \*rel_\[0-6\].data.xml: No such file or directory'],'NICOS HARMLESS WARNING: missing *rel_[0-6].data.xml')
+        s.add(94697,['href="#prblm"\>python: can\'t open file \'checkFileTrigSize_RTT.py\''],'NICOS HARMLESS WARNING: cannot find checkFileTrigSize_RTT.py')
+        s.add(94697,['href="#prblm"\>sh: voms-proxy-info: command not found'],'NICOS HARMLESS WARNING: voms-proxy-info command not found')
         s.add(-5, ['\.reference: No such file or directory','wc:','old/reference'],'NICOS: MISSING REFERENCE FILE')
         s.add(-5, ['\.reference: No such file or directory','wc:','checkcounts test warning: Unable to open reference'],'NICOS: MISSING REFERENCE FILE')
         s.add(-6, ['These errors occured: ROOTCOMP_MISMATCH \(4\)','trigtest.pl: FAILURE at end'],'NICOS: ROOTCOMP MISMATCH')
@@ -325,6 +325,7 @@ class BugTracker:
         s.add(94713,['LArRawConditionsDict2_gen_rflx.cpp:35473','Reflex::LiteralString::Remove'])
         s.add(94725,['THistSvc','ERROR already registered an object with identifier','EXPERT/TrigEFElectronHypo_'])
         s.add(94726,['in InDet::SiCluster::width','in InDet::SiTrajectoryElement_xk::patternCovariances'])
+        s.add_new(94730,['efd::CoreEIssue ERROR EFD core problem','Failed terminating monitorThread'])
         return
 
 if __name__ == '__main__':
