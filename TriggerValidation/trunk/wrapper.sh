@@ -42,7 +42,8 @@ echo "REL = ${rel}   PART = ${part}"
 
 # Prepare the shift report
 ./run.py ${rel} ${part} &> ${DEST}/log.txt
-cp ${DEST}/index2.html ${DEST}/index_stable.html
+# Back up a copy of the output
+cp ${DEST}/index2.html ${DEST}/index_part${part}.html
 
 echo "RTT TESTS:" > ${DEST}/rtt.txt
 echo "" >> ${DEST}/rtt.txt

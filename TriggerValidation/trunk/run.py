@@ -51,7 +51,7 @@ if __name__=="__main__":
     if getpass.getuser()=='antonk':
         f = open('/hep/public_html/VAL/index2.html','w')
     else:
-        f = open('index.html','w')
+        f = open('index2.html','w')
     print >>f,'<html><head><title>Trigger Validation Shift Report: rel_%d</title></head><body>'%rel
     print >>f,'<pre style="font-size: 12; font-family: Courier, \'Courier New\', monospace">'
     if True:
