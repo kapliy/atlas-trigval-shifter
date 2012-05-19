@@ -325,7 +325,7 @@ class BugTracker:
         s.add(94713,['LArRawConditionsDict2_gen_rflx.cpp:35473','Reflex::LiteralString::Remove'])
         s.add(94725,['THistSvc','ERROR already registered an object with identifier','EXPERT/TrigEFElectronHypo_'])
         s.add(94726,['in InDet::SiCluster::width','in InDet::SiTrajectoryElement_xk::patternCovariances'])
-        s.add_new(94730,['efd::CoreEIssue ERROR EFD core problem','Failed terminating monitorThread'])
+        s.add(94730,['efd::CoreEIssue ERROR EFD core problem','Failed terminating monitorThread'])
         return
 
 if __name__ == '__main__':
