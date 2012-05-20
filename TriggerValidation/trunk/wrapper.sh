@@ -45,16 +45,24 @@ echo "REL = ${rel}   PART = ${part}"
 # Back up a copy of the output
 cp ${DEST}/index2.html ${DEST}/index_part${part}.html
 
-echo "RTT TESTS:" > ${DEST}/rtt.txt
-echo "" >> ${DEST}/rtt.txt
-echo "" >> ${DEST}/rtt.txt
-./rtt.py 0 1.1 ${rel} >> ${DEST}/rtt.txt
-echo "" >> ${DEST}/rtt.txt
-echo "" >> ${DEST}/rtt.txt
-./rtt.py 1 1.1 ${rel} >> ${DEST}/rtt.txt
-echo "" >> ${DEST}/rtt.txt
-echo "" >> ${DEST}/rtt.txt
-./rtt.py 2 1.1 ${rel} >> ${DEST}/rtt.txt
+# RTT tests
+DO_RTT=1
+if [ "$#" -gt "0" ];then
+    echo "Disabling rtt.py"
+    DO_RTT=0
+fi
+if [ "${DO_RTT}" -eq "1" ]; then
+    echo "RTT TESTS:" > ${DEST}/rtt.txt
+    echo "" >> ${DEST}/rtt.txt
+    echo "" >> ${DEST}/rtt.txt
+    ./rtt.py 0 1.1 ${rel} >> ${DEST}/rtt.txt
+    echo "" >> ${DEST}/rtt.txt
+    echo "" >> ${DEST}/rtt.txt
+    ./rtt.py 1 1.1 ${rel} >> ${DEST}/rtt.txt
+    echo "" >> ${DEST}/rtt.txt
+    echo "" >> ${DEST}/rtt.txt
+    ./rtt.py 2 1.1 ${rel} >> ${DEST}/rtt.txt
+fi
 
 nskip=`grep -c 'skipping release' ${DEST}/log.txt`
 if [ "${nskip}" == "0" ]; then

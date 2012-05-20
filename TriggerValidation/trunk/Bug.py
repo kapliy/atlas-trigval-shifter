@@ -110,12 +110,9 @@ class BugTracker:
         s.add(86562,['ERROR preLoadFolder failed for folder /Digitization/Parameters','FATAL DetectorStore service not found'])
         s.add(87109,"No such file or directory: '/afs/cern.ch/user/t/tbold/public/TDTtest/attila.AOD.pool.root'",comment='AthenaTrigAOD_TDT_fixedAOD fails with missing input file. According the the bug report, this has been fixed in TrigAnalysistest-00-03-24.')
         #s.add(88042,['Partition "athena_mon" does not exist'])
-        s.add(88042,["\[is::repository_var is::server::resolve\(...\) at is/src/server.cc:31\] IS repository 'Histogramming-EF-Segment-1-1-iss' does not exist"]) # not sure if this is indeed the same bug
+        s.add(88042,["\[is::repository_var is::server::resolve\(...\) at is/src/server.cc:31\] IS repository 'Histogramming-EF-Segment-1-1-iss' does not exist"])
         s.add(88042,["\[is::repository_var is::server::resolve\(...\) at is/src/server.cc:31\] IS repository 'Histogramming-L2-Segment-1-1-iss' does not exist"])
-        #s.add(88042,"OH repository 'Histogramming-L2-Segment-1-1-iss' does not exist") # 87601 is also appropriate, but closed as duplicate
-        # not sure if the errors below are also the same as bug 88042:
-        #s.add(88042,["IS repository 'RunParams' does not exist"])
-        #s.add(88042,['object "RunParams" of the "is/repository" type is not published'])
+        s.add(88042,['\[ipc::_objref_partition\* ipc::util::getPartition\(...\) at ipc/src/util.cc:273\] Partition "athena_mon" does not exist'])
         s.add(88554,['Moving to AthenaTrigRDO_chainOrder_compare','differences in tests with ordered HLT chain execution','TrigSteer_EF.TrigChainMoniValidation'])
         #s.add(88602,['TDTExampleARA.py','ReferenceError: attempt to access a null-pointer']) # too old
         #s.add(89464,['TriggerTool.jar','ERROR Upload of SMKey failed']) # too general
@@ -310,7 +307,6 @@ class BugTracker:
         #s.add(94668,['Current algorithm: TrigSteer_EF','Current trigger chain: <NONE>','Event counter: 91']) # uninformative stack trace. This is 94507
         #s.add(94536,["ers::Issue::Issue\(const ers::Context\&, const std::exception\&\) at ers/src/Issue.cxx:91","std::bad_alloc"]) # marked INVALID
         #s.add(94562,['HLTConfigSvc::updatePrescaleSets','Current algorithm: TrigSteer_EF','std::bad_alloc']) # said to be duplicate of 94507
-        #s.add(94537,['CORBA::Object\* ipc::util::resolve\(...\) at ipc/src/util.cc:369','The object "RunParams" of the "is/repository" type is not published in the "athena_mon" partition'])
         s.add(94542,["RuntimeError: key 'outputNTUP_TRIGFile' is not defined in ConfigDic"])
         s.add(94543,"tech: ROOT  desc: HIST  flags: INVALID  i_flags: WRITE")
         s.add(94595,['THistSvc','ERROR already registered an object with identifier','EXPERT/TrigSteer_'])
@@ -327,6 +323,8 @@ class BugTracker:
         s.add(94726,['in InDet::SiCluster::width','in InDet::SiTrajectoryElement_xk::patternCovariances'])
         s.add(94730,['efd::CoreEIssue ERROR EFD core problem','Failed terminating monitorThread'])
         s.add(94734,['\[TObject\* histmon::THistRegisterImpl::HInfo::get\(...\) at histmon/src/THistRegisterImpl.cxx:310\] Histograms registered with the id "/EXPERT/','CutCounter" are not compatible for the merge operation'])
+        s.add(94738,'ImportError: No module named TrigL2CosmicMuon.TrigL2CosmicMuon_Config')
+        s.add(94740,'ImportError: No module named METRefGetter_newplup')
         return
 
 if __name__ == '__main__':
