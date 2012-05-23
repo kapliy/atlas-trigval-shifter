@@ -326,6 +326,11 @@ class BugTracker:
         s.add(94734,['\[TObject\* histmon::THistRegisterImpl::HInfo::get\(...\) at histmon/src/THistRegisterImpl.cxx:310\] Histograms registered with the id "/EXPERT/','CutCounter" are not compatible for the merge operation'])
         s.add(94738,'ImportError: No module named TrigL2CosmicMuon.TrigL2CosmicMuon_Config')
         s.add(94740,'ImportError: No module named METRefGetter_newplup')
+        s.add(79986,['BackCompAthenaTrigBStoESDAOD FAILURE','Athena exited abnormally','Exit code: 5','script trigtest.pl --test BackCompAthenaTrigBStoESDAOD'])
+        s.add(94787,['include file MissingETSig/MissingETSigOutputESDList_jobOptions.py can not be found'])
+        s.add(94817,['can not locate service MuonTGC_CablingSvc'])
+        s.add(92555,['Warning in <TEnvRec::ChangeValue>','attempt to access a null-pointer'])
+        s.add(94825,['No module named TrigIDtrkMonitoring.TrigIDtrkMonitoringConfig'])
         return
 
 if __name__ == '__main__':
