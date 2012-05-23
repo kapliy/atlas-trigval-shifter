@@ -96,6 +96,7 @@ class BugTracker:
         s.add(94697,['href="#prblm"\>python: can\'t open file \'checkFileTrigSize_RTT.py\''],'NICOS HARMLESS WARNING: cannot find checkFileTrigSize_RTT.py')
         s.add(94697,['href="#prblm"\>sh: voms-proxy-info: command not found'],'NICOS HARMLESS WARNING: voms-proxy-info command not found')
         s.add(-5, ['\.reference: No such file or directory','wc:','old/reference'],'NICOS: MISSING REFERENCE FILE')
+        s.add(-5, ['\.reference: No such file or directory\</A\>\<BR\>'],'NICOS: MISSING REFERENCE FILE')
         s.add(-5, ['\.reference: No such file or directory','wc:','checkcounts test warning: Unable to open reference'],'NICOS: MISSING REFERENCE FILE')
         s.add(-6, ['These errors occured: ROOTCOMP_MISMATCH \(4\)','trigtest.pl: FAILURE at end'],'NICOS: ROOTCOMP MISMATCH')
         s.add(-7, ['NICOS NOTICE: POSSIBLE FAILURE \(ERROR\) : LOGFILE LARGE and TRUNCATED'],'NICOS: LOGFILE TRUNCATED')
