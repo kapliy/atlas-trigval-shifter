@@ -311,8 +311,9 @@ class BugTracker:
         s.add(94542,["RuntimeError: key 'outputNTUP_TRIGFile' is not defined in ConfigDic"])
         s.add(94543,"tech: ROOT  desc: HIST  flags: INVALID  i_flags: WRITE")
         s.add(94595,['THistSvc','ERROR already registered an object with identifier','EXPERT/TrigSteer_'])
-        #s.add(94598,['Last incident: EFEventLoopMgr:BeginEvent','Current algorithm: EFTrigMissingETMuon_Fex_FEB']) # uninformative stack trace
-        #s.add(94598,['Last incident: EFEventLoopMgr:BeginEvent','Current algorithm: EFTrigMissingETMuon_Fex']) # uninformative stack trace
+        s.add(94598,['EFTrigMissingETMuon_Fex_FEB','at ../src/TrigInDetTrack.cxx:67']) # uninformative stack trace
+        s.add(94598,'Current algorithm: EFTrigMissingETMuon_Fex_FEB') #too general
+        s.add(94598,['Current algorithm: EFTrigMissingETMuon_Fex']) # uninformative stack trace
         #s.add(94599,['corrupted double-linked list','cfree','libeformat.so']) # uninformative stack trace, full log only
         #s.add(94599,['double free or corruption','cfree','_ZN4Cint8Internal18G__BufferReservoirD1Ev']) # uninformative stack trace, full log only
         s.add(94610,['EventStorage::file_end_record ESLOriginalFile::currentFileFER','data10_7TeV.00152845.physics_MinBias.merge.RAW._lb0250._0003.1','GUID not present in BS file'])
@@ -335,9 +336,11 @@ class BugTracker:
         s.add(94865,'AllMT_physicsV4_menu FAILURE')
         s.add(94866,'BackCompAthenaTrigBStoESDAOD FAILURE')
         s.add(94869,['CRITICAL Caught an untreated exception','FSMTransitionError: Cannot execute configure'])
-        s.add(94868,['TrigSteer_L2','AthMasterSeq','AthAlgSeq'])
-        s.add(94867,['Error in configuration of TauSlice'])
-        s.add(94873,['Last incident: AthenaEventLoopMgr:BeginEvent','Current algorithm: TrigEDMChecker'])
+        #s.add(94868,['TrigSteer_L2','AthMasterSeq','AthAlgSeq'])
+        s.add(94867,['Error in configuration of TauSlice','AssertionError: unable to find L2 hypothesis algorithm \(l2calo_tau70_loose1\)'])
+        s.add(94873,['Last incident: AthenaEventLoopMgr:BeginEvent','Current algorithm: TrigEDMChecker','diff ../src/TrigPhoton.cxx:225'])
+        s.add(94874,['ERROR Trying to define EF item more than once EF_tauNoCut'])
+        s.add(94877,['line 98, in setHltExtraPayloadWords','OverflowError: bad numeric conversion: positive overflow'])
         return
 
 if __name__ == '__main__':
