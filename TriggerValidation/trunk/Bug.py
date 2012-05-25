@@ -331,6 +331,13 @@ class BugTracker:
         s.add(94817,['can not locate service MuonTGC_CablingSvc'])
         s.add(92555,['Warning in <TEnvRec::ChangeValue>','attempt to access a null-pointer'])
         s.add(94825,['No module named TrigIDtrkMonitoring.TrigIDtrkMonitoringConfig'])
+        s.add(94827,['FATAL Conditions database connection COOLOFL_INDET/COMP200 cannot be opened'])
+        s.add(94865,'AllMT_physicsV4_menu FAILURE')
+        s.add(94866,'BackCompAthenaTrigBStoESDAOD FAILURE')
+        s.add(94869,['CRITICAL Caught an untreated exception','FSMTransitionError: Cannot execute configure'])
+        s.add(94868,['TrigSteer_L2','AthMasterSeq','AthAlgSeq'])
+        s.add(94867,['Error in configuration of TauSlice'])
+        s.add(94873,['Last incident: AthenaEventLoopMgr:BeginEvent','Current algorithm: TrigEDMChecker'])
         return
 
 if __name__ == '__main__':
