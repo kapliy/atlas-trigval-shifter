@@ -230,7 +230,8 @@ class BugTracker:
         s.add(93658,["ES_WrongFileFormat: file is of no know format", "IOError: Invalid file or format at '../AllMT_physicsV4_caf/AllMT_mcV4_caf-1._0001.data'"])
         #s.add(93711,['WARNING IPC partition "part_lhl2ef_AtlasCAFHLT_rel_nightly" is not valid','Timeout reached waiting for transition to CONNECTED']) # generalized
         #s.add(93713,['INFO RAWtoESD has completed running of Athena with exit code -11','Current algorithm: EGammaStream_ProbeElectronFilter']) # too general?
-        #s.add(93735,["ERROR Upload of key 2 failed"]) # in reality, one needs to look inside <DIR>/uploadSMK.log  
+        #s.add(93735,["ERROR Upload of key 2 failed"]) # in reality, one needs to look inside <DIR>/uploadSMK.log
+        s.add(93735,["ERROR Upload of key 1 failed"])
         s.add(93736,["ERROR attempt to add a duplicate \(TopAlg.BeamBackgroundFiller\) ... dupe ignored"])
         s.add(93740,["IncludeError: include file InDetPriVxCBNT/InDetPriVxCBNT_jobOptions.py can not be found"])
         s.add(93741,["ERROR Unable to build inputFileSummary from any of the specified input files","TimeoutError","KeyError: 'eventdata_itemsDic'"])
@@ -333,14 +334,15 @@ class BugTracker:
         s.add(92555,['Warning in <TEnvRec::ChangeValue>','attempt to access a null-pointer'])
         s.add(94825,['No module named TrigIDtrkMonitoring.TrigIDtrkMonitoringConfig'])
         s.add(94827,['FATAL Conditions database connection COOLOFL_INDET/COMP200 cannot be opened'])
-        s.add(94865,'AllMT_physicsV4_menu FAILURE')
-        s.add(94866,'BackCompAthenaTrigBStoESDAOD FAILURE')
+        #s.add(94865,'AllMT_physicsV4_menu FAILURE')
+        s.add(94866,"NameError: name 'isTier0Flag' is not defined")
         s.add(94869,['CRITICAL Caught an untreated exception','FSMTransitionError: Cannot execute configure'])
         #s.add(94868,['TrigSteer_L2','AthMasterSeq','AthAlgSeq'])
         s.add(94867,['Error in configuration of TauSlice','AssertionError: unable to find L2 hypothesis algorithm \(l2calo_tau70_loose1\)'])
         s.add(94873,['Last incident: AthenaEventLoopMgr:BeginEvent','Current algorithm: TrigEDMChecker','diff ../src/TrigPhoton.cxx:225'])
         s.add(94874,['ERROR Trying to define EF item more than once EF_tauNoCut'])
         s.add(94877,['line 98, in setHltExtraPayloadWords','OverflowError: bad numeric conversion: positive overflow'])
+        s.add(94765,'Muonboy/digitu ERROR of MDT/CSC station Off')
         return
 
 if __name__ == '__main__':
