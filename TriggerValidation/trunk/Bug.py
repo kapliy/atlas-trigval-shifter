@@ -343,6 +343,12 @@ class BugTracker:
         s.add(94874,['ERROR Trying to define EF item more than once EF_tauNoCut'])
         s.add(94877,['line 98, in setHltExtraPayloadWords','OverflowError: bad numeric conversion: positive overflow'])
         s.add(94765,'Muonboy/digitu ERROR of MDT/CSC station Off')
+        s.add(94958,['Py:TriggerPythonConfig','ERROR IN CHAIN: EF Chain counter 801 used 2 times while can only once, will print them all'])
+        s.add(91065,['Error: When merging chains:','EF_mu4T','EF_j10_a4tc_EFFS','these were missing'])
+        s.add(95024,['segmentation violation','TrigDiMuonFast::makeMDT\(Candidate'])
+        s.add(95026,['ImportError: cannot import name CBNTAA_CaloInfo'])
+        s.add(95027,['Py:LArCalibMenu     ERROR template chain with sig_id=g.* is not defined at level EF'])
+        s.add(95028,['NameError: name \'L2ElectronHypo_e12_loose1_FTK\' is not defined'])
         return
 
 if __name__ == '__main__':

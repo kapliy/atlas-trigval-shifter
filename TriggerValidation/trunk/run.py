@@ -43,6 +43,7 @@ Project.Project.bugs = bugs
 # (but sweep them into Bug.py BugTracker::prefill() at the end of the shift)
 #bugs.add_new(,[""])
 
+
 # Load the list of nightlies that we need to validate
 from configure_nightlies import X    
 
