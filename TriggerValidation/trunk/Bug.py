@@ -93,8 +93,8 @@ class BugTracker:
     def prefill_nicos(s):
         """ Special bugs that are only picked up by NICOS - and are not present in the ATN summary page """
         s.add(94697,['href="#prblm"\>ls: \*rel_\[0-6\].data.xml: No such file or directory'],'NICOS HARMLESS WARNING: missing *rel_[0-6].data.xml')
-        s.add(94697,['href="#prblm"\>python: can\'t open file \'checkFileTrigSize_RTT.py\''],'NICOS HARMLESS WARNING: cannot find checkFileTrigSize_RTT.py')
-        s.add(94697,['href="#prblm"\>sh: voms-proxy-info: command not found'],'NICOS HARMLESS WARNING: voms-proxy-info command not found')
+        s.add(94970,['href="#prblm"\>python: can\'t open file \'checkFileTrigSize_RTT.py\''],'NICOS HARMLESS WARNING: cannot find checkFileTrigSize_RTT.py')
+        s.add(94775,['href="#prblm"\>sh: voms-proxy-info: command not found'],'NICOS HARMLESS WARNING: voms-proxy-info command not found')
         s.add(-5, ['\.reference: No such file or directory','wc:','old/reference'],'NICOS: MISSING REFERENCE FILE')
         s.add(-5, ['\.reference: No such file or directory\</A\>\<BR\>'],'NICOS: MISSING REFERENCE FILE')
         s.add(-5, ['\.reference: No such file or directory','wc:','checkcounts test warning: Unable to open reference'],'NICOS: MISSING REFERENCE FILE')
@@ -336,7 +336,7 @@ class BugTracker:
         s.add(94825,['No module named TrigIDtrkMonitoring.TrigIDtrkMonitoringConfig'])
         s.add(94827,['FATAL Conditions database connection COOLOFL_INDET/COMP200 cannot be opened'])
         s.add(94866,"NameError: name 'isTier0Flag' is not defined")
-        s.add(94869,['CRITICAL Caught an untreated exception','FSMTransitionError: Cannot execute configure'])
+        #s.add(94869,['CRITICAL Caught an untreated exception','FSMTransitionError: Cannot execute configure']) # too general
         s.add(94867,['Error in configuration of TauSlice','AssertionError: unable to find L2 hypothesis algorithm \(l2calo_tau70_loose1\)'])
         s.add(94873,['Last incident: AthenaEventLoopMgr:BeginEvent','Current algorithm: TrigEDMChecker','diff ../src/TrigPhoton.cxx:225'])
         s.add(94874,['ERROR Trying to define EF item more than once EF_tauNoCut'])
@@ -352,6 +352,10 @@ class BugTracker:
         s.add(95069,['Muonboy/digitu ERROR of MDT/CSC station Off','which has hits'])
         s.add(95115,['in TrigConfChain::TrigConfChain','TrigMonitoringEvent/TrigMonitoringEvent/TrigConfChain.h:28'])
         s.add(95115,['Trig::FillConf::FillLV1','TrigMonitoringEvent/TrigMonConfig.icc:163'])
+        s.add(95116,['in TrigCostTool::\~TrigCostTool','in TrigMonConfig::\~TrigMonConfig'])
+        s.add(95116,['TrigSteer_L2','FATAL in sysStart\(\): standard std::exception is caught','ERROR std::bad_alloc'])
+        s.add(95141,["RuntimeError: RootController is in faulty state because: Application 'L2-Segment-1",'OnlRec::ExpertSystemDecision ERROR Raised Error state because of "L2PU'])
+        s.add(95156,['ERROR ServiceLocatorHelper::service: can not locate service InDetBeamSpotOnline','ERROR  failed to retrieve Online BeamCondSvc','ToolSvc.TestMonToolAC'])
         return
 
 if __name__ == '__main__':
