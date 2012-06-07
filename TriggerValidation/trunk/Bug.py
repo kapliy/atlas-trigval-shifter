@@ -356,6 +356,10 @@ class BugTracker:
         s.add(95116,['TrigSteer_L2','FATAL in sysStart\(\): standard std::exception is caught','ERROR std::bad_alloc'])
         s.add(95141,["RuntimeError: RootController is in faulty state because: Application 'L2-Segment-1",'OnlRec::ExpertSystemDecision ERROR Raised Error state because of "L2PU'])
         s.add(95156,['ERROR ServiceLocatorHelper::service: can not locate service InDetBeamSpotOnline','ERROR  failed to retrieve Online BeamCondSvc','ToolSvc.TestMonToolAC'])
+        s.add(95168,['Current algorithm: L2BjetFex_Jet_JetF','TrigBjetFex::hltExecute','src/FexAlgo.cxx:84'])
+        s.add(95172,['L2SecVtx_JetB','ERROR Failed to get TrigVertexCollection from the trigger element'])
+        s.add(95173,['RuntimeError: could not insert file','into PoolFileCatalog','line 37, in memoize'])
+        s.add(94599,['/afs/cern.ch/sw/lcg/external/Python/2.6.5/i686-slc5-gcc43-opt/bin/python: double free or corruption \(\!prev\): 0x0cc40538']) # FIXME fake bug
         return
 
 if __name__ == '__main__':

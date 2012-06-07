@@ -237,9 +237,7 @@ class Project:
                     # for others, just list the bugs, one per line, with comma in the end of each line
                     else:
                         offset = '    -  ' if iorder==0 else '       '
-                        if bugids[i] >= 0:
-                            res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>)(<a href="%s">nicos</a>),'%(offset,lextract,ts[i].name,lerror,llog,ltail,lnicos))
-                        
+                        res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>)(<a href="%s">nicos</a>),'%(offset,lextract,ts[i].name,lerror,llog,ltail,lnicos))
         return res,total
     def report(s):
         res = []

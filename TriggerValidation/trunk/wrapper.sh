@@ -67,7 +67,11 @@ fi
 nskip=`grep -c 'skipping release' ${DEST}/log.txt`
 if [ "${nskip}" == "0" ]; then
     echo "All nightlies finished successfully on `date`" >> ${DEST}/log.txt
-    echo 'LINK: http://hep.uchicago.edu/~antonk/VAL' >> ${DEST}/log.txt
+    echo 'Top link:  http://hep.uchicago.edu/~antonk/VAL' >> ${DEST}/log.txt
+    echo "This test: http://hep.uchicago.edu/~antonk/VAL/index_part${part}.html" >> ${DEST}/log.txt
+    echo "" >> ${DEST}/log.txt
+    echo "Cheers," >> ${DEST}/log.txt
+    echo "Your faithful AutoShifter" >> ${DEST}/log.txt
     cat ${DEST}/log.txt | mail -s "`date +%D`: TrigVal shifts: REL = ${rel} PART = ${part}" ${MYEMAIL}
 fi
 echo "DONE"
