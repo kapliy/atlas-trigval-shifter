@@ -110,13 +110,10 @@ class BugTracker:
         s.prefill_nicos()
         s.add(86562,['ERROR preLoadFolder failed for folder /Digitization/Parameters','FATAL DetectorStore service not found'])
         s.add(87109,"No such file or directory: '/afs/cern.ch/user/t/tbold/public/TDTtest/attila.AOD.pool.root'",comment='AthenaTrigAOD_TDT_fixedAOD fails with missing input file. According the the bug report, this has been fixed in TrigAnalysistest-00-03-24.')
-        #s.add(88042,['Partition "athena_mon" does not exist'])
         s.add(88042,["\[is::repository_var is::server::resolve\(...\) at is/src/server.cc:31\] IS repository 'Histogramming-EF-Segment-1-1-iss' does not exist"])
         s.add(88042,["\[is::repository_var is::server::resolve\(...\) at is/src/server.cc:31\] IS repository 'Histogramming-L2-Segment-1-1-iss' does not exist"])
         s.add(88042,['\[ipc::_objref_partition\* ipc::util::getPartition\(...\) at ipc/src/util.cc:273\] Partition "athena_mon" does not exist'])
         s.add(88554,['Moving to AthenaTrigRDO_chainOrder_compare','differences in tests with ordered HLT chain execution','TrigSteer_EF.TrigChainMoniValidation'])
-        #s.add(88602,['TDTExampleARA.py','ReferenceError: attempt to access a null-pointer']) # too old
-        #s.add(89464,['TriggerTool.jar','ERROR Upload of SMKey failed']) # too general
         s.add(90593,['ERROR ServiceLocatorHelper::createService: wrong interface id IID_3596816672 for service JobIDSvc','Root+python problem when reading ESDs'])
         s.add(90638,["if not ':' in connection:","argument of type 'NoneType' is not iterable","JobProperties.Rec.Trigger.triggerDbConnection which has not been set"],'TypeError at AthenaDBConfigRDO. Note that the bug report suggests the problem is due to conflict in TMXML build (bug 90665)') # tricky
         s.add(90677,['differences found in XML and DB trigger configuration tests','REGTEST events accepted by chain'],'Differences between DB and XML jobs because the job from the DB did not run, because of the missing/corrupted sqlite file.') # tricky
@@ -137,10 +134,8 @@ class BugTracker:
         s.add(92206,['FATAL: Failed to start local PMG server',"RunManager instance has no attribute 'root_controller'"])
         s.add(92206,['FATAL: Failed to start RM server',"RunManager instance has no attribute 'root_controller'"])
         s.add(92208,["CaloMonManager INFO Retrieved tool PublicToolHandle\('CaloCellVecMon/CaloCellMon'\)","boost::spirit::nil_t"])
-        #s.add(92209,'TauSliceAthenaTrigRDO__v4_top.reference: No such file or directory') # generalized to NICOS errors
         s.add(92213,'could not bind handle to CondAttrListCollection to key: /TRT/Onl/ROD/Compress','InDetTRTRodDecoder callback registration failed, but Athena job completes successfully')
         #s.add(92222,'ERROR Upload of key 1 failed') # too general
-        #s.add(92225,['Core dump from CoreDumpSvc','inlined at ../src/HLTBjetMonTool.cxx','HLTBjetMonTool::fill()'],'Segfault in HLTBjetMonTool, submitted to open bug, but may be a new problem') # may be general
         s.add(92260,"IOError: \[Errno 2\] No such file or directory: '../AthenaTrigAODtoAOD_TrigNavSlimming/AOD_RSegamma.pool.root'" )
         s.add(92260,"IOError: \[Errno 2\] No such file or directory: '../AthenaTrigRDOtoESDAOD/AOD.pool.root'" )
         s.add(92260,"IOError: \[Errno 2\] No such file or directory: '../AthenaTrigRDOtoESDAOD/ESD.pool.root'" )
@@ -155,43 +150,29 @@ class BugTracker:
         s.add(92265,'ERROR Failed to find jet chain with name EF_j145_a4tchad')
         s.add(92267,['CharybdisJimmy.digit.RDO','Py:inputFilePeeker WARNING caught','raise convert_to_error\(kind, result\)'])
         s.add(92272,['L2PhotonHypo_g15_loose','carcore size is 10 but needs 9'])
-        #s.add(92273,'Last incident: EFEventLoopMgr:EndRun') # too general
         s.add(92273,"/src/MeasuredAtaStraightLine.cxx:108")
         s.add(92298,["No such file or directory: 'ESD.pool.root'",'testAthenaP1ESD_TrigEDMCheck_data.py'], "Upstream test failed or timed out")
         s.add(92298,["No such file or directory: 'ESD.pool.root'",'testAthenaP1ESD_TrigDecTool.py'], "Upstream test failed or timed out")
         s.add(92397,'RuntimeError: Conditions database identifier RPC_OFL is not defined',comment='Conditions database identifier RPC_OFL is not defined for standalone_cosmic test. Note that this was originally assigned to bug [91848]')
-        #s.add(92407,['CRITICAL stopped by user interrupt','BackCompAthenaTrigBStoESDAOD']) # duplicate of special category
-        #s.add(92413,['Start of HLT Processing in EF','Current algorithm: TrigSteer_EF','Segmentation fault']) # too general!
         s.add(92435,['include file MissingET/MissingETOutputAODList_jobOptions.py can not be found'])
         s.add(92436,['AntiKt6TowerJets','fastjet::ClusterSequenceArea::initialize_and_run_cswa'])
         s.add(92437,["'D3PDMakerFlags' object has no attribute 'CompressionLevel'"])
         s.add(92449,['DataHeader_p','object has no attribute','File "./TDTExampleARA.py"'])
         s.add(92501,['invalid next size','libTrigTauDiscriminant.so'],"Invalid read in TrigTauDiscriBuilder")
-        #s.add(92516,['AthMasterSeq', 'AthAlgSeq','TrigSteer_EF','EFBMuMuFex_DiMu_noOS','stack trace'],"Segfault in EFBMuMuFex_DiMu_noOS--fix to be in TrigBphysHypo-00-03-07") # too general
         s.add(92532,"ERROR FATAL No input BS file could be found matching '../AthenaTrigRDOtoBS")
         s.add(92536,"HLTJobLib:       crash ERROR HLTProcess: could not find any files starting")
         s.add(92551,["NameError: name 'L2PhotonHypo_g12_loose' is not defined"])
         s.add(92595,["WARNING Chain L2_mu4T_j75_c4cchad aborting with error code ABORT_CHAIN"])
         s.add(92596,["CSCHackL2ROBListWriter_j10_empty_larcalib","ERROR Could not find RoI descriptor"])
-        #s.add(92598,["corrupted unsorted chunks:"]) # too general?
         s.add(92615,["WARNING Chain L2_2mu4T_DiMu_l2muonSA aborting with error code ABORT_CHAIN UNKNOWN"])
         s.add(92632,"message=inputBSFile=link_to_file_from_P1HLT.data: link_to_file_from_P1HLT.data not found")
-        #s.add(92662,["Current algorithm: Kt5TopoJets","\(floating point invalid operation\)"]) # too general?
-        #s.add(92675,["Algorithm stack:","EFMissingET_Fex_noiseSupp"]) #DELETEME
-        #s.add(92675,["FATAL Unchecked StatusCode","EFMissingET_Fex_noiseSupp"]) #DELETEME
-        #s.add(92675,["Algorithm stack:","EFMissingET_Fex_2sidednoiseSupp"]) #DELETEME
-        #s.add(92675,["FATAL Unchecked StatusCode","EFMissingET_Fex_2sidednoiseSupp"]) #DELETEME
         s.add(92680,['ERROR IN CHAIN: EF Chain counter 414 used 2 times while can only once, will print them all'])
-        #s.add(92699,["Current algorithm: TrigDiMuon_FS","Algorithm stack: "]) # too general
         s.add(92719,["Trigger menu inconsistent, aborting","Available HLT counter","TrigSteering/pureSteering_menu.py"])
         s.add(92734,["TrigConfConsistencyChecker","ERROR SAX error while parsing exceptions xml file, line 43, column 13"],'SAX error while parsing exceptions xml file')
-        #s.add(92746,["HLTBjetMon",'Unknown exception caught, while filling histograms'],'Error in HLTBjetMon. This bug is already assigned to a b-slice expert.')   # REMOVE ME!
         s.add(92757,["chain L2_g100_etcut_g50_etcut with has no matching LVL1 item L1_2EM14L1_2EM14",'Trigger menu inconsistent, aborting'])
         s.add(92814,["Unable to initialize Algorithm TrigSteer_L2",'ERROR Configuration error','T2IDTauHypo_tau',])
         s.add(92830,["Non identical keys found. See diff_smk_","l2_diff.txt and ef_diff.txt","TrigL2MuonSA::RpcDataPreparator"])
         s.add(92881,["Failed in LArFebRodMap::set",'barrel_ec out of range ,pos_neg out of range ,em_hec_fcal out of range'])
-        #s.add(92901,["/bin/python: malloc\(\): memory corruption:",'glibc detected','/lib/libc.so.6\(__libc_malloc','libboost_thread-gcc43-mt-1_44.so.1.44.0\(thread_proxy','ZN14OHRootProvider7publishERK3TH1RKSsiRKSt6vectorISt4pairISsSsESaIS7_EE'],'Malloc memory corruption') # general?
-        #s.add(92938,["TrigSteer_EF","FATAL Errors were too severe in this event will abort the job"]) # REMOVE ME
         s.add(91772,["Floating point exception",'InDetSiSpTrackFinder','RAWtoESD has completed running of Athena with exit code -8','InDet::SiCombinatorialTrackFinder_xk::initialize'],comment='FPE in InDetSiSpTrackFinder::initialize with vector<double> as properties')
         s.add(92952,["following input TEs don't appear as output TE: EM"])
         s.add(92952,["ERROR the element: \['tau20_medium_bdt', 'tau20_medium1_bdt', 'tau29_medium_bdt', 'tau29_medium1_bdt'\] is not allowed"])
@@ -206,9 +187,6 @@ class BugTracker:
         s.add(93239,["decodeCreateSvcNameList: Cannot create service AGDD2GeoSvc/AGDD2GeoSvc"])
         s.add(93292,["ImportError: cannot import name T2CaloFastJet_a4TT_MultipleOutput_TEs","ERROR Error in configuration of JetSlice"])
         s.add(93294,["CRITICAL Trigger connection alias 'None' is not defined","You are attempting to access the jobproperty JobProperties.Rec.Trigger.triggerDbConnection which has not been set","KeyError: 'techno'",'leaving with code 8: "an unknown exception occurred"'])
-        #s.add(93305,["INFO Creating event stream from file list \['root://eosatlas//eos/atlas/atlascerngroupdisk/trig-daq/validation/test_data/data11_7TeV.00191628.physics_eb_zee_zmumu._0001.data'\]","Parameters = 'name=Segmentation fault \(invalid memory reference\)' 'signum=11'"]) # ill-defined
-        #s.add(93307,["Last incident: InputMetaDataStore:StoreCleared","Algorithm stack: <EMPTY>","FATAL Unchecked StatusCode in exit from lib /lib/libc.so.6"]) # too general
-        #s.add(93315,["trigtest.pl --cleardir --test AllMT_physicsV4_menu --rundir AllMT_physicsV4_menu --conf TrigP1Test.conf","double free or corruption (!prev)","glibc detected"]) # too general
         s.add(93342,"FATAL ../src/JetVtxTrackHelper.cxx:154")
         s.add(93348,["LArRawChannelBuilder","ERROR Can't retrieve LArDigitContainer with key FREEfrom StoreGate."])
         s.add(93375,["L2_j30_c4ccem_2L1MU4_HV_EMPTY", "'T2CaloJet_Jet_noise':ABORT_CHAIN UNKNOWN BAD_JOB_SETUP","got error back while executing first algorithm"])
@@ -219,7 +197,6 @@ class BugTracker:
         s.add(93502,["No module named InDetVertexMonitoring.InDetVertexMonitoringConf","DataQualitySteering_jobOptions.py: exception when setting up inner detector monitoring"])
         s.add(93503,["AttributeError: 'DQMonFlagsCont' object has no attribute 'doMuonTrkPhysMon'"])
         s.add(93505,["ERROR Problems calling Blob2ToolConstants"])
-        #s.add(93509,["segmentation violation","HLTConfigSvc::updatePrescaleSets","in DataModelAthenaPool::DataVectorConvert::initialize"]) # a little too general
         s.add(93520,["AttributeError: 'InDetGlobalTrackMonTool' object has no attribute 'checkRate'"])
         s.add(93534,["RootController is in faulty state because: Application","has a problem that cannot be ignored","ERROR transition failed"])
         s.add(93582,["At least one of the jobs \(XML or DB reading\) has not been completed! Exit.","RDO_test.log"])
@@ -229,39 +206,25 @@ class BugTracker:
         s.add(93634,["ImportError: No module named part_lhl2ef_opt"])
         s.add(93636,["OPEN ERROR  boost::_bi::bind_t","Io::FileAttr const"])
         s.add(93658,["ES_WrongFileFormat: file is of no know format", "IOError: Invalid file or format at '../AllMT_physicsV4_caf/AllMT_mcV4_caf-1._0001.data'"])
-        #s.add(93711,['WARNING IPC partition "part_lhl2ef_AtlasCAFHLT_rel_nightly" is not valid','Timeout reached waiting for transition to CONNECTED']) # generalized
-        #s.add(93713,['INFO RAWtoESD has completed running of Athena with exit code -11','Current algorithm: EGammaStream_ProbeElectronFilter']) # too general?
         #s.add(93735,["ERROR Upload of key 2 failed"]) # in reality, one needs to look inside <DIR>/uploadSMK.log
         s.add(93735,["ERROR Upload of key 1 failed"])
         s.add(93736,["ERROR attempt to add a duplicate \(TopAlg.BeamBackgroundFiller\) ... dupe ignored"])
         s.add(93740,["IncludeError: include file InDetPriVxCBNT/InDetPriVxCBNT_jobOptions.py can not be found"])
         s.add(93741,["ERROR Unable to build inputFileSummary from any of the specified input files","TimeoutError","KeyError: 'eventdata_itemsDic'"])
         s.add(93747,["ERROR CaloCondBlobBase::getObjVersion: Invalid Blob"])
-        #s.add(93771,['was caused by: ERROR TrigDiMuon_FS','was caused by: ERROR TrigSteer_L2.Navigation']) # ill-defined>
-        #s.add(92598,['glibc detected','free\(\): corrupted unsorted chunks:','Backtrace','boost9re_detail26basic_regex_implementation']) # too general?
         s.add(93833,["AttributeError: 'D3PD__VectorFillerTool' object has no attribute 'JetTag_SoftMuonInfoMuonAssoc_target'"])
-        #s.add(93870,['Core dump from CoreDumpSvc','Caught signal 11\(Segmentation fault\)','Last incident: InputMetaDataStore:StoreCleared']) # somewhat general
-        #s.add(93877,['Current algorithm: StreamAOD','stacktrace ../src/SealDebug.cxx:738']) # wrong pattern
-        #s.add(93877,['Current algorithm: GlobalMonManager','stacktrace ../src/SealDebug.cxx:738','ERROR Athena received signal 11. Exit code reset to Athena exit code 139']) # wrong pattern
         s.add(93886,'At least one of the jobs \(ascending/descending chain counter\) has not been completed\! Exit.')
         s.add(93887,['WARNING Unpacking  of L2 chains failed','Current algorithm: GlobalMonManager','pool::PersistencySvc::DatabaseHandler::readObject'])
         s.add(93888,"TypeError: interpretConnection\(\) got an unexpected keyword argument 'resolveAlias'")
         s.add(93889,"NameError: name 'StreamESD' is not defined")
         s.add(93897,['LArL2ROBListWriter_j10_empty_larcalib','L1CaloTileHackL2ROBListWriter_j10_empty_larcalib','ERROR Could not find RoI descriptor - labels checked : TrigT2CaloEgamma initialRoI'])
-        #s.add(93944,['Current algorithm: L2SecVtx_JetB']) #uninformative stack trace
         s.add(93986,["AttributeError: 'FreeStore' object has no attribute 'l2_BjetFex_IDScan'"])
-        #s.add(93963,['histFolder = "InDetGlobal/PrimaryVertexMultiplicity"'])
         s.add(93987,["No such file or directory: 'HLTconfig_MC_pp_v4_loose_mc_prescale_17.2.2.2.xml'",'ServiceMgr.HLTConfigSvc.getAlgorithmsByLevel\(\)','doc = ET.parse\(self.XMLMenuFile\)'])
         s.add(93990,["TriggerMenuSQLiteFile","sqlite' file is NOT found in DATAPATH, exiting"])
         s.add(94001,["AttributeError: 'TileDQFragMonTool' object has no attribute 'TileRawChannelContainer'"])
         s.add(94033,["ATLAS_DBA.LOGON_AUDIT_TRIGGER' is invalid and failed re-validation"])
-        #s.add(94081,["Current algorithm: StreamBS"]) #uninformatie stack trace
         s.add(94049,["ERROR Can't retrieve offline RawChannel from TES"])
         s.add(94084,["LVL1CTP::CTPSLink::getCTPToRoIBWords","Current algorithm: RoIBuilder"])
-        #s.add(94087,["StatusCodeSv","FATAL Unchecked StatusCode in TrigJetRec::hltExecute"]) # too general?
-        #s.add(94088,['corrupted double-linked list','The object "RunParams" of the'])
-        #s.add(94088,'The object "RunParams" of the "is/repository" type is not published')
-        #s.add(94089,["Current algorithm: TrigJetRec_AntiKt4_lctopo"]) #uninforative stack trace
         s.add(93196,["ToolSvc.TrigTSerializer","MuonFeatureContainer_p3","ERROR Errors while decoding"])
         s.add(94120,["ERROR no handler for tech","FileMgr"])
         s.add(92976,["ERROR EF chains that recursively call L2 sequences","TrigConfConsistencyChecker"])
@@ -273,11 +236,9 @@ class BugTracker:
         s.add(94185,"ImportError: No module named egammaD3PDAnalysisConf")
         s.add(94190,["ERROR poolToObject: Could not get object for Token","ConditionsContainerTRTCond::StrawStatusContainerTemplate"])
         s.add(94192,["Non identical keys found. See diff_smk_","l2_diff.txt and ef_diff.txt","L2SecVtx_JetB.TrigInDetVxInJetTool.VertexFitterTool"])
-        #s.add(94223,"WARNING D3PDProdFlags not availabl. Only OK if you're using job transforms without the AtlasAnalysis project.") # not real error?
         s.add(94261,"IncludeError: include file MuonTrkPhysMonitoring/MuonTrkPhysDQA_options.py can not be found")
         s.add(94273,["ERROR: Can't find branch EventInfo_p3_McEventInfo in tree MetaData","ERROR ServiceLocatorHelper::createService: wrong interface id IID"])
         s.add(94320,["HLTAutoKey_PrimVx","of type \[VxContainer\] is INCONSISTENT. The element does not seem to be in the container. This link can not be written"])
-        #s.add(94339,["/afs/cern.ch/sw/lcg/external/Python/","/bin/python: corrupted double-linked list"])
         #s.add(94339,["__libc_malloc","libMuonMDT_CnvTools.so","/bin/python: corrupted double-linked list"]) # this bug can only be found in full log file
         s.add(94342,["TrigMuonEFTrackBuilderConfig_SeededFS","Core dump from CoreDumpSvc","Caught signal 11\(Segmentation fault\)"])
         #s.add(94342,["EFTrigMissingETMuon_Fex","Core dump from CoreDumpSvc","Caught signal 11\(Segmentation fault\)"]) # another bug
@@ -293,29 +254,14 @@ class BugTracker:
         s.add(94429,"ImportError: No module named TrigBphysMonitoring.TrigBphysMonitoringConfig")
         s.add(94435,["ES_WrongFileFormat: file is of no know format. Abort.EventStorage reading problem: file is of no know format. Abort.","virtual EventStackLayer"])
         s.add(94443,"ERROR Running command `rc_sendcommand -ppart_lhl2ef_AtlasCAFHLT_rel_nightly -nRootController exit' has produced an error")
-        # TODO: delete the following batch of ImportError's once they are fixed
-        s.add(94465,"ImportError: No module named JetRecTools.JetRecToolsConf")
-        s.add(94467,"ImportError: No module named TrigT2CaloEgammaConf")
-        s.add(94469,"ImportError: No module named TrigmuIsoConf")
-        s.add(94470,"ImportError: No module named LArByteStreamConf")
-        s.add(94471,"ImportError: No module named TrigT2MinBiasConf")
-        s.add(94472,"ImportError: No module named TrigT2CaloJet.TrigT2CaloJetConfig")
-        s.add(94473,"ImportError: No module named TrigL2MissingET.TrigL2MissingETConfig")
-        s.add(94474,"ImportError: No module named TrigT2CaloTau.TrigT2CaloTauConfig")
-        #s.add(94483,["Py:athenaMT", "CRITICAL Caught an untreated exception - OverflowError: bad numeric conversion: positive overflow"]) # not detailed enough
         s.add(94507,["TH1::Fill","../src/TrigLBNHist.cxx:92"])
         s.add(94507,["TrigLBNHist<TH1I>::Fill","../src/TrigLBNHist.cxx:92"])
-        ##s.add(94507,['Core dump from CoreDumpSvc','Current algorithm: TrigSteer_','Last incident: Lvl2EventLoopMgr:BeginEvent','Event counter: 104']) # this is tricky: stack trace is often absent in these logs. But in one case, it was printed, and it matched bug 94507
-        ##s.add(94507,['Core dump from CoreDumpSvc','Current algorithm: TrigSteer_','Last incident: EFEventLoopMgr:BeginEvent','Event counter: 95'])
-        #s.add(94668,['Current algorithm: TrigSteer_EF','Current trigger chain: <NONE>','Event counter: 91']) # uninformative stack trace. This is 94507
-        #s.add(94536,["ers::Issue::Issue\(const ers::Context\&, const std::exception\&\) at ers/src/Issue.cxx:91","std::bad_alloc"]) # marked INVALID
-        #s.add(94562,['HLTConfigSvc::updatePrescaleSets','Current algorithm: TrigSteer_EF','std::bad_alloc']) # said to be duplicate of 94507
         s.add(94542,["RuntimeError: key 'outputNTUP_TRIGFile' is not defined in ConfigDic"])
         s.add(94543,"tech: ROOT  desc: HIST  flags: INVALID  i_flags: WRITE")
         s.add(94595,['THistSvc','ERROR already registered an object with identifier','EXPERT/TrigSteer_'])
-        s.add(94598,['EFTrigMissingETMuon_Fex_FEB','at ../src/TrigInDetTrack.cxx:67']) # uninformative stack trace
-        s.add(94598,'Current algorithm: EFTrigMissingETMuon_Fex_FEB') #too general
-        s.add(94598,['Current algorithm: EFTrigMissingETMuon_Fex']) # uninformative stack trace
+        #s.add(94598,['EFTrigMissingETMuon_Fex_FEB','at ../src/TrigInDetTrack.cxx:67']) # uninformative stack trace
+        #s.add(94598,'Current algorithm: EFTrigMissingETMuon_Fex_FEB') #too general
+        #s.add(94598,['Current algorithm: EFTrigMissingETMuon_Fex']) # uninformative stack trace
         #s.add(94599,['corrupted double-linked list','cfree','libeformat.so']) # uninformative stack trace, full log only
         #s.add(94599,['double free or corruption','cfree','_ZN4Cint8Internal18G__BufferReservoirD1Ev']) # uninformative stack trace, full log only
         s.add(94610,['EventStorage::file_end_record ESLOriginalFile::currentFileFER','data10_7TeV.00152845.physics_MinBias.merge.RAW._lb0250._0003.1','GUID not present in BS file'])
@@ -329,14 +275,12 @@ class BugTracker:
         s.add(94734,['\[TObject\* histmon::THistRegisterImpl::HInfo::get\(...\) at histmon/src/THistRegisterImpl.cxx:310\] Histograms registered with the id "/EXPERT/','CutCounter" are not compatible for the merge operation'])
         s.add(94738,'ImportError: No module named TrigL2CosmicMuon.TrigL2CosmicMuon_Config')
         s.add(94740,'ImportError: No module named METRefGetter_newplup')
-        #s.add(79986,['BackCompAthenaTrigBStoESDAOD FAILURE','Athena exited abnormally','Exit code: 5','script trigtest.pl --test BackCompAthenaTrigBStoESDAOD'])
         s.add(94787,['include file MissingETSig/MissingETSigOutputESDList_jobOptions.py can not be found'])
         s.add(94817,['can not locate service MuonTGC_CablingSvc'])
         s.add(92555,['Warning in <TEnvRec::ChangeValue>','attempt to access a null-pointer'])
         s.add(94825,['No module named TrigIDtrkMonitoring.TrigIDtrkMonitoringConfig'])
         s.add(94827,['FATAL Conditions database connection COOLOFL_INDET/COMP200 cannot be opened'])
         s.add(94866,"NameError: name 'isTier0Flag' is not defined")
-        #s.add(94869,['CRITICAL Caught an untreated exception','FSMTransitionError: Cannot execute configure']) # too general
         s.add(94867,['Error in configuration of TauSlice','AssertionError: unable to find L2 hypothesis algorithm \(l2calo_tau70_loose1\)'])
         s.add(94873,['Last incident: AthenaEventLoopMgr:BeginEvent','Current algorithm: TrigEDMChecker','diff ../src/TrigPhoton.cxx:225'])
         s.add(94874,['ERROR Trying to define EF item more than once EF_tauNoCut'])
@@ -359,7 +303,8 @@ class BugTracker:
         s.add(95168,['Current algorithm: L2BjetFex_Jet_JetF','TrigBjetFex::hltExecute','src/FexAlgo.cxx:84'])
         s.add(95172,['L2SecVtx_JetB','ERROR Failed to get TrigVertexCollection from the trigger element'])
         s.add(95173,['RuntimeError: could not insert file','into PoolFileCatalog','line 37, in memoize'])
-        s.add(94599,['/afs/cern.ch/sw/lcg/external/Python/2.6.5/i686-slc5-gcc43-opt/bin/python: double free or corruption \(\!prev\): 0x0cc40538']) # FIXME fake bug
+        s.add(95212,"RuntimeError: Don't know how to configure conditionsTag for file_type: None")
+        
         return
 
 if __name__ == '__main__':
