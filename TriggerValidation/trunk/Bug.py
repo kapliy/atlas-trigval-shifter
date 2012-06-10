@@ -304,7 +304,7 @@ class BugTracker:
         s.add(95172,['L2SecVtx_JetB','ERROR Failed to get TrigVertexCollection from the trigger element'])
         s.add(95173,['RuntimeError: could not insert file','into PoolFileCatalog','line 37, in memoize'])
         s.add(95212,"RuntimeError: Don't know how to configure conditionsTag for file_type: None")
-        
+        s.add(95256,['ImportError: No module named DBReplicaSvc.DBReplicaSvcConf'])
         return
 
 if __name__ == '__main__':
