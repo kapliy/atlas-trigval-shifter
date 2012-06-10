@@ -18,24 +18,27 @@ This package includes two scripts:
   # Make sure there are no "unswept" bugs in *Bug.py*. Basically, you can look at the last few lines of the _!BugTracker.prefill_ function in *Bug.py* and make sure all bugs are added via the *add()* method, rather than *add_new()*. If that's not true, just change all *add_new()* instances to a simple *add()*.
   # Run _./run.py REL (PART) (DBY)_. REL is release number (from 0 = Sunday, until 6=Saturday). PART is an optional integer argument that selects only a subset of nightlies. Selecting PART=1 runs over the two nightlies that usually finish by midnight Chicago time. Selecting PART=2 runs over several nightlies that finish by 8 AM Chicago time. Selecting PART=3 runs over the last two nightlies that finish around 1 PM Chicago time. Selecting PART=0 runs over all nightlies, and is functionally equivalent to running without the optional PART argument. Lastly, DBY is an optional argument that, when set to 1, instructs the script to compare today's ATN test results with the Day-Before-Yesterday's (DBY) results. If DBY is not specified (i.e. the default case), today's results are compared with Yesterday's cache. DBY option is useful in cases when yesterday's caches were not built, thus preventing generation of today's report because it cannot access yesterday's results needed to generate the "fixed bugs" portion of the report.
   # Note that if some nightlies haven't actually finished, the _./run.py_ script will simply skip them and produce a report only for those nightlies that have finished. The output is saved directly to an html file, which can be copied to a local machined and viewed through a web browser (e.g., Google Chrome).
-  # Check the generated shift report inside _index.html_. Pay particular attention to sections labeled <font color="yellow">*FIXME*</font> - these are the test failures that could not be matched against known bugs. For each of those cases, you need to either manually find a similar bug in the Savannah, or create a new bug. In either case, you need to let the script know about these previously unknown bugs. The preferred way is to add them at the bottom of _Bug.py_ via the _add_new_ function, which will result in these bugs being summarized at the beginning of your shift report. Remember to rename change these *add_new()* instances to a simple *add()* in the end of your shift - otherwise, the same bugs will be reported as new in the following shift report, too.
+  # Check the generated shift report inside _index.html_. Pay particular attention to sections labeled <font color="yellow">*FIXME*</font> - these are the test failures that could not be matched against known bugs. For each of those cases, you need to either manually find a similar bug in the Savannah, or create a new bug. In either case, you need to let the script know about these previously unknown bugs. The preferred way is to add them at the bottom of _Bug.py_ via the _add_new_ function, which will result in these bugs being summarized at the beginning of your shift report. Remember to rename these *add_new()* instances to a simple *add()* in the end of your shift - otherwise, the same bugs will be reported as new in the following shift report, too.
    # It is good practice check "by-hand" all tests that are matched as "new" - even if they are matched to an existing bug. The strings used for the bug matching could be loose enough to catch unrelated bugs.
   # If you have a bug that can only be matched with a string in the full log file, you have two options. The preferred option is to report that bug "by-hand". The lazy option is to enable experimental _full-log matching_ functionality, which works OK as long as there aren't too many bugs that require full log matching. Because full logs are very large and take forever to download, run.py limits you to 10 full-log matches per invocation. Please avoid using full-log matching whenever possible, because full logs often trigger unrelated bugs simply because they are so large and cover a huge phase space of potential warning/error printouts.
   # You may find it convenient to iterate a couple of times when running run.py. Once you've identified and added the first batch of new bugs, simply rerun _./run.py_ again to generate the updated report. At this point, you can add any remaining unidentified bugs to the list and re-run to generate the final report.
   # At the end of the shift, run _./rtt.py 0_, and then repeat with an argument _1_ and _2_ to parse the other two RTT reports. Each time, it will print a report containing all memory usage regressions. Note that the output is dumped to screen - you will need to manually copy it into your shift report. By default, this script will identify the tests with a memory usage that's at least 10% higher than the _maximum_ usage in the past 6 days.
+  # Once a week, please submit a separate Savannah report summarizing all tests that have a missing reference file (these are labeled with "exit category #-5" in the shift reports). These problems will never get fixed unless you report them separately.
 
 = Automating shift report generation =
 If you are really lazy, you can automate pretty much all of the steps outlined above, excepting the addition of new bugs that always require human attention.
 
-To do that, make a copy of the *cron.tab* script and modify the path to the atlas-trigval-shfiter folder. Then, submit a cron job via:
+To do that, make a copy of the *cron.tab* script and modify the path to the atlas-trigval-shfiter folder. Also, put your email address in the beginning of wrapper.sh to ensure that a notification email is sent to your inbox whenever automatic reports are generated. Finally, submit a cron job via:
 {{{
 crontab -r
 crontab cron.tab
 crontab -l
 }}}
-If everything worked correctly, the last command will print a summary of the cron job, which will run automatically every 30 minutes to generate the run.py and rtt.py reports. 
+If everything worked correctly, the last command will print a summary of the cron job, which will run automatically every 30 minutes to generate the run.py and rtt.py reports.
 
 Note that the actual running is accomplished via the *wrapper.sh* script, which automatically bootstraps the correct REL and PART numbers depending on the current PC time.
+
+The results for the most recent PART 1 .. 3 runs are backed up in index_part%d.html files.
 
 = Code organization =
 
@@ -50,9 +53,9 @@ Note that the actual running is accomplished via the *wrapper.sh* script, which 
 = Adding new bugs =
 If you detect a test failure that could not be matched against the existing bug database in _Bug.py_, please add a corresponding entry for future users. It is also likely that this would save you time tomorrow, because bugs are rarely fixed within one day of appearance.
 
-Basically, once you identify a unique pattern in the log extract (either tail or error extracts are fine), add them inside *Bug.py* at the bottom of the _!BugTracker.prefill()_ function via _bugs.add_new()_. This way, these new bugs will be automatically included at the top of your shift report, as requested by the shift leader.
+For each serious ATN failure, run.py provides five links: ATN-grep, error-grep, full-log, log-tail, nicos-grep. I normally start checking the "nicos" link, followed by "err", followed by "tail". On average, this seems to be the fastest path to finding the relevant log fragment.
 
-In the end of the shift, please rename all instances of add_new() to a simple add().
+Basically, once you identify a unique pattern in one of the log files, you can add it inside *Bug.py* at the bottom of the _!BugTracker.prefill()_ function via _bugs.add_new()_.
 
 A useful note: once you add a bug to the _!BugTracker.prefill()_ function, you can quickly test if it matches a given log file (in other words, that the pattern you chose for this bug is not too restrictive) by running:
 {{{
