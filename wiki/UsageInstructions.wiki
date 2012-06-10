@@ -25,7 +25,7 @@ This package includes two scripts:
   # At the end of the shift, run _./rtt.py 0_, and then repeat with an argument _1_ and _2_ to parse the other two RTT reports. Each time, it will print a report containing all memory usage regressions. Note that the output is dumped to screen - you will need to manually copy it into your shift report. By default, this script will identify the tests with a memory usage that's at least 10% higher than the _maximum_ usage in the past 6 days.
   # Once a week, please submit a separate Savannah report summarizing all tests that have a missing reference file (these are labeled with "exit category #-5" in the shift reports). These problems will never get fixed unless you report them separately.
 
-= Automating shift report generation =
+= Further automation =
 If you are really lazy, you can automate pretty much all of the steps outlined above, excepting the addition of new bugs that always require human attention.
 
 To do that, make a copy of the *cron.tab* script and modify the path to the atlas-trigval-shfiter folder. Also, put your email address in the beginning of wrapper.sh to ensure that a notification email is sent to your inbox whenever automatic reports are generated. Finally, submit a cron job via:
