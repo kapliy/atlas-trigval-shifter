@@ -228,7 +228,7 @@ class BugTracker:
         s.add(93196,["ToolSvc.TrigTSerializer","MuonFeatureContainer_p3","ERROR Errors while decoding"])
         s.add(94120,["ERROR no handler for tech","FileMgr"])
         s.add(92976,["ERROR EF chains that recursively call L2 sequences","TrigConfConsistencyChecker"])
-        s.add(41910,["ToolSvc.InDetTrigPrdAssociationTool","ERROR track already found in cache"])
+        #s.add(41910,["ToolSvc.InDetTrigPrdAssociationTool","ERROR track already found in cache"])
         s.add(94016,["No such file or directory:","'HLTconfig_MC_pp_v4_loose_mc_prescale","xml'"])
         #s.add(94152,['TriggerTool.jar','ERROR Upload of SMKey failed']) # in reality, one needs to look inside <DIR>/uploadSMK.log  
         s.add(94173,["Py:TriggerPythonConfig","ERROR Chain L2_je255 defined 2 times with 2 variants"])
@@ -298,13 +298,20 @@ class BugTracker:
         s.add(95115,['Trig::FillConf::FillLV1','TrigMonitoringEvent/TrigMonConfig.icc:163'])
         s.add(95116,['in TrigCostTool::\~TrigCostTool','in TrigMonConfig::\~TrigMonConfig'])
         s.add(95116,['TrigSteer_L2','FATAL in sysStart\(\): standard std::exception is caught','ERROR std::bad_alloc'])
-        s.add(95141,["RuntimeError: RootController is in faulty state because: Application 'L2-Segment-1",'OnlRec::ExpertSystemDecision ERROR Raised Error state because of "L2PU'])
+        #s.add(95141,["RuntimeError: RootController is in faulty state because: Application 'L2-Segment-1",'OnlRec::ExpertSystemDecision ERROR Raised Error state because of "L2PU'])
+        s.add(95141,["RuntimeError: RootController is in faulty state because:"])
         s.add(95156,['ERROR ServiceLocatorHelper::service: can not locate service InDetBeamSpotOnline','ERROR  failed to retrieve Online BeamCondSvc','ToolSvc.TestMonToolAC'])
         s.add(95168,['Current algorithm: L2BjetFex_Jet_JetF','TrigBjetFex::hltExecute','src/FexAlgo.cxx:84'])
         s.add(95172,['L2SecVtx_JetB','ERROR Failed to get TrigVertexCollection from the trigger element'])
         s.add(95173,['RuntimeError: could not insert file','into PoolFileCatalog','line 37, in memoize'])
         s.add(95212,"RuntimeError: Don't know how to configure conditionsTag for file_type: None")
         s.add(95256,['ImportError: No module named DBReplicaSvc.DBReplicaSvcConf'])
+   
+        s.add(92598,['corrupted unsorted chunks','AllPT_HI_menu'])
+        s.add(95281,["ToolSvc.InDetTrigPrdAssociationTool","ERROR track already found in cache"])
+        s.add(95413,["ERROR Unable to retrieve EMAltTrackIsolationTool"])
+        s.add(95430,["ImportError: No module named MuidStatistics.MuidStatisticsConf"])
+        s.add(95135,["LArHVToolDB.cxx","received fatal signal 6"])
         return
 
 if __name__ == '__main__':
