@@ -313,8 +313,8 @@ class BugTracker:
         s.add(95413,["ERROR Unable to retrieve EMAltTrackIsolationTool"])
         s.add(95430,["ImportError: No module named MuidStatistics.MuidStatisticsConf"])
         s.add(95135,["LArHVToolDB.cxx","received fatal signal 6"])
-        s.add(95545,["failed to get an object of class \'Partition\' via relationship \'InitialPartition\'"])
-        s.add(95545,["WARNING Problems retrieving relation \"InitialPartition\"","ERROR oks_dump reports status `5\'"])
+        s.add(95547,["failed to get an object of class \'Partition\' via relationship \'InitialPartition\'"])
+        s.add(95547,["WARNING Problems retrieving relation \"InitialPartition\"","ERROR oks_dump reports status `5\'"])
         return
 
 if __name__ == '__main__':
