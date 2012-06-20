@@ -167,7 +167,7 @@ class BugTracker:
         s.add(92615,["WARNING Chain L2_2mu4T_DiMu_l2muonSA aborting with error code ABORT_CHAIN UNKNOWN"])
         s.add(92632,"message=inputBSFile=link_to_file_from_P1HLT.data: link_to_file_from_P1HLT.data not found")
         s.add(92680,['ERROR IN CHAIN: EF Chain counter 414 used 2 times while can only once, will print them all'])
-        s.add(92680,['ERROR IN CHAIN: EF Chain counter 2001 used 2 times while can only once, will print them all'])
+        s.add(95540,['ERROR IN CHAIN: EF Chain counter 2001 used 2 times while can only once, will print them all'])
         s.add(92719,["Trigger menu inconsistent, aborting","Available HLT counter","TrigSteering/pureSteering_menu.py"])
         s.add(92734,["TrigConfConsistencyChecker","ERROR SAX error while parsing exceptions xml file, line 43, column 13"],'SAX error while parsing exceptions xml file')
         s.add(92757,["chain L2_g100_etcut_g50_etcut with has no matching LVL1 item L1_2EM14L1_2EM14",'Trigger menu inconsistent, aborting'])
@@ -313,6 +313,8 @@ class BugTracker:
         s.add(95413,["ERROR Unable to retrieve EMAltTrackIsolationTool"])
         s.add(95430,["ImportError: No module named MuidStatistics.MuidStatisticsConf"])
         s.add(95135,["LArHVToolDB.cxx","received fatal signal 6"])
+        s.add(95545,["failed to get an object of class \'Partition\' via relationship \'InitialPartition\'"])
+        s.add(95545,["WARNING Problems retrieving relation \"InitialPartition\"","ERROR oks_dump reports status `5\'"])
         return
 
 if __name__ == '__main__':

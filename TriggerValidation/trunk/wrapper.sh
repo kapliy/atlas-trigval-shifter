@@ -6,11 +6,18 @@
 
 MYEMAIL="$USER@localhost"
 DEST=$PWD
+SCPADDR=""
 
 if [ "$HOSTNAME" == "kapliy" ]; then
     echo "Running on Anton's machine!"
     MYEMAIL="kapliy@gmail.com"
     DEST=/hep/public_html/VAL
+fi
+
+if [ "$HOSTNAME" == "Jordan-Websters-MacBook-Pro.local" ]; then
+    echo "Running on Jordan's machine!"
+    MYEMAIL="jwebste2@gmail.com"
+    SCPADDR="jswebster@cdf.uchicago.edu:public_html/VAL/"
 fi
 
 rel=`date '+%w'`
@@ -44,6 +51,10 @@ echo "REL = ${rel}   PART = ${part}"
 ./run.py ${rel} ${part} &> ${DEST}/log.txt
 # Back up a copy of the output
 cp ${DEST}/index2.html ${DEST}/index_part${part}.html
+if [ "${SCPADDR}" != "" ]
+then
+    scp ${DEST}/index_part${part}.html ${SCPADDR}
+fi
 
 # RTT tests
 DO_RTT=1
@@ -67,8 +78,8 @@ fi
 nskip=`grep -c 'skipping release' ${DEST}/log.txt`
 if [ "${nskip}" == "0" ]; then
     echo "All nightlies finished successfully on `date`" >> ${DEST}/log.txt
-    echo 'Top link:  http://hep.uchicago.edu/~antonk/VAL' >> ${DEST}/log.txt
-    echo "This test: http://hep.uchicago.edu/~antonk/VAL/index_part${part}.html" >> ${DEST}/log.txt
+    echo 'Top link:  http://hep.uchicago.edu/~jswebster/VAL' >> ${DEST}/log.txt
+    echo "This test: http://hep.uchicago.edu/~jswebster/VAL/index_part${part}.html" >> ${DEST}/log.txt
     echo "" >> ${DEST}/log.txt
     echo "Cheers," >> ${DEST}/log.txt
     echo "Your faithful AutoShifter" >> ${DEST}/log.txt
