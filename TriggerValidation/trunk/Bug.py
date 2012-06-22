@@ -320,8 +320,9 @@ class BugTracker:
         s.add(95547,["WARNING Problems retrieving relation \"InitialPartition\"","ERROR oks_dump reports status `5\'"])
         #s.add(95550,["[CORBA::Object* ipc::util::resolve(...) at ipc/src/util.cc:369]","\"RunParams\" of the \"is/repository\""])
         s.add(95605,["ERROR could not get handle to TrigEgammaPhotonCutIDTool","ValueError:"])
-        s.add(95607,["Segmentation fault","AthenaTrigRDO_Physics_pp_v","EFPhotonHypo_g"])
-        s.add(95607,["Segmentation fault","AthenaTrigRDO_MC_pp_v","EFPhotonHypo_g"])
+        s.add(95607,["Reconstruction/egamma/egammaPIDTools/cmt/../src/egammaPhotonCutIDTool.cxx:591"])
+        #s.add(95607,["Segmentation fault","AthenaTrigRDO_Physics_pp_v","EFPhotonHypo_g"])
+        #s.add(95607,["Segmentation fault","AthenaTrigRDO_MC_pp_v","EFPhotonHypo_g"])
         return
 
 if __name__ == '__main__':
