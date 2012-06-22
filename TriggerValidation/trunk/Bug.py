@@ -109,6 +109,8 @@ class BugTracker:
         s.prefill_genpurpose()
         s.prefill_nicos()
         s.add(86562,['ERROR preLoadFolder failed for folder /Digitization/Parameters','FATAL DetectorStore service not found'])
+        # FIXME
+        #s.add(95595,['ERROR preLoadFolder failed for folder /Digitization/Parameters','FATAL DetectorStore service not found'])
         s.add(87109,"No such file or directory: '/afs/cern.ch/user/t/tbold/public/TDTtest/attila.AOD.pool.root'",comment='AthenaTrigAOD_TDT_fixedAOD fails with missing input file. According the the bug report, this has been fixed in TrigAnalysistest-00-03-24.')
         s.add(88042,["\[is::repository_var is::server::resolve\(...\) at is/src/server.cc:31\] IS repository 'Histogramming-EF-Segment-1-1-iss' does not exist"])
         s.add(88042,["\[is::repository_var is::server::resolve\(...\) at is/src/server.cc:31\] IS repository 'Histogramming-L2-Segment-1-1-iss' does not exist"])
@@ -227,7 +229,8 @@ class BugTracker:
         s.add(94049,["ERROR Can't retrieve offline RawChannel from TES"])
         s.add(94084,["LVL1CTP::CTPSLink::getCTPToRoIBWords","Current algorithm: RoIBuilder"])
         s.add(93196,["ToolSvc.TrigTSerializer","MuonFeatureContainer_p3","ERROR Errors while decoding"])
-        s.add(94120,["ERROR no handler for tech","FileMgr"])
+        #s.add(94120,["ERROR no handler for tech","FileMgr"]) # duplicate report
+        s.add(94095,["ERROR no handler for tech","FileMgr"])
         s.add(92976,["ERROR EF chains that recursively call L2 sequences","TrigConfConsistencyChecker"])
         #s.add(41910,["ToolSvc.InDetTrigPrdAssociationTool","ERROR track already found in cache"])
         s.add(94016,["No such file or directory:","'HLTconfig_MC_pp_v4_loose_mc_prescale","xml'"])
@@ -315,6 +318,10 @@ class BugTracker:
         s.add(95135,["LArHVToolDB.cxx","received fatal signal 6"])
         s.add(95547,["failed to get an object of class \'Partition\' via relationship \'InitialPartition\'"])
         s.add(95547,["WARNING Problems retrieving relation \"InitialPartition\"","ERROR oks_dump reports status `5\'"])
+        #s.add(95550,["[CORBA::Object* ipc::util::resolve(...) at ipc/src/util.cc:369]","\"RunParams\" of the \"is/repository\""])
+        s.add(95605,["ERROR could not get handle to TrigEgammaPhotonCutIDTool","ValueError:"])
+        s.add(95607,["Segmentation fault","AthenaTrigRDO_Physics_pp_v","EFPhotonHypo_g"])
+        s.add(95607,["Segmentation fault","AthenaTrigRDO_MC_pp_v","EFPhotonHypo_g"])
         return
 
 if __name__ == '__main__':
