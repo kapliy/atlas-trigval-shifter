@@ -323,6 +323,7 @@ class BugTracker:
         s.add(95607,["Reconstruction/egamma/egammaPIDTools/cmt/../src/egammaPhotonCutIDTool.cxx:591"])
         #s.add(95607,["Segmentation fault","AthenaTrigRDO_Physics_pp_v","EFPhotonHypo_g"])
         #s.add(95607,["Segmentation fault","AthenaTrigRDO_MC_pp_v","EFPhotonHypo_g"])
+	s.add(95616,["ImportError: No module named TrigInDetAnalysisExample.TrigInDetAnalysisExampleConf"])
         return
 
 if __name__ == '__main__':
