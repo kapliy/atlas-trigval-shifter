@@ -109,7 +109,7 @@ class BugTracker:
         s.prefill_genpurpose()
         s.prefill_nicos()
         s.add(86562,['ERROR preLoadFolder failed for folder /Digitization/Parameters','FATAL DetectorStore service not found'])
-        # FIXME
+        # At some point, someone asked for a new bug report for the above bug -- if they complain again, you could uncomment line below
         #s.add(95595,['ERROR preLoadFolder failed for folder /Digitization/Parameters','FATAL DetectorStore service not found'])
         s.add(87109,"No such file or directory: '/afs/cern.ch/user/t/tbold/public/TDTtest/attila.AOD.pool.root'",comment='AthenaTrigAOD_TDT_fixedAOD fails with missing input file. According the the bug report, this has been fixed in TrigAnalysistest-00-03-24.')
         s.add(88042,["\[is::repository_var is::server::resolve\(...\) at is/src/server.cc:31\] IS repository 'Histogramming-EF-Segment-1-1-iss' does not exist"])
@@ -321,11 +321,10 @@ class BugTracker:
         #s.add(95550,["[CORBA::Object* ipc::util::resolve(...) at ipc/src/util.cc:369]","\"RunParams\" of the \"is/repository\""])
         s.add(95605,["ERROR could not get handle to TrigEgammaPhotonCutIDTool","ValueError:"])
         s.add(95607,["Reconstruction/egamma/egammaPIDTools/cmt/../src/egammaPhotonCutIDTool.cxx:591"])
-        #s.add(95607,["Segmentation fault","AthenaTrigRDO_Physics_pp_v","EFPhotonHypo_g"])
-        #s.add(95607,["Segmentation fault","AthenaTrigRDO_MC_pp_v","EFPhotonHypo_g"])
 	s.add(95616,["ImportError: No module named TrigInDetAnalysisExample.TrigInDetAnalysisExampleConf"])
         s.add(95622,["RuntimeError: RootController did not exit in 60 seconds","Timeout reached waiting for transition to BOOTED"])
         s.add(95623,["ERROR Errors while decoding TrigElectronContainer_p3","WARNING: no directory and/or release sturucture found"])
+        s.add(95640,["IOVSvcTool::preLoadProxies \(this=0x1e486a00\) at ../src/IOVSvcTool.cxx:986"])
         return
 
 if __name__ == '__main__':
