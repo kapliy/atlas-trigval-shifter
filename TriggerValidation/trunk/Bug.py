@@ -324,6 +324,8 @@ class BugTracker:
         #s.add(95607,["Segmentation fault","AthenaTrigRDO_Physics_pp_v","EFPhotonHypo_g"])
         #s.add(95607,["Segmentation fault","AthenaTrigRDO_MC_pp_v","EFPhotonHypo_g"])
 	s.add(95616,["ImportError: No module named TrigInDetAnalysisExample.TrigInDetAnalysisExampleConf"])
+        s.add(95622,["RuntimeError: RootController did not exit in 60 seconds","Timeout reached waiting for transition to BOOTED"])
+        s.add(95623,["ERROR Errors while decoding TrigElectronContainer_p3","WARNING: no directory and/or release sturucture found"])
         return
 
 if __name__ == '__main__':
