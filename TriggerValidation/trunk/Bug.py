@@ -310,7 +310,6 @@ class BugTracker:
         s.add(95173,['RuntimeError: could not insert file','into PoolFileCatalog','line 37, in memoize'])
         s.add(95212,"RuntimeError: Don't know how to configure conditionsTag for file_type: None")
         s.add(95256,['ImportError: No module named DBReplicaSvc.DBReplicaSvcConf'])
-   
         s.add(92598,['corrupted unsorted chunks','AllPT_HI_menu'])
         s.add(95281,["ToolSvc.InDetTrigPrdAssociationTool","ERROR track already found in cache"])
         s.add(95413,["ERROR Unable to retrieve EMAltTrackIsolationTool"])
@@ -325,6 +324,9 @@ class BugTracker:
         s.add(95622,["RuntimeError: RootController did not exit in 60 seconds","Timeout reached waiting for transition to BOOTED"])
         s.add(95623,["ERROR Errors while decoding TrigElectronContainer_p3","WARNING: no directory and/or release sturucture found"])
         s.add(95640,["IOVSvcTool::preLoadProxies \(this=0x1e486a00\) at ../src/IOVSvcTool.cxx:986"])
+        s.add(95657,["ValueError:  Physics_HI_v2 is not the expected type and/or the value is not allowed for: JobProperties.Rec.Trigger.triggerMenuSetup"])
+        s.add(95658,["THistSvc","ERROR already registered an object with identifier \"/EXPERT/L2MetHypo","/Hypo"])
+        s.add(95658,["THistSvc","ERROR already registered an object with identifier \"/EXPERT/EFMetHypo","/Hypo"])
         return
 
 if __name__ == '__main__':
