@@ -327,6 +327,14 @@ class BugTracker:
         s.add(95657,["ValueError:  Physics_HI_v2 is not the expected type and/or the value is not allowed for: JobProperties.Rec.Trigger.triggerMenuSetup"])
         s.add(95658,["THistSvc","ERROR already registered an object with identifier \"/EXPERT/L2MetHypo","/Hypo"])
         s.add(95658,["THistSvc","ERROR already registered an object with identifier \"/EXPERT/EFMetHypo","/Hypo"])
+        s.add(95661,["FATAL Failed to retrieve ConditionsSummaryTool = ServiceHandle\(\'TRT_ConditionsSummarySvc/InDetTRTConditionsSummaryService\'\)"])
+        s.add(95661,["FATAL Failed to retrieve ConditionsSummaryTool = ServiceHandle\(\'TRT_ConditionsSummarySvc/InDetTrigInDetTRTConditionsSummaryService\'\)"])
+        s.add(95680,["Error in <TCint::AutoLoadCallback>: failure loading library ARA_RecTPCnvDict.so for class CaloEnergyCnv_p2","\'CaloEnergyCnv_p2\' has no attribute \'registerStreamerConverter\'"])
+        s.add(95686,["ERROR Tag OFLCOND-DR-BS7T-ANom","cannot be resolved for folder /TRT/Cond/StatusHT"])
+        s.add(95692,["Waiting for ManyPropagableCommand to finish:  99/100 seconds","if ret != 0 and ret != 5: raise PropagationException"])
+        s.add(95696,["histmon::THistRegisterImpl::HInfo::get","at ../src/THistRegisterImpl.cxx:82"])
+        s.add(95696,["histmon::THistRegisterImpl::HInfo::get","at ../src/TConvertingBranchElement.cxx:943"])
+        s.add(95732,["diff: HLTMenu_frontier.xml: No such file or directory","ERROR HLT menus are not identical"])
         return
 
 if __name__ == '__main__':
