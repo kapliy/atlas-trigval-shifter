@@ -335,6 +335,9 @@ class BugTracker:
         s.add(95696,["histmon::THistRegisterImpl::HInfo::get","at ../src/THistRegisterImpl.cxx:82"])
         s.add(95696,["histmon::THistRegisterImpl::HInfo::get","at ../src/TConvertingBranchElement.cxx:943"])
         s.add(95732,["diff: HLTMenu_frontier.xml: No such file or directory","ERROR HLT menus are not identical"])
+        s.add(95753,["Basic Python configuration failed","No such file or directory: \'LVL1config_Physics_HI_v2_17.1.5.xml\'"])
+        s.add(95737,["FATAL Cannot locate MagField  from \$\{DATAPATH\}"])
+        s.add(95737,["FATAL Cannot locate MagneticFieldMaps/bmagatlas_09_fullAsym20400.data.bz2 from \$\{DATAPATH\}"])
         return
 
 if __name__ == '__main__':
