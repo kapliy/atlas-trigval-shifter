@@ -338,6 +338,7 @@ class BugTracker:
         s.add(95753,["Basic Python configuration failed","No such file or directory: \'LVL1config_Physics_HI_v2_17.1.5.xml\'"])
         s.add(95737,["FATAL Cannot locate MagField  from \$\{DATAPATH\}"])
         s.add(95737,["FATAL Cannot locate MagneticFieldMaps/bmagatlas_09_fullAsym20400.data.bz2 from \$\{DATAPATH\}"])
+        s.add(95804,["ERROR Upload of SMKey failed","No such file or directory: \'../AllPT_HI_menu/ef_Default_setup.txt\'"])
         return
 
 if __name__ == '__main__':
