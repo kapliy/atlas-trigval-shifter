@@ -11,7 +11,7 @@ rel = 5
 dby = False
 
 import common
-import sys,getpass,datetime
+import sys,getpass,socket,datetime
 
 if len(sys.argv)>=2:
     rel = int(sys.argv[1])
@@ -68,7 +68,7 @@ if __name__=="__main__":
         print >>f,'Failures that were NOT present in yesterday’s release are marked with %s.'%(Project.NEWSTATUS)
         print >>f,'Failures that were fixed between yesterday and today are marked with %s.'%(Project.FIXEDSTATUS)
         print >>f,''
-        if getpass.getuser()=='antonk':
+        if getpass.getuser()=='antonk' and socket.gethostname()=='kapliy':
             print >>f,'Cheers,'
             print >>f,'Anton'
         else:
