@@ -339,6 +339,8 @@ class BugTracker:
         s.add(95737,["FATAL Cannot locate MagField  from \$\{DATAPATH\}"])
         s.add(95737,["FATAL Cannot locate MagneticFieldMaps/bmagatlas_09_fullAsym20400.data.bz2 from \$\{DATAPATH\}"])
         s.add(95804,["ERROR Upload of SMKey failed","No such file or directory: \'../AllPT_HI_menu/ef_Default_setup.txt\'"])
+        s.add(95812,["glibc detected","/afs/cern.ch/sw/lcg/external/Python/2.6.5/i686-slc5-gcc43-opt/bin/python: malloc\(\): memory corruption: 0x0cd76e08"])
+        s.add(95855,"FAILURE \(ERROR\) : script trigtest.pl")
         return
 
 if __name__ == '__main__':
