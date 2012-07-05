@@ -87,7 +87,7 @@ N = Nightly('17.2.X-VAL (64-bit)')
 N.add(Project('TrigP1Test','http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/17.2.X-VAL/AtlasHLT/rel_%d/NICOS_area/NICOS_atntest172XVAL64BS5G4AtlasHLTOpt/trigp1test_testconfiguration_work/'))
 N.add(Project('TriggerTest','http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/17.2.X-VAL/AtlasTrigger/rel_%d/NICOS_area/NICOS_atntest172XVAL64BS5G4TrgOpt/triggertest_testconfiguration_work/'))
 N.add(Project('TrigAnalysisTest','http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/17.2.X-VAL/AtlasAnalysis/rel_%d/NICOS_area/NICOS_atntest172XVAL64BS5G4AnlOpt/triganalysistest_testconfiguration_work/'))
-if nightly_sel in (PART2,ALL,PART4):
+if nightly_sel in (PART2,ALL):
     X.append(N)
 
 N = Nightly('17.X.0 (64-bit)')
@@ -117,3 +117,15 @@ N.add(Project('TriggerTest','http://atlas-computing.web.cern.ch/atlas-computing/
 if nightly_sel in (PART3,ALL):
     X.append(N)
 
+# Athena 18.X.0 nightlies - not yet used, so only run them if user explicitly requested PART4
+N = Nightly('18.X.0 (64-bit)')
+N.add(Project('TriggerTest','http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/dev/AtlasTrigger/rel_%d/NICOS_area/NICOS_atntest18X064BS5G4TrgOpt/triggertest_testconfiguration_work/'))
+N.add(Project('TrigAnalysisTest','http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/dev/AtlasAnalysis/rel_%d/NICOS_area/NICOS_atntest18X064BS5G4AnlOpt/triganalysistest_testconfiguration_work/'))
+if nightly_sel in (PART4,):
+    X.append(N)
+
+N = Nightly('18.X.0-VAL (64-bit)')
+N.add(Project('TriggerTest','http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/devval/AtlasTrigger/rel_%d/NICOS_area/NICOS_atntest18X0VAL64BS5G4TrgOpt/triggertest_testconfiguration_work/'))
+N.add(Project('TrigAnalysisTest','http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/devval/AtlasAnalysis/rel_%d/NICOS_area/NICOS_atntest18X0VAL64BS5G4AnlOpt/triganalysistest_testconfiguration_work/'))
+if nightly_sel in (PART4,):
+    X.append(N)
