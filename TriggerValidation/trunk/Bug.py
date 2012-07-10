@@ -345,6 +345,8 @@ class BugTracker:
         s.add(95915,"Error initializing tool 'TrigTauRecMerged_Tau.TrigTau_EnergyCalibrationLC_onlyEnergy'")
         s.add(95948,["in HistorySvc::listProperties","psc::Psc::pscStopRun","at ../src/Psc.cxx:692"])
         s.add(95965,["in TEmulatedCollectionProxy::InitializeEx","in TEmulatedMapProxy::TEmulatedMapProxy"])
+        s.add(95970,["problem picking a data reader for file","testBphysicsSliceAthenaTrigRDO_Kstar"])
+        s.add(95971,["Errors while decoding TrigInDetTrackCollection_tlp2"])
         return
 
 if __name__ == '__main__':
