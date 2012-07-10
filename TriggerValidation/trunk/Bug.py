@@ -344,6 +344,7 @@ class BugTracker:
         s.add(95915,"Error initializing tool 'TrigTauRecMerged_Tau2012.TrigTau_EnergyCalibrationLC_onlyEnergy'")
         s.add(95915,"Error initializing tool 'TrigTauRecMerged_Tau.TrigTau_EnergyCalibrationLC_onlyEnergy'")
         s.add(95948,["in HistorySvc::listProperties","psc::Psc::pscStopRun","at ../src/Psc.cxx:692"])
+        s.add(95965,["in TEmulatedCollectionProxy::InitializeEx","in TEmulatedMapProxy::TEmulatedMapProxy"])
         return
 
 if __name__ == '__main__':
