@@ -348,6 +348,7 @@ class BugTracker:
         s.add(95970,["problem picking a data reader for file","testBphysicsSliceAthenaTrigRDO_Kstar"])
         s.add(95971,["Errors while decoding TrigInDetTrackCollection_tlp2"])
         s.add(95986,["/src/rbmaga.F:82","/src/setmagfield.F:52"])
+        s.add(95995,["Trigger menu inconsistent, aborting"])
         return
 
 if __name__ == '__main__':
