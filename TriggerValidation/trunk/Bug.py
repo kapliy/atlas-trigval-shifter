@@ -152,7 +152,7 @@ class BugTracker:
         s.add(92265,'ERROR Failed to find jet chain with name EF_j145_a4tchad')
         s.add(92267,['CharybdisJimmy.digit.RDO','Py:inputFilePeeker WARNING caught','raise convert_to_error\(kind, result\)'])
         s.add(92272,['L2PhotonHypo_g15_loose','carcore size is 10 but needs 9'])
-        s.add(92273,"/src/MeasuredAtaStraightLine.cxx:108")
+        s.add(94142,"/src/MeasuredAtaStraightLine.cxx:108")
         s.add(92298,["No such file or directory: 'ESD.pool.root'",'testAthenaP1ESD_TrigEDMCheck_data.py'], "Upstream test failed or timed out")
         s.add(92298,["No such file or directory: 'ESD.pool.root'",'testAthenaP1ESD_TrigDecTool.py'], "Upstream test failed or timed out")
         s.add(92397,'RuntimeError: Conditions database identifier RPC_OFL is not defined',comment='Conditions database identifier RPC_OFL is not defined for standalone_cosmic test. Note that this was originally assigned to bug [91848]')
@@ -228,7 +228,7 @@ class BugTracker:
         s.add(94033,["ATLAS_DBA.LOGON_AUDIT_TRIGGER' is invalid and failed re-validation"])
         s.add(94049,["ERROR Can't retrieve offline RawChannel from TES"])
         s.add(94084,["LVL1CTP::CTPSLink::getCTPToRoIBWords","Current algorithm: RoIBuilder"])
-        s.add(93196,["ToolSvc.TrigTSerializer","MuonFeatureContainer_p3","ERROR Errors while decoding"])
+        s.add(94627,["ToolSvc.TrigTSerializer","MuonFeatureContainer_p3","ERROR Errors while decoding"])
         #s.add(94120,["ERROR no handler for tech","FileMgr"]) # duplicate report
         s.add(94095,["ERROR no handler for tech","FileMgr"])
         s.add(92976,["ERROR EF chains that recursively call L2 sequences","TrigConfConsistencyChecker"])
@@ -261,7 +261,7 @@ class BugTracker:
         s.add(94507,["TH1::Fill","../src/TrigLBNHist.cxx:92"])
         s.add(94507,["TrigLBNHist<TH1I>::Fill","../src/TrigLBNHist.cxx:92"])
         s.add(94542,["RuntimeError: key 'outputNTUP_TRIGFile' is not defined in ConfigDic"])
-        s.add(94543,"tech: ROOT  desc: HIST  flags: INVALID  i_flags: WRITE")
+        #s.add(94543,"tech: ROOT  desc: HIST  flags: INVALID  i_flags: WRITE")
         s.add(94595,['THistSvc','ERROR already registered an object with identifier','EXPERT/TrigSteer_'])
         #s.add(94598,['EFTrigMissingETMuon_Fex_FEB','at ../src/TrigInDetTrack.cxx:67']) # uninformative stack trace
         #s.add(94598,'Current algorithm: EFTrigMissingETMuon_Fex_FEB') #too general
@@ -271,7 +271,7 @@ class BugTracker:
         s.add(94610,['EventStorage::file_end_record ESLOriginalFile::currentFileFER','data10_7TeV.00152845.physics_MinBias.merge.RAW._lb0250._0003.1','GUID not present in BS file'])
         s.add(94611,['Current algorithm: MuGirl','msFit ../src/GlobalFitTool.cxx:571'])
         s.add(94654,['ImportError: cannot import name LVL1CTP__CBNTAA_CTP_RDO'])
-        s.add(94667,['in CoreDumpSvcHandler::action','at ../src/root/OHRootProvider.cxx:136'])
+        #s.add(94667,['in CoreDumpSvcHandler::action','at ../src/root/OHRootProvider.cxx:136'])
         s.add(94713,['LArRawConditionsDict2_gen_rflx.cpp:35473','Reflex::LiteralString::Remove'])
         s.add(94725,['THistSvc','ERROR already registered an object with identifier','EXPERT/TrigEFElectronHypo_'])
         s.add(94726,['in InDet::SiCluster::width','in InDet::SiTrajectoryElement_xk::patternCovariances'])
@@ -347,6 +347,7 @@ class BugTracker:
         s.add(95965,["in TEmulatedCollectionProxy::InitializeEx","in TEmulatedMapProxy::TEmulatedMapProxy"])
         s.add(95970,["problem picking a data reader for file","testBphysicsSliceAthenaTrigRDO_Kstar"])
         s.add(95971,["Errors while decoding TrigInDetTrackCollection_tlp2"])
+        s.add(95986,["/src/rbmaga.F:82","/src/setmagfield.F:52"])
         return
 
 if __name__ == '__main__':
