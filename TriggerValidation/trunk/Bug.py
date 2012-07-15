@@ -352,6 +352,7 @@ class BugTracker:
         s.add(96087,["No such file or directory","HLTconfig_MC_pp_v4_loose_mc_prescale_17.2.4.3.xml"])
         s.add(96092,["AthenaTrigBS_standalone_top_L2","TrigChainMoniValidation.reference: No such file or directory"])
         s.add(96093,["ByteStreamAttListMetadataSvc","not locate service"])
+        s.add(96094,["AllMT_physicsV4_magField_on_off_on","monitoring histogram mismatch detected by rootcomp"])
         return
 
 if __name__ == '__main__':
