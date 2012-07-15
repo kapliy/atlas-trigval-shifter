@@ -350,6 +350,8 @@ class BugTracker:
         s.add(95986,["/src/rbmaga.F:82","/src/setmagfield.F:52"])
         s.add(95995,["Trigger menu inconsistent, aborting","L2 Chain counter 454 used 2 times while can only once, will print them all"])
         s.add(96087,["No such file or directory","HLTconfig_MC_pp_v4_loose_mc_prescale_17.2.4.3.xml"])
+        s.add(96092,["AthenaTrigBS_standalone_top_L2","TrigChainMoniValidation.reference: No such file or directory"])
+        s.add(96093,["ByteStreamAttListMetadataSvc","not locate service"])
         return
 
 if __name__ == '__main__':
