@@ -127,7 +127,15 @@ class Project:
         bugurl = "none"
         bugcomment = '<font style="BACKGROUND-COLOR: yellow">FIXME</font>'
         if s.MATCH_BUGS:
-            if t.lerror:
+            if re.search('Upload',t.name):
+                smlink = os.path.dirname(t.llog)+'/'+'uploadSMK.log'
+                try:
+                    bug = s.bugs.match(urllib2.urlopen(smlink,timeout=s.URLTIMEOUT).read())
+                except (urllib2.HTTPError,urllib2.URLError) as e :
+                    print 'WARNING: the following error-grep link leads to "404 page not found":'
+                    print '   ',t.lerror
+                    bug = None
+            if not bug and t.lerror:
                 try:
                     bug = s.bugs.match(urllib2.urlopen(t.lerror,timeout=s.URLTIMEOUT).read())
                 except (urllib2.HTTPError,urllib2.URLError) as e :

@@ -352,7 +352,13 @@ class BugTracker:
         s.add(96087,["No such file or directory","HLTconfig_MC_pp_v4_loose_mc_prescale_17.2.4.3.xml"])
         s.add(96092,["AthenaTrigBS_standalone_top_L2","TrigChainMoniValidation.reference: No such file or directory"])
         s.add(96093,["ByteStreamAttListMetadataSvc","not locate service"])
-        s.add(96094,["AllMT_physicsV4_magField_on_off_on","monitoring histogram mismatch detected by rootcomp"])
+        s.add(96094,["ConversionSvc::makeCall","ConversionSvc::createRep","THashTable::FindObject"])
+        s.add(96097,["SEVERE: Caught SQL error: ORA-02290: check constraint \(ATLAS_TRIGGER_ATN.TW_ID_NN\) violated","SEVERE:  Database is already locked by ATLAS_TRIGGER_ATN_W"]) # the bug is found in uploadSMK.log
+        s.add(96098,"free\(\): corrupted unsorted chunks: 0x1ac14178")
+        s.add(96112,"ImportError: No module named AthenaServicesConf")
+        s.add(96117,"JobTransform completed for RAWtoESD with error code 11000 \(exit code 10\)") # the matching statements can be found in log/nicos, but the exact error msg is found in RAWtoESD.log
+        s.add(96137,["TFile::Init:0: RuntimeWarning: file expert-monitoring.root probably not closed, trying to recover","WARNING: no directory and/or release sturucture found","ERROR: cound not cd to directory:  TrigSteer_L2"])
+        s.add_new(96142,["OBSOLETE WARNING please use RecExCond/RecExCommon_flags.py","Py:AutoConfiguration WARNING Unable to import PrimaryDPDFlags","Py:AutoConfiguration WARNING Primary DPDMake does not support the old naming convention"])
         return
 
 if __name__ == '__main__':

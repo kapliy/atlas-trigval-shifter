@@ -29,7 +29,7 @@ Project.Project.rel = rel
 Project.Project.dby = dby
 Project.Project.SKIP_ERRORS = SKIP_ERRORS
 # tweaks for *full* log matching:
-Project.Project.full_enable = True
+Project.Project.full_enable = False
 Project.Project.full_nmax   = 10    # increase this if you really NEED to match more full logs
 from Test import Test
 Test.CHECK_NICOS = True
@@ -65,7 +65,7 @@ if __name__=="__main__":
         print >>f,'The following tests had a >10% increase in total memory consumption with respect to the minimum memory usage in the past 6 days:'
         print >>f,''
         print >>f,'Detailed report is below.'
-        print >>f,'Failures that were NOT present in yesterday’s release are marked with %s.'%(Project.NEWSTATUS)
+        print >>f,'Failures that were NOT present in yesterday\'s release are marked with %s.'%(Project.NEWSTATUS)
         print >>f,'Failures that were fixed between yesterday and today are marked with %s.'%(Project.FIXEDSTATUS)
         print >>f,''
         if getpass.getuser()=='antonk':
