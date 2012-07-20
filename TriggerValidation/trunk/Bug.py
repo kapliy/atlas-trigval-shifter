@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import re,time
+import re,time,datetime
 import BeautifulSoup as bs
 import urllib2
 
@@ -17,6 +17,15 @@ class Bug:
                 s.patterns += pattern
             else:
                 s.patterns.append(pattern)
+        s.fetched = False
+        s.author = None
+        s.date = None
+        s.status = None
+        s.open = None
+        s.assigned = None
+        s.category = None
+        s.severity = None
+        s.priority = None
         s.comment = comment
         s.seen = False
         s.new = False
@@ -31,18 +40,65 @@ class Bug:
                 time.sleep(itry*2+1)
                 continue
         return None
+    def is_closed(s):
+        """ True if the bug metadata shows the bug has been marked as Closed on Savannah (may wanna reopen it!)"""
+        if not s.fetched:
+            s.fetch_comment()
+        return s.open == 'Closed'
     def fetch_comment(s):
         """ Do on-the-fly lookup of the bug title from the bug tracker """
         NOCOMMENT = 'CANNOT FETCH COMMENT FOR BUG %d'%(s.id)
-        if not s.comment:
+        if not s.fetched and s.id>0:
             b = s._urlopen(s.url())
+            soup = bs.BeautifulSoup(b) if b else None
+            # get bug title
             try:
-                soup = bs.BeautifulSoup(b)
-                s.comment = str((soup.findAll('h2')[1]).contents[1])
-                if s.comment[0:2]==': ':
-                    s.comment = s.comment[2:]
+                if not s.comment:
+                    s.comment = str((soup.findAll('h2')[1]).contents[1])
+                    if s.comment[0:2]==': ':
+                        s.comment = s.comment[2:]
             except:
-                s.comment = NOCOMMENT
+                if not s.comment:
+                    s.comment = NOCOMMENT
+            # try to get bug status, author, date etc. This only works for trigger savannah (but not reco!)
+            # CAREFUL: this parsing code may need to be updated if anything changes with Savannah!
+            try:
+                meta = soup.findAll('table')[0]
+                for itr in meta.findAll("tr"):
+                    if len(itr)==7:    # header - bug author and date
+                        if itr.find("a"):
+                            s.author = str(itr.find("a").contents[0])   #Jordan S Webster &lt;jwebster&gt;
+                        elif len(itr.findAll("td"))==3:
+                            dt = str(itr.findAll("td")[1].contents[0])  #2012-06-27 20:19
+                            s.date = datetime.datetime.strptime(dt, "%Y-%m-%d %H:%M")
+                        pass
+                    elif len(itr)==5 and len(itr.findAll("td"))==4:     # meat of the table
+                        tds = itr.findAll("td")
+                        for itd in (0,2):   # loop over two super-columns of attributes
+                            if len(tds[itd].findAll("span"))==2:
+                                att = str(tds[itd].span.span.contents[0])
+                                val = str(tds[itd+1].contents[0]) if len(tds[itd+1].contents)>0 else None
+                                if att == 'Status:':
+                                    s.status = val
+                                elif att == 'Open/Closed:':
+                                    s.open = val
+                                elif att == 'Category:':
+                                    s.category = val
+                                elif att == 'Assigned to:':
+                                    if len(tds[itd+1].findAll("a"))>0: # remove <a href>, if bug is actually assigned
+                                        s.assigned = str(tds[itd+1].contents[0].contents[0]) if len(tds[itd+1].contents)>0 else None
+                                    else:
+                                        s.category = val
+                                elif att == 'Severity:':
+                                    s.severity = val
+                                elif att == 'Priority:':
+                                    s.priority = val
+                    else:
+                        continue
+            except:
+                print 'WARNING: unable to retrieve detailed metadata from Savannah for bug',s.id
+                pass
+            s.fetched = True
         return s.comment
     def add_pattern(s,pattern):
         s.patterns.append(pattern)
@@ -350,7 +406,7 @@ class BugTracker:
         s.add(95986,["/src/rbmaga.F:82","/src/setmagfield.F:52"])
         s.add(95995,["Trigger menu inconsistent, aborting","L2 Chain counter 454 used 2 times while can only once, will print them all"])
         s.add(96087,["No such file or directory","HLTconfig_MC_pp_v4_loose_mc_prescale_17.2.4.3.xml"])
-        s.add(96092,["AthenaTrigBS_standalone_top_L2","TrigChainMoniValidation.reference: No such file or directory"])
+        #s.add(96092,["AthenaTrigBS_standalone_top_L2","TrigChainMoniValidation.reference: No such file or directory"])
         s.add(96093,["ByteStreamAttListMetadataSvc","not locate service"])
         s.add(96094,["ConversionSvc::makeCall","ConversionSvc::createRep","THashTable::FindObject"])
         s.add(96097,["SEVERE: Caught SQL error: ORA-02290: check constraint \(ATLAS_TRIGGER_ATN.TW_ID_NN\) violated","SEVERE:  Database is already locked by ATLAS_TRIGGER_ATN_W"]) # the bug is found in uploadSMK.log
@@ -370,7 +426,8 @@ if __name__ == '__main__':
     m =  bugs.match(urllib2.urlopen(sys.argv[1]).read())
     if m:
         print 'Matched: ',m.id,m.url()
-        print m.fetch_comment()
+        print 'Title:',m.fetch_comment()
+        print 'Metadata:',m.author,m.date,m.status,m.open,m.assigned
+        print 'Metadata:',m.category,m.severity,m.priority
     else:
         print 'No match!'
-    

@@ -67,6 +67,7 @@ if __name__=="__main__":
         print >>f,'Detailed report is below.'
         print >>f,'Failures that were NOT present in yesterday\'s release are marked with %s.'%(Project.NEWSTATUS)
         print >>f,'Failures that were fixed between yesterday and today are marked with %s.'%(Project.FIXEDSTATUS)
+        print >>f,'Bugs that were closed on Savannah (perhaps prematurely) are marked with %s.'%(Project.CLOSEDSTATUS)
         print >>f,''
         if getpass.getuser()=='antonk':
             print >>f,'Cheers,'

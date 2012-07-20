@@ -58,7 +58,7 @@ N = Nightly('17.2.X.Y-VAL-Prod (64-bit)')
 N.add(Project('TrigP1Test','http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/17.2.X.Y-VAL/AtlasProduction/rel_%d/NICOS_area/NICOS_atntest172XYVALProd64BS5G4ProdOpt/trigp1test_testconfiguration_work/'))
 N.add(Project('TriggerTest','http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/17.2.X.Y-VAL/AtlasProduction/rel_%d/NICOS_area/NICOS_atntest172XYVALProd64BS5G4ProdOpt/triggertest_testconfiguration_work/'))
 N.add(Project('TrigAnalysisTest','http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/17.2.X.Y-VAL/AtlasProduction/rel_%d/NICOS_area/NICOS_atntest172XYVALProd64BS5G4ProdOpt/triganalysistest_testconfiguration_work/'))
-if nightly_sel in (PART2,ALL): # this nightly sometimes finishes rather late
+if nightly_sel in (PART2,ALL,PART4): # this nightly sometimes finishes rather late
     X.append(N)
 
 # lower-priority releases

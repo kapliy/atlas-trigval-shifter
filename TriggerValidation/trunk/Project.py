@@ -7,6 +7,7 @@ from Test import Test
 DUMMY_LINK='http://www.NOT.AVAILABLE.com'
 NEWSTATUS='[<b><FONT style="BACKGROUND-COLOR: FF6666">NEW</FONT></b>] '
 FIXEDSTATUS='[<b><FONT style="BACKGROUND-COLOR: 99FF00">FIXED</FONT></b>] '
+CLOSEDSTATUS='[<b><font style="BACKGROUND-COLOR: 967BF9">CLOSED</font></b>] '
 
 class Project:
     """ One trigger validation project that has its own ATN and NICOS page
@@ -237,10 +238,11 @@ class Project:
                     if iorder==len(matchedidx)-1:
                         # special handling for the case of one test only affected by this bug
                         offset = '       ' if len(matchedidx)>1 else '    -  '
+                        closed_summary = CLOSEDSTATUS if bugs[i] and bugs[i].is_closed() else ''
                         if bugids[i] >= 0:
-                            res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>)(<a href="%s">nicos</a>):\n       [<a href="%s">bug #%s</a>] %s%s'%(offset,lextract,ts[i].name,lerror,llog,ltail,lnicos,bugurls[i],bugids[i],status_summary,bugcomments[i]))
+                            res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>)(<a href="%s">nicos</a>):\n       [<a href="%s">bug #%s</a>] %s%s%s'%(offset,lextract,ts[i].name,lerror,llog,ltail,lnicos,bugurls[i],bugids[i],closed_summary,status_summary,bugcomments[i]))
                         else:
-                            res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>)(<a href="%s">nicos</a>):\n       [Exit Category #%s] %s%s'%(offset,lextract,ts[i].name,lerror,llog,ltail,lnicos,bugids[i],status_summary,bugcomments[i]))
+                            res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>)(<a href="%s">nicos</a>):\n       [Exit Category #%s] %s%s%s'%(offset,lextract,ts[i].name,lerror,llog,ltail,lnicos,bugids[i],closed_summary,status_summary,bugcomments[i]))
  
                     # for others, just list the bugs, one per line, with comma in the end of each line
                     else:
@@ -321,10 +323,11 @@ class Project:
                 if iorder==len(matchedidx)-1:
                     # special handling for the case of one test only affected by this bug
                     offset = '       ' if len(matchedidx)>1 else '    -  '
+                    closed_summary = CLOSEDSTATUS if bugs[i] and bugs[i].is_closed() else ''
                     if bugids[i] >= 0:
-                        res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>)(<a href="%s">nicos</a>):\n       [<a href="%s">bug #%s</a>] %s%s'%(offset,lextract,old.name,lerror,llog,ltail,lnicos,bugurls[i],bugids[i],FIXEDSTATUS,bugcomments[i]))
+                        res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>)(<a href="%s">nicos</a>):\n       [<a href="%s">bug #%s</a>] %s%s%s'%(offset,lextract,old.name,lerror,llog,ltail,lnicos,bugurls[i],bugids[i],closed_summary,FIXEDSTATUS,bugcomments[i]))
                     else:
-                        res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>)(<a href="%s">nicos</a>):\n       [Exit Category #%s] %s%s'%(offset,lextract,old.name,lerror,llog,ltail,lnicos,bugids[i],FIXEDSTATUS,bugcomments[i]))
+                        res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>)(<a href="%s">nicos</a>):\n       [Exit Category #%s] %s%s%s'%(offset,lextract,old.name,lerror,llog,ltail,lnicos,bugids[i],closed_summary,FIXEDSTATUS,bugcomments[i]))
                 # for others, just list the bugs, one per line, with comma in the end of each line
                 else:
                     offset = '    -  ' if iorder==0 else '       '
