@@ -358,7 +358,8 @@ class BugTracker:
         s.add(96112,"ImportError: No module named AthenaServicesConf")
         s.add(96117,"JobTransform completed for RAWtoESD with error code 11000 \(exit code 10\)") # the matching statements can be found in log/nicos, but the exact error msg is found in RAWtoESD.log
         s.add(96137,["TFile::Init:0: RuntimeWarning: file expert-monitoring.root probably not closed, trying to recover","WARNING: no directory and/or release sturucture found","ERROR: cound not cd to directory:  TrigSteer_L2"])
-        s.add_new(96142,["OBSOLETE WARNING please use RecExCond/RecExCommon_flags.py","Py:AutoConfiguration WARNING Unable to import PrimaryDPDFlags","Py:AutoConfiguration WARNING Primary DPDMake does not support the old naming convention"])
+        s.add(96142,["OBSOLETE WARNING please use RecExCond/RecExCommon_flags.py","Py:AutoConfiguration WARNING Unable to import PrimaryDPDFlags","Py:AutoConfiguration WARNING Primary DPDMake does not support the old naming convention"])
+        s.add(96165,["from MuonIsolationTools.MuonIsolationToolsConf import","ImportError: No module named MuonIsolationTools.MuonIsolationToolsConf"])
         return
 
 if __name__ == '__main__':
