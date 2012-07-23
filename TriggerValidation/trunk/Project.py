@@ -128,6 +128,14 @@ class Project:
         bugurl = "none"
         bugcomment = '<font style="BACKGROUND-COLOR: yellow">FIXME</font>'
         if s.MATCH_BUGS:
+            if re.match('AllPT_physicsV4_magField_on_off_on',t.name):
+                smlink = os.path.dirname(t.llog)+'/'+'warn.log'
+                try:
+                    bug = s.bugs.match(urllib2.urlopen(smlink,timeout=s.URLTIMEOUT).read())
+                except (urllib2.HTTPError,urllib2.URLError) as e :
+                    print 'WARNING: the following error-grep link leads to "404 page not found":'
+                    print '   ',t.lerror
+                    bug = None                
             if re.search('Upload',t.name):
                 smlink = os.path.dirname(t.llog)+'/'+'uploadSMK.log'
                 try:
