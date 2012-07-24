@@ -9,6 +9,8 @@ SKIP_ERRORS = True
 rel = 5
 # compare with the dby(day-before-yesterday) release, rather than yesterday?
 dby = False
+# print (to stdout) a summary of all found bugs
+SUMMARIZE_BUGS = True
 
 import common
 import sys,getpass,socket,datetime
@@ -59,7 +61,7 @@ if __name__=="__main__":
         if len(bugs.new_bugs())>0:
             print >>f,'New bug reports:'
             for bug in bugs.new_bugs():
-                print >>f,'- [<a href="%s">bug #%d</a>] : %s'%(bug.url(),bug.id,bug.fetch_comment())
+                print >>f,'- [<a href="%s">bug #%d</a>] : %s'%(bug.url(),bug.id,bug.fetch_metadata())
         print >>f,''
         print >>f,'RTT memory report:'
         print >>f,'The following tests had a >10% increase in total memory consumption with respect to the minimum memory usage in the past 6 days:'
@@ -87,3 +89,5 @@ if __name__=="__main__":
             print >>f,l
     print >>f,'</pre></body></html>'
     f.close()
+    if SUMMARIZE_BUGS:
+        bugs.summarize_bugs()

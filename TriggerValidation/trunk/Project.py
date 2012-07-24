@@ -126,7 +126,7 @@ class Project:
         bug = None
         bugid=00000
         bugurl = "none"
-        bugcomment = '<font style="BACKGROUND-COLOR: yellow">FIXME</font>'
+        bugtitle = '<font style="BACKGROUND-COLOR: yellow">FIXME</font>'
         if s.MATCH_BUGS:
             if re.match('AllPT_physicsV4_magField_on_off_on',t.name):
                 smlink = os.path.dirname(t.llog)+'/'+'warn.log'
@@ -201,8 +201,8 @@ class Project:
             if bug:
                 bugid=bug.id
                 bugurl = bug.url()
-                bugcomment = bug.fetch_comment()
-        return status,bug,bugid,bugurl,bugcomment
+                bugtitle = bug.fetch_metadata()
+        return status,bug,bugid,bugurl,bugtitle
     def process_errors(s,err):
         """ prints the errors in a nicely formatted way """
         total = 0
@@ -211,10 +211,10 @@ class Project:
             res.append('    None')
             return res,total
         else:
-            ts,statuses,bugs,bugids,bugurls,bugcomments = [],[],[],[],[],[]
+            ts,statuses,bugs,bugids,bugurls,bugtitles = [],[],[],[],[],[]
             for t in err:
                 total += 1
-                status,bug,bugid,bugurl,bugcomment = s.match_bugs(t)
+                status,bug,bugid,bugurl,bugtitle = s.match_bugs(t)
                 # separately keep track of "new" bug reports. Note that this functionality
                 # depends on the user to separately add these bugs via bugs.add_new().
                 if bug and bug.new==True and not bug in s.new_bugs:
@@ -224,7 +224,7 @@ class Project:
                 bugs.append(bug)
                 bugids.append(bugid)
                 bugurls.append(bugurl)
-                bugcomments.append(bugcomment)
+                bugtitles.append(bugtitle)
             # group by bug id
             uniquebugs = list(set(bugids))
             for uid in uniquebugs:
@@ -248,9 +248,9 @@ class Project:
                         offset = '       ' if len(matchedidx)>1 else '    -  '
                         closed_summary = CLOSEDSTATUS if bugs[i] and bugs[i].is_closed() else ''
                         if bugids[i] >= 0:
-                            res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>)(<a href="%s">nicos</a>):\n       [<a href="%s">bug #%s</a>] %s%s%s'%(offset,lextract,ts[i].name,lerror,llog,ltail,lnicos,bugurls[i],bugids[i],closed_summary,status_summary,bugcomments[i]))
+                            res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>)(<a href="%s">nicos</a>):\n       [<a href="%s">bug #%s</a>] %s%s%s'%(offset,lextract,ts[i].name,lerror,llog,ltail,lnicos,bugurls[i],bugids[i],closed_summary,status_summary,bugtitles[i]))
                         else:
-                            res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>)(<a href="%s">nicos</a>):\n       [Exit Category #%s] %s%s%s'%(offset,lextract,ts[i].name,lerror,llog,ltail,lnicos,bugids[i],closed_summary,status_summary,bugcomments[i]))
+                            res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>)(<a href="%s">nicos</a>):\n       [Exit Category #%s] %s%s%s'%(offset,lextract,ts[i].name,lerror,llog,ltail,lnicos,bugids[i],closed_summary,status_summary,bugtitles[i]))
  
                     # for others, just list the bugs, one per line, with comma in the end of each line
                     else:
@@ -300,7 +300,7 @@ class Project:
         bugs = []
         bugids = []
         bugurls = []
-        bugcomments = []
+        bugtitles = []
         for t in err:
             # today's corresponding tests (if fixed)
             matches = [pres for pres in s.pres if t.fixedbug(pres)]
@@ -308,11 +308,11 @@ class Project:
             if len(matches)==1:
                 fixed.append(t)
                 match.append(matches[0])
-                status,bug,bugid,bugurl,bugcomment = s.match_bugs(t)
+                status,bug,bugid,bugurl,bugtitle = s.match_bugs(t)
                 bugs.append(bug)
                 bugids.append(bugid)
                 bugurls.append(bugurl)
-                bugcomments.append(bugcomment)
+                bugtitles.append(bugtitle)
         res.append("  <i>Link to yesterday's broken tests that passed successfully today (as of rel_%d)</i>:"%s.rel)
         # group by bug id
         uniquebugs = list(set(bugids))
@@ -333,9 +333,9 @@ class Project:
                     offset = '       ' if len(matchedidx)>1 else '    -  '
                     closed_summary = CLOSEDSTATUS if bugs[i] and bugs[i].is_closed() else ''
                     if bugids[i] >= 0:
-                        res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>)(<a href="%s">nicos</a>):\n       [<a href="%s">bug #%s</a>] %s%s%s'%(offset,lextract,old.name,lerror,llog,ltail,lnicos,bugurls[i],bugids[i],closed_summary,FIXEDSTATUS,bugcomments[i]))
+                        res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>)(<a href="%s">nicos</a>):\n       [<a href="%s">bug #%s</a>] %s%s%s'%(offset,lextract,old.name,lerror,llog,ltail,lnicos,bugurls[i],bugids[i],closed_summary,FIXEDSTATUS,bugtitles[i]))
                     else:
-                        res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>)(<a href="%s">nicos</a>):\n       [Exit Category #%s] %s%s%s'%(offset,lextract,old.name,lerror,llog,ltail,lnicos,bugids[i],closed_summary,FIXEDSTATUS,bugcomments[i]))
+                        res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>)(<a href="%s">nicos</a>):\n       [Exit Category #%s] %s%s%s'%(offset,lextract,old.name,lerror,llog,ltail,lnicos,bugids[i],closed_summary,FIXEDSTATUS,bugtitles[i]))
                 # for others, just list the bugs, one per line, with comma in the end of each line
                 else:
                     offset = '    -  ' if iorder==0 else '       '
