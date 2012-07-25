@@ -118,9 +118,10 @@ class Project:
     def dump(s):
         if s.pres_soup:
             print s.soup.prettify()
-    def match_bugs(s,t):
+    def match_bugs(s,t,only_lextract=False):
         """ Look up the bugs in local BugTracker, as well as yesterday's cache 
         Uses log error extract, summary extract, and full log tail to do the matching
+        If only_lextract is set to True, only match log extract (i.e, use this for tests labeled with WARN)
         """
         status = '' if any([l.samebug(t) for l in s.last]) else NEWSTATUS
         bug = None
@@ -128,7 +129,7 @@ class Project:
         bugurl = "none"
         bugtitle = '<font style="BACKGROUND-COLOR: yellow">FIXME</font>'
         if s.MATCH_BUGS:
-            if re.match('AllPT_physicsV4_magField_on_off_on',t.name):
+            if re.match('AllPT_physicsV4_magField_on_off_on',t.name) and not only_lextract:
                 smlink = os.path.dirname(t.llog)+'/'+'warn.log'
                 try:
                     bug = s.bugs.match(urllib2.urlopen(smlink,timeout=s.URLTIMEOUT).read())
@@ -136,7 +137,7 @@ class Project:
                     print 'WARNING: the following error-grep link leads to "404 page not found":'
                     print '   ',t.lerror
                     bug = None                
-            if re.search('Upload',t.name):
+            if re.search('Upload',t.name) and not only_lextract:
                 smlink = os.path.dirname(t.llog)+'/'+'uploadSMK.log'
                 try:
                     bug = s.bugs.match(urllib2.urlopen(smlink,timeout=s.URLTIMEOUT).read())
@@ -144,7 +145,7 @@ class Project:
                     print 'WARNING: the following error-grep link leads to "404 page not found":'
                     print '   ',t.lerror
                     bug = None
-            if not bug and t.lerror:
+            if not bug and t.lerror and not only_lextract:
                 try:
                     bug = s.bugs.match(urllib2.urlopen(t.lerror,timeout=s.URLTIMEOUT).read())
                 except (urllib2.HTTPError,urllib2.URLError) as e :
@@ -157,15 +158,17 @@ class Project:
                 except (urllib2.HTTPError,urllib2.URLError) as e :
                     print 'WARNING: the following error-summary link leads to "404 page not found":'
                     print '   ',t.lextract
+                    if only_lextract:
+                        print '   ','THIS BUG CANNOT BE MATCHED'
                     bug = None
-            if not bug and t.ltail:
+            if not bug and t.ltail and not only_lextract:
                 try:
                     bug = s.bugs.match(urllib2.urlopen(t.ltail,timeout=s.URLTIMEOUT).read())
                 except (urllib2.HTTPError,urllib2.URLError) as e :
                     print 'WARNING: the following tail link leads to "404 page not found":'
                     print '   ',t.ltail
                     bug = None
-            if not bug and t.lnicos:
+            if not bug and t.lnicos and not only_lextract:
                 try:
                     bug = s.bugs.match(urllib2.urlopen(t.lnicos,timeout=s.URLTIMEOUT).read())
                 except (urllib2.HTTPError,urllib2.URLError) as e :
@@ -177,7 +180,7 @@ class Project:
                 # special fake bug number for unmatched NICOS-only bugs
                 if not bug and t.is_error_athena_nicos():
                     bugid=1
-            if not bug and t.llog and Project.full_enable:
+            if not bug and t.llog and Project.full_enable  and not only_lextract:
                 try:
                     # only check full logs if they are under 50 MB in size
                     site = urllib2.urlopen(t.llog,timeout=s.URLTIMEOUT)
@@ -203,7 +206,7 @@ class Project:
                 bugurl = bug.url()
                 bugtitle = bug.fetch_metadata()
         return status,bug,bugid,bugurl,bugtitle
-    def process_errors(s,err):
+    def process_errors(s,err,only_lextract=False):
         """ prints the errors in a nicely formatted way """
         total = 0
         res = []
@@ -214,7 +217,7 @@ class Project:
             ts,statuses,bugs,bugids,bugurls,bugtitles = [],[],[],[],[],[]
             for t in err:
                 total += 1
-                status,bug,bugid,bugurl,bugtitle = s.match_bugs(t)
+                status,bug,bugid,bugurl,bugtitle = s.match_bugs(t,only_lextract)
                 # separately keep track of "new" bug reports. Note that this functionality
                 # depends on the user to separately add these bugs via bugs.add_new().
                 if bug and bug.new==True and not bug in s.new_bugs:
@@ -282,6 +285,12 @@ class Project:
                 status = '' if any([l.samebug(t) for l in s.last]) else ' '+NEWSTATUS
                 total += 1
                 res.append('    - <a href="%s">%s</a> (<a href="%s">nicos</a>)%s'%(t.lextract,t.name,t.lnicos,status))
+        # warnings
+        err = [t for t in s.pres if t.is_warning()]
+        msg,tot = s.process_errors(err,only_lextract=True);
+        if tot>0:
+            res.append('  <i>Tests that finished without errors, but their output differs from reference</i>:')
+            res += msg; total+=tot
         # if there were no errors of any kind, just say so
         if total==0:
             res = res[0:2]
@@ -293,7 +302,7 @@ class Project:
         """ Returns a list of tests that were fixed between previous and current releases """
         res = []
         # yesterday's errors:
-        err = [t for t in s.last if t.is_error_athena() or t.is_error_exit()]
+        err = [t for t in s.last if t.is_error_athena() or t.is_error_exit() or t.is_warning()]
         # yesterday's errors that were fixed, and their matches in today's release
         fixed = [] # yesterday's test
         match = [] # corresponding today's test

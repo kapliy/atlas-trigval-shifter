@@ -197,9 +197,16 @@ class BugTracker:
         s.add(94697,['href="#prblm"\>ls: \*rel_\[0-6\].data.xml: No such file or directory'],'NICOS HARMLESS WARNING: missing *rel_[0-6].data.xml')
         s.add(94970,['href="#prblm"\>python: can\'t open file \'checkFileTrigSize_RTT.py\''],'NICOS HARMLESS WARNING: cannot find checkFileTrigSize_RTT.py')
         s.add(94775,['href="#prblm"\>sh: voms-proxy-info: command not found'],'NICOS HARMLESS WARNING: voms-proxy-info command not found')
-        #s.add(-5, ['\.reference: No such file or directory','wc:','old/reference'],'NICOS: MISSING REFERENCE FILE')
-        #s.add(-5, ['\.reference: No such file or directory\</A\>\<BR\>'],'NICOS: MISSING REFERENCE FILE')
-        #s.add(-5, ['\.reference: No such file or directory','wc:','checkcounts test warning: Unable to open reference'],'NICOS: MISSING REFERENCE FILE')
+        if False:
+            s.add(-5, ['\.reference: No such file or directory','wc:','old/reference'],'NICOS: MISSING REFERENCE FILE')
+            s.add(-5, ['\.reference: No such file or directory\</A\>\<BR\>'],'NICOS: MISSING REFERENCE FILE')
+            s.add(-5, ['\.reference: No such file or directory','wc:','checkcounts test warning: Unable to open reference'],'NICOS: MISSING REFERENCE FILE')
+        else:
+            s.add(96295,[".reference: No such file or directory","nightly 17.2.X.Y-VAL-Prod/"])
+            s.add(96296,[".reference: No such file or directory","nightly 17.2.X/"])
+            s.add(96297,[".reference: No such file or directory","nightly 17.2.X-VAL/"])
+        s.add(-99,['ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)'],title='TEMPORARY PLACEHOLDER FOR REFERENCE MISMATCH') #FIXME
+        s.add(-99,['WARNING Output differs from reference for','If this change is understood, please update'],title='TEMPORARY PLACEHOLDER FOR REFERENCE MISMATCH') #FIXME
         s.add(-6, ['These errors occured: ROOTCOMP_MISMATCH \(4\)','trigtest.pl: FAILURE at end'],'NICOS: ROOTCOMP MISMATCH')
         s.add(-7, ['NICOS NOTICE: POSSIBLE FAILURE \(ERROR\) : LOGFILE LARGE and TRUNCATED'],'NICOS: LOGFILE TRUNCATED')
     def prefill(s):
@@ -296,45 +303,15 @@ class BugTracker:
         s.add(96097,["SEVERE: Caught SQL error: ORA-02290: check constraint \(ATLAS_TRIGGER_ATN.TW_ID_NN\) violated","SEVERE:  Database is already locked by ATLAS_TRIGGER_ATN_W"]) # the bug is found in uploadSMK.log
         s.add(96098,"free\(\): corrupted unsorted chunks: 0x1ac14178")
         s.add(96112,"ImportError: No module named AthenaServicesConf")
-        s.add(96117,"JobTransform completed for RAWtoESD with error code 11000 \(exit code 10\)") # the matching statements can be found in log/nicos, but the exact error msg is found in RAWtoESD.log
+        s.add(96117,"JobTransform completed for RAWtoESD with error code 11000 \(exit code 10\)") # the matching statements can be found in log/nicos, but the exact error msg is found in RAWtoESD.log. TODO: if this shows up again, modify Project.py match_bugs to parse RAWtoESD.log
         s.add(96137,["TFile::Init:0: RuntimeWarning: file expert-monitoring.root probably not closed, trying to recover","WARNING: no directory and/or release sturucture found","ERROR: cound not cd to directory:  TrigSteer_L2"])
         s.add(96142,["OBSOLETE WARNING please use RecExCond/RecExCommon_flags.py","Py:AutoConfiguration WARNING Unable to import PrimaryDPDFlags","Py:AutoConfiguration WARNING Primary DPDMake does not support the old naming convention"])
         s.add(96165,["from MuonIsolationTools.MuonIsolationToolsConf import","ImportError: No module named MuonIsolationTools.MuonIsolationToolsConf"])
         s.add(96215,"ImportError: cannot import name CBNTAA_L1CaloPPM")
         s.add(96216,["farmelements.py","if ret != 0 and ret != 5: raise PropagationException\(ret,output\)","PropagationException: return code: 1280"])
-#         s.add(96217,"AthenaDBConfigRDO_top_L2.TrigChainMoniValidation.reference: No such file or directory")
-#         s.add(96218,"BjetSliceAthenaTrigRDO_top.reference: No such file or directory")
-#         s.add(96219,"AthenaTrigRDO_blackholes.reference: No such file or directory")
-#         s.add(96220,"AthenaRDO_chainOrderAscend_top_L2.TrigChainMoniValidation.reference: No such file or directory")
-#         s.add(96221,"AthenaRDO_chainOrderDescend_top_L2.TrigChainMoniValidation.reference: No such file or directory")
-#         s.add(96222,"AthenaRDO_cosmic_default_top_L2.TrigChainMoniValidation.reference: No such file or directory")
-#         s.add(96223,"AthenaTrigRDO_standalone_top_L2.TrigChainMoniValidation.reference: No such file or directory")
-#         s.add(96224,"AthenaXMLConfigRDO_top_L2.TrigChainMoniValidation.reference: No such file or directory")
-#         s.add(96225,"BphysicsSliceAthenaTrigRDO_top.reference: No such file or directory")
-#         s.add(96226,"BphysicsSliceAthenaTrigRDO_top_Kstar.reference: No such file or directory")
-#         s.add(96227,"CaloAthenaTrigRDO_top.reference: No such file or directory")
-#         s.add(96228,"ElectronSliceAthenaTrigRDO_top.reference: No such file or directory")
-#         s.add(96229,"IDAthenaTrigRDO_top.reference: No such file or directory")
-#         s.add(96230,"IDAthenaTrigRDO_preRTTtest_top.reference: No such file or directory")
-#         s.add(96231,"JetSliceAthenaTrigRDO_top.reference: No such file or directory")
-#         s.add(96232,"METSliceAthenaTrigRDO_top.reference: No such file or directory")
-#         s.add(96233,"MinBiasSliceAthenaTrigRDO.reference: No such file or directory")
-#         s.add(96234,"MuonSliceAthenaTrigRDO_top.reference: No such file or directory")
-#         s.add(96235,"PhotonSlice_top.reference: No such file or directory")
-#         s.add(96236,"TauSliceAthenaTrigRDO_top.reference: No such file or directory")
-#         s.add(96237,"TrigSteer_L2.ResultBuilder.reference: No such file or directory")
-#         s.add(96238,"ecodes_TrigSteer_L2.ResultBuilder.reference: No such file or directory")
-#         s.add(96239,"TrigEDMCheck_mcV4_savedBS.reference: No such file or directory")
-#         s.add(96240,"TrigEDMCheck_physicsV4_savedBS.reference: No such file or directory")
-#         s.add(96241,"AthenaTrigAOD_UnslimVal.reference: No such file or directory")
-#         s.add(96242,"AllMT_HI.reference: No such file or directory")
-#         s.add(96243,"AllPT_HI.reference: No such file or directory")
         s.add(96245,["is::repository_var is::server::resolve\(...\) at is/src/server.cc:31","CORBA::Object\* ipc::util::resolve\(...\) at ipc/src/util.cc:369"])
         s.add(96251,["WARNING Unable to retrieve the cell container  AllCalo","WARNING retrieve\(const\): No valid proxy for object AllCalo  of type CaloCellContainer\(CLID 2802\)"])
         s.add(96273,["raise IncludeError\( 'include file %s can not be found' % fn \)","IncludeError: include file TrigT1CaloCalibTools/CBNT_L1Calo_jobOptions.py can not be found"])
-        s.add(96295,[".reference: No such file or directory","nightly 17.2.X.Y-VAL-Prod/"])
-        s.add(96296,[".reference: No such file or directory","nightly 17.2.X/"])
-        s.add(96297,[".reference: No such file or directory","nightly 17.2.X-VAL/"])
         return
 
 if __name__ == '__main__':
