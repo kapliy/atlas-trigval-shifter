@@ -164,7 +164,6 @@ class Project:
                 except (urllib2.HTTPError,urllib2.URLError) as e :
                     print 'WARNING: the following tail link leads to "404 page not found":'
                     print '   ',t.ltail
-                    print '   ','THIS BUG CANNOT BE MATCHED'
                     bug = None
             if not bug and t.lnicos:
                 try:
@@ -172,7 +171,8 @@ class Project:
                 except (urllib2.HTTPError,urllib2.URLError) as e :
                     print '%s: the following NICOS link leads to "404 page not found":'%('WARNING' if Project.full_enable else 'ERROR')
                     print '   ',t.lnicos
-                    print '   ','THIS BUG CANNOT BE MATCHED'
+                    if not ( t.llog and Project.full_enable ):
+                        print '   ','THIS BUG CANNOT BE MATCHED'
                     bug = None
                 # special fake bug number for unmatched NICOS-only bugs
                 if not bug and t.is_error_athena_nicos():
