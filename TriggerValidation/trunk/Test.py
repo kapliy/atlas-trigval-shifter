@@ -88,6 +88,7 @@ class Test:
     def is_warning(s):
         """ Only report warnings if it is not also an athena error, exit error, or log parse error """
         if s.is_error_athena(): return False
+        if s.is_error_exit(): return False
         if s.is_error_post(): return False
         return s.warn
     def samebug(s,t):
