@@ -205,8 +205,30 @@ class BugTracker:
             s.add(96295,[".reference: No such file or directory","nightly 17.2.X.Y-VAL-Prod/"])
             s.add(96296,[".reference: No such file or directory","nightly 17.2.X/"])
             s.add(96297,[".reference: No such file or directory","nightly 17.2.X-VAL/"])
-        s.add(-99,['ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)'],title='TEMPORARY PLACEHOLDER FOR REFERENCE MISMATCH') #FIXME
-        s.add(-99,['WARNING Output differs from reference for','If this change is understood, please update'],title='TEMPORARY PLACEHOLDER FOR REFERENCE MISMATCH') #FIXME
+        s.add(96332,["/17.1.X.Y-VAL-P1HLT/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"])
+        s.add(96332,["/17.1.X.Y-VAL-P1HLT/","WARNING Output differs from reference for","If this change is understood, please update"])
+        s.add(96333,["/17.1.X.Y.Z-VAL-AtlasCAFHLT/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"])
+        s.add(96333,["/17.1.X.Y.Z-VAL-AtlasCAFHLT/","WARNING Output differs from reference for","If this change is understood, please update"])
+        s.add(96334,["/17.2.X.Y-VAL-Prod/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"])
+        s.add(96334,["/17.2.X.Y-VAL-Prod/","WARNING Output differs from reference for","If this change is understood, please update"])
+        s.add(96335,["/17.1.X/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"])
+        s.add(96335,["/17.1.X/","WARNING Output differs from reference for","If this change is understood, please update"])
+        s.add(96336,["/17.1.X-VAL/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"])
+        s.add(96336,["/17.1.X-VAL/","WARNING Output differs from reference for","If this change is understood, please update"])
+        s.add(96337,["/17.2.X/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"])
+        s.add(96337,["/17.2.X/","WARNING Output differs from reference for","If this change is understood, please update"])
+        s.add(96338,["/17.2.X-VAL/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"])
+        s.add(96338,["/17.2.X-VAL/","WARNING Output differs from reference for","If this change is understood, please update"])
+        s.add(96339,["/18.X.0/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"])
+        s.add(96339,["/18.X.0/","WARNING Output differs from reference for","If this change is understood, please update"])
+        s.add(96340,["/18.X.0-VAL/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"])
+        s.add(96340,["/18.X.0-VAL/","WARNING Output differs from reference for","If this change is understood, please update"])
+        s.add(96341,["/17.1.X.Y-VAL2-P1HLT/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"])
+        s.add(96341,["/17.1.X.Y-VAL2-P1HLT/","WARNING Output differs from reference for","If this change is understood, please update"])
+        s.add(96342,["/17.1.X.Y.Z-VAL2-AtlasCAFHLT/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"])
+        s.add(96342,["/17.1.X.Y.Z-VAL2-AtlasCAFHLT/","WARNING Output differs from reference for","If this change is understood, please update"])
+        #s.add(-99,['ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)'],title='TEMPORARY PLACEHOLDER FOR REFERENCE MISMATCH') #FIXME
+        #s.add(-99,['WARNING Output differs from reference for','If this change is understood, please update'],title='TEMPORARY PLACEHOLDER FOR REFERENCE MISMATCH') #FIXME
         s.add(-6, ['These errors occured: ROOTCOMP_MISMATCH \(4\)','trigtest.pl: FAILURE at end'],'NICOS: ROOTCOMP MISMATCH')
         s.add(-7, ['NICOS NOTICE: POSSIBLE FAILURE \(ERROR\) : LOGFILE LARGE and TRUNCATED'],'NICOS: LOGFILE TRUNCATED')
     def prefill(s):
