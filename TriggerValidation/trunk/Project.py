@@ -286,7 +286,7 @@ class Project:
                 total += 1
                 res.append('    - <a href="%s">%s</a> (<a href="%s">nicos</a>)%s'%(t.lextract,t.name,t.lnicos,status))
         # warnings
-        err = [t for t in s.pres if t.is_warning()]
+        err = [t for t in s.pres if (t.is_warning() and not t.is_error_athena() and not t.is_error_exit() and not t.is_error_post())]
         msg,tot = s.process_errors(err,only_lextract=True);
         if tot>0:
             res.append('  <i>Tests that finished without errors, but their output differs from reference</i>:')
