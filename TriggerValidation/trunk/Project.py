@@ -4,10 +4,7 @@ import sys,os,re,urllib2,time,datetime
 import BeautifulSoup as bs
 from Test import Test
 
-DUMMY_LINK='http://www.NOT.AVAILABLE.com'
-NEWSTATUS='[<b><FONT style="BACKGROUND-COLOR: FF6666">NEW</FONT></b>] '
-FIXEDSTATUS='[<b><FONT style="BACKGROUND-COLOR: 99FF00">FIXED</FONT></b>] '
-CLOSEDSTATUS='[<b><font style="BACKGROUND-COLOR: 967BF9">CLOSED</font></b>] '
+from constants import *
 
 class Project:
     """ One trigger validation project that has its own ATN and NICOS page
@@ -16,15 +13,8 @@ class Project:
     """
     rel = 0
     URLTIMEOUT = 60
-    bugs = None
-    MATCH_BUGS = False
     SKIP_ERRORS = True
     dby = False
-    # special settings for matching bugs in full logs (that are huge)
-    full_enable=True       # enable at the beginning?
-    full_counter=0         # counter for number of times we downloaded a full log
-    full_maxsize=50        # maximum size of "full log" to be downloadable, in megabytes
-    full_nmax=10           # after full_nmax full logs are downloaded, full_enabled will be set to False
     def __init__(s,name,atn):
         s.name = name
         s.atn = atn
@@ -118,94 +108,6 @@ class Project:
     def dump(s):
         if s.pres_soup:
             print s.soup.prettify()
-    def match_bugs(s,t,only_lextract=False):
-        """ Look up the bugs in local BugTracker, as well as yesterday's cache 
-        Uses log error extract, summary extract, and full log tail to do the matching
-        If only_lextract is set to True, only match log extract (i.e, use this for tests labeled with WARN)
-        """
-        status = '' if any([l.samebug(t) for l in s.last]) else NEWSTATUS
-        bug = None
-        bugid=00000
-        bugurl = "none"
-        bugtitle = '<font style="BACKGROUND-COLOR: yellow">FIXME</font>'
-        if s.MATCH_BUGS:
-            if re.match('AllPT_physicsV4_magField_on_off_on',t.name) and not only_lextract:
-                smlink = os.path.dirname(t.llog)+'/'+'warn.log'
-                try:
-                    bug = s.bugs.match(urllib2.urlopen(smlink,timeout=s.URLTIMEOUT).read())
-                except (urllib2.HTTPError,urllib2.URLError) as e :
-                    print 'WARNING: the following error-grep link leads to "404 page not found":'
-                    print '   ',t.lerror
-                    bug = None                
-            if re.search('Upload',t.name) and not only_lextract:
-                smlink = os.path.dirname(t.llog)+'/'+'uploadSMK.log'
-                try:
-                    bug = s.bugs.match(urllib2.urlopen(smlink,timeout=s.URLTIMEOUT).read())
-                except (urllib2.HTTPError,urllib2.URLError) as e :
-                    print 'WARNING: the following error-grep link leads to "404 page not found":'
-                    print '   ',t.lerror
-                    bug = None
-            if not bug and t.lerror and not only_lextract:
-                try:
-                    bug = s.bugs.match(urllib2.urlopen(t.lerror,timeout=s.URLTIMEOUT).read())
-                except (urllib2.HTTPError,urllib2.URLError) as e :
-                    print 'WARNING: the following error-grep link leads to "404 page not found":'
-                    print '   ',t.lerror
-                    bug = None
-            if not bug and t.lextract:
-                try:
-                    bug = s.bugs.match(urllib2.urlopen(t.lextract,timeout=s.URLTIMEOUT).read())
-                except (urllib2.HTTPError,urllib2.URLError) as e :
-                    print 'WARNING: the following error-summary link leads to "404 page not found":'
-                    print '   ',t.lextract
-                    if only_lextract:
-                        print '   ','THIS BUG CANNOT BE MATCHED'
-                    bug = None
-            if not bug and t.ltail and not only_lextract:
-                try:
-                    bug = s.bugs.match(urllib2.urlopen(t.ltail,timeout=s.URLTIMEOUT).read())
-                except (urllib2.HTTPError,urllib2.URLError) as e :
-                    print 'WARNING: the following tail link leads to "404 page not found":'
-                    print '   ',t.ltail
-                    bug = None
-            if not bug and t.lnicos and not only_lextract:
-                try:
-                    bug = s.bugs.match(urllib2.urlopen(t.lnicos,timeout=s.URLTIMEOUT).read())
-                except (urllib2.HTTPError,urllib2.URLError) as e :
-                    print '%s: the following NICOS link leads to "404 page not found":'%('WARNING' if Project.full_enable else 'ERROR')
-                    print '   ',t.lnicos
-                    if not ( t.llog and Project.full_enable ):
-                        print '   ','THIS BUG CANNOT BE MATCHED'
-                    bug = None
-                # special fake bug number for unmatched NICOS-only bugs
-                if not bug and t.is_error_athena_nicos():
-                    bugid=1
-            if not bug and t.llog and Project.full_enable  and not only_lextract:
-                try:
-                    # only check full logs if they are under 50 MB in size
-                    site = urllib2.urlopen(t.llog,timeout=s.URLTIMEOUT)
-                    meta = site.info()
-                    nmbX = meta.getheaders("Content-Length")[0]
-                    nmb = int(nmbX)/1024/1024
-                    if nmb < Project.full_maxsize:
-                        Project.full_counter += 1
-                        bug = s.bugs.match(site.read())
-                except (urllib2.HTTPError,urllib2.URLError) as e :
-                    print 'ERROR: the following test log link leads to "404 page not found":'
-                    print '   ',t.llog
-                    print '   ','THIS BUG CANNOT BE MATCHED'
-                    bug = None
-                # if we exceeded the maximum number of times to download a full log, disable further attempts
-                # this is here to prevent cases where a build failure causes a gazillion ATN test crashes,
-                # in which case checking full log for each of them would take forever. So limit it to full_nmax attempts.
-                if Project.full_counter>=Project.full_nmax:
-                    print 'WARNING: disabling full-log matching because maximum number of full-log downloads has been reached:',Project.full_nmax
-                    Project.full_enable = False
-            if bug:
-                bugid=bug.id
-                bugurl = bug.url()
-                bugtitle = bug.fetch_metadata()
-        return status,bug,bugid,bugurl,bugtitle
     def process_errors(s,err,only_lextract=False):
         """ prints the errors in a nicely formatted way """
         total = 0
@@ -217,7 +119,7 @@ class Project:
             ts,statuses,bugs,bugids,bugurls,bugtitles = [],[],[],[],[],[]
             for t in err:
                 total += 1
-                status,bug,bugid,bugurl,bugtitle = s.match_bugs(t,only_lextract)
+                status,bug,bugid,bugurl,bugtitle = t.match(s.last)
                 # separately keep track of "new" bug reports. Note that this functionality
                 # depends on the user to separately add these bugs via bugs.add_new().
                 if bug and bug.new==True and not bug in s.new_bugs:
@@ -289,7 +191,7 @@ class Project:
         err = [t for t in s.pres if t.is_warning()]
         msg,tot = s.process_errors(err,only_lextract=True);
         if tot>0:
-            res.append('  <i>Tests that finished without errors, but their output differs from reference</i>:')
+            res.append('  <i>Tests that finished without errors, but warnings given at ATN</i>:')
             res += msg; total+=tot
         # if there were no errors of any kind, just say so
         if total==0:
@@ -317,7 +219,7 @@ class Project:
             if len(matches)==1:
                 fixed.append(t)
                 match.append(matches[0])
-                status,bug,bugid,bugurl,bugtitle = s.match_bugs(t)
+                status,bug,bugid,bugurl,bugtitle = t.match(s.last)
                 bugs.append(bug)
                 bugids.append(bugid)
                 bugurls.append(bugurl)

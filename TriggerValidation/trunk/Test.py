@@ -1,11 +1,20 @@
 #!/usr/bin/env python
 
-import re
+import re,urllib2,os
+import constants
 
 class Test:
     """ One ATN test along with test results and log pointers """
+    bugs = None
+    # special settings for matching bugs in full logs (that are huge)
+    full_enable=True       # enable at the beginning?
+    full_counter=0         # counter for number of times we downloaded a full log
+    full_maxsize=50        # maximum size of "full log" to be downloadable, in megabytes
+    full_nmax=10           # after full_nmax full logs are downloaded, full_enabled will be set to False
+    # test settings
     urlbase=''
-    CHECK_NICOS = False
+    CHECK_NICOS = True
+    URLTIMEOUT = 60
     def __init__(s,urlbase):
         s.urlbase=urlbase
         s.name = 'EMPTY'
@@ -105,3 +114,89 @@ class Test:
         if s.is_warning():
             if t.is_warning(): return False     # don't report a test as fixed until all warnings are gone
         return True if t.overall == 'OK' else False
+    def match(s,last=[]):
+        """ Match this test to a bug in local BugTracker using a variety of test logs """
+        status = '' if any([l.samebug(s) for l in last]) else constants.NEWSTATUS
+        bug = None
+        bugid=00000
+        bugurl = "none"
+        bugtitle = '<font style="BACKGROUND-COLOR: yellow">FIXME</font>'
+        ref_mismatch = s.is_warning()
+        if True:
+            if re.match('AllPT_physicsV4_magField_on_off_on',s.name) and not ref_mismatch:
+                smlink = os.path.dirname(s.llog)+'/'+'warn.log'
+                try:
+                    bug = s.bugs.match(urllib2.urlopen(smlink,timeout=s.URLTIMEOUT).read())
+                except (urllib2.HTTPError,urllib2.URLError) as e :
+                    print 'WARNING: the following error-grep link leads to "404 page not found":'
+                    print '   ',s.lerror
+                    bug = None                
+            if re.search('Upload',s.name) and not ref_mismatch:
+                smlink = os.path.dirname(s.llog)+'/'+'uploadSMK.log'
+                try:
+                    bug = s.bugs.match(urllib2.urlopen(smlink,timeout=s.URLTIMEOUT).read())
+                except (urllib2.HTTPError,urllib2.URLError) as e :
+                    print 'WARNING: the following error-grep link leads to "404 page not found":'
+                    print '   ',s.lerror
+                    bug = None
+            if not bug and s.lerror and not ref_mismatch:
+                try:
+                    bug = s.bugs.match(urllib2.urlopen(s.lerror,timeout=s.URLTIMEOUT).read())
+                except (urllib2.HTTPError,urllib2.URLError) as e :
+                    print 'WARNING: the following error-grep link leads to "404 page not found":'
+                    print '   ',s.lerror
+                    bug = None
+            if not bug and s.lextract and not ref_mismatch:
+                try:
+                    bug = s.bugs.match(urllib2.urlopen(s.lextract,timeout=s.URLTIMEOUT).read())
+                except (urllib2.HTTPError,urllib2.URLError) as e :
+                    print 'WARNING: the following error-summary link leads to "404 page not found":'
+                    print '   ',s.lextract
+                    if ref_mismatch:
+                        print '   ','THIS BUG CANNOT BE MATCHED'
+                    bug = None
+            if not bug and s.ltail and not ref_mismatch:
+                try:
+                    bug = s.bugs.match(urllib2.urlopen(s.ltail,timeout=s.URLTIMEOUT).read())
+                except (urllib2.HTTPError,urllib2.URLError) as e :
+                    print 'WARNING: the following tail link leads to "404 page not found":'
+                    print '   ',s.ltail
+                    bug = None
+            if not bug and s.lnicos:
+                try:
+                    bug = s.bugs.match(urllib2.urlopen(s.lnicos,timeout=s.URLTIMEOUT).read(),ref_mismatch=ref_mismatch)
+                except (urllib2.HTTPError,urllib2.URLError) as e :
+                    print '%s: the following NICOS link leads to "404 page not found":'%('WARNING' if Test.full_enable else 'ERROR')
+                    print '   ',s.lnicos
+                    if not ( s.llog and Test.full_enable ):
+                        print '   ','THIS BUG CANNOT BE MATCHED'
+                    bug = None
+                # special fake bug number for unmatched NICOS-only bugs
+                if not bug and s.is_error_athena_nicos():
+                    bugid=1
+            if not bug and s.llog and Test.full_enable  and not ref_mismatch:
+                try:
+                    # only check full logs if they are under 50 MB in size
+                    site = urllib2.urlopen(s.llog,timeout=s.URLTIMEOUT)
+                    meta = site.info()
+                    nmbX = meta.getheaders("Content-Length")[0]
+                    nmb = int(nmbX)/1024/1024
+                    if nmb < Test.full_maxsize:
+                        Test.full_counter += 1
+                        bug = s.bugs.match(site.read())
+                except (urllib2.HTTPError,urllib2.URLError) as e :
+                    print 'ERROR: the following test log link leads to "404 page not found":'
+                    print '   ',s.llog
+                    print '   ','THIS BUG CANNOT BE MATCHED'
+                    bug = None
+                # if we exceeded the maximum number of times to download a full log, disable further attempts
+                # this is here to prevent cases where a build failure causes a gazillion ATN test crashes,
+                # in which case checking full log for each of them would take forever. So limit it to full_nmax attempts.
+                if Test.full_counter>=Test.full_nmax:
+                    print 'WARNING: disabling full-log matching because maximum number of full-log downloads has been reached:',Test.full_nmax
+                    Test.full_enable = False
+            if bug:
+                bugid=bug.id
+                bugurl = bug.url()
+                bugtitle = bug.fetch_metadata()
+        return status,bug,bugid,bugurl,bugtitle

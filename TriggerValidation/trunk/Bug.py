@@ -25,6 +25,7 @@ class Bug:
         s.seen = False
         s.nseen = 0    # counter
         s.new = False
+        s.cat = 0  # 0 = only match errors, 1 = only match warnings, 2 = match both
     def _urlopen(s,url):
         """ Since Savannah is sometimes unstable, we sometimes need to try several times """
         for itry in xrange(5):
@@ -131,10 +132,12 @@ class BugTracker:
     """ A local mini bugtracker to quickly look up common bugs """
     def __init__(s):
         s.bugs = []
-    def match(s,log):
+    def match(s,log,ref_mismatch=False):
         """ Require that all patterns match. Matching is done bottom-up (i.e. newest bugs are matched first) """
         #print log
         for bug in reversed(s.bugs):
+            if ref_mismatch and bug.cat not in (1,2): continue
+            if not ref_mismatch and not bug.cat in (0,2): continue
             if bug.match(log):
                 return bug
         return None
@@ -160,7 +163,7 @@ class BugTracker:
                 com2 = com[:_LINEWIDTH]
                 print '(%d)'%bug.nseen,bug.id,com2 if len(com)==len(com2) else com2+'...'
             print '='*_LINEWIDTH
-    def add(s,bugid,pattern,title=None,new=False):
+    def add(s,bugid,pattern,title=None,new=False,cat=0):
         """ Use this function to add pre-filled (aka known) bugs """
         old = [bug for bug in s.bugs if bug.id == bugid]
         bug = None
@@ -169,35 +172,37 @@ class BugTracker:
             bug.add_patterngroup(pattern)
             bug.set_title(title)
             bug.new = new
+            bug.cat = cat
             s.bugs.append( bug )
         elif len(old)==1:
             bug = old[0]
             bug.add_patterngroup(pattern)
             bug.new = new
+            bug.cat = cat
             if bug.title != title:
                 #print 'WARNING: encountered different bug titles for the same bug id = %d'%bugid
                 pass
             bug.set_title(title)
         else:
             assert False,'Severe failure in bug grouping functionality; please contact a developer'
-    def add_new(s,bugid,pattern,title=None):
+    def add_new(s,bugid,pattern,title=None,cat=0):
         """ Use this function to add new bugs in run.py - these will be reported separately at the top of the shift report """
-        s.add(bugid,pattern,title,new=True)
+        s.add(bugid,pattern,title,new=True,cat=cat)
     def prefill_genpurpose(s):
         """ General failure conditions """
-        s.add(-1, 'CRITICAL stopped by user interrupt','User interrupt')
-        s.add(-1, 'KeyboardInterrupt','User interrupt')
-        s.add(-2, 'APPLICATION_DIED_UNEXPECTEDLY','Worker process failed')
-        s.add(-3, 'received fatal signal 15','Job recieved SIGTERM signal')
-        s.add(-3, ['Signal handler: Killing','with 15'],'Job recieved SIGTERM signal')
-        s.add(-4, 'ATN_TIME_LIMIT','Job timed out')
-        s.add(-4, ['test killed as time quota spent, test warning is issued','nicos_kill_fam'],'Job timed out')
+        s.add(-1, 'CRITICAL stopped by user interrupt','User interrupt',cat=2)
+        s.add(-1, 'KeyboardInterrupt','User interrupt',cat=2)
+        s.add(-2, 'APPLICATION_DIED_UNEXPECTEDLY','Worker process failed',cat=2)
+        s.add(-3, 'received fatal signal 15','Job recieved SIGTERM signal',cat=2)
+        s.add(-3, ['Signal handler: Killing','with 15'],'Job recieved SIGTERM signal',cat=2)
+        s.add(-4, 'ATN_TIME_LIMIT','Job timed out',cat=2)
+        s.add(-4, ['test killed as time quota spent, test warning is issued','nicos_kill_fam'],'Job timed out',cat=2)
     def prefill_nicos(s):
         """ Special bugs that are only picked up by NICOS - and are not present in the ATN summary page """
         s.add(94697,['href="#prblm"\>ls: \*rel_\[0-6\].data.xml: No such file or directory'],'NICOS HARMLESS WARNING: missing *rel_[0-6].data.xml')
         s.add(94970,['href="#prblm"\>python: can\'t open file \'checkFileTrigSize_RTT.py\''],'NICOS HARMLESS WARNING: cannot find checkFileTrigSize_RTT.py')
         s.add(94775,['href="#prblm"\>sh: voms-proxy-info: command not found'],'NICOS HARMLESS WARNING: voms-proxy-info command not found')
-        if False:
+        if False: # missing references
             s.add(-5, ['\.reference: No such file or directory','wc:','old/reference'],'NICOS: MISSING REFERENCE FILE')
             s.add(-5, ['\.reference: No such file or directory\</A\>\<BR\>'],'NICOS: MISSING REFERENCE FILE')
             s.add(-5, ['\.reference: No such file or directory','wc:','checkcounts test warning: Unable to open reference'],'NICOS: MISSING REFERENCE FILE')
@@ -205,30 +210,35 @@ class BugTracker:
             s.add(96295,[".reference: No such file or directory","nightly 17.2.X.Y-VAL-Prod/"])
             s.add(96296,[".reference: No such file or directory","nightly 17.2.X/"])
             s.add(96297,[".reference: No such file or directory","nightly 17.2.X-VAL/"])
-        s.add(96332,["/17.1.X.Y-VAL-P1HLT/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"])
-        s.add(96332,["/17.1.X.Y-VAL-P1HLT/","WARNING Output differs from reference for","If this change is understood, please update"])
-        s.add(96333,["/17.1.X.Y.Z-VAL-AtlasCAFHLT/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"])
-        s.add(96333,["/17.1.X.Y.Z-VAL-AtlasCAFHLT/","WARNING Output differs from reference for","If this change is understood, please update"])
-        s.add(96334,["/17.2.X.Y-VAL-Prod/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"])
-        s.add(96334,["/17.2.X.Y-VAL-Prod/","WARNING Output differs from reference for","If this change is understood, please update"])
-        s.add(96335,["/17.1.X/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"])
-        s.add(96335,["/17.1.X/","WARNING Output differs from reference for","If this change is understood, please update"])
-        s.add(96336,["/17.1.X-VAL/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"])
-        s.add(96336,["/17.1.X-VAL/","WARNING Output differs from reference for","If this change is understood, please update"])
-        s.add(96337,["/17.2.X/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"])
-        s.add(96337,["/17.2.X/","WARNING Output differs from reference for","If this change is understood, please update"])
-        s.add(96338,["/17.2.X-VAL/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"])
-        s.add(96338,["/17.2.X-VAL/","WARNING Output differs from reference for","If this change is understood, please update"])
-        s.add(96339,["/18.X.0/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"])
-        s.add(96339,["/18.X.0/","WARNING Output differs from reference for","If this change is understood, please update"])
-        s.add(96340,["/18.X.0-VAL/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"])
-        s.add(96340,["/18.X.0-VAL/","WARNING Output differs from reference for","If this change is understood, please update"])
-        s.add(96341,["/17.1.X.Y-VAL2-P1HLT/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"])
-        s.add(96341,["/17.1.X.Y-VAL2-P1HLT/","WARNING Output differs from reference for","If this change is understood, please update"])
-        s.add(96342,["/17.1.X.Y.Z-VAL2-AtlasCAFHLT/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"])
-        s.add(96342,["/17.1.X.Y.Z-VAL2-AtlasCAFHLT/","WARNING Output differs from reference for","If this change is understood, please update"])
-        #s.add(-99,['ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)'],title='TEMPORARY PLACEHOLDER FOR REFERENCE MISMATCH') #FIXME
-        #s.add(-99,['WARNING Output differs from reference for','If this change is understood, please update'],title='TEMPORARY PLACEHOLDER FOR REFERENCE MISMATCH') #FIXME
+        if True: # reference count mismatch - only matched if a test is a WARNING but not an ERROR
+            s.add(96332,["nightlies/17.1.X.Y-VAL-P1HLT/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"],cat=1)
+            s.add(96332,["nightlies/17.1.X.Y-VAL-P1HLT/","WARNING Output differs from reference for","If this change is understood, please update"],cat=1)
+            s.add(96333,["nightlies/17.1.X.Y.Z-VAL-AtlasCAFHLT/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"],cat=1)
+            s.add(96333,["nightlies/17.1.X.Y.Z-VAL-AtlasCAFHLT/","WARNING Output differs from reference for","If this change is understood, please update"],cat=1)
+            s.add(96334,["nightlies/17.2.X.Y-VAL-Prod/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"],cat=1)
+            s.add(96334,["nightlies/17.2.X.Y-VAL-Prod/","WARNING Output differs from reference for","If this change is understood, please update"],cat=1)
+            s.add(96335,["nightlies/17.1.X/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"],cat=1)
+            s.add(96335,["nightlies/17.1.X/","WARNING Output differs from reference for","If this change is understood, please update"],cat=1)
+            s.add(96336,["nightlies/17.1.X-VAL/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"],cat=1)
+            s.add(96336,["nightlies/17.1.X-VAL/","WARNING Output differs from reference for","If this change is understood, please update"],cat=1)
+            s.add(96337,["nightlies/17.2.X/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"],cat=1)
+            s.add(96337,["nightlies/17.2.X/","WARNING Output differs from reference for","If this change is understood, please update"],cat=1)
+            s.add(96338,["nightlies/17.2.X-VAL/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"],cat=1)
+            s.add(96338,["nightlies/17.2.X-VAL/","WARNING Output differs from reference for","If this change is understood, please update"],cat=1)
+            s.add(96339,["nightlies/18.X.0/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"],cat=1)
+            s.add(96339,["nightlies/18.X.0/","WARNING Output differs from reference for","If this change is understood, please update"],cat=1)
+            s.add(96340,["nightlies/18.X.0-VAL/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"],cat=1)
+            s.add(96340,["nightlies/18.X.0-VAL/","WARNING Output differs from reference for","If this change is understood, please update"],cat=1)
+            s.add(96341,["nightlies/17.1.X.Y-VAL2-P1HLT/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"],cat=1)
+            s.add(96341,["nightlies/17.1.X.Y-VAL2-P1HLT/","WARNING Output differs from reference for","If this change is understood, please update"],cat=1)
+            s.add(96342,["nightlies/17.1.X.Y.Z-VAL2-AtlasCAFHLT/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"],cat=1)
+            s.add(96342,["nightlies/17.1.X.Y.Z-VAL2-AtlasCAFHLT/","WARNING Output differs from reference for","If this change is understood, please update"],cat=1)
+            s.add(96368,"checkcounts test warning : trigger counts outside tolerance:",cat=1)
+            s.add(96372,["checkcounts test warning: Unable to open reference file","nightlies/17.1.X.Y.Z-VAL-AtlasCAFHLT/",".root"],cat=1)
+            s.add(-9999,["checkcounts test warning: Unable to open reference file",".root"],title='ATTENTION: add a match string in Bug.py::prefill_nicos for this release',cat=1) #FIXME
+            s.add_new(96392,["checkcounts test warning: Unable to open reference file","nightlies/17.2.X-VAL/",".root"],cat=1)
+            s.add_new(96393,["checkcounts test warning: Unable to open reference file","nightlies/17.2.X/",".root"],cat=1)
+            #s.add(96366,["ATN, test wrapper", "test killed as time quota spent, test warning is issued"])
         s.add(-6, ['These errors occured: ROOTCOMP_MISMATCH \(4\)','trigtest.pl: FAILURE at end'],'NICOS: ROOTCOMP MISMATCH')
         s.add(-7, ['NICOS NOTICE: POSSIBLE FAILURE \(ERROR\) : LOGFILE LARGE and TRUNCATED'],'NICOS: LOGFILE TRUNCATED')
     def prefill(s):
@@ -237,8 +247,8 @@ class BugTracker:
         s.add(,'')
         s.add(,['',''])
         """
-        s.prefill_genpurpose()
         s.prefill_nicos()
+        s.prefill_genpurpose()
         s.add(86562,['ERROR preLoadFolder failed for folder /Digitization/Parameters','FATAL DetectorStore service not found'])
         # At some point, someone asked for a new bug report for the above bug -- if they complain again, you could use the line below
         #s.add(95595,['ERROR preLoadFolder failed for folder /Digitization/Parameters','FATAL DetectorStore service not found'])
@@ -341,7 +351,9 @@ if __name__ == '__main__':
     assert len(sys.argv)==2,'USAGE: %s http://url.to.logfile'
     bugs = BugTracker()
     bugs.prefill()
-    m =  bugs.match(urllib2.urlopen(sys.argv[1]).read())
+    m =  bugs.match(urllib2.urlopen(sys.argv[1]).read(),ref_mismatch=False)
+    if not m:
+        m =  bugs.match(urllib2.urlopen(sys.argv[1]).read(),ref_mismatch=True)
     if m:
         print 'Matched: ',m.id,m.url()
         print 'Title:',m.fetch_metadata()

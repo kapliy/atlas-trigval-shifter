@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# enable bug lookup functionality
-MATCH_BUGS = True
 # Set to false to die on first exception (and print detailed error summary)
 SKIP_ERRORS = True
 # choose default release (may be over-ridden on command line)
@@ -14,6 +12,7 @@ SUMMARIZE_BUGS = True
 
 import common
 import sys,getpass,socket,datetime
+from constants import *
 
 if len(sys.argv)>=2:
     rel = int(sys.argv[1])
@@ -30,16 +29,15 @@ import Project
 Project.Project.rel = rel
 Project.Project.dby = dby
 Project.Project.SKIP_ERRORS = SKIP_ERRORS
-# tweaks for *full* log matching:
-Project.Project.full_enable = False
-Project.Project.full_nmax   = 10    # increase this if you really NEED to match more full logs
 from Test import Test
 Test.CHECK_NICOS = True
+# tweaks for *full* log matching:
+Test.full_enable = False
+Test.full_nmax   = 10    # increase this if you really NEED to match more full logs
 from Bug import BugTracker
-Project.Project.MATCH_BUGS = MATCH_BUGS
 bugs = BugTracker()
 bugs.prefill()
-Project.Project.bugs = bugs
+Test.bugs = bugs
 
 # Load the list of nightlies that we need to validate
 from configure_nightlies import X    
@@ -67,9 +65,9 @@ if __name__=="__main__":
         print >>f,'The following tests had a >10% increase in total memory consumption with respect to the minimum memory usage in the past 6 days:'
         print >>f,''
         print >>f,'Detailed report is below.'
-        print >>f,'Failures that were NOT present in yesterday\'s release are marked with %s.'%(Project.NEWSTATUS)
-        print >>f,'Failures that were fixed between yesterday and today are marked with %s.'%(Project.FIXEDSTATUS)
-        print >>f,'Bugs that were closed on Savannah (perhaps prematurely) are marked with %s.'%(Project.CLOSEDSTATUS)
+        print >>f,'Failures that were NOT present in yesterday\'s release are marked with %s.'%(NEWSTATUS)
+        print >>f,'Failures that were fixed between yesterday and today are marked with %s.'%(FIXEDSTATUS)
+        print >>f,'Bugs that were closed on Savannah (perhaps prematurely) are marked with %s.'%(CLOSEDSTATUS)
         print >>f,''
         if getpass.getuser()=='antonk':
             print >>f,'Cheers,'
