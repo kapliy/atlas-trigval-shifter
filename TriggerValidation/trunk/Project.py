@@ -108,7 +108,7 @@ class Project:
     def dump(s):
         if s.pres_soup:
             print s.soup.prettify()
-    def process_errors(s,err,only_lextract=False):
+    def process_errors(s,err):
         """ prints the errors in a nicely formatted way """
         total = 0
         res = []
@@ -169,13 +169,13 @@ class Project:
         total = 0
         # athena errors
         err = [t for t in s.pres if t.is_error_athena()]
-        msg,tot = s.process_errors(err);
+        msg,tot = s.process_errors(err)
         if tot>0:
             res.append('  <i>Tests with ERRORs</i>:')
             res += msg; total+=tot
         # exit errors
         err = [t for t in s.pres if t.is_error_exit()]
-        msg,tot = s.process_errors(err);
+        msg,tot = s.process_errors(err)
         if tot>0:
             res.append('  <i>Tests that finished without errors, but crashed on Athena exit</i>:')
             res += msg; total+=tot
@@ -189,7 +189,7 @@ class Project:
                 res.append('    - <a href="%s">%s</a> (<a href="%s">nicos</a>)%s'%(t.lextract,t.name,t.lnicos,status))
         # warnings
         err = [t for t in s.pres if t.is_warning()]
-        msg,tot = s.process_errors(err,only_lextract=True);
+        msg,tot = s.process_errors(err)
         if tot>0:
             res.append('  <i>Tests that finished without errors, but warnings given at ATN</i>:')
             res += msg; total+=tot
