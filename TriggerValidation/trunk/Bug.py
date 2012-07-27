@@ -211,6 +211,7 @@ class BugTracker:
             s.add(96296,[".reference: No such file or directory","nightly 17.2.X/"])
             s.add(96297,[".reference: No such file or directory","nightly 17.2.X-VAL/"])
         if True: # reference count mismatch - only matched if a test is a WARNING but not an ERROR
+            # REFERENCE BUGS
             s.add(96332,["nightlies/17.1.X.Y-VAL-P1HLT/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"],cat=1)
             s.add(96332,["nightlies/17.1.X.Y-VAL-P1HLT/","WARNING Output differs from reference for","If this change is understood, please update"],cat=1)
             s.add(96333,["nightlies/17.1.X.Y.Z-VAL-AtlasCAFHLT/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"],cat=1)
@@ -233,12 +234,25 @@ class BugTracker:
             s.add(96341,["nightlies/17.1.X.Y-VAL2-P1HLT/","WARNING Output differs from reference for","If this change is understood, please update"],cat=1)
             s.add(96342,["nightlies/17.1.X.Y.Z-VAL2-AtlasCAFHLT/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"],cat=1)
             s.add(96342,["nightlies/17.1.X.Y.Z-VAL2-AtlasCAFHLT/","WARNING Output differs from reference for","If this change is understood, please update"],cat=1)
-            s.add(96368,"checkcounts test warning : trigger counts outside tolerance:",cat=1)
+            # TOLERANCE BUGS
+            s.add(-9998,"checkcounts test warning : trigger counts outside tolerance:",title="ATTENTION: add a TOLERANCE BUG match string in Bug.py::prefill_nicos for this release",cat=1) #HAS to be above other tolerance  strings - this is a "catch-all" case
+            s.add(96368,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.1.X.Y-VAL-P1HLT/"],cat=1) #FIXME wrong bug number!!!
+            s.add(96399,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.1.X.Y.Z-VAL-AtlasCAFHLT/"],cat=1)
+            s.add(96401,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.2.X.Y-VAL-Prod/"],cat=1)
+            s.add(96402,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.1.X/"],cat=1)
+            s.add(96403,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.1.X-VAL/"],cat=1)
+            s.add(96404,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.2.X-VAL/"],cat=1)
+            s.add(96405,["checkcounts test warning : trigger counts outside tolerance:","nightlies/18.X.0/"],cat=1)
+            s.add(96406,["checkcounts test warning : trigger counts outside tolerance:","nightlies/18.X.0-VAL/"],cat=1)
+            s.add(96407,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.1.X.Y-VAL2-P1HLT/"],cat=1)
+            s.add(96408,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.1.X.Y.Z-VAL2-AtlasCAFHLT/"],cat=1)
+            # CHECKCOUNT MISSING REFERENCE BUGS
+            s.add(-9999,["checkcounts test warning: Unable to open reference file",".root"],title='ATTENTION: add a CHECKCOUNTS BUG match string in Bug.py::prefill_nicos for this release',cat=1) #HAS to be above other checkcounts strings - this is a "catch-all" case
             s.add(96372,["checkcounts test warning: Unable to open reference file","nightlies/17.1.X.Y.Z-VAL-AtlasCAFHLT/",".root"],cat=1)
-            s.add(-9999,["checkcounts test warning: Unable to open reference file",".root"],title='ATTENTION: add a match string in Bug.py::prefill_nicos for this release',cat=1) #FIXME
-            s.add_new(96392,["checkcounts test warning: Unable to open reference file","nightlies/17.2.X-VAL/",".root"],cat=1)
-            s.add_new(96393,["checkcounts test warning: Unable to open reference file","nightlies/17.2.X/",".root"],cat=1)
-            #s.add(96366,["ATN, test wrapper", "test killed as time quota spent, test warning is issued"])
+            s.add(96392,["checkcounts test warning: Unable to open reference file","nightlies/17.2.X-VAL/",".root"],cat=1)
+            s.add(96393,["checkcounts test warning: Unable to open reference file","nightlies/17.2.X/",".root"],cat=1)
+            s.add(96397,["checkcounts test warning: Unable to open reference file","nightlies/17.1.X/",".root"],cat=1)
+            s.add(96398,["checkcounts test warning: Unable to open reference file","nightlies/17.1.X.Y.Z-VAL2-AtlasCAFHLT/",".root"],cat=1)
         s.add(-6, ['These errors occured: ROOTCOMP_MISMATCH \(4\)','trigtest.pl: FAILURE at end'],'NICOS: ROOTCOMP MISMATCH')
         s.add(-7, ['NICOS NOTICE: POSSIBLE FAILURE \(ERROR\) : LOGFILE LARGE and TRUNCATED'],'NICOS: LOGFILE TRUNCATED')
     def prefill(s):
@@ -351,7 +365,8 @@ if __name__ == '__main__':
     assert len(sys.argv)==2,'USAGE: %s http://url.to.logfile'
     bugs = BugTracker()
     bugs.prefill()
-    m =  bugs.match(urllib2.urlopen(sys.argv[1]).read(),ref_mismatch=False)
+    m = None
+    #m =  bugs.match(urllib2.urlopen(sys.argv[1]).read(),ref_mismatch=False)
     if not m:
         m =  bugs.match(urllib2.urlopen(sys.argv[1]).read(),ref_mismatch=True)
     if m:
