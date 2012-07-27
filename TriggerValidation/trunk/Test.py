@@ -115,7 +115,9 @@ class Test:
             if t.is_warning(): return False     # don't report a test as fixed until all warnings are gone
         return True if t.overall == 'OK' else False
     def match(s,last=[]):
-        """ Match this test to a bug in local BugTracker using a variety of test logs """
+        """ Match this test to a bug in local BugTracker using a variety of test logs.
+        last is an optional list of tests from yesterday, and can be used to label some bugs as NEW
+        """
         status = '' if any([l.samebug(s) for l in last]) else constants.NEWSTATUS
         bug = None
         bugid=00000
