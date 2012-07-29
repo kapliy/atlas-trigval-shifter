@@ -9,7 +9,7 @@ The videos are hosted on youtube. It's highly recommended to change the video qu
 = Links =
 
 Watch the videos in the following order:
-  * [http://www.youtube.com/watch?v=ZYwX7xX-5sA Part 1]
-  * [http://www.youtube.com/watch?v=nRgA8XPm3GI Part 2]
-  * [http://www.youtube.com/watch?v=y8e2l47et_8 Part 3]
-  * [http://www.youtube.com/watch?v=Lpz5SiSSjiQ Part 4]
+  * [http://www.youtube.com/watch?v=ZYwX7xX-5sA Part 1 - nightlies, NICOS, Savannah, and logs]
+  * [http://www.youtube.com/watch?v=nRgA8XPm3GI Part 2 - Chicago scripts]
+  * [http://www.youtube.com/watch?v=y8e2l47et_8 Part 3 - examining index2.html]
+  * [http://www.youtube.com/watch?v=Lpz5SiSSjiQ Part 4 - options and tricky details]
