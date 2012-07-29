@@ -367,7 +367,7 @@ if __name__ == '__main__':
     bugs = BugTracker()
     bugs.prefill()
     m = None
-    #m =  bugs.match(urllib2.urlopen(sys.argv[1]).read(),ref_mismatch=False)
+    m =  bugs.match(urllib2.urlopen(sys.argv[1]).read(),ref_mismatch=False)
     if not m:
         m =  bugs.match(urllib2.urlopen(sys.argv[1]).read(),ref_mismatch=True)
     if m:
