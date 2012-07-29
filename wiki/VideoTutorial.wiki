@@ -2,9 +2,9 @@
 
 = Introduction =
 
-Anton recorded a few video tutorials describing Trigger Validation scripts, including the use of Chicago's scripts.
+Chicago recorded a few video tutorials describing Trigger Validation scripts, including the use of our automated scripts.
 
-The videos are hosted on youtube. It's highly recommended to change the video quality to "720P" and then watch the videos in full-screen, which will let you read the text in the videos.
+The videos are hosted on youtube. It's highly recommended that you change the video quality to "720P" and then watch the videos in full-screen, which will let you read the text in the videos.
 
 = Links =
 
