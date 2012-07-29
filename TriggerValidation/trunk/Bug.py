@@ -246,6 +246,7 @@ class BugTracker:
             s.add(96406,["checkcounts test warning : trigger counts outside tolerance:","nightlies/18.X.0-VAL/"],cat=1)
             s.add(96407,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.1.X.Y-VAL2-P1HLT/"],cat=1)
             s.add(96408,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.1.X.Y.Z-VAL2-AtlasCAFHLT/"],cat=1)
+            s.add(96420,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.2.X/"],cat=1)
             # CHECKCOUNT MISSING REFERENCE BUGS
             s.add(-9999,["checkcounts test warning: Unable to open reference file",".root"],title='ATTENTION: add a CHECKCOUNTS BUG match string in Bug.py::prefill_nicos for this release',cat=1) #HAS to be above other checkcounts strings - this is a "catch-all" case
             s.add(96372,["checkcounts test warning: Unable to open reference file","nightlies/17.1.X.Y.Z-VAL-AtlasCAFHLT/",".root"],cat=1)
