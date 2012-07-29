@@ -1,0 +1,15 @@
+#summary Trigger Validation Shifts - Video Tutorial
+
+= Introduction =
+
+Anton recorded a few video tutorials describing Trigger Validation scripts, including the use of Chicago's scripts.
+
+The videos are hosted on youtube. It's highly recommended to change the video quality to "720P" and then watch the videos in full-screen, which will let you read the text in the videos.
+
+= Links =
+
+Watch the videos in the following order:
+  * [http://www.youtube.com/watch?v=ZYwX7xX-5sA Part 1]
+  * [http://www.youtube.com/watch?v=nRgA8XPm3GI Part 2]
+  * [http://www.youtube.com/watch?v=y8e2l47et_8 Part 3]
+  * [http://www.youtube.com/watch?v=Lpz5SiSSjiQ Part 4]
