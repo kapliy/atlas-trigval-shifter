@@ -196,7 +196,6 @@ class BugTracker:
         s.add(-3, 'received fatal signal 15','Job recieved SIGTERM signal',cat=2)
         s.add(-3, ['Signal handler: Killing','with 15'],'Job recieved SIGTERM signal',cat=2)
         s.add(-4, 'ATN_TIME_LIMIT','Job timed out',cat=2)
-        s.add(-4, ['test killed as time quota spent, test warning is issued','nicos_kill_fam'],'Job timed out',cat=2)
     def prefill_nicos(s):
         """ Special bugs that are only picked up by NICOS - and are not present in the ATN summary page """
         s.add(94697,['href="#prblm"\>ls: \*rel_\[0-6\].data.xml: No such file or directory'],'NICOS HARMLESS WARNING: missing *rel_[0-6].data.xml')
@@ -234,6 +233,9 @@ class BugTracker:
             s.add(96341,["nightlies/17.1.X.Y-VAL2-P1HLT/","WARNING Output differs from reference for","If this change is understood, please update"],cat=1)
             s.add(96342,["nightlies/17.1.X.Y.Z-VAL2-AtlasCAFHLT/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"],cat=1)
             s.add(96342,["nightlies/17.1.X.Y.Z-VAL2-AtlasCAFHLT/","WARNING Output differs from reference for","If this change is understood, please update"],cat=1)
+            # test killed as time quota spent bugs
+            s.add(-9997,["test killed as time quota spent, test warning is issued","nicos_kill_fam"],title="ATTENTION: add a TIME QUOTA BUG match string in Bug.py::prefill_nicos for this release",cat=1)
+            s.add(96366,["nightlies/17.1.X.Y-VAL-P1HLT/","test killed as time quota spent, test warning is issued","nicos_kill_fam"],cat=1)
             # TOLERANCE BUGS
             s.add(-9998,"checkcounts test warning : trigger counts outside tolerance:",title="ATTENTION: add a TOLERANCE BUG match string in Bug.py::prefill_nicos for this release",cat=1) #HAS to be above other tolerance  strings - this is a "catch-all" case
             s.add(96368,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.1.X.Y-VAL-P1HLT/"],cat=1) #FIXME wrong bug number!!!
