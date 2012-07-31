@@ -99,7 +99,7 @@ class Test:
         if s.is_error_athena(): return False
         if s.is_error_exit(): return False
         if s.is_error_post(): return False
-        return s.warn
+        return s.warn or s.nicoswarn
     def samebug(s,t):
         if t.name == s.name and t.overall==s.overall and t.exit==s.exit and t.error==s.error and t.exitcode==s.exitcode:
             return True
@@ -123,7 +123,7 @@ class Test:
         bugid=00000
         bugurl = "none"
         bugtitle = '<font style="BACKGROUND-COLOR: yellow">FIXME</font>'
-        ref_mismatch = s.is_warning()
+        ref_mismatch = s.is_warning()  # if True, only match using the NICOS log (ignoring all other logs)
         if True:
             if re.match('AllPT_physicsV4_magField_on_off_on',s.name) and not ref_mismatch:
                 smlink = os.path.dirname(s.llog)+'/'+'warn.log'
