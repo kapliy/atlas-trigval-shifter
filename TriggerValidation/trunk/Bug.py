@@ -235,8 +235,8 @@ class BugTracker:
             s.add(96342,["nightlies/17.1.X.Y.Z-VAL2-AtlasCAFHLT/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"],cat=1)
             s.add(96342,["nightlies/17.1.X.Y.Z-VAL2-AtlasCAFHLT/","WARNING Output differs from reference for","If this change is understood, please update"],cat=1)
             # TIME QUOTA BUGS
-            s.add(-7,["test killed as time quota spent, test warning is issued"],title="ATTENTION: add a TIME QUOTA BUG match string in Bug.py::prefill_nicos for this test and release - but ONLY if it recurs",cat=1) # HAS to be above other time quota strings - this is a "catch-all" case
-            s.add(96366,["AthenaTrigRDO_MC_pp_v2_loose_mc_prescale","nightlies/17.1.X.Y-VAL-P1HLT/","test killed as time quota spent, test warning is issued","nicos_kill_fam"],cat=1)
+            s.add(-7,["test killed as time quota spent, test warning is issued"],title="ATTENTION: add a TIME QUOTA BUG match string in Bug.py::prefill_nicos for this test and release - but ONLY if it recurs",cat=2) # HAS to be above other time quota strings - this is a "catch-all" case
+            s.add(96366,["AthenaTrigRDO_MC_pp_v2_loose_mc_prescale","nightlies/17.1.X.Y-VAL-P1HLT/","test killed as time quota spent, test warning is issued"],cat=1)
             # TOLERANCE BUGS
             s.add(-8,"checkcounts test warning : trigger counts outside tolerance:",title="ATTENTION: add a TOLERANCE BUG match string in Bug.py::prefill_nicos for this release",cat=1) #HAS to be above other tolerance  strings - this is a "catch-all" case
             s.add(96368,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.1.X.Y-VAL-P1HLT/"],cat=1) #FIXME wrong bug number!!!
@@ -257,6 +257,8 @@ class BugTracker:
             s.add(96393,["checkcounts test warning: Unable to open reference file","nightlies/17.2.X/",".root"],cat=1)
             s.add(96397,["checkcounts test warning: Unable to open reference file","nightlies/17.1.X/",".root"],cat=1)
             s.add(96398,["checkcounts test warning: Unable to open reference file","nightlies/17.1.X.Y.Z-VAL2-AtlasCAFHLT/",".root"],cat=1)
+            s.add(96494,["checkcounts test warning: Unable to open reference file","nightlies/17.1.X-VAL/",".root"],cat=1)
+            s.add(96496,["checkcounts test warning: Unable to open reference file","nightlies/17.1.X.Y-VAL2-P1HLT/",".root"],cat=1)
     def prefill(s):
         """ 
         Note that bugs will be matched bottom-up. That is, newer bugs should be put at the bottom and will get matched first
