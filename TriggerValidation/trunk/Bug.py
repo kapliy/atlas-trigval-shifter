@@ -190,12 +190,12 @@ class BugTracker:
         s.add(bugid,pattern,title,new=True,cat=cat)
     def prefill_genpurpose(s):
         """ General failure conditions """
-        s.add(-1, 'CRITICAL stopped by user interrupt','User interrupt',cat=2)
-        s.add(-1, 'KeyboardInterrupt','User interrupt',cat=2)
+        #s.add(-1, 'CRITICAL stopped by user interrupt','User interrupt',cat=2)
+        #s.add(-1, 'KeyboardInterrupt','User interrupt',cat=2)
         s.add(-2, 'APPLICATION_DIED_UNEXPECTEDLY','Worker process failed',cat=2)
         s.add(-3, 'received fatal signal 15','Job recieved SIGTERM signal',cat=2)
         s.add(-3, ['Signal handler: Killing','with 15'],'Job recieved SIGTERM signal',cat=2)
-        s.add(-4, 'ATN_TIME_LIMIT','Job timed out',cat=2)
+        #s.add(-4, 'ATN_TIME_LIMIT','Job timed out',cat=2)
     def prefill_nicos(s):
         """ Special bugs that are only picked up by NICOS - and are not present in the ATN summary page """
         s.add(-6, ['NICOS NOTICE: POSSIBLE FAILURE \(ERROR\) : LOGFILE LARGE and TRUNCATED'],title='NICOS: LOGFILE TRUNCATED',cat=1) # this shows up often, so match if last
@@ -237,6 +237,11 @@ class BugTracker:
             # TIME QUOTA BUGS
             s.add(-7,["test killed as time quota spent, test warning is issued"],title="ATTENTION: add a TIME QUOTA BUG match string in Bug.py::prefill_nicos for this test and release - but ONLY if it recurs",cat=2) # HAS to be above other time quota strings - this is a "catch-all" case
             s.add(96366,["AthenaTrigRDO_MC_pp_v2_loose_mc_prescale","nightlies/17.1.X.Y-VAL-P1HLT/","test killed as time quota spent, test warning is issued"],cat=1)
+            s.add(96540,["AthenaTrigRDO_MC_pp_v4","mc_prescale","nightlies/17.1.X.Y-VAL-P1HLT/","test killed as time quota spent, test warning is issued"],cat=1)
+            s.add(96542,["AthenaTrigRDO_MC_pp_v4","mc_prescale","nightlies/17.1.X/","test killed as time quota spent, test warning is issued"],cat=1)
+            s.add(96543,["AthenaTrigRDO_MC_pp_v4","mc_prescale","nightlies/17.1.X-VAL/","test killed as time quota spent, test warning is issued"],cat=1)
+            s.add(96546,["AllPT_MC_run_stop_run","nightlies/17.2.X/","test killed as time quota spent, test warning is issued"],cat=1)
+            s.add(96547,["AllPT_MC_run_stop_run","nightlies/17.2.X-VAL/","test killed as time quota spent, test warning is issued"],cat=1)
             # TOLERANCE BUGS
             s.add(-8,"checkcounts test warning : trigger counts outside tolerance:",title="ATTENTION: add a TOLERANCE BUG match string in Bug.py::prefill_nicos for this release",cat=1) #HAS to be above other tolerance  strings - this is a "catch-all" case
             s.add(96368,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.1.X.Y-VAL-P1HLT/"],cat=1) #FIXME wrong bug number!!!
@@ -354,7 +359,7 @@ class BugTracker:
         s.add(96098,"free\(\): corrupted unsorted chunks: 0x1ac14178")
         s.add(96112,"ImportError: No module named AthenaServicesConf")
         s.add(96117,"JobTransform completed for RAWtoESD with error code 11000 \(exit code 10\)") # the matching statements can be found in log/nicos, but the exact error msg is found in RAWtoESD.log. TODO: if this shows up again, modify Project.py match_bugs to parse RAWtoESD.log
-        s.add(96137,["TFile::Init:0: RuntimeWarning: file expert-monitoring.root probably not closed, trying to recover","WARNING: no directory and/or release sturucture found","ERROR: cound not cd to directory:  TrigSteer_L2"])
+        #s.add(96137,["TFile::Init:0: RuntimeWarning: file expert-monitoring.root probably not closed, trying to recover","WARNING: no directory and/or release sturucture found","ERROR: cound not cd to directory:  TrigSteer_L2"])
         s.add(96142,["OBSOLETE WARNING please use RecExCond/RecExCommon_flags.py","Py:AutoConfiguration WARNING Unable to import PrimaryDPDFlags","Py:AutoConfiguration WARNING Primary DPDMake does not support the old naming convention"])
         s.add(96165,["from MuonIsolationTools.MuonIsolationToolsConf import","ImportError: No module named MuonIsolationTools.MuonIsolationToolsConf"])
         s.add(96215,"ImportError: cannot import name CBNTAA_L1CaloPPM")
@@ -362,6 +367,8 @@ class BugTracker:
         s.add(96245,["is::repository_var is::server::resolve\(...\) at is/src/server.cc:31","CORBA::Object\* ipc::util::resolve\(...\) at ipc/src/util.cc:369"])
         s.add(96251,["WARNING Unable to retrieve the cell container  AllCalo","WARNING retrieve\(const\): No valid proxy for object AllCalo  of type CaloCellContainer\(CLID 2802\)"])
         s.add(96273,["raise IncludeError\( 'include file %s can not be found' % fn \)","IncludeError: include file TrigT1CaloCalibTools/CBNT_L1Calo_jobOptions.py can not be found"])
+        s.add(96545,["Errors while decoding TrigL2BphysContainer_tlp1","Can't instantiate precompiled template SG::ELVRef"])
+        s.add(96563,["lib/libc.so.6\(cfree\+0x59\)","glibc detected"])
         return
 
 if __name__ == '__main__':
