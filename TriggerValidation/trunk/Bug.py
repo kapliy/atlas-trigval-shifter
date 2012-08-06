@@ -374,6 +374,7 @@ class BugTracker:
         s.add(96545,["Errors while decoding TrigL2BphysContainer_tlp1","Can't instantiate precompiled template SG::ELVRef"])
         s.add(96563,["lib/libc.so.6\(cfree\+0x59\)","glibc detected"])
         s.add(96581,["could not bind handle to CondAttrListCollection","/FWD/ALFA/position_calibration"])
+        s.add(96583,["Python/2.6.5/i686-slc5-gcc43-opt/bin/python"," double free or corruption","glibc detected"])
         return
 
 if __name__ == '__main__':
