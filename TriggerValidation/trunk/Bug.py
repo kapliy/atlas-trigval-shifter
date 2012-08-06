@@ -236,16 +236,16 @@ class BugTracker:
             s.add(96342,["nightlies/17.1.X.Y.Z-VAL2-AtlasCAFHLT/","WARNING Output differs from reference for","If this change is understood, please update"],cat=1)
             # TIME QUOTA BUGS
             s.add(-7,["test killed as time quota spent, test warning is issued"],title="ATTENTION: add a TIME QUOTA BUG match string in Bug.py::prefill_nicos for this test and release - but ONLY if it recurs",cat=2) # HAS to be above other time quota strings - this is a "catch-all" case
-            s.add(96366,["AthenaTrigRDO_MC_pp_v2_loose_mc_prescale","nightlies/17.1.X.Y-VAL-P1HLT/","test killed as time quota spent, test warning is issued"],cat=1)
-            s.add(96540,["AthenaTrigRDO_MC_pp_v4","mc_prescale","nightlies/17.1.X.Y-VAL-P1HLT/","test killed as time quota spent, test warning is issued"],cat=1)
-            s.add(96542,["AthenaTrigRDO_MC_pp_v4","mc_prescale","nightlies/17.1.X/","test killed as time quota spent, test warning is issued"],cat=1)
-            s.add(96543,["AthenaTrigRDO_MC_pp_v4","mc_prescale","nightlies/17.1.X-VAL/","test killed as time quota spent, test warning is issued"],cat=1)
-            s.add(96546,["AllPT_MC_run_stop_run","nightlies/17.2.X/","test killed as time quota spent, test warning is issued"],cat=1)
-            s.add(96547,["AllPT_MC_run_stop_run","nightlies/17.2.X-VAL/","test killed as time quota spent, test warning is issued"],cat=1)
-            s.add(96568,["AllPT_HIV2_run_stop_run","nightlies/17.1.X.Y.Z-VAL-AtlasCAFHLT/","test killed as time quota spent, test warning is issued"],cat=1)
-            s.add(96574,["AllPartition_physicsV4","nightlies/17.1.X.Y-VAL2-P1HLT/","test killed as time quota spent, test warning is issued"],cat=1)
-            s.add(96575,["AthenaTrigRDO_MC_pp","_mc_prescale","nightlies/17.1.X.Y-VAL2-P1HLT/","test killed as time quota spent, test warning is issued"],cat=1)
-            s.add(96576,["AllPT_HIV2_run_stop_run","nightlies/17.1.X.Y.Z-VAL2-AtlasCAFHLT/","test killed as time quota spent, test warning is issued"],cat=1)
+            s.add(96366,["AthenaTrigRDO_MC_pp_v2_loose_mc_prescale","nightlies/17.1.X.Y-VAL-P1HLT/","test killed as time quota spent, test warning is issued"],cat=2)
+            s.add(96540,["AthenaTrigRDO_MC_pp_v4","mc_prescale","nightlies/17.1.X.Y-VAL-P1HLT/","test killed as time quota spent, test warning is issued"],cat=2)
+            s.add(96542,["AthenaTrigRDO_MC_pp_v4","mc_prescale","nightlies/17.1.X/","test killed as time quota spent, test warning is issued"],cat=2)
+            s.add(96543,["AthenaTrigRDO_MC_pp_v4","mc_prescale","nightlies/17.1.X-VAL/","test killed as time quota spent, test warning is issued"],cat=2)
+            s.add(96546,["AllPT_MC_run_stop_run","nightlies/17.2.X/","test killed as time quota spent, test warning is issued"],cat=2)
+            s.add(96547,["AllPT_MC_run_stop_run","nightlies/17.2.X-VAL/","test killed as time quota spent, test warning is issued"],cat=2)
+            s.add(96568,["AllPT_HIV2_run_stop_run","nightlies/17.1.X.Y.Z-VAL-AtlasCAFHLT/","test killed as time quota spent, test warning is issued"],cat=2)
+            s.add(96574,["AllPartition_physicsV4","nightlies/17.1.X.Y-VAL2-P1HLT/","test killed as time quota spent, test warning is issued"],cat=2)
+            s.add(96575,["AthenaTrigRDO_MC_pp","_mc_prescale","nightlies/17.1.X.Y-VAL2-P1HLT/","test killed as time quota spent, test warning is issued"],cat=2)
+            s.add(96576,["AllPT_HIV2_run_stop_run","nightlies/17.1.X.Y.Z-VAL2-AtlasCAFHLT/","test killed as time quota spent, test warning is issued"],cat=2)
             # TOLERANCE BUGS
             s.add(-8,"checkcounts test warning : trigger counts outside tolerance:",title="ATTENTION: add a TOLERANCE BUG match string in Bug.py::prefill_nicos for this release",cat=1) #HAS to be above other tolerance  strings - this is a "catch-all" case
             s.add(96368,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.1.X.Y-VAL-P1HLT/"],cat=1) #FIXME wrong bug number!!!
