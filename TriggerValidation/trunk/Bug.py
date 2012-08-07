@@ -362,7 +362,8 @@ class BugTracker:
         s.add(96093,["ByteStreamAttListMetadataSvc","not locate service"])
         s.add(96094,["ConversionSvc::makeCall","ConversionSvc::createRep","THashTable::FindObject"])
         s.add(96097,["SEVERE: Caught SQL error: ORA-02290: check constraint \(ATLAS_TRIGGER_ATN.TW_ID_NN\) violated","SEVERE:  Database is already locked by ATLAS_TRIGGER_ATN_W"]) # the bug is found in uploadSMK.log
-        s.add(96098,"free\(\): corrupted unsorted chunks: 0x1ac14178")
+        #s.add(96098,"free\(\): corrupted unsorted chunks: 0x1ac14178")
+        s.add(96098,["free\(\): corrupted unsorted chunks","Python/2.6.5/i686-slc5-gcc43-opt/bin/python"])
         s.add(96112,"ImportError: No module named AthenaServicesConf")
         s.add(96117,"JobTransform completed for RAWtoESD with error code 11000 \(exit code 10\)") # the matching statements can be found in log/nicos, but the exact error msg is found in RAWtoESD.log. TODO: if this shows up again, modify Project.py match_bugs to parse RAWtoESD.log
         #s.add(96137,["TFile::Init:0: RuntimeWarning: file expert-monitoring.root probably not closed, trying to recover","WARNING: no directory and/or release sturucture found","ERROR: cound not cd to directory:  TrigSteer_L2"])
