@@ -247,6 +247,7 @@ class BugTracker:
             s.add(96575,["AthenaTrigRDO_MC_pp","_mc_prescale","nightlies/17.1.X.Y-VAL2-P1HLT/","test killed as time quota spent, test warning is issued"],cat=2)
             s.add(96576,["AllPT_HIV2_run_stop_run","nightlies/17.1.X.Y.Z-VAL2-AtlasCAFHLT/","test killed as time quota spent, test warning is issued"],cat=2)
             s.add(96602,["AllPartition_physicsV4","nightlies/17.1.X/","test killed as time quota spent, test warning is issued"],cat=2)
+            s.add(96635,["AllPT_HIV2_run_stop_run","nightlies/17.1.X.Y-VAL2-P1HLT/","test killed as time quota spent, test warning is issued"],cat=2)
             # TOLERANCE BUGS
             s.add(-8,"checkcounts test warning : trigger counts outside tolerance:",title="ATTENTION: add a TOLERANCE BUG match string in Bug.py::prefill_nicos for this release",cat=1) #HAS to be above other tolerance  strings - this is a "catch-all" case
             s.add(96368,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.1.X.Y-VAL-P1HLT/"],cat=1) #FIXME wrong bug number!!!
@@ -378,6 +379,7 @@ class BugTracker:
         s.add(96563,["lib/libc.so.6\(cfree\+0x59\)","glibc detected"])
         s.add(96581,["could not bind handle to CondAttrListCollection","/FWD/ALFA/position_calibration"])
         s.add(96583,["Python/2.6.5/i686-slc5-gcc43-opt/bin/python"," double free or corruption","glibc detected"])
+        s.add(94628,["LOGFILE LARGE and TRUNCATED"])
         return
 
 if __name__ == '__main__':
