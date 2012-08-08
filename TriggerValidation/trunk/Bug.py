@@ -380,6 +380,7 @@ class BugTracker:
         s.add(96581,["could not bind handle to CondAttrListCollection","/FWD/ALFA/position_calibration"])
         s.add(96583,["Python/2.6.5/i686-slc5-gcc43-opt/bin/python"," double free or corruption","glibc detected"])
         s.add(94628,["LOGFILE LARGE and TRUNCATED"])
+        s.add(96639,["Trigger menu inconsistent","Chain counter 4152 used 2 times while can only once"])
         return
 
 if __name__ == '__main__':
