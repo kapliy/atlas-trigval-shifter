@@ -250,17 +250,17 @@ class BugTracker:
             s.add(96635,["AllPT_HIV2_run_stop_run","nightlies/17.1.X.Y-VAL2-P1HLT/","test killed as time quota spent, test warning is issued"],cat=2)
             # TOLERANCE BUGS
             s.add(-8,"checkcounts test warning : trigger counts outside tolerance:",title="ATTENTION: add a TOLERANCE BUG match string in Bug.py::prefill_nicos for this release",cat=1) #HAS to be above other tolerance  strings - this is a "catch-all" case
-            s.add(96368,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.1.X.Y-VAL-P1HLT/"],cat=1) #FIXME wrong bug number!!!
-            s.add(96399,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.1.X.Y.Z-VAL-AtlasCAFHLT/"],cat=1)
-            s.add(96401,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.2.X.Y-VAL-Prod/"],cat=1)
-            s.add(96402,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.1.X/"],cat=1)
-            s.add(96403,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.1.X-VAL/"],cat=1)
-            s.add(96404,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.2.X-VAL/"],cat=1)
-            s.add(96405,["checkcounts test warning : trigger counts outside tolerance:","nightlies/18.X.0/"],cat=1)
-            s.add(96406,["checkcounts test warning : trigger counts outside tolerance:","nightlies/18.X.0-VAL/"],cat=1)
-            s.add(96407,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.1.X.Y-VAL2-P1HLT/"],cat=1)
-            s.add(96408,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.1.X.Y.Z-VAL2-AtlasCAFHLT/"],cat=1)
-            s.add(96420,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.2.X/"],cat=1)
+            s.add(-96368,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.1.X.Y-VAL-P1HLT/"],title="count mismatch warnings:bona fide bugs but don't report in Savannah per Roger's request",cat=1) #FIXME wrong bug number!!!
+            s.add(-96399,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.1.X.Y.Z-VAL-AtlasCAFHLT/"],title="count mismatch warnings:bona fide bugs but don't report in Savannah per Roger's request",cat=1)
+            s.add(-96401,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.2.X.Y-VAL-Prod/"],title="count mismatch warnings:bona fide bugs but don't report in Savannah per Roger's request",cat=1)
+            s.add(-96402,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.1.X/"],title="count mismatch warnings:bona fide bugs but don't report in Savannah per Roger's request",cat=1)
+            s.add(-96403,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.1.X-VAL/"],title="count mismatch warnings:bona fide bugs but don't report in Savannah per Roger's request",cat=1)
+            s.add(-96404,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.2.X-VAL/"],title="count mismatch warnings:bona fide bugs but don't report in Savannah per Roger's request",cat=1)
+            s.add(-96405,["checkcounts test warning : trigger counts outside tolerance:","nightlies/18.X.0/"],title="count mismatch warnings:bona fide bugs but don't report in Savannah per Roger's request",cat=1)
+            s.add(-96406,["checkcounts test warning : trigger counts outside tolerance:","nightlies/18.X.0-VAL/"],title="count mismatch warnings:bona fide bugs but don't report in Savannah per Roger's request",cat=1)
+            s.add(-96407,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.1.X.Y-VAL2-P1HLT/"],title="count mismatch warnings:bona fide bugs but don't report in Savannah per Roger's request",cat=1)
+            s.add(-96408,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.1.X.Y.Z-VAL2-AtlasCAFHLT/"],title="count mismatch warnings:bona fide bugs but don't report in Savannah per Roger's request",cat=1)
+            s.add(-96420,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.2.X/"],title="count mismatch warnings:bona fide bugs but don't report in Savannah per Roger's request",cat=1)
             # CHECKCOUNT MISSING REFERENCE BUGS
             s.add(-9,["checkcounts test warning: Unable to open reference file",".root"],title='ATTENTION: add a CHECKCOUNTS BUG match string in Bug.py::prefill_nicos for this release',cat=1) #HAS to be above other checkcounts strings - this is a "catch-all" case
             s.add(96372,["checkcounts test warning: Unable to open reference file","nightlies/17.1.X.Y.Z-VAL-AtlasCAFHLT/",".root"],cat=1)
