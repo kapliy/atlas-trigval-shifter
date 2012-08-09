@@ -381,6 +381,8 @@ class BugTracker:
         s.add(96583,["Python/2.6.5/i686-slc5-gcc43-opt/bin/python"," double free or corruption","glibc detected"])
         #s.add(94628,["LOGFILE LARGE and TRUNCATED"])
         s.add(96639,["Trigger menu inconsistent","Chain counter 4152 used 2 times while can only once"])
+        s.add(90993,["Py:GenerateMenu.py","Error in configuration of EgammaSlice"])
+        s.add(96660,["test -e ../AllMT_HIV2/AllMT_HIV2-1._0001.data","pre-conditions failed"])
         return
 
 if __name__ == '__main__':
