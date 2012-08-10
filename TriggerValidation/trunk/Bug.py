@@ -385,6 +385,9 @@ class BugTracker:
         s.add(96660,["test -e ../AllMT_HIV2/AllMT_HIV2-1._0001.data","pre-conditions failed"])
         s.add(96675,["Errors while decoding egammaContainer_p2"])
         s.add(95732,["HLTMenu_frontier.xml: No such file or directory"])
+        s.add(94869,["FSMTransitionError","Cannot execute configure()"])
+        s.add(92536,["ERROR HLTProcess","could not find any files starting 'data11_hi.00193211.express_express.AthenaMTout_1.RAW._lb0717._CAF_999999_000001'"])
+        s.add_new(96683,["ERROR HLTProcess","could not find any files starting 'data12_8TeV.00202798.physics_EnhancedBias.AthenaMTout_1.RAW._lb0000._CAF_999999_000001'"])
         return
 
 if __name__ == '__main__':
