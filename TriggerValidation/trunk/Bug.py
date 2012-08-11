@@ -389,6 +389,7 @@ class BugTracker:
         s.add(92536,["ERROR HLTProcess","could not find any files starting 'data11_hi.00193211.express_express.AthenaMTout_1.RAW._lb0717._CAF_999999_000001'"])
         s.add(96683,["ERROR HLTProcess","could not find any files starting 'data12_8TeV.00202798.physics_EnhancedBias.AthenaMTout_1.RAW._lb0000._CAF_999999_000001'"])
         s.add(96704,["Errors while decoding MuonFeatureDetailsContainer_p2"])
+        s.add(96712,["'InDetGlobalTrackMonTool' object has no attribute 'TrackCollection'"])
         return
 
 if __name__ == '__main__':
