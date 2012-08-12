@@ -248,6 +248,7 @@ class BugTracker:
             s.add(96576,["AllPT_HIV2_run_stop_run","nightlies/17.1.X.Y.Z-VAL2-AtlasCAFHLT/","test killed as time quota spent, test warning is issued"],cat=2)
             s.add(96602,["AllPartition_physicsV4","nightlies/17.1.X/","test killed as time quota spent, test warning is issued"],cat=2)
             s.add(96635,["AllPT_HIV2_run_stop_run","nightlies/17.1.X.Y-VAL2-P1HLT/","test killed as time quota spent, test warning is issued"],cat=2)
+            s.add(96714,["AthenaTrigRDO_MC_pp_v4_loose_mc_prescale","nightlies/17.1.X.Y.Z-VAL-AtlasCAFHLT/","test killed as time quota spent, test warning is issued"],cat=2)
             # TOLERANCE BUGS
             s.add(-8,"checkcounts test warning : trigger counts outside tolerance:",title="ATTENTION: add a TOLERANCE BUG match string in Bug.py::prefill_nicos for this release",cat=1) #HAS to be above other tolerance  strings - this is a "catch-all" case
             s.add(-96368,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.1.X.Y-VAL-P1HLT/"],title="count mismatch warnings:bona fide bugs but don't report in Savannah per Roger's request",cat=1) #FIXME wrong bug number!!!
@@ -257,7 +258,7 @@ class BugTracker:
             s.add(-96403,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.1.X-VAL/"],title="count mismatch warnings:bona fide bugs but don't report in Savannah per Roger's request",cat=1)
             s.add(-96404,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.2.X-VAL/"],title="count mismatch warnings:bona fide bugs but don't report in Savannah per Roger's request",cat=1)
             s.add(-96405,["checkcounts test warning : trigger counts outside tolerance:","nightlies/18.X.0/"],title="count mismatch warnings:bona fide bugs but don't report in Savannah per Roger's request",cat=1)
-            s.add(-96406,["checkcounts test warning : trigger counts outside tolerance:","nightlies/18.X.0-VAL/"],title="count mismatch warnings:bona fide bugs but don't report in Savannah per Roger's request",cat=1)
+            s.add(-96406,["checkcounts test warning : trigger counts outside tolerance:","nightlies/18.X.0-VAL/"],title="count mismatch warnings:bona fide bugs but don't report in Savannah per Roger's request",cat=2)
             s.add(-96407,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.1.X.Y-VAL2-P1HLT/"],title="count mismatch warnings:bona fide bugs but don't report in Savannah per Roger's request",cat=1)
             s.add(-96408,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.1.X.Y.Z-VAL2-AtlasCAFHLT/"],title="count mismatch warnings:bona fide bugs but don't report in Savannah per Roger's request",cat=1)
             s.add(-96420,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.2.X/"],title="count mismatch warnings:bona fide bugs but don't report in Savannah per Roger's request",cat=1)
@@ -270,6 +271,7 @@ class BugTracker:
             s.add(96398,["checkcounts test warning: Unable to open reference file","nightlies/17.1.X.Y.Z-VAL2-AtlasCAFHLT/",".root"],cat=1)
             s.add(96494,["checkcounts test warning: Unable to open reference file","nightlies/17.1.X-VAL/",".root"],cat=1)
             s.add(96496,["checkcounts test warning: Unable to open reference file","nightlies/17.1.X.Y-VAL2-P1HLT/",".root"],cat=1)
+            s.add(96715,["checkcounts test warning: Unable to open reference file","nightlies/17.1.X.Y-VAL-P1HLT/",".root"],cat=1)
     def prefill(s):
         """ 
         Note that bugs will be matched bottom-up. That is, newer bugs should be put at the bottom and will get matched first
@@ -284,6 +286,7 @@ class BugTracker:
         s.add(88042,["\[is::repository_var is::server::resolve\(...\) at is/src/server.cc:31\] IS repository 'Histogramming-EF-Segment-1-1-iss' does not exist"])
         s.add(88042,["\[is::repository_var is::server::resolve\(...\) at is/src/server.cc:31\] IS repository 'Histogramming-L2-Segment-1-1-iss' does not exist"])
         s.add(88042,['\[ipc::_objref_partition\* ipc::util::getPartition\(...\) at ipc/src/util.cc:273\] Partition "athena_mon" does not exist'])
+        s.add(88042,["IS repository 'Histogramming-EF-Segment-1-1-iss' does not exist",'Partition "athena_mon" does not exist'])
         s.add(88554,['Moving to AthenaTrigRDO_chainOrder_compare','differences in tests with ordered HLT chain execution','TrigSteer_EF.TrigChainMoniValidation'])
         s.add(90593,['ERROR ServiceLocatorHelper::createService: wrong interface id IID_3596816672 for service JobIDSvc','Root+python problem when reading ESDs'])
         s.add(91065,['Error: When merging chains:','EF_mu4T','EF_j10_a4tc_EFFS','these were missing'])
@@ -390,6 +393,9 @@ class BugTracker:
         s.add(96683,["ERROR HLTProcess","could not find any files starting 'data12_8TeV.00202798.physics_EnhancedBias.AthenaMTout_1.RAW._lb0000._CAF_999999_000001'"])
         s.add(96704,["Errors while decoding MuonFeatureDetailsContainer_p2"])
         s.add(96712,["'InDetGlobalTrackMonTool' object has no attribute 'TrackCollection'"])
+        s.add(96718,["ToolSvc","Cannot create tool JetBTaggerTool"])
+        s.add(96719,["ToolSvc","Cannot create tool JetTowerNoiseTool"])
+        #s.add_new(96720,["CallBack function",'"GeoModelSvc[0x2d6abbf0]+109" cannot be registered'])
         return
 
 if __name__ == '__main__':
