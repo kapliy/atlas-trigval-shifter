@@ -395,7 +395,10 @@ class BugTracker:
         s.add(96712,["'InDetGlobalTrackMonTool' object has no attribute 'TrackCollection'"])
         s.add(96718,["ToolSvc","Cannot create tool JetBTaggerTool"])
         s.add(96719,["ToolSvc","Cannot create tool JetTowerNoiseTool"])
-        #s.add_new(96720,["CallBack function",'"GeoModelSvc[0x2d6abbf0]+109" cannot be registered'])
+        s.add(95812,["TrigTSerializer::serialize","at ../src/TrigTSerializer.cxx:223"])
+        s.add(96756,["No module named JetEventAthenaPool","JetEventAthenaPoolConf"])
+        s.add(96720,["ERROR CallBack function","GeoModelSvc","cannot be registered"])
+        s.add(96760,["'Histogramming-EF-Segment-0-iss' does not exist"])
         return
 
 if __name__ == '__main__':
