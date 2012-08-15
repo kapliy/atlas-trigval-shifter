@@ -248,7 +248,8 @@ class BugTracker:
             s.add(96576,["AllPT_HIV2_run_stop_run","nightlies/17.1.X.Y.Z-VAL2-AtlasCAFHLT/","test killed as time quota spent, test warning is issued"],cat=2)
             s.add(96602,["AllPartition_physicsV4","nightlies/17.1.X/","test killed as time quota spent, test warning is issued"],cat=2)
             s.add(96635,["AllPT_HIV2_run_stop_run","nightlies/17.1.X.Y-VAL2-P1HLT/","test killed as time quota spent, test warning is issued"],cat=2)
-            s.add(96714,["AthenaTrigRDO_MC_pp_v4_loose_mc_prescale","nightlies/17.1.X.Y.Z-VAL-AtlasCAFHLT/","test killed as time quota spent, test warning is issued"],cat=2)
+            s.add(96714,["AthenaTrigRDO_MC_pp_v4","mc_prescale","nightlies/17.1.X.Y.Z-VAL-AtlasCAFHLT/","test killed as time quota spent, test warning is issued"],cat=2)
+            #s.add(     ,["AthenaTrigRDO_MC_pp_v4_tight_mc_prescale","nightlies/17.1.X.Y.Z-VAL-AtlasCAFHLT/","test killed as time quota spent, test warning is issued"],cat=2)
             # TOLERANCE BUGS
             s.add(-8,"checkcounts test warning : trigger counts outside tolerance:",title="ATTENTION: add a TOLERANCE BUG match string in Bug.py::prefill_nicos for this release",cat=1) #HAS to be above other tolerance  strings - this is a "catch-all" case
             s.add(-96368,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.1.X.Y-VAL-P1HLT/"],title="count mismatch warnings:bona fide bugs but don't report in Savannah per Roger's request",cat=1) #FIXME wrong bug number!!!
@@ -389,8 +390,8 @@ class BugTracker:
         s.add(96675,["Errors while decoding egammaContainer_p2"])
         s.add(95732,["HLTMenu_frontier.xml: No such file or directory"])
         s.add(94869,["FSMTransitionError","Cannot execute configure()"])
-        s.add(92536,["ERROR HLTProcess","could not find any files starting 'data11_hi.00193211.express_express.AthenaMTout_1.RAW._lb0717._CAF_999999_000001'"])
-        s.add(96683,["ERROR HLTProcess","could not find any files starting 'data12_8TeV.00202798.physics_EnhancedBias.AthenaMTout_1.RAW._lb0000._CAF_999999_000001'"])
+        #s.add(92536,["ERROR HLTProcess","could not find any files starting 'data11_hi.00193211.express_express.AthenaMTout_1.RAW._lb0717._CAF_999999_000001'"])
+        s.add(96683,["HLTJobLib","ERROR HLTProcess","could not find any files starting 'data1*"])
         s.add(96704,["Errors while decoding MuonFeatureDetailsContainer_p2"])
         s.add(96712,["'InDetGlobalTrackMonTool' object has no attribute 'TrackCollection'"])
         s.add(96718,["ToolSvc","Cannot create tool JetBTaggerTool"])
@@ -399,6 +400,7 @@ class BugTracker:
         s.add(96756,["No module named JetEventAthenaPool","JetEventAthenaPoolConf"])
         s.add(96720,["ERROR CallBack function","GeoModelSvc","cannot be registered"])
         s.add(96760,["'Histogramming-EF-Segment-0-iss' does not exist"])
+        s.add(96776,["There was a crash","TrigMinimalEventLoopMgr::sysPrepareForRun"])
         return
 
 if __name__ == '__main__':
