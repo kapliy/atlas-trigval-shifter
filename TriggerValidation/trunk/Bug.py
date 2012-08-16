@@ -401,6 +401,7 @@ class BugTracker:
         s.add(96720,["ERROR CallBack function","GeoModelSvc","cannot be registered"])
         s.add(96760,["'Histogramming-EF-Segment-0-iss' does not exist"])
         s.add(96776,["There was a crash","TrigMinimalEventLoopMgr::sysPrepareForRun"])
+        s.add(96354,["Py:AllowedList","xe*","is not in the list of allowed values"])
         return
 
 if __name__ == '__main__':
