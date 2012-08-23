@@ -376,7 +376,7 @@ class BugTracker:
         s.add(96165,["from MuonIsolationTools.MuonIsolationToolsConf import","ImportError: No module named MuonIsolationTools.MuonIsolationToolsConf"])
         s.add(96215,"ImportError: cannot import name CBNTAA_L1CaloPPM")
         s.add(96216,["farmelements.py","if ret != 0 and ret != 5: raise PropagationException\(ret,output\)","PropagationException: return code: 1280"])
-        s.add(96245,["is::repository_var is::server::resolve\(...\) at is/src/server.cc:31","CORBA::Object\* ipc::util::resolve\(...\) at ipc/src/util.cc:369"])
+        #s.add(96245,["is::repository_var is::server::resolve\(...\) at is/src/server.cc:31","CORBA::Object\* ipc::util::resolve\(...\) at ipc/src/util.cc:369"])
         s.add(96251,["WARNING Unable to retrieve the cell container  AllCalo","WARNING retrieve\(const\): No valid proxy for object AllCalo  of type CaloCellContainer\(CLID 2802\)"])
         s.add(96273,["raise IncludeError\( 'include file %s can not be found' % fn \)","IncludeError: include file TrigT1CaloCalibTools/CBNT_L1Calo_jobOptions.py can not be found"])
         s.add(96545,["Errors while decoding TrigL2BphysContainer_tlp1","Can't instantiate precompiled template SG::ELVRef"])
@@ -406,7 +406,9 @@ class BugTracker:
         s.add(96876,["OverflowError","bad numeric conversion"])
         s.add(96912,["inputBSFile=data1*","not found","RAWtoESD"])
         s.add(96949,["IOError","No such file or directory","LVL1config_MC_pp_v4_17.1.5.xml"])
-        
+        s.add(96975,["AthAlgSeq","Cone7H1TowerJetsFixIt","did NOT succeed"])
+        s.add(96987,["Py:runHLT_standalone.py","No trigger menu specified"])
+        s.add_new(96993,["There was a crash","Trk::AtaPlane"])
         return
 
 if __name__ == '__main__':
