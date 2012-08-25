@@ -250,6 +250,7 @@ class BugTracker:
             s.add(96635,["AllPT_HIV2_run_stop_run","nightlies/17.1.X.Y-VAL2-P1HLT/","test killed as time quota spent, test warning is issued"],cat=2)
             s.add(96714,["AthenaTrigRDO_MC_pp_v4","mc_prescale","nightlies/17.1.X.Y.Z-VAL-AtlasCAFHLT/","test killed as time quota spent, test warning is issued"],cat=2)
             s.add(96882,["AthenaTrigRDO_MC_pp_v4_loose_mc_prescale","nightlies/17.1.X.Y.Z-VAL2-AtlasCAFHLT/","test killed as time quota spent, test warning is issued"],cat=2)
+            s.add(97057,["AthenaTrigRDO_MC_pp_v2_loose_mc_prescale","nightlies/17.1.X.Y.Z-VAL2-AtlasCAFHLT/","test killed as time quota spent, test warning is issued"],cat=2)
             # TOLERANCE BUGS
             s.add(-8,"checkcounts test warning : trigger counts outside tolerance:",title="ATTENTION: add a TOLERANCE BUG match string in Bug.py::prefill_nicos for this release",cat=1) #HAS to be above other tolerance  strings - this is a "catch-all" case
             s.add(-96368,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.1.X.Y-VAL-P1HLT/"],title="count mismatch warnings:bona fide bugs but don't report in Savannah per Roger's request",cat=1) #FIXME wrong bug number!!!
@@ -265,7 +266,7 @@ class BugTracker:
             s.add(-96420,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.2.X/"],title="count mismatch warnings:bona fide bugs but don't report in Savannah per Roger's request",cat=1)
             # CHECKCOUNT MISSING REFERENCE BUGS
             s.add(-9,["checkcounts test warning: Unable to open reference file",".root"],title='ATTENTION: add a CHECKCOUNTS BUG match string in Bug.py::prefill_nicos for this release',cat=1) #HAS to be above other checkcounts strings - this is a "catch-all" case
-            s.add(96372,["checkcounts test warning: Unable to open reference file","nightlies/17.1.X.Y.Z-VAL-AtlasCAFHLT/",".root"],cat=1)
+            s.add(96372,["checkcounts test warning: Unable to open reference file","nightlies/17.1.X.Y.Z-VAL-AtlasCAFHLT/",".root"],cat=2)
             s.add(96392,["checkcounts test warning: Unable to open reference file","nightlies/17.2.X-VAL/",".root"],cat=1)
             s.add(96393,["checkcounts test warning: Unable to open reference file","nightlies/17.2.X/",".root"],cat=1)
             s.add(96397,["checkcounts test warning: Unable to open reference file","nightlies/17.1.X/",".root"],cat=1)
@@ -408,7 +409,8 @@ class BugTracker:
         s.add(96949,["IOError","No such file or directory","LVL1config_MC_pp_v4_17.1.5.xml"])
         s.add(96975,["AthAlgSeq","Cone7H1TowerJetsFixIt","did NOT succeed"])
         s.add(96987,["Py:runHLT_standalone.py","No trigger menu specified"])
-        s.add_new(96993,["There was a crash","Trk::AtaPlane"])
+        s.add(96993,["There was a crash","Trk::AtaPlane"])
+        s.add(96996,["TypeError","__init__()","3 given"])
         return
 
 if __name__ == '__main__':
