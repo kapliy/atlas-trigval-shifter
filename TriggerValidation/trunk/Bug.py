@@ -417,6 +417,13 @@ class BugTracker:
         s.add(97194,["ERROR: Could not copy data file"])
         s.add(97195,["ReferenceError","attempt to access a null-pointer"])
         s.add(97197,["AllMT_physicsV4.reference.new","No such file or directory"])
+        s.add(97204,["Algorithm stack","unknown function"])
+        s.add(97205,["Algorithm stack","unknown function"])
+        s.add(97211,["segmentation violation"])
+        s.add(97212,["FATAL Loading primary"])
+        s.add(97213,["Algorithm stack"])
+        s.add(97214,["TrigP1Test.conf returned 8"])
+        s.add(97298,["ImportError","No module named"])
         return
 
 if __name__ == '__main__':
