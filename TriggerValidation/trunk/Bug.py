@@ -198,6 +198,8 @@ class BugTracker:
         #s.add(-4, 'ATN_TIME_LIMIT','Job timed out',cat=2)
     def prefill_nicos(s):
         """ Special bugs that are only picked up by NICOS - and are not present in the ATN summary page """
+        s.add_new(97313,["AllMT_physicsV4/AllMT_physicsV4.reference.new: No such file or directory","17.2.X-VAL/AtlasHLT"]) #LT 9/6
+
         s.add(-6, ['NICOS NOTICE: POSSIBLE FAILURE \(ERROR\) : LOGFILE LARGE and TRUNCATED'],title='NICOS: LOGFILE TRUNCATED',cat=2) # this shows up often, so match if last
         s.add(94697,['href="#prblm"\>ls: \*rel_\[0-6\].data.xml: No such file or directory'],'NICOS HARMLESS WARNING: missing *rel_[0-6].data.xml')
         s.add(94970,['href="#prblm"\>python: can\'t open file \'checkFileTrigSize_RTT.py\''],'NICOS HARMLESS WARNING: cannot find checkFileTrigSize_RTT.py')
@@ -274,6 +276,7 @@ class BugTracker:
             s.add(96494,["checkcounts test warning: Unable to open reference file","nightlies/17.1.X-VAL/",".root"],cat=1)
             s.add(96496,["checkcounts test warning: Unable to open reference file","nightlies/17.1.X.Y-VAL2-P1HLT/",".root"],cat=1)
             s.add(96715,["checkcounts test warning: Unable to open reference file","nightlies/17.1.X.Y-VAL-P1HLT/",".root"],cat=1)
+
     def prefill(s):
         """ 
         Note that bugs will be matched bottom-up. That is, newer bugs should be put at the bottom and will get matched first
@@ -282,7 +285,7 @@ class BugTracker:
         """
         s.prefill_nicos()
         s.prefill_genpurpose()
-        s.add(86562,['ERROR preLoadFolder failed for folder /Digitization/Parameters','FATAL DetectorStore service not found'])
+        s.add(86562,['ERROR preLoadFolder failed for folder /Digitization/Parameters','FATAL DetectorStore service not found']) #note from LT on Sept 6--still a valid bug, although very old.
         # At some point, someone asked for a new bug report for the above bug -- if they complain again, you could use the line below
         #s.add(95595,['ERROR preLoadFolder failed for folder /Digitization/Parameters','FATAL DetectorStore service not found'])
         s.add(88042,["\[is::repository_var is::server::resolve\(...\) at is/src/server.cc:31\] IS repository 'Histogramming-EF-Segment-1-1-iss' does not exist"])
@@ -403,7 +406,8 @@ class BugTracker:
         s.add(96760,["'Histogramming-EF-Segment-0-iss' does not exist"])
         s.add(96776,["There was a crash","TrigMinimalEventLoopMgr::sysPrepareForRun"])
         s.add(96354,["Py:AllowedList","xe*","is not in the list of allowed values"])
-        s.add(96858,["There was a crash","/lib64/libc.so.6","TrigSteer_*"])
+        #s.add(96858,["There was a crash","/lib64/libc.so.6","TrigSteer_*"]) //LT commenting out, not a descriptive enough bug
+        
         s.add(96876,["OverflowError","bad numeric conversion"])
         s.add(96912,["inputBSFile=data1*","not found","RAWtoESD"])
         s.add(96949,["IOError","No such file or directory","LVL1config_MC_pp_v4_17.1.5.xml"])
@@ -414,16 +418,28 @@ class BugTracker:
         s.add(97099,["There was a crash","Trk::TrackSegment"])
         s.add(97122,["Fatal Python error","GC object already tracked"])
         s.add(97165,["ImportError","No module named PanTauAnalysisConf"])
-        s.add(97194,["ERROR: Could not copy data file"])
-        s.add(97195,["ReferenceError","attempt to access a null-pointer"])
-        s.add(97197,["AllMT_physicsV4.reference.new","No such file or directory"])
-        s.add(97204,["Algorithm stack","unknown function"])
-        s.add(97205,["Algorithm stack","unknown function"])
-        s.add(97211,["segmentation violation"])
-        s.add(97212,["FATAL Loading primary"])
-        s.add(97213,["Algorithm stack"])
-        s.add(97214,["TrigP1Test.conf returned 8"])
-        s.add(97298,["ImportError","No module named"])
+        s.add(97212,["FATAL Loading primary pi0 BDT file","TauDiscriminant.TauPi0BDT"])
+        s.add_new(97303,["TypeError: defineHistogram\(\) got multiple values for keyword argument 'type'","self.AthenaMonTools \+\= \[ MbMbtsFexMonitoring\(\), time\]"]) # LT Sept 6
+        s.add_new(97311,"ERROR  Cannot retrieve Mdt SegmentCollection ConvertedMBoySegments") # LT Sept 6
+        s.add_new(97312,["TH2F::Add:0: RuntimeWarning: Attempt to add histograms with different labels","TrigEgammaRec_NoIDEF_eGamma","TrigSteer_EF"])
+        s.add_new(97312,["Current algorithm: TrigSteer_EF","FATAL Unchecked StatusCode in exit from lib /lib64/libc.so.6"])
+        s.add_new(97312,["Current algorithm: TrigSteer_L2","FATAL Unchecked StatusCode in exit from lib /lib64/libc.so.6"])
+        s.add_new(97312,["Current algorithm: TrigDiMuon_FS","FATAL Unchecked StatusCode in exit from lib /lib64/libc.so.6"])
+        s.add_new(97312,["Current algorithm: TrigDiMuon_FS","Core dump"])
+#s.add(97194,["ERROR: Could not copy data file"])
+        #s.add(97195,["ReferenceError","attempt to access a null-pointer"])
+        s.add(97197,["AllMT_physicsV4/AllMT_physicsV4.reference.new: No such file or directory","17.2.X/AtlastHLT"])
+        s.add_new(97314,["'Trig::TrigDecisionToolARA' object has no attribute 'getChainGroup'"]) #LT 9/6
+        s.add(97261,"ERROR: ld.so: object '/afs/cern.ch/atlas/offline/external/tcmalloc/google-perftools-0.99.2c/i686-slc5-gcc43-opt/lib/libtcmalloc_minimal.so' from LD_PRELOAD cannot be preloaded: ignored")
+        #s.add(97204,["Algorithm stack","unknown function"])
+        #s.add(97205,["Algorithm stack","unknown function"])
+        #s.add(97211,["segmentation violation"])
+        #s.add(97212,["FATAL Loading primary"])
+        #s.add(97213,["Algorithm stack"])
+        #s.add(97214,["TrigP1Test.conf returned 8"])
+        s.add(97298,["ImportError: No module named TrigSteeringTest.TrigSteeringTestConf"])
+
+ 
         return
 
 if __name__ == '__main__':
