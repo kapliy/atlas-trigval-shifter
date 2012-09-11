@@ -16,7 +16,7 @@ import BeautifulSoup as bs
 rel = 5
 rtt = 0
 THRESHOLD=1.10
-useMax=True
+useMax=False
 
 urls = []
 urls.append(['TrigP1Test','http://atlas-project-trigger-release-validation.web.cern.ch/atlas-project-trigger-release-validation/www/perfmonrtt/TrigP1Test.html'])
