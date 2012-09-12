@@ -16,7 +16,7 @@ import BeautifulSoup as bs
 rel = 5
 rtt = 0
 THRESHOLD=1.10
-useMax=False
+useMax=True
 
 urls = []
 urls.append(['TrigP1Test','http://atlas-project-trigger-release-validation.web.cern.ch/atlas-project-trigger-release-validation/www/perfmonrtt/TrigP1Test.html'])
@@ -105,6 +105,7 @@ for testName in stats.keys():
     for build in stats[testName].keys():
         res = stats[testName][build]
         pres = res[rel]
+ 
         oldtot = max([data[0] for i,data in enumerate(res) if i!=rel])
         oldavg = avg([data[0] for i,data in enumerate(res) if i!=rel and data[0]>0])
         if len([data[0] for i,data in enumerate(res) if i!=rel and data[0]> 0]) > 0:

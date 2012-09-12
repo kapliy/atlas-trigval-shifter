@@ -62,7 +62,7 @@ if __name__=="__main__":
                 print >>f,'- [<a href="%s">bug #%d</a>] : %s'%(bug.url(),bug.id,bug.fetch_metadata())
         print >>f,''
         print >>f,'RTT memory report:'
-        print >>f,'The following tests had a >10% increase in total memory consumption with respect to the minimum memory usage in the past 6 days:'
+        print >>f,'The following tests had a >10% increase in total memory consumption with respect to the maximum memory usage in the past 6 days:'
         print >>f,''
         print >>f,'Detailed report is below.'
         print >>f,'Failures that were NOT present in yesterday\'s release are marked with %s.'%(NEWSTATUS)
