@@ -458,6 +458,7 @@ class BugTracker:
         s.add(97374,["IS repository 'Histogramming-L2-Segment-1-1-iss' does not exist","double free or corruption"])
         s.add(97394,["at \.\./src/TrigDiMuonFast.cxx:1414","in TrigDiMuonFast::processTrack"])
         s.add(97400,["AllPT_physicsV4_magField_on_off_on","free\(\): corrupted unsorted chunks","17.1.X.Y.Z-VAL-AtlasCAFHLT"]) ##segfault with not a lot of details, tried to use as restrictive match string as possible
+        s.add(96858,["testAthenaTrigRDO_test","AthenaTrigRDO_leakcheck FAILURE","glibc detected"])
         return
 
 if __name__ == '__main__':
