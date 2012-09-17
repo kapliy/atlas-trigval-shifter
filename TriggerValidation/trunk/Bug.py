@@ -258,6 +258,10 @@ class BugTracker:
             s.add(96714,["AthenaTrigRDO_MC_pp_v4","mc_prescale","nightlies/17.1.X.Y.Z-VAL-AtlasCAFHLT/","test killed as time quota spent, test warning is issued"],cat=2)
             s.add(96882,["AthenaTrigRDO_MC_pp_v4_loose_mc_prescale","nightlies/17.1.X.Y.Z-VAL2-AtlasCAFHLT/","test killed as time quota spent, test warning is issued"],cat=2)
             s.add(97057,["AthenaTrigRDO_MC_pp_v2_loose_mc_prescale","nightlies/17.1.X.Y.Z-VAL2-AtlasCAFHLT/","test killed as time quota spent, test warning is issued"],cat=2)
+            s.add(97531,["AthenaTrigRDO_blackholes","nightlies/17.2.X.Y-VAL-Prod/","test killed as time quota spent, test warning is issued"],cat=2)
+            s.add(97532,["AllMT_HIV2","nightlies/17.2.X/","test killed as time quota spent, test warning is issued"],cat=2)
+            s.add(97533,["AllMT_HIV2_menu","nightlies/17.2.X/","test killed as time quota spent, test warning is issued"],cat=2)
+            s.add(97547,["AthenaTrigRDO_MC_pp_v4_tight_mc_prescale","nightlies/17.1.X.Y.Z-VAL2-AtlasCAFHLT/","test killed as time quota spent, test warning is issued"],cat=2)
             # TOLERANCE BUGS
             s.add(-8,"checkcounts test warning : trigger counts outside tolerance:",title="ATTENTION: add a TOLERANCE BUG match string in Bug.py::prefill_nicos for this release",cat=1) #HAS to be above other tolerance  strings - this is a "catch-all" case
             s.add(-96368,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.1.X.Y-VAL-P1HLT/"],title="count mismatch warnings:bona fide bugs but don't report in Savannah per Roger's request",cat=1) #FIXME wrong bug number!!!
