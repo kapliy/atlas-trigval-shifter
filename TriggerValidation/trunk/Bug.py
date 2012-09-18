@@ -285,7 +285,6 @@ class BugTracker:
             s.add(96494,["checkcounts test warning: Unable to open reference file","nightlies/17.1.X-VAL/",".root"],cat=1)
             s.add(96496,["checkcounts test warning: Unable to open reference file","nightlies/17.1.X.Y-VAL2-P1HLT/",".root"],cat=1)
             s.add(96715,["checkcounts test warning: Unable to open reference file","nightlies/17.1.X.Y-VAL-P1HLT/",".root"],cat=1)
-            s.add(97368,["cat: ../AllMT_physicsV4/AllMT_physicsV4.reference.new: No such file or directory","17.2.X/AtlasHLT"])
             s.add(97370,["libTrigMonitorBaseLib.so","TrigLBNHist","glibc detected"],"Segfault in TrigMonitorBase, check to make sure match string is not too general") ## LT 9/9 challenging to match, if this is matched to something else, make sure it is correct
 
     def prefill(s):
@@ -458,11 +457,13 @@ class BugTracker:
         s.add(97339,["ERROR Errors while decoding TrigT2MbtsBitsContainer_p3 any further ROOT messages for this class"])
         s.add(97355,["getPublicTool\(\"MuonSegmentMerger\"\)","kwargs.setdefault\(\"TriggerHitAssociator\", getPublicToolClone\(\"TriggerHitAssociator\", \"DCMathSegmentMaker\",Redo2DFit=False\)","18.X.0-VAL"])
         s.add(97355,['Error: When merging chains:','EF_mu4T','EF_j10_a4tc_EFFS','these were missing','18.X.0-VAL'])
+        s.add(97368,["cat: ../AllMT_physicsV4/AllMT_physicsV4.reference.new: No such file or directory"])
         s.add(97369,["HLT::TrigSteer::execute","at ../src/TrigSteer.cxx:617"])
         s.add(97374,["IS repository 'Histogramming-L2-Segment-1-1-iss' does not exist","double free or corruption"])
         s.add(97394,["at \.\./src/TrigDiMuonFast.cxx:1414","in TrigDiMuonFast::processTrack"])
         s.add(97400,["AllPT_physicsV4_magField_on_off_on","free\(\): corrupted unsorted chunks","17.1.X.Y.Z-VAL-AtlasCAFHLT"]) ##segfault with not a lot of details, tried to use as restrictive match string as possible
         s.add(96858,["testAthenaTrigRDO_test","AthenaTrigRDO_leakcheck FAILURE","glibc detected"])
+        s.add(97580,["boost","PyEval_EvalFrameEx","segmentation violation"])
         return
 
 if __name__ == '__main__':
