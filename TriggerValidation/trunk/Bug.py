@@ -466,6 +466,8 @@ class BugTracker:
         s.add(96858,["testAthenaTrigRDO_test","AthenaTrigRDO_leakcheck FAILURE","glibc detected"])
         s.add(97580,["boost","PyEval_EvalFrameEx","segmentation violation"])
         s.add(97650,["UploadHIMenuKeys FAILURE"])
+        s.add(97684,["no ChainAcceptance_runsummary","AllPT_mcV3"],cat=2)
+        s.add(97685,["CheckKeys FAILURE","Upload of key 1 failed"])
         return
 
 if __name__ == '__main__':
