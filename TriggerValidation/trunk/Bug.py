@@ -468,6 +468,8 @@ class BugTracker:
         s.add(97650,["UploadHIMenuKeys FAILURE"])
         s.add(97684,["no ChainAcceptance_runsummary","AllPT_mcV3"],cat=2)
         s.add(97685,["CheckKeys FAILURE","Upload of key 1 failed"])
+        s.add(97704,["Crash in TRTTrackExtAlg_Tau_EFID","FAILURE at end"])
+        s.add(97705,["Crash on L2MbSpFex_SCTNoiseSup in AthenaTrigRDOtoTAG","Algorithm stack"])
         return
 
 if __name__ == '__main__':
