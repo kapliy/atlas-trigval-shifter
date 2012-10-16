@@ -43,6 +43,8 @@ class Project:
         soup = bs.BeautifulSoup(page)
         # make sure we are not accidentally looking at last week's results
         # (e.g., if we are fetching the page before it's been updated)
+        if not soup.find('p'):
+            print 'check web page availability: ',url
         lastupdate = str(soup.find('p').string).strip()
         assert re.match('Last updated ',lastupdate),'Unexpected page format: cannot find "Last Updated" element'
         # compute a delta between today and test date
