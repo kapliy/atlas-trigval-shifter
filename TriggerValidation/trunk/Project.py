@@ -104,6 +104,8 @@ class Project:
         return res,soup,nicoslink
     def load(s):
         print '--> Loading ATN project:',s.name
+        #print "PRES URL:  ",s.pres_url() # for debug
+        #print "LAST URL:  ",s.last_url() # for debug
         s.pres,s.pres_soup,s.pres_nicoslink = s.get_tests_from_url(s.pres_url())
         s.last,s.last_soup,s.last_nicoslink = s.get_tests_from_url(s.last_url())
         return True

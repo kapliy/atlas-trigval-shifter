@@ -471,7 +471,7 @@ class BugTracker:
         s.add(96858,["testAthenaTrigRDO_test","AthenaTrigRDO_leakcheck FAILURE","glibc detected"])
         #s.add(97580,["boost","PyEval_EvalFrameEx","segmentation violation"])
         s.add(96563,["boost","PyEval_EvalFrameEx","segmentation violation"])
-        s.add(97650,["UploadHIMenuKeys FAILURE"])
+        s.add(97685,["UploadHIMenuKeys FAILURE"]) # JK 17/10/12 was 97650 - Duplicate of 97685
         s.add(97684,["no ChainAcceptance_runsummary","AllPT_mcV3"],cat=2)
         s.add(97685,["CheckKeys FAILURE","Upload of key 1 failed"])
         s.add(97704,["Crash in TRTTrackExtAlg_Tau_EFID","FAILURE at end"])
@@ -498,8 +498,8 @@ class BugTracker:
         s.add(97835,["MissingET/MissingET_jobOptions.py can not be found"])
         s.add(98082,["ToolSvc","ERROR Cannot create tool InDetTrigTrackSummaryTool"])
         s.add(98132,['WARNING IPC partition \"part_lhl2ef_AtlasCAFHLT_rel_nightly\" is not valid','ipc::_objref_partition\* ipc::util::getPartition\(...\) at ipc/src/util.cc:273'])
+        s.add(98277,["Errors while decoding TrigL2BphysContainer_tlp1"])   
         return
-    
 
 if __name__ == '__main__':
     import sys
