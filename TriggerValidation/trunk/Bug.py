@@ -365,7 +365,7 @@ class BugTracker:
         s.add(95115,['Trig::FillConf::FillLV1','TrigMonitoringEvent/TrigMonConfig.icc:163'])
         s.add(95116,['in TrigCostTool::\~TrigCostTool','in TrigMonConfig::\~TrigMonConfig'])
         s.add(95116,['TrigSteer_L2','FATAL in sysStart\(\): standard std::exception is caught','ERROR std::bad_alloc'])
-        s.add(95141,["RuntimeError: RootController is in faulty state because:"])
+        s.add(95141,["RuntimeError: RootController is in faulty state because:","Application 'L2-Segment-1:voatlas62' has a problem that cannot be ignored"])
         s.add(92598,['corrupted unsorted chunks','AllPT_HI_menu'])
         s.add(95281,["ToolSvc.InDetTrigPrdAssociationTool","ERROR track already found in cache"])
         s.add(95605,["ERROR could not get handle to TrigEgammaPhotonCutIDTool","ValueError:"])
@@ -482,7 +482,7 @@ class BugTracker:
         s.add(97708,["Caught signal 11\(Segmentation fault\)","Current trigger chain: L2_mbSpTrk_noiseSup","Current algorithm: L2MbSpFex_SCTNoiseSup"])
         s.add(97734,["Caught signal 11\(Segmentation fault\)","Current trigger chain: L2_VdM_mbSpTrk","Current algorithm: L2MbSpFex"])
         s.add(97735,["Caught signal 11\(Segmentation fault\)","Current trigger chain: L2_CosmicsAllTeTRTxK_TRTTrkHypo_Pixel","Current algorithm: CosmicCosmicsAllTeTRTxK_TRTTrkHypo_PixelTrigTRTSegFinder"])
-        s.add(97736,["AthenaTrigRDO_blackholes","glibc detected"])
+        #s.add(97736,["AthenaTrigRDO_blackholes","glibc detected"])
         
         s.add(97750,["Caught signal 11\(Segmentation fault\)","Current trigger chain: L2_mu10_Upsimumu_tight_FS","TrigDiMuon_FS"])
         s.add(97751,["Caught signal 11\(Segmentation fault\)","Last incident: Lvl2EventLoopMgr:EndRun","Current algorithm: \<NONE\>","Algorithm stack: \<EMPTY\>"])
@@ -499,6 +499,16 @@ class BugTracker:
         s.add(98082,["ToolSvc","ERROR Cannot create tool InDetTrigTrackSummaryTool"])
         s.add(98132,['WARNING IPC partition \"part_lhl2ef_AtlasCAFHLT_rel_nightly\" is not valid','ipc::_objref_partition\* ipc::util::getPartition\(...\) at ipc/src/util.cc:273'])
         s.add(98277,["Errors while decoding TrigL2BphysContainer_tlp1"])   
+        
+        # Bug report (2012 10 22 - 10 28)
+        s.add(98377,["FATAL Failed to retrieve tool TrackSummaryTool = PublicToolHandle\('Trk::TrackSummaryTool'\)"])
+        s.add(98397,["ImportError: No module named L1CaloSliceFlags"])
+        s.add(97994,["WARNING: error in file: expert-monitoring.root","ERROR: cound not cd to directory:  TrigSteer_L2","ERROR: cound not cd to directory:  TrigSteer_EF"])
+        s.add(91921,["RuntimeError: RootController is in faulty state because: Application 'EBEF-Segment-1:voatlas","has a problem that cannot be ignored."])
+
+        s.add(98401,["RuntimeError: RootController did not get up/publish to IS in 60 seconds \(or it did and then got in an error state\)"])
+        s.add(98402,["Core dump from CoreDumpSvc on","Event counter: 0","Current algorithm: \<NONE\>","Algorithm stack: \<EMPTY\>"])
+        s.add(98406,["Core dump from CoreDumpSvc on","Current algorithm: StreamBS","Last incident: AthenaEventLoopMgr:BeginEvent"])
         return
 
 if __name__ == '__main__':
