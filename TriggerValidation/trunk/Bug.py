@@ -509,6 +509,10 @@ class BugTracker:
         s.add(98401,["RuntimeError: RootController did not get up/publish to IS in 60 seconds \(or it did and then got in an error state\)"])
         s.add(98402,["Core dump from CoreDumpSvc on","Event counter: 0","Current algorithm: \<NONE\>","Algorithm stack: \<EMPTY\>"])
         s.add(98406,["Core dump from CoreDumpSvc on","Current algorithm: StreamBS","Last incident: AthenaEventLoopMgr:BeginEvent"])
+        
+        s.add(94730,["efd::CoreEIssue ERROR EFD core problem","Failed terminating monitorThread"])
+        s.add(98452,["ERROR Errors while decoding Trk::VxContainer_tlp2 any further ROOT messages for this class will be suppressed"])
+        #s.add(98453,["ImportError: No module named TrkExRungeKuttaPropagator.TrkExRungeKuttaPropagatorConf"]) #maybe transient error
         return
 
 if __name__ == '__main__':
