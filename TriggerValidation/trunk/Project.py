@@ -55,6 +55,10 @@ class Project:
         delta = (nowdate-testdate).days
         #print 'DEBUG: DELTA =',delta
         #print 'DEBUG: URL =',url
+        if delta>4:
+            print '(delta>4): DELTA =',delta
+            print 'See URL =',url
+            
         assert delta<=4,"Results on this page are older than 5 days - probably, the test hasn't finished yet"
         # retrieve links to NICOS logs that are grepped before truncation
         # the following parameters exploit the layout of NICOS summary page as seen in May 2012

@@ -500,7 +500,6 @@ class BugTracker:
         s.add(98132,['WARNING IPC partition \"part_lhl2ef_AtlasCAFHLT_rel_nightly\" is not valid','ipc::_objref_partition\* ipc::util::getPartition\(...\) at ipc/src/util.cc:273'])
         s.add(98277,["Errors while decoding TrigL2BphysContainer_tlp1"])   
         
-        # Bug report (2012 10 22 - 10 28)
         s.add(98377,["FATAL Failed to retrieve tool TrackSummaryTool = PublicToolHandle\('Trk::TrackSummaryTool'\)"])
         s.add(98397,["ImportError: No module named L1CaloSliceFlags"])
         s.add(97994,["WARNING: error in file: expert-monitoring.root","ERROR: cound not cd to directory:  TrigSteer_L2","ERROR: cound not cd to directory:  TrigSteer_EF"])
@@ -512,7 +511,8 @@ class BugTracker:
         
         s.add(94730,["efd::CoreEIssue ERROR EFD core problem","Failed terminating monitorThread"])
         s.add(98452,["ERROR Errors while decoding Trk::VxContainer_tlp2 any further ROOT messages for this class will be suppressed"])
-        #s.add(98453,["ImportError: No module named TrkExRungeKuttaPropagator.TrkExRungeKuttaPropagatorConf"]) #maybe transient error
+        s.add(98453,["ImportError: No module named TrkExRungeKuttaPropagator.TrkExRungeKuttaPropagatorConf"])
+        s.add(98490,["ImportError: No module named TrkExSTEP_Propagator.TrkExSTEP_PropagatorConf"])
         return
 
 if __name__ == '__main__':
