@@ -513,6 +513,17 @@ class BugTracker:
         s.add(98452,["ERROR Errors while decoding Trk::VxContainer_tlp2 any further ROOT messages for this class will be suppressed"])
         s.add(98453,["ImportError: No module named TrkExRungeKuttaPropagator.TrkExRungeKuttaPropagatorConf"])
         s.add(98490,["ImportError: No module named TrkExSTEP_Propagator.TrkExSTEP_PropagatorConf"])
+        s.add(98531,["ERROR Errors while decoding Rec::TrackParticleContainer_tlp1 any further ROOT messages for this class will be suppressed "])
+        s.add(98552,["ERROR Cannot create EFID sequence algseq"])
+        s.add(98554,["Error in configuration of MuonSlice"])
+        s.add(98577,["ERROR Algorithm of type TrigJetFeaturesUnpacker is unknown"])
+        s.add(98590,["Error in configuration of BphysicsSlice"])
+        s.add(98618,["FATAL Unchecked StatusCode in ByteStreamEventStorageOutputSvc::initDataWriter"])
+        s.add(98619,["RootController is in faulty state because: Application 'ROS-Segment-1:voatlas62' has a problem that cannot be ignored"])
+        s.add(98629,["ImportError: No module named DBReplicaSvc.DBReplicaSvcConf"])
+        s.add(98631,["RootController is in faulty state"])
+        
+        
         return
 
 if __name__ == '__main__':
