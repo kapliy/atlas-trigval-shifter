@@ -227,18 +227,22 @@ class BugTracker:
             s.add(-96333,["nightlies/17.1.X.Y.Z-VAL-AtlasCAFHLT/","WARNING Output differs from reference for","If this change is understood, please update"],title = "WARNING Output differs from reference: don't report in Savannah per Roger's request",cat=1)
             s.add(-96334,["nightlies/17.2.X.Y-VAL-Prod/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"],title = "WARNING Output differs from reference: don't report in Savannah per Roger's request",cat=1)
             s.add(-96334,["nightlies/17.2.X.Y-VAL-Prod/","WARNING Output differs from reference for","If this change is understood, please update"],title = "WARNING Output differs from reference: don't report in Savannah per Roger's request",cat=1)
-            s.add(96335,["nightlies/17.1.X/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"],cat=1)
-            s.add(96335,["nightlies/17.1.X/","WARNING Output differs from reference for","If this change is understood, please update"],cat=1)
+            s.add(-96335,["nightlies/17.1.X/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"],title = "WARNING Output differs from reference: don't report in Savannah per Roger's request",cat=1)
+            s.add(-96335,["nightlies/17.1.X/","WARNING Output differs from reference for","If this change is understood, please update"],title = "WARNING Output differs from reference: don't report in Savannah per Roger's request",cat=1)
             s.add(-96336,["nightlies/17.1.X-VAL/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"],title = "WARNING Output differs from reference: don't report in Savannah per Roger's request",cat=1)
             s.add(-96336,["nightlies/17.1.X-VAL/","WARNING Output differs from reference for","If this change is understood, please update"],title = "WARNING Output differs from reference: don't report in Savannah per Roger's request",cat=1)
-            s.add(96337,["nightlies/17.2.X/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"],cat=1)
-            s.add(96337,["nightlies/17.2.X/","WARNING Output differs from reference for","If this change is understood, please update"],cat=1)
+            s.add(-96337,["nightlies/17.2.X/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"],title = "WARNING Output differs from reference: don't report in Savannah per Roger's request",cat=1)
+            s.add(-96337,["nightlies/17.2.X/","WARNING Output differs from reference for","If this change is understood, please update"],title = "WARNING Output differs from reference: don't report in Savannah per Roger's request",cat=1)
             s.add(-96338,["nightlies/17.2.X-VAL/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"],title = "WARNING Output differs from reference: don't report in Savannah per Roger's request",cat=1)
             s.add(-96338,["nightlies/17.2.X-VAL/","WARNING Output differs from reference for","If this change is understood, please update"],title = "WARNING Output differs from reference: don't report in Savannah per Roger's request",cat=1)
-            s.add(96339,["nightlies/18.X.0/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"],cat=1)
-            s.add(96339,["nightlies/18.X.0/","WARNING Output differs from reference for","If this change is understood, please update"],cat=1)
+            s.add(-96339,["nightlies/18.X.0/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"],title = "WARNING Output differs from reference: don't report in Savannah per Roger's request",cat=1)
+            s.add(-96339,["nightlies/18.X.0/","WARNING Output differs from reference for","If this change is understood, please update"],title = "WARNING Output differs from reference: don't report in Savannah per Roger's request",cat=1)
             s.add(-96340,["nightlies/18.X.0-VAL/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"],title = "WARNING Output differs from reference: don't report in Savannah per Roger's request",cat=1)
             s.add(-96340,["nightlies/18.X.0-VAL/","WARNING Output differs from reference for","If this change is understood, please update"],title = "WARNING Output differs from reference: don't report in Savannah per Roger's request",cat=1)
+            s.add(-96339,["nightlies/17.X.0/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"],title = "WARNING Output differs from reference: don't report in Savannah per Roger's request",cat=1)
+            s.add(-96339,["nightlies/17.X.0/","WARNING Output differs from reference for","If this change is understood, please update"],title = "WARNING Output differs from reference: don't report in Savannah per Roger's request",cat=1)
+            s.add(-96340,["nightlies/17.X.0-VAL/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"],title = "WARNING Output differs from reference: don't report in Savannah per Roger's request",cat=1)
+            s.add(-96340,["nightlies/17.X.0-VAL/","WARNING Output differs from reference for","If this change is understood, please update"],title = "WARNING Output differs from reference: don't report in Savannah per Roger's request",cat=1)
             s.add(-96341,["nightlies/17.1.X.Y-VAL2-P1HLT/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"],title = "WARNING Output differs from reference: don't report in Savannah per Roger's request",cat=1)
             s.add(-96341,["nightlies/17.1.X.Y-VAL2-P1HLT/","WARNING Output differs from reference for","If this change is understood, please update"],title = "WARNING Output differs from reference: don't report in Savannah per Roger's request",cat=1)
             s.add(-96342,["nightlies/17.1.X.Y.Z-VAL2-AtlasCAFHLT/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"],title = "WARNING Output differs from reference: don't report in Savannah per Roger's request",cat=1)
@@ -262,9 +266,15 @@ class BugTracker:
             s.add(97057,["AthenaTrigRDO_MC_pp_v2_loose_mc_prescale","nightlies/17.1.X.Y.Z-VAL2-AtlasCAFHLT/","test killed as time quota spent, test warning is issued"],cat=2)
             s.add(97531,["AthenaTrigRDO_blackholes","nightlies/17.2.X.Y-VAL-Prod/","test killed as time quota spent, test warning is issued"],cat=2)
             s.add(97532,["AllMT_HIV2","nightlies/17.2.X/","test killed as time quota spent, test warning is issued"],cat=2)
-            s.add(97533,["AllMT_HIV2_menu","nightlies/17.2.X/","test killed as time quota spent, test warning is issued"],cat=2)
+            s.add(97532,["AllMT_HIV2","nightlies/17.2.X-VAL/","test killed as time quota spent, test warning is issued"],cat=2)
+#            s.add(97533,["AllMT_HIV2_menu","nightlies/17.2.X/","test killed as time quota spent, test warning is issued"],cat=2) # duplicats of 97532
+            s.add(97532,["AllMT_HIV2_menu","nightlies/17.2.X/","test killed as time quota spent, test warning is issued"],cat=2) 
+            s.add(97532,["AllMT_HIV2_menu","nightlies/17.2.X-VAL/","test killed as time quota spent, test warning is issued"],cat=2) 
             s.add(97547,["AthenaTrigRDO_MC_pp_v4_tight_mc_prescale","nightlies/17.1.X.Y.Z-VAL2-AtlasCAFHLT/","test killed as time quota spent, test warning is issued"],cat=2)
             s.add(97654,["BackCompAthenaTrigBStoESDAOD","nightlies/17.2.X.Y-VAL-Prod/","test killed as time quota spent, test warning is issued"],cat=2)
+            s.add(98691,["AllPT_mcV4","nightlies/17.1.X/","test killed as time quota spent, test warning is issued"],cat=2)
+            s.add(98691,["AllPT_mcV4","nightlies/17.1.X-VAL/","test killed as time quota spent, test warning is issued"],cat=2)
+            s.add(98771,["AthenaTrigAOD_TrigEDMCheck_fixedAOD","nightlies/17.1.X-VAL/","test killed as time quota spent, test warning is issued"],cat=2)
             # TOLERANCE BUGS
             s.add(-8,"checkcounts test warning : trigger counts outside tolerance:",title="ATTENTION: add a TOLERANCE BUG match string in Bug.py::prefill_nicos for this release",cat=1) #HAS to be above other tolerance  strings - this is a "catch-all" case
             s.add(-96368,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.1.X.Y-VAL-P1HLT/"],title="count mismatch warnings:bona fide bugs but don't report in Savannah per Roger's request",cat=1) #FIXME wrong bug number!!!
@@ -275,6 +285,8 @@ class BugTracker:
             s.add(-96404,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.2.X-VAL/"],title="count mismatch warnings:bona fide bugs but don't report in Savannah per Roger's request",cat=1)
             s.add(-96405,["checkcounts test warning : trigger counts outside tolerance:","nightlies/18.X.0/"],title="count mismatch warnings:bona fide bugs but don't report in Savannah per Roger's request",cat=1)
             s.add(-96406,["checkcounts test warning : trigger counts outside tolerance:","nightlies/18.X.0-VAL/"],title="count mismatch warnings:bona fide bugs but don't report in Savannah per Roger's request",cat=2)
+            s.add(-96405,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.X.0/"],title="count mismatch warnings:bona fide bugs but don't report in Savannah per Roger's request",cat=1)
+            s.add(-96406,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.X.0-VAL/"],title="count mismatch warnings:bona fide bugs but don't report in Savannah per Roger's request",cat=2)
             s.add(-96407,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.1.X.Y-VAL2-P1HLT/"],title="count mismatch warnings:bona fide bugs but don't report in Savannah per Roger's request",cat=1)
             s.add(-96408,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.1.X.Y.Z-VAL2-AtlasCAFHLT/"],title="count mismatch warnings:bona fide bugs but don't report in Savannah per Roger's request",cat=1)
             s.add(-96420,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.2.X/"],title="count mismatch warnings:bona fide bugs but don't report in Savannah per Roger's request",cat=1)
@@ -334,7 +346,7 @@ class BugTracker:
         s.add(92994,["Py:LArCalibMenu",'ERROR template chain with sig_id=g15_loose is not defined at level EF'])
         s.add(93195,["ERROR","No conversion CscRDO to stream","Could not create Rep for DataObject"])
         s.add(93505,["ERROR Problems calling Blob2ToolConstants"])
-        s.add(93534,["RootController is in faulty state because: Application","has a problem that cannot be ignored","ERROR transition failed"])
+        s.add(93534,["RootController is in faulty state because: Application","ROS","has a problem that cannot be ignored","ERROR transition failed"])
         s.add(93633,["IncludeError: include file CaloRecEx/CaloRecOutputItemList_jobOptions.py can not be found"])
         s.add(93740,["IncludeError: include file InDetPriVxCBNT/InDetPriVxCBNT_jobOptions.py can not be found"])
         s.add(93741,["ERROR Unable to build inputFileSummary from any of the specified input files","TimeoutError","KeyError: 'eventdata_itemsDic'"])
@@ -413,7 +425,7 @@ class BugTracker:
         s.add(95732,["HLTMenu_frontier.xml: No such file or directory"])
         #s.add(94869,["FSMTransitionError","Cannot execute configure()"])
         #s.add(92536,["ERROR HLTProcess","could not find any files starting 'data11_hi.00193211.express_express.AthenaMTout_1.RAW._lb0717._CAF_999999_000001'"])
-        s.add(96683,["HLTJobLib","ERROR HLTProcess","could not find any files starting 'data1*"])
+        s.add(97671,["HLTJobLib","ERROR HLTProcess","could not find any files starting 'data1*"]) # was 96683. Duplicate and being folled in this bug report
         s.add(96704,["Errors while decoding MuonFeatureDetailsContainer_p2"])
         s.add(96712,["'InDetGlobalTrackMonTool' object has no attribute 'TrackCollection'"])
         s.add(96718,["ToolSvc","Cannot create tool JetBTaggerTool"])
@@ -470,7 +482,7 @@ class BugTracker:
         s.add(97400,["AllPT_physicsV4_magField_on_off_on","free\(\): corrupted unsorted chunks","17.1.X.Y.Z-VAL-AtlasCAFHLT"]) ##segfault with not a lot of details, tried to use as restrictive match string as possible
         s.add(96858,["testAthenaTrigRDO_test","AthenaTrigRDO_leakcheck FAILURE","glibc detected"])
         #s.add(97580,["boost","PyEval_EvalFrameEx","segmentation violation"])
-        s.add(96563,["boost","PyEval_EvalFrameEx","segmentation violation"])
+        s.add(96563,["boost","PyEval_EvalFrameEx","segmentation violation","start of run ="])
         s.add(97685,["UploadHIMenuKeys FAILURE"]) # JK 17/10/12 was 97650 - Duplicate of 97685
         s.add(97684,["no ChainAcceptance_runsummary","AllPT_mcV3"],cat=2)
         s.add(97685,["CheckKeys FAILURE","Upload of key 1 failed"])
@@ -506,14 +518,14 @@ class BugTracker:
         s.add(91921,["RuntimeError: RootController is in faulty state because: Application 'EBEF-Segment-1:voatlas","has a problem that cannot be ignored."])
 
         s.add(98401,["RuntimeError: RootController did not get up/publish to IS in 60 seconds \(or it did and then got in an error state\)"])
-        s.add(98402,["Core dump from CoreDumpSvc on","Event counter: 0","Current algorithm: \<NONE\>","Algorithm stack: \<EMPTY\>"])
+        ##s.add(98402,["Core dump from CoreDumpSvc on","Event counter: 0","Current algorithm: \<NONE\>","Algorithm stack: \<EMPTY\>"]) ## JK commented - too general
         s.add(98406,["Core dump from CoreDumpSvc on","Current algorithm: StreamBS","Last incident: AthenaEventLoopMgr:BeginEvent"])
         
         s.add(94730,["efd::CoreEIssue ERROR EFD core problem","Failed terminating monitorThread"])
         s.add(98452,["ERROR Errors while decoding Trk::VxContainer_tlp2 any further ROOT messages for this class will be suppressed"])
         s.add(98453,["ImportError: No module named TrkExRungeKuttaPropagator.TrkExRungeKuttaPropagatorConf"])
         s.add(98490,["ImportError: No module named TrkExSTEP_Propagator.TrkExSTEP_PropagatorConf"])
-        s.add(98531,["ERROR Errors while decoding Rec::TrackParticleContainer_tlp1 any further ROOT messages for this class will be suppressed "])
+        s.add(98531,["ERROR Errors while decoding Rec::TrackParticleContainer_tlp1 any further ROOT messages for this class will be suppressed "]) 
         s.add(98552,["ERROR Cannot create EFID sequence algseq"])
         s.add(98554,["Error in configuration of MuonSlice"])
         s.add(98577,["ERROR Algorithm of type TrigJetFeaturesUnpacker is unknown"])
@@ -522,8 +534,15 @@ class BugTracker:
         s.add(98619,["RootController is in faulty state because: Application 'ROS-Segment-1:voatlas62' has a problem that cannot be ignored"])
         s.add(98629,["ImportError: No module named DBReplicaSvc.DBReplicaSvcConf"])
         s.add(98631,["RootController is in faulty state"])
-        
-        
+        s.add(98640,["OH repository 'Histogramming-L2-Segment-1-1-iss' does not exist"])
+        s.add(98640,["IS repository 'Histogramming-L2-Segment-1-1-iss' does not exist"])
+        s.add(98688,["IS infomation name 'Histogramming-L2-Segment-1-1-issL2PU-1/EXPERT/TrigSteer_L2/NumberOfLvl1TEs' is invalid"])
+        s.add(98748,["IS repository 'DF-EF-Segment-0-iss' does not exist"])
+        s.add(98768,["segmentation violation","Current trigger chain: EF_j50_a4tcem_eta25_xe50_empty","Current algorithm: CellMakerFullCalo_topo"])
+        s.add(98786,["Error in opening muon calibration buffer"])
+        s.add(98856,["No module named HLTTestApps.application"])
+        s.add(98857,["Current trigger chain: L2_2fj15_a4TTem_2fj50_c4cchad_L1MBTS","Current algorithm: T2CaloFastJet_a4TT"])
+        s.add_new(98917,["line 50, in BuildTransientTrees"])
         return
 
 if __name__ == '__main__':
