@@ -483,6 +483,7 @@ class BugTracker:
         s.add(96858,["testAthenaTrigRDO_test","AthenaTrigRDO_leakcheck FAILURE","glibc detected"])
         #s.add(97580,["boost","PyEval_EvalFrameEx","segmentation violation"])
         s.add(96563,["boost","PyEval_EvalFrameEx","segmentation violation","start of run ="])
+        s.add(97641,["Histogramming-EF-Segment-0-iss does not exist"])
         s.add(97685,["UploadHIMenuKeys FAILURE"]) # JK 17/10/12 was 97650 - Duplicate of 97685
         s.add(97684,["no ChainAcceptance_runsummary","AllPT_mcV3"],cat=2)
         s.add(97685,["CheckKeys FAILURE","Upload of key 1 failed"])
