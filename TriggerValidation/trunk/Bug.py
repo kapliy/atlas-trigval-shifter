@@ -434,7 +434,7 @@ class BugTracker:
         s.add(96756,["No module named JetEventAthenaPool","JetEventAthenaPoolConf"])
         s.add(96720,["ERROR CallBack function","GeoModelSvc","cannot be registered"])
         s.add(96760,["'Histogramming-EF-Segment-0-iss' does not exist"])
-        s.add(96776,["There was a crash","TrigMinimalEventLoopMgr::sysPrepareForRun"])
+        #s.add(96776,["There was a crash","TrigMinimalEventLoopMgr::sysPrepareForRun"])
         s.add(96354,["Py:AllowedList","xe*","is not in the list of allowed values"])
         #s.add(96858,["There was a crash","/lib64/libc.so.6","TrigSteer_*"]) //LT commenting out, not a descriptive enough bug
         
@@ -483,7 +483,6 @@ class BugTracker:
         s.add(96858,["testAthenaTrigRDO_test","AthenaTrigRDO_leakcheck FAILURE","glibc detected"])
         #s.add(97580,["boost","PyEval_EvalFrameEx","segmentation violation"])
         s.add(96563,["boost","PyEval_EvalFrameEx","segmentation violation","start of run ="])
-        s.add(97641,["Histogramming-EF-Segment-0-iss does not exist"])
         s.add(97685,["UploadHIMenuKeys FAILURE"]) # JK 17/10/12 was 97650 - Duplicate of 97685
         s.add(97684,["no ChainAcceptance_runsummary","AllPT_mcV3"],cat=2)
         s.add(97685,["CheckKeys FAILURE","Upload of key 1 failed"])
@@ -543,7 +542,9 @@ class BugTracker:
         s.add(98786,["Error in opening muon calibration buffer"])
         s.add(98856,["No module named HLTTestApps.application"])
         s.add(98857,["Current trigger chain: L2_2fj15_a4TTem_2fj50_c4cchad_L1MBTS","Current algorithm: T2CaloFastJet_a4TT"])
-        s.add_new(98917,["line 50, in BuildTransientTrees"])
+        s.add(98917,["line 50, in BuildTransientTrees"])
+        s.add(99135,["No such file or directory: 'LVL1config_","_rel_nightly.xml"])
+        s.add(92097,["nothing found for TriggerCosts_1e33.xml","prescales1000.xml"])
         return
 
 if __name__ == '__main__':
