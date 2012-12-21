@@ -203,7 +203,7 @@ class BugTracker:
 
     def prefill_nicos(s):
         """ Special bugs that are only picked up by NICOS - and are not present in the ATN summary page """
-        s.add(97313,["AllMT_physicsV4/AllMT_physicsV4.reference.new: No such file or directory","17.2.X-VAL/AtlasHLT"]) #LT 9/6
+        s.add(97313,["AllPT_physicsV4.reference.new: No such file or directory"]) #LT 9/6 PT/MT
         s.add(97313,["cat: ../AllMT_physicsV4/AllMT_physicsV4.reference.new: No such file or directory"])
         #s.add(97197,["AllMT_physicsV4/AllMT_physicsV4.reference.new: No such file or directory","17.2.X/AtlasHLT"])
         s.add(97356,["If this change is understood, please update the reference fileby typing:","cp AthenaRDO_MC_pp_v2_loose_mc_prescale_top_EF.TrigChainMoniValidation.reference.new /afs/cern.ch/atlas/project/trigger/pesa-sw/validation/references/ATN/REG/17.1.X.Y/20120808/AthenaRDO_MC_pp_v2_loose_mc_prescale_top_EF.TrigChainMoniValidation.reference"])#LT 9/8
@@ -243,7 +243,7 @@ class BugTracker:
             s.add(-96339,["nightlies/17.X.0/","WARNING Output differs from reference for","If this change is understood, please update"],title = "WARNING Output differs from reference: don't report in Savannah per Roger's request",cat=1)
             s.add(-96340,["nightlies/17.X.0-VAL/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"],title = "WARNING Output differs from reference: don't report in Savannah per Roger's request",cat=1)
             s.add(-96340,["nightlies/17.X.0-VAL/","WARNING Output differs from reference for","If this change is understood, please update"],title = "WARNING Output differs from reference: don't report in Savannah per Roger's request",cat=1)
-            s.add(-96341,["nightlies/17.1.X.Y-VAL2-P1HLT/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"],title = "WARNING Output differs from reference: don't report in Savannah per Roger's request",cat=1)
+            s.add(-96341,["nightlies/17.1.X.Y-VAL2-P1HLT/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"],title = "WARNING Output differs from reference: don't report in Savannah per Roger's request",cat=2)
             s.add(-96341,["nightlies/17.1.X.Y-VAL2-P1HLT/","WARNING Output differs from reference for","If this change is understood, please update"],title = "WARNING Output differs from reference: don't report in Savannah per Roger's request",cat=1)
             s.add(-96342,["nightlies/17.1.X.Y.Z-VAL2-AtlasCAFHLT/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"],title = "WARNING Output differs from reference: don't report in Savannah per Roger's request",cat=1)
             s.add(-96342,["nightlies/17.1.X.Y.Z-VAL2-AtlasCAFHLT/","WARNING Output differs from reference for","If this change is understood, please update"],title = "WARNING Output differs from reference: don't report in Savannah per Roger's request",cat=1)
@@ -366,7 +366,7 @@ class BugTracker:
         s.add(94261,"IncludeError: include file MuonTrkPhysMonitoring/MuonTrkPhysDQA_options.py can not be found")
         s.add(94342,["TrigMuonEFTrackBuilderConfig_SeededFS","Core dump from CoreDumpSvc","Caught signal 11\(Segmentation fault\)"])
         s.add(94435,["ES_WrongFileFormat: file is of no know format. Abort.EventStorage reading problem: file is of no know format. Abort.","virtual EventStackLayer"])
-        s.add(94542,["RuntimeError: key 'outputNTUP_TRIGFile' is not defined in ConfigDic"])
+        s.add(97056,["RuntimeError: key 'outputNTUP_TRIGFile' is not defined in ConfigDic"])
         s.add(94611,['Current algorithm: MuGirl','msFit ../src/GlobalFitTool.cxx:571'])
         s.add(94734,['\[TObject\* histmon::THistRegisterImpl::HInfo::get\(...\) at histmon/src/THistRegisterImpl.cxx:310\] Histograms registered with the id "/EXPERT/','CutCounter" are not compatible for the merge operation'])
         s.add(94873,['Last incident: AthenaEventLoopMgr:BeginEvent','Current algorithm: TrigEDMChecker','diff ../src/TrigPhoton.cxx:225'])
@@ -397,6 +397,7 @@ class BugTracker:
         s.add(95995,["Trigger menu inconsistent, aborting","L2 Chain counter 454 used 2 times while can only once, will print them all"])
         s.add(96093,["ByteStreamAttListMetadataSvc","not locate service"])
         s.add(96094,["ConversionSvc::makeCall","ConversionSvc::createRep","THashTable::FindObject"])
+        s.add(96094,["diff: .regtest: No such file or directory"])
         s.add(96097,["SEVERE: Caught SQL error: ORA-02290: check constraint \(ATLAS_TRIGGER_ATN.TW_ID_NN\) violated","SEVERE:  Database is already locked by ATLAS_TRIGGER_ATN_W"]) # the bug is found in uploadSMK.log
         #s.add(96098,"free\(\): corrupted unsorted chunks: 0x1ac14178")
         #s.add(96098,["free\(\): corrupted unsorted chunks","Python/2.6.5/i686-slc5-gcc43-opt/bin/python"])  ##TOO GENERAL, COMMENTED OUT
@@ -484,7 +485,7 @@ class BugTracker:
         #s.add(97580,["boost","PyEval_EvalFrameEx","segmentation violation"])
         s.add(96563,["boost","PyEval_EvalFrameEx","segmentation violation","start of run ="])
         s.add(97685,["UploadHIMenuKeys FAILURE"]) # JK 17/10/12 was 97650 - Duplicate of 97685
-        s.add(97684,["no ChainAcceptance_runsummary","AllPT_mcV3"],cat=2)
+        s.add(95848,["no ChainAcceptance_runsummary","AllPT_mcV3"],cat=2)
         s.add(97685,["CheckKeys FAILURE","Upload of key 1 failed"])
         s.add(97704,["Crash in TRTTrackExtAlg_Tau_EFID","FAILURE at end"])
         s.add(97705,["Crash on L2MbSpFex_SCTNoiseSup in AthenaTrigRDOtoTAG","Algorithm stack"])
@@ -545,6 +546,15 @@ class BugTracker:
         s.add(98917,["line 50, in BuildTransientTrees"])
         s.add(99135,["No such file or directory: 'LVL1config_","_rel_nightly.xml"])
         s.add(92097,["nothing found for TriggerCosts_1e33.xml","prescales1000.xml"])
+        s.add(99337,["Unable to determine beamType","data12_hip"])
+        s.add(99338,["ERROR updateAddress","Cannot translate clID"])
+        s.add(99392,["Segmentation fault","runHLT_standalone.py"])
+        s.add(99421,["No module named TrigT2CaloCommon.TrigT2CaloCommonConf"])
+        s.add(99422,["ToolSvc.TileBeamInfoProvider","Error retrieving","from TDS"])
+        s.add(99423,["testLVL1CTPMuonAthenaTrigRDO","Could not create Rep for DataObject"])
+        s.add(99451,["Segmentation fault","address not mapped to object"])
+        s.add(99470,["No such file or directory", "LVL1config_MC_pp_v3_17.2.8.xml"])
+        s.add(94152,["ERROR Upload of SMKey failed"])
         return
 
 if __name__ == '__main__':
