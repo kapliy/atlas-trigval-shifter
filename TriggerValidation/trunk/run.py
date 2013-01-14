@@ -10,6 +10,8 @@ rel = 5
 dby = False
 # print (to stdout) a summary of all found bugs
 SUMMARIZE_BUGS = True
+# name of output file
+OUTNAME = 'index2.html'
 
 import common
 import sys,getpass,socket,datetime
@@ -20,9 +22,14 @@ if len(sys.argv)>=2:
     assert rel>=0 and rel<=6,'Release must be an integer between 0 and 6'
 
 if len(sys.argv)>=4:
-    dby = True
-    print 'INFO: using Day-Before-Yesterday nightly instead of Yesterday'
-    print '      (this is useful if yesterday nightly build failed)'
+    assert sys.argv[3] in ('1','0')
+    dby = int(sys.argv[3])
+    if dby==1:
+        print 'INFO: using Day-Before-Yesterday nightly instead of Yesterday'
+        print '      (this is useful if yesterday nightly build failed)'
+
+if len(sys.argv)>=5:
+    OUTNAME = sys.argv[4]
 
 import Nightly
 Nightly.Nightly.rel = rel
@@ -46,9 +53,9 @@ from configure_nightlies import X
 # Dump shift report to an html file
 if __name__=="__main__":
     if getpass.getuser()=='antonk' and socket.gethostname()=='kapliy':
-        f = open('/hep/public_html/VAL/index2.html','w')
+        f = open('/hep/public_html/VAL/%s'%OUTNAME,'w')
     else:
-        f = open('index2.html','w')
+        f = open(OUTNAME,'w')
     print >>f,'<html><head><title>Trigger Validation Shift Report: rel_%d</title></head><body>'%rel
     print >>f,'<pre style="font-size: 12; font-family: Courier, \'Courier New\', monospace">'
     if True:
@@ -76,6 +83,8 @@ if __name__=="__main__":
         else:
             print >>f,''
         print >>f,''
+        f.flush()
+        sys.stdout.flush()
     for N in X[:]:
         try:
             N.load()
@@ -86,7 +95,10 @@ if __name__=="__main__":
             continue
         for l in N.report():
             print >>f,l
+            f.flush()
+            sys.stdout.flush()
     print >>f,'</pre></body></html>'
     f.close()
+    sys.stdout.flush()
     if SUMMARIZE_BUGS:
         bugs.summarize_bugs()

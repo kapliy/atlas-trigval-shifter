@@ -159,11 +159,17 @@ class Project:
                     if iorder==len(matchedidx)-1:
                         # special handling for the case of one test only affected by this bug
                         offset = '       ' if len(matchedidx)>1 else '    -  '
-                        closed_summary = CLOSEDSTATUS if bugs[i] and bugs[i].is_closed() else ''
+                        closed_summary = ''
+                        wontfix_summary = ''
+                        if bugs[i]:
+                            if bugs[i].is_closed():
+                                closed_summary = CLOSEDSTATUS
+                            if bugs[i].is_wontfix():
+                                wontfix_summary = WONTFIXSTATUS
                         if bugids[i] >= 0:
-                            res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>)(<a href="%s">nicos</a>):\n       [<a href="%s">bug #%s</a>] %s%s%s'%(offset,lextract,ts[i].name,lerror,llog,ltail,lnicos,bugurls[i],bugids[i],closed_summary,status_summary,bugtitles[i]))
+                            res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>)(<a href="%s">nicos</a>):\n       [<a href="%s">bug #%s</a>] %s%s%s%s'%(offset,lextract,ts[i].name,lerror,llog,ltail,lnicos,bugurls[i],bugids[i],closed_summary,wontfix_summary,status_summary,bugtitles[i]))
                         else:
-                            res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>)(<a href="%s">nicos</a>):\n       [Exit Category #%s] %s%s%s'%(offset,lextract,ts[i].name,lerror,llog,ltail,lnicos,bugids[i],closed_summary,status_summary,bugtitles[i]))
+                            res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>)(<a href="%s">nicos</a>):\n       [Exit Category #%s] %s%s%s%s'%(offset,lextract,ts[i].name,lerror,llog,ltail,lnicos,bugids[i],closed_summary,wontfix_summary,status_summary,bugtitles[i]))
  
                     # for others, just list the bugs, one per line, with comma in the end of each line
                     else:
@@ -250,11 +256,17 @@ class Project:
                 if iorder==len(matchedidx)-1:
                     # special handling for the case of one test only affected by this bug
                     offset = '       ' if len(matchedidx)>1 else '    -  '
-                    closed_summary = CLOSEDSTATUS if bugs[i] and bugs[i].is_closed() else ''
+                    closed_summary = ''
+                    wontfix_summary = ''
+                    if bugs[i]:
+                        if bugs[i].is_closed():
+                            closed_summary = CLOSEDSTATUS
+                        if bugs[i].is_wontfix():
+                            wontfix_summary = WONTFIXSTATUS
                     if bugids[i] >= 0:
-                        res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>)(<a href="%s">nicos</a>):\n       [<a href="%s">bug #%s</a>] %s%s%s'%(offset,lextract,old.name,lerror,llog,ltail,lnicos,bugurls[i],bugids[i],closed_summary,FIXEDSTATUS,bugtitles[i]))
+                        res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>)(<a href="%s">nicos</a>):\n       [<a href="%s">bug #%s</a>] %s%s%s%s'%(offset,lextract,old.name,lerror,llog,ltail,lnicos,bugurls[i],bugids[i],closed_summary,wontfix_summary,FIXEDSTATUS,bugtitles[i]))
                     else:
-                        res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>)(<a href="%s">nicos</a>):\n       [Exit Category #%s] %s%s%s'%(offset,lextract,old.name,lerror,llog,ltail,lnicos,bugids[i],closed_summary,FIXEDSTATUS,bugtitles[i]))
+                        res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>)(<a href="%s">nicos</a>):\n       [Exit Category #%s] %s%s%s%s'%(offset,lextract,old.name,lerror,llog,ltail,lnicos,bugids[i],closed_summary,wontfix_summary,FIXEDSTATUS,bugtitles[i]))
                 # for others, just list the bugs, one per line, with comma in the end of each line
                 else:
                     offset = '    -  ' if iorder==0 else '       '

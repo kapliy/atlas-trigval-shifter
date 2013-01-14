@@ -42,6 +42,11 @@ class Bug:
         if not s.fetched:
             s.fetch_metadata()
         return s.open == 'Closed'
+    def is_wontfix(s):
+        """ True if the bug metadata shows the bug has been marked as Wont fix on Savannah"""
+        if not s.fetched:
+            s.fetch_metadata()
+        return s.status == 'Wont Fix'
     def fetch_metadata(s):
         """ Do on-the-fly lookup of the bug title and other metadata from the bug tracker """
         NOTITLE = 'CANNOT FETCH TITLE FOR BUG %d'%(s.id)
@@ -566,9 +571,12 @@ class BugTracker:
         s.add(99712,["segmentation violation","in HLT::HLTResult::serialize","in TrigMinimalEventLoopMgr::HltResultROB"])
         s.add(99751,["../src/PixelClusterCacheTool.cxx:34: error: invalid conversion","../src/SCT_ClusterCacheTool.cxx:35: error: invalid conversion"])
         s.add(99749,["error: SiClusterizationTool/SCT_ClusteringTool.h"])
-        s.add(92277,["ToolHandle<Trk::IPatternParametersUpdator>::retrieve\(Trk::IPatternParametersUpdator","Current algorithm: InDetSiSpTrackFinder"])
+        #s.add(92277,["ToolHandle<Trk::IPatternParametersUpdator>::retrieve\(Trk::IPatternParametersUpdator","Current algorithm: InDetSiSpTrackFinder"])
         s.add(99765,["Current algorithm: CosmicCosmicsAllTeTRTxK_TRTTrkHypo_AllPhysicsTrigTRTSegFinder","TRT_DriftCircleOnTrack ../src/TRT_DriftCircleOnTrack.cxx"])
         s.add(99766,["JetRec/TrackSelectionForJets.py","DetFlags.detdescr.ID_on\(\)  and hasattr\(ToolSvc,\'InDetTrackSummaryTool\'\) "])
+        s.add(99778,['Trig::TrigNtExecTool::ReadOPI','at ../src/TrigNtExecTool.cxx:354'])
+        s.add(99802,['is bigger than my length','HLTJobLib: recoverable ERROR error processing EF_PROCESS'])
+        s.add(99803,['Gaudi::Parsers::parse_real_vector<double','Caught signal 8\(Floating point exception\). Details'])
         return
 
 if __name__ == '__main__':

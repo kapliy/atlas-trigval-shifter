@@ -48,12 +48,17 @@ echo "DEST = ${DEST}"
 echo "REL = ${rel}   PART = ${part}"
 
 # Prepare the shift report
-./run.py ${rel} ${part} &> ${DEST}/log.txt
+for dby in 0 1; do
+    ./run.py ${rel} ${part} ${dby} index2_dby${dby}.html &> ${DEST}/log_dby${dby}.txt &
+done
+wait
 # Back up a copy of the output
-cp ${DEST}/index2.html ${DEST}/index_part${part}.html
-if [ "${SCPADDR}" != "" ]; then
-    scp ${DEST}/index_part${part}.html ${SCPADDR}
-fi
+for dby in 0 1; do
+    cp ${DEST}/index2_dby${dby}.html ${DEST}/index_dby${dby}_part${part}.html
+    if [ "${SCPADDR}" != "" ]; then
+	scp ${DEST}/index_dby${dby}_part${part}.html ${SCPADDR}
+    fi
+done
 
 # RTT tests
 DO_RTT=1
@@ -74,14 +79,14 @@ if [ "${DO_RTT}" -eq "1" ]; then
     ./rtt.py 2 1.1 ${rel} >> ${DEST}/rtt.txt
 fi
 
-nskip=`grep -c 'skipping release' ${DEST}/log.txt`
+nskip=`grep -c 'skipping release' ${DEST}/log_dby0.txt`
 if [ "${nskip}" == "0" ]; then
-    echo "All nightlies finished successfully on `date`" >> ${DEST}/log.txt
-    echo 'Top link:  http://hep.uchicago.edu/~${USER}/VAL' >> ${DEST}/log.txt
-    echo "This test: http://hep.uchicago.edu/~${USER}/VAL/index_part${part}.html" >> ${DEST}/log.txt
-    echo "" >> ${DEST}/log.txt
-    echo "Cheers," >> ${DEST}/log.txt
-    echo "Your faithful AutoShifter" >> ${DEST}/log.txt
-    cat ${DEST}/log.txt | mail -s "`date +%D`: TrigVal shifts: REL = ${rel} PART = ${part}" ${MYEMAIL}
+    echo "All nightlies finished successfully on `date`" >> ${DEST}/log_dby0.txt
+    echo "Top link:  http://hep.uchicago.edu/~antonk/VAL" >> ${DEST}/log_dby0.txt
+    echo "This test: http://hep.uchicago.edu/~antonk/VAL/index_dby0_part${part}.html" >> ${DEST}/log_dby0.txt
+    echo "" >> ${DEST}/log_dby0.txt
+    echo "Cheers," >> ${DEST}/log_dby0.txt
+    echo "Your faithful AutoShifter" >> ${DEST}/log_dby0.txt
+    cat ${DEST}/log_dby0.txt | mail -s "`date +%D`: TrigVal shifts: REL = ${rel} PART = ${part}" ${MYEMAIL}
 fi
 echo "DONE"
