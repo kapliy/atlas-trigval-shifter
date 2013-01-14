@@ -51,8 +51,7 @@ echo "REL = ${rel}   PART = ${part}"
 ./run.py ${rel} ${part} &> ${DEST}/log.txt
 # Back up a copy of the output
 cp ${DEST}/index2.html ${DEST}/index_part${part}.html
-if [ "${SCPADDR}" != "" ]
-then
+if [ "${SCPADDR}" != "" ]; then
     scp ${DEST}/index_part${part}.html ${SCPADDR}
 fi
 
@@ -78,8 +77,8 @@ fi
 nskip=`grep -c 'skipping release' ${DEST}/log.txt`
 if [ "${nskip}" == "0" ]; then
     echo "All nightlies finished successfully on `date`" >> ${DEST}/log.txt
-    echo 'Top link:  http://hep.uchicago.edu/~jswebster/VAL' >> ${DEST}/log.txt
-    echo "This test: http://hep.uchicago.edu/~jswebster/VAL/index_part${part}.html" >> ${DEST}/log.txt
+    echo 'Top link:  http://hep.uchicago.edu/~${USER}/VAL' >> ${DEST}/log.txt
+    echo "This test: http://hep.uchicago.edu/~${USER}/VAL/index_part${part}.html" >> ${DEST}/log.txt
     echo "" >> ${DEST}/log.txt
     echo "Cheers," >> ${DEST}/log.txt
     echo "Your faithful AutoShifter" >> ${DEST}/log.txt
