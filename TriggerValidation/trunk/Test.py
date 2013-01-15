@@ -201,4 +201,6 @@ class Test:
                 bugid=bug.id
                 bugurl = bug.url()
                 bugtitle = bug.fetch_metadata()
+            else:
+                s.bugs.add_unknown()
         return status,bug,bugid,bugurl,bugtitle

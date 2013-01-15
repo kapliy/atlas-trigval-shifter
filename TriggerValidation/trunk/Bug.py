@@ -137,6 +137,9 @@ class BugTracker:
     """ A local mini bugtracker to quickly look up common bugs """
     def __init__(s):
         s.bugs = []
+        s.unknown = 0
+    def add_unknown(s):
+        s.unknown += 1
     def match(s,log,ref_mismatch=False):
         """ Require that all patterns match. Matching is done bottom-up (i.e. newest bugs are matched first) """
         #print log
@@ -159,8 +162,11 @@ class BugTracker:
         """ A raw-text summary of all triggered bugs in this invocation of the script """
         _LINEWIDTH = 70
         sbugs = sorted( [bug for bug in s.bugs if bug.seen==True], key=lambda bug: bug.nseen , reverse = True)
+        print ''
+        if s.unknown>0:
+            print '='*_LINEWIDTH
+            print 'NUMBER OF UNKNOWN BUGS THAT NEED ATTENTION:',s.unknown
         if len(sbugs)>0:
-            print ''
             print '='*_LINEWIDTH
             print 'QUICK SUMMARY OF ALL IDENTIFIED BUGS:'
             for bug in sbugs:

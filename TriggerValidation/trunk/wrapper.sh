@@ -26,7 +26,7 @@ part=0
 # adjust for chicago-CERN time
 # choose which PART to run
 hour=`echo $(date '+%k')`
-if [ "$hour" -gt "20" ]; then
+if [ "$hour" -gt "18" ]; then
     part=1
     rel=`expr $rel + 1`
     if [ "$rel" -ge "7" ]; then
