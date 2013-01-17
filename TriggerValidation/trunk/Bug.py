@@ -583,6 +583,10 @@ class BugTracker:
         s.add(99778,['Trig::TrigNtExecTool::ReadOPI','at ../src/TrigNtExecTool.cxx:354'])
         s.add(99802,['is bigger than my length','HLTJobLib: recoverable ERROR error processing EF_PROCESS'])
         s.add(99803,['Gaudi::Parsers::parse_real_vector<double','Caught signal 8\(Floating point exception\). Details'])
+        s.add(99851,'error: VP1TrackSystems/TrackCollectionSettingsButton.h: No such file or directory')
+        s.add(99852,["No rule to make target `install_tfs_jop'",'Trigger/TrigFTK/TrigFTKSim'])
+        s.add(99853,['WARNING Chain EF_hadCalib_trk18_L1HA8 aborting with error code ABORT_CHAIN UNKNOWN UNKNOWN',"got error back while executing first algorithm"])
+        s.add(99863,['ERROR Trying to define EF item more than once EF_e9_tight1_e5_etcut'])
         return
 
 if __name__ == '__main__':
