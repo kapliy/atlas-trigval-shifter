@@ -305,7 +305,7 @@ class BugTracker:
             s.add(-96420,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.2.X/"],title="count mismatch warnings:bona fide bugs but don't report in Savannah per Roger's request",cat=1)
             # CHECKCOUNT MISSING REFERENCE BUGS
             s.add(-9,["checkcounts test warning: Unable to open reference file",".root"],title='ATTENTION: add a CHECKCOUNTS BUG match string in Bug.py::prefill_nicos for this release',cat=1) #HAS to be above other checkcounts strings - this is a "catch-all" case
-            s.add(96372,["checkcounts test warning: Unable to open reference file","nightlies/17.1.X.Y.Z-VAL-AtlasCAFHLT/",".root"],cat=2)
+            s.add(96372,["checkcounts test warning: Unable to open reference file","nightlies/17.1.X.Y.Z-VAL-AtlasCAFHLT/",".root"],cat=1)
             s.add(96392,["checkcounts test warning: Unable to open reference file","nightlies/17.2.X-VAL/",".root"],cat=1)
             s.add(96393,["checkcounts test warning: Unable to open reference file","nightlies/17.2.X/",".root"],cat=1)
             s.add(96397,["checkcounts test warning: Unable to open reference file","nightlies/17.1.X/",".root"],cat=1)
@@ -587,6 +587,10 @@ class BugTracker:
         s.add(99852,["No rule to make target `install_tfs_jop'",'Trigger/TrigFTK/TrigFTKSim'])
         s.add(99853,['WARNING Chain EF_hadCalib_trk18_L1HA8 aborting with error code ABORT_CHAIN UNKNOWN UNKNOWN',"got error back while executing first algorithm"])
         s.add(99863,['ERROR Trying to define EF item more than once EF_e9_tight1_e5_etcut'])
+        s.add(99896,['cmt/../src/TrigPhoton.cxx:225','diff\(TrigPhoton const'])
+        s.add(99897,['cpp_any/MuonboyRecMaker.cxx:115','chicsc_','Current algorithm: MboyRec'])
+        s.add(99898,['ERROR Error in configuration of EgammaSlice',"name 'L2ElectronHypo_e5_medium1_NoTrk' is not defined"])
+        s.add(99903,['ERROR template chain with sig_id=g3_nocut is not defined at level EF'])
         return
 
 if __name__ == '__main__':
