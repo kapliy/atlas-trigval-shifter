@@ -591,6 +591,7 @@ class BugTracker:
         s.add(99897,['cpp_any/MuonboyRecMaker.cxx:115','chicsc_','Current algorithm: MboyRec'])
         s.add(99898,['ERROR Error in configuration of EgammaSlice',"name 'L2ElectronHypo_e5_medium1_NoTrk' is not defined"])
         s.add(99903,['ERROR template chain with sig_id=g3_nocut is not defined at level EF'])
+        s.add(99917,['ERROR Unknown error 2952715949','Algorithm of type  is unknown \(No factory available\)'])
         return
 
 if __name__ == '__main__':
