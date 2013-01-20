@@ -6,6 +6,25 @@ import urllib2
 
 _URLTIMEOUT = 20
 
+def test_one_log():
+    """ A function invoked when Bug.py is run on command line to test
+    whether a particular log matches any of the bugs """
+    import sys
+    assert len(sys.argv)==2,'USAGE: %s http://url/to/logfile.dat'%sys.argv[0]
+    bugs = BugTracker()
+    bugs.prefill()
+    m = None
+    m =  bugs.match(urllib2.urlopen(sys.argv[1]).read(),ref_mismatch=False)
+    if not m:
+        m =  bugs.match(urllib2.urlopen(sys.argv[1]).read(),ref_mismatch=True)
+    if m:
+        print 'Matched: ',m.id,m.url()
+        print 'Title:',m.fetch_metadata()
+        print 'Metadata:',m.author,m.date,m.status,m.open,m.assigned
+        print 'Metadata:',m.category,m.severity,m.priority
+    else:
+        print 'No match!'
+
 class Bug:
     """ One bug """
     _urlpat = 'https://savannah.cern.ch/bugs/index.php?%d'
@@ -213,12 +232,10 @@ class BugTracker:
         s.add(-5,["ESLOriginalFile reported: File end record not found in file"],"Failed to read end of file, most likely a transient problem, submit bug if persists. ")
         s.add(-5,["Error in <TXNetSystem::Connect>: some severe error occurred while opening the connection at root://eosatlas//eos/"],"Failed to open eos file, most likely a transient problem, submit bug if persists. ")
 
-
     def prefill_nicos(s):
         """ Special bugs that are only picked up by NICOS - and are not present in the ATN summary page """
         s.add(97313,["AllPT_physicsV4.reference.new: No such file or directory"]) #LT 9/6 PT/MT
         s.add(97313,["cat: ../AllMT_physicsV4/AllMT_physicsV4.reference.new: No such file or directory"])
-        #s.add(97197,["AllMT_physicsV4/AllMT_physicsV4.reference.new: No such file or directory","17.2.X/AtlasHLT"])
         s.add(97356,["If this change is understood, please update the reference fileby typing:","cp AthenaRDO_MC_pp_v2_loose_mc_prescale_top_EF.TrigChainMoniValidation.reference.new /afs/cern.ch/atlas/project/trigger/pesa-sw/validation/references/ATN/REG/17.1.X.Y/20120808/AthenaRDO_MC_pp_v2_loose_mc_prescale_top_EF.TrigChainMoniValidation.reference"])#LT 9/8
         s.add(-6, ['NICOS NOTICE: POSSIBLE FAILURE \(ERROR\) : LOGFILE LARGE and TRUNCATED'],title='NICOS: LOGFILE TRUNCATED',cat=2) # this shows up often, so match if last
         s.add(94697,['href="#prblm"\>ls: \*rel_\[0-6\].data.xml: No such file or directory'],'NICOS HARMLESS WARNING: missing *rel_[0-6].data.xml')
@@ -280,7 +297,6 @@ class BugTracker:
             s.add(97531,["AthenaTrigRDO_blackholes","nightlies/17.2.X.Y-VAL-Prod/","test killed as time quota spent, test warning is issued"],cat=2)
             s.add(97532,["AllMT_HIV2","nightlies/17.2.X/","test killed as time quota spent, test warning is issued"],cat=2)
             s.add(97532,["AllMT_HIV2","nightlies/17.2.X-VAL/","test killed as time quota spent, test warning is issued"],cat=2)
-#            s.add(97533,["AllMT_HIV2_menu","nightlies/17.2.X/","test killed as time quota spent, test warning is issued"],cat=2) # duplicats of 97532
             s.add(97532,["AllMT_HIV2_menu","nightlies/17.2.X/","test killed as time quota spent, test warning is issued"],cat=2) 
             s.add(97532,["AllMT_HIV2_menu","nightlies/17.2.X-VAL/","test killed as time quota spent, test warning is issued"],cat=2) 
             s.add(97547,["AthenaTrigRDO_MC_pp_v4_tight_mc_prescale","nightlies/17.1.X.Y.Z-VAL2-AtlasCAFHLT/","test killed as time quota spent, test warning is issued"],cat=2)
@@ -290,7 +306,7 @@ class BugTracker:
             s.add(98771,["AthenaTrigAOD_TrigEDMCheck_fixedAOD","nightlies/17.1.X-VAL/","test killed as time quota spent, test warning is issued"],cat=2)
             # TOLERANCE BUGS
             s.add(-8,"checkcounts test warning : trigger counts outside tolerance:",title="ATTENTION: add a TOLERANCE BUG match string in Bug.py::prefill_nicos for this release",cat=1) #HAS to be above other tolerance  strings - this is a "catch-all" case
-            s.add(-96368,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.1.X.Y-VAL-P1HLT/"],title="count mismatch warnings:bona fide bugs but don't report in Savannah per Roger's request",cat=1) #FIXME wrong bug number!!!
+            s.add(-96368,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.1.X.Y-VAL-P1HLT/"],title="count mismatch warnings:bona fide bugs but don't report in Savannah per Roger's request",cat=1)
             s.add(-96399,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.1.X.Y.Z-VAL-AtlasCAFHLT/"],title="count mismatch warnings:bona fide bugs but don't report in Savannah per Roger's request",cat=1)
             s.add(-96401,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.2.X.Y-VAL-Prod/"],title="count mismatch warnings:bona fide bugs but don't report in Savannah per Roger's request",cat=1)
             s.add(-96402,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.1.X/"],title="count mismatch warnings:bona fide bugs but don't report in Savannah per Roger's request",cat=1)
@@ -313,7 +329,6 @@ class BugTracker:
             s.add(96494,["checkcounts test warning: Unable to open reference file","nightlies/17.1.X-VAL/",".root"],cat=1)
             s.add(96496,["checkcounts test warning: Unable to open reference file","nightlies/17.1.X.Y-VAL2-P1HLT/",".root"],cat=1)
             s.add(96715,["checkcounts test warning: Unable to open reference file","nightlies/17.1.X.Y-VAL-P1HLT/",".root"],cat=1)
-            s.add(97370,["libTrigMonitorBaseLib.so","TrigLBNHist","glibc detected"],"Segfault in TrigMonitorBase, check to make sure match string is not too general") ## LT 9/9 challenging to match, if this is matched to something else, make sure it is correct
 
     def prefill(s):
         """ 
@@ -332,21 +347,9 @@ class BugTracker:
         s.add(88042,["IS repository 'Histogramming-EF-Segment-1-1-iss' does not exist",'Partition "athena_mon" does not exist'])
         s.add(88554,['Moving to AthenaTrigRDO_chainOrder_compare','differences in tests with ordered HLT chain execution','TrigSteer_EF.TrigChainMoniValidation'])
         s.add(90593,['ERROR ServiceLocatorHelper::createService: wrong interface id IID_3596816672 for service JobIDSvc','Root+python problem when reading ESDs'])
-        #s.add(91065,['Error: When merging chains:','EF_mu4T','EF_j10_a4tc_EFFS','these were missing'])
         s.add(92206,['FATAL: Failed to start local PMG server',"RunManager instance has no attribute 'root_controller'"])
         s.add(92206,['FATAL: Failed to start RM server',"RunManager instance has no attribute 'root_controller'"])
         s.add(92213,'could not bind handle to CondAttrListCollection to key: /TRT/Onl/ROD/Compress','InDetTRTRodDecoder callback registration failed, but Athena job completes successfully')
-        if True: # consider deleting bug 92260 soon
-            s.add(92260,"IOError: \[Errno 2\] No such file or directory: '../AthenaTrigAODtoAOD_TrigNavSlimming/AOD_RSegamma.pool.root'" )
-            s.add(92260,"IOError: \[Errno 2\] No such file or directory: '../AthenaTrigRDOtoESDAOD/AOD.pool.root'" )
-            s.add(92260,"IOError: \[Errno 2\] No such file or directory: '../AthenaTrigRDOtoESDAOD/ESD.pool.root'" )
-            s.add(92260,"IOError: \[Errno 2\] No such file or directory: '../AthenaTrigAODtoAOD_TrigNavSqueeze/AOD_SqueezeRFTrigCaloCellMaker.pool.root'" )
-            s.add(92260,"IOError: \[Errno 2\] No such file or directory: '../BackCompAthenaTrigBStoESDAOD/AOD.pool.root'" )
-            s.add(92260,"No input AOD file could be found matching '../AthenaTrig\*toESDAOD\*/AOD\*.pool.root'" )
-            s.add(92260,"AssertionError: problem picking a data reader for file","../AthenaTrigRDOtoBS/raw.data")
-            s.add(92260,["Unable to fill inputFileSummary from file ../AthenaTrigRDOtoESDAOD/ESD.pool.root. File is probably empty"])
-            s.add(92260,["Unable to fill inputFileSummary from file ../AthenaTrigRDOtoESDAOD/AOD.pool.root. File is probably empty"])
-            s.add(92260,["Unable to fill inputFileSummary from file ../AthenaTrigRDOtoAOD/AOD.pool.root. File is probably empty"])
         s.add(94142,"/src/MeasuredAtaStraightLine.cxx:108")
         s.add(92615,["WARNING Chain L2_2mu4T_DiMu_l2muonSA aborting with error code ABORT_CHAIN UNKNOWN"])
         s.add(92632,"message=inputBSFile=link_to_file_from_P1HLT.data: link_to_file_from_P1HLT.data not found")
@@ -368,7 +371,6 @@ class BugTracker:
         s.add(93990,["TriggerMenuSQLite","sqlite' file is NOT found in DATAPATH, exiting"],"NB: This is usually due to a build error in Trigger XML")
         s.add(94033,["ATLAS_DBA.LOGON_AUDIT_TRIGGER' is invalid and failed re-validation"])
         s.add(94084,["LVL1CTP::CTPSLink::getCTPToRoIBWords","Current algorithm: RoIBuilder"])
-        #s.add(94627,["ToolSvc.TrigTSerializer","MuonFeatureContainer_p3","ERROR Errors while decoding"])
         s.add(96606,["ToolSvc.TrigTSerializer","MuonFeatureContainer_p3","ERROR Errors while decoding"])
         s.add(94095,["ERROR no handler for tech","FileMgr"])
         s.add(94016,["No such file or directory:","'HLTconfig_MC_pp_v4_loose_mc_prescale","xml'"])
@@ -404,41 +406,25 @@ class BugTracker:
         s.add(95855,"UploadHIV2MenuKeys/exportMenuKeys.sh: No such file or directory")
         s.add(95948,["in HistorySvc::listProperties","psc::Psc::pscStopRun","at ../src/Psc.cxx:692"])
         s.add(95965,["in TEmulatedCollectionProxy::InitializeEx","in TEmulatedMapProxy::TEmulatedMapProxy"])
-        #s.add(95971,["Errors while decoding TrigInDetTrackCollection_tlp2"," any further ROOT messages for this class will be suppressed"])
         s.add(96606,["Errors while decoding TrigInDetTrackCollection_tlp2"," any further ROOT messages for this class will be suppressed"])
         s.add(95986,["/src/rbmaga.F:82","/src/setmagfield.F:52"])
         s.add(95995,["Trigger menu inconsistent, aborting","L2 Chain counter 454 used 2 times while can only once, will print them all"])
         s.add(96093,["ByteStreamAttListMetadataSvc","not locate service"])
-        #s.add(96094,["ConversionSvc::makeCall","ConversionSvc::createRep","THashTable::FindObject"])#TOO GENERAL
-        #s.add(96094,["diff: .regtest: No such file or directory"]) #TOO GENERAL
         s.add(96097,["SEVERE: Caught SQL error: ORA-02290: check constraint \(ATLAS_TRIGGER_ATN.TW_ID_NN\) violated","SEVERE:  Database is already locked by ATLAS_TRIGGER_ATN_W"]) # the bug is found in uploadSMK.log
-        #s.add(96098,"free\(\): corrupted unsorted chunks: 0x1ac14178")
-        #s.add(96098,["free\(\): corrupted unsorted chunks","Python/2.6.5/i686-slc5-gcc43-opt/bin/python"])  ##TOO GENERAL, COMMENTED OUT
         s.add(96112,"ImportError: No module named AthenaServicesConf")
         #s.add(96117,"JobTransform completed for RAWtoESD with error code 11000 \(exit code 10\)") # the matching statements can be found in log/nicos, but the exact error msg is found in RAWtoESD.log. TODO: if this shows up again, modify Project.py match_bugs to parse RAWtoESD.log  #TOO GENERAL
-        #s.add(96137,["TFile::Init:0: RuntimeWarning: file expert-monitoring.root probably not closed, trying to recover","WARNING: no directory and/or release sturucture found","ERROR: cound not cd to directory:  TrigSteer_L2"])
         s.add(96142,["OBSOLETE WARNING please use RecExCond/RecExCommon_flags.py","Py:AutoConfiguration WARNING Unable to import PrimaryDPDFlags","Py:AutoConfiguration WARNING Primary DPDMake does not support the old naming convention"])
         s.add(96165,["from MuonIsolationTools.MuonIsolationToolsConf import","ImportError: No module named MuonIsolationTools.MuonIsolationToolsConf"])
         s.add(96215,"ImportError: cannot import name CBNTAA_L1CaloPPM")
-        #s.add(96216,["farmelements.py","if ret != 0 and ret != 5: raise PropagationException\(ret,output\)","PropagationException: return code: 1280"])
         s.add(95692,["farmelements.py","if ret != 0 and ret != 5: raise PropagationException\(ret,output\)","PropagationException: return code: 1280"])
         #s.add(96245,["is::repository_var is::server::resolve\(...\) at is/src/server.cc:31","CORBA::Object\* ipc::util::resolve\(...\) at ipc/src/util.cc:369"])
-        #s.add(96251,["WARNING Unable to retrieve the cell container  AllCalo","WARNING retrieve\(const\): No valid proxy for object AllCalo  of type CaloCellContainer\(CLID 2802\)"]) ## LT Commented out.  This is just a warning and masks other real bugs
         s.add(96273,["raise IncludeError\( 'include file %s can not be found' % fn \)","IncludeError: include file TrigT1CaloCalibTools/CBNT_L1Calo_jobOptions.py can not be found"])
         s.add(96545,["Errors while decoding TrigL2BphysContainer_tlp1","Can't instantiate precompiled template SG::ELVRef"])
-        ##s.add(96563,["lib/libc.so.6\(cfree\+0x59\)","glibc detected"]) ##TOO GENERAL COMMENTED OUT
         s.add(96581,["could not bind handle to CondAttrListCollection","/FWD/ALFA/position_calibration"])
-        #s.add(96583,["Python/2.6.5/i686-slc5-gcc43-opt/bin/python"," double free or corruption","glibc detected"]) ##LT commented out b/c too general
-        
-        
-        #s.add(94628,["LOGFILE LARGE and TRUNCATED"])
         s.add(96639,["Trigger menu inconsistent","Chain counter 4152 used 2 times while can only once"])
-        #s.add(90993,["Py:GenerateMenu.py","Error in configuration of EgammaSlice"])
         s.add(96660,["test -e ../AllMT_HIV2/AllMT_HIV2-1._0001.data","pre-conditions failed"])
         s.add(96675,["Errors while decoding egammaContainer_p2"])
         s.add(95732,["HLTMenu_frontier.xml: No such file or directory"])
-        #s.add(94869,["FSMTransitionError","Cannot execute configure()"])
-        #s.add(92536,["ERROR HLTProcess","could not find any files starting 'data11_hi.00193211.express_express.AthenaMTout_1.RAW._lb0717._CAF_999999_000001'"])
         s.add(97671,["HLTJobLib","ERROR HLTProcess","could not find any files starting 'data1*"]) # was 96683. Duplicate and being folled in this bug report
         s.add(96704,["Errors while decoding MuonFeatureDetailsContainer_p2"])
         s.add(96712,["'InDetGlobalTrackMonTool' object has no attribute 'TrackCollection'"])
@@ -447,21 +433,13 @@ class BugTracker:
         s.add(95812,["TrigTSerializer::serialize","at ../src/TrigTSerializer.cxx:223"])
         s.add(96756,["No module named JetEventAthenaPool","JetEventAthenaPoolConf"],"NB: This bug is usually caused by a build failure in JetEventAthenaPool.  Check NICOS build logs \(see twiki for details\) to see if the build failed.  This BUG is only valid if the build failure is TRANSIENT.  Check if there are specific reasons for build failure.")
         s.add(96756,["WARNING Couldn't retrieve JetKeyDescriptor with key <JetKeyMap> in StoreGate \! Giving up \!"],"NB: This bug is usually caused by a build failure in JetEventAthenaPool.  Check NICOS build logs \(see twiki for details\) to see if the build failed. This BUG is only valid if the build failure is TRANSIENT.  Check if there are specific reasons for build failure.")
-
         s.add(96720,["ERROR CallBack function","GeoModelSvc","cannot be registered"])
         s.add(96760,["'Histogramming-EF-Segment-0-iss' does not exist"])
-        #s.add(96776,["There was a crash","TrigMinimalEventLoopMgr::sysPrepareForRun"])
         s.add(96354,["Py:AllowedList","xe*","is not in the list of allowed values"])
-        #s.add(96858,["There was a crash","/lib64/libc.so.6","TrigSteer_*"]) //LT commenting out, not a descriptive enough bug
-        
-        s.add(96876,["OverflowError","bad numeric conversion","program state has been reset"])
-        #s.add(96876,["OverflowError","bad numeric conversion"])
         s.add(96912,["inputBSFile=data1*","not found","RAWtoESD"])
         s.add(96949,["IOError","No such file or directory","LVL1config_MC_pp_v4_17.1.5.xml"])
-        #s.add(96975,["AthAlgSeq","Cone7H1TowerJetsFixIt","did NOT succeed"])
         s.add(96987,["Py:runHLT_standalone.py","No trigger menu specified"])
         s.add(96993,["There was a crash","Trk::AtaPlane"])
-        s.add(96996,["TypeError","__init__()","3 given"])
         s.add(97099,["There was a crash","Trk::TrackSegment"])
         s.add(97122,["Fatal Python error","GC object already tracked"])
         s.add(97165,["ImportError","No module named PanTauAnalysisConf"])
@@ -469,23 +447,11 @@ class BugTracker:
         s.add(97303,["TypeError: defineHistogram\(\) got multiple values for keyword argument 'type'","self.AthenaMonTools \+\= \[ MbMbtsFexMonitoring\(\), time\]"]) # LT Sept 6
         s.add(97311,"ERROR  Cannot retrieve Mdt SegmentCollection ConvertedMBoySegments") # LT Sept 6
         s.add(97312,["TH2F::Add:0: RuntimeWarning: Attempt to add histograms with different labels","TrigEgammaRec_NoIDEF_eGamma","TrigSteer_EF","Current algorithm: \<NONE\>"])
-        #s.add(97312,["TH2F::Add:0: RuntimeWarning: Attempt to add histograms with different labels","TrigEgammaRec_NoIDEF_eGamma","TrigSteer_EF"])
-        #s.add(97312,["Current algorithm: TrigSteer_EF","FATAL Unchecked StatusCode in exit from lib /lib64/libc.so.6"])
-        #s.add(97312,["Current algorithm: TrigSteer_L2","FATAL Unchecked StatusCode in exit from lib /lib64/libc.so.6"]) 
         #s.add(96858,["at ../src/TrigLBNHist.cxx:92"])
-        s.add(97312,["Current algorithm: TrigDiMuon_FS"])#LT 9/7 Wait for more information
-
         s.add(97312,["Current algorithm: TrigDiMuon_FS","Core dump"])
-#s.add(97194,["ERROR: Could not copy data file"])
         s.add(97195,["ReferenceError: attempt to access a null-pointer","dh_tree \= handleTFile.Get\(dhTreeName\)"], "This is a transient error due to upstream failures.  Add exception if confirmed by validation coordinators")
         s.add(97314,["'Trig::TrigDecisionToolARA' object has no attribute 'getChainGroup'"]) #LT 9/6
         s.add(97261,"ERROR: ld.so: object '/afs/cern.ch/atlas/offline/external/tcmalloc/google-perftools-0.99.2c/i686-slc5-gcc43-opt/lib/libtcmalloc_minimal.so' from LD_PRELOAD cannot be preloaded: ignored")
-        #s.add(97204,["Algorithm stack","unknown function"])
-        #s.add(97205,["Algorithm stack","unknown function"])
-        #s.add(97211,["segmentation violation"])
-        #s.add(97212,["FATAL Loading primary"])
-        #s.add(97213,["Algorithm stack"])
-        #s.add(97214,["TrigP1Test.conf returned 8"])
         s.add(97298,["ImportError: No module named TrigSteeringTest.TrigSteeringTestConf"])
         s.add(97334,["ImportError: No module named pyAMIErrors"],"Reconstruction Project Error") #LT 9/7
         s.add(97333,["class MCTBEntryHandler\(CfgMgr.Muon__MCTBEntryHandler,ConfiguredBase\)","TypeError: Error when calling the metaclass bases","18.X.0-VAL"], "Reported by Reco SW Validation shifter")
@@ -495,30 +461,19 @@ class BugTracker:
         s.add(97369,["HLT::TrigSteer::execute","at ../src/TrigSteer.cxx:617"])
         s.add(97374,["IS repository 'Histogramming-L2-Segment-1-1-iss' does not exist","double free or corruption"])
         s.add(97394,["at \.\./src/TrigDiMuonFast.cxx:1414","in TrigDiMuonFast::processTrack"])
-        s.add(97400,["AllPT_physicsV4_magField_on_off_on","free\(\): corrupted unsorted chunks","17.1.X.Y.Z-VAL-AtlasCAFHLT"]) ##segfault with not a lot of details, tried to use as restrictive match string as possible
-        #s.add(96858,["testAthenaTrigRDO_test","AthenaTrigRDO_leakcheck FAILURE","glibc detected"])
-        #s.add(97580,["boost","PyEval_EvalFrameEx","segmentation violation"])
-        ##s.add(96563,["boost","PyEval_EvalFrameEx","segmentation violation","start of run ="]) ##TO GENERAL, COMMENTING OUT
         s.add(97685,["UploadHIMenuKeys FAILURE"]) # JK 17/10/12 was 97650 - Duplicate of 97685
         s.add(95848,["no ChainAcceptance_runsummary","AllPT_mcV3"],cat=2)
         s.add(97685,["CheckKeys FAILURE","Upload of key 1 failed"])
         s.add(97704,["Crash in TRTTrackExtAlg_Tau_EFID","FAILURE at end"])
         s.add(97705,["Crash on L2MbSpFex_SCTNoiseSup in AthenaTrigRDOtoTAG","Algorithm stack"])
-        # Shift (2012.9.24 - )
         s.add(97713,["Tool BunchCrossingTool either does not implement the correct interface, or its version is incompatible"])
         s.add(97729,["Caught signal 11\(Segmentation fault\)","Current algorithm: LVL1::TrigT1TRT","Current trigger chain: \<NONE\>"])
         s.add(97708,["Caught signal 11\(Segmentation fault\)","Current trigger chain: L2_mbSpTrk_noiseSup","Current algorithm: L2MbSpFex_SCTNoiseSup"])
         s.add(97734,["Caught signal 11\(Segmentation fault\)","Current trigger chain: L2_VdM_mbSpTrk","Current algorithm: L2MbSpFex"])
         s.add(97735,["Caught signal 11\(Segmentation fault\)","Current trigger chain: L2_CosmicsAllTeTRTxK_TRTTrkHypo_Pixel","Current algorithm: CosmicCosmicsAllTeTRTxK_TRTTrkHypo_PixelTrigTRTSegFinder"])
-        #s.add(97736,["AthenaTrigRDO_blackholes","glibc detected"])
-        
         s.add(97750,["Caught signal 11\(Segmentation fault\)","Current trigger chain: L2_mu10_Upsimumu_tight_FS","TrigDiMuon_FS"])
         s.add(97751,["Caught signal 11\(Segmentation fault\)","Last incident: Lvl2EventLoopMgr:EndRun","Current algorithm: \<NONE\>","Algorithm stack: \<EMPTY\>"])
-        #s.add(97780,["TDTExampleJO_test.py: No such file or directory"]) # probably temporal one (-> eventually commented out 2012.9.27)
-        #s.add(97781,["TDTExampleARA.py: No such file or directory"]) # probably temporal one (-> eventually commented out 2012.9.27)
-        #s.add(97779,["ImportError: No module named"]) # This should be commented out later, since the key word is ambiguous. It is on purpose in order to handl temporal SVN outage related errors on purpose. (-> eventually commented out 2012.9.27)
         s.add(97784,["TCMalloc_ThreadCache::ReleaseToCentralCache"])
-
         s.add(97822,["IS repository 'RunCtrl' does not exist","The object \"RunCtrl\" of the \"is/repository\" type is not published in the \"initial\" partition"])
         s.add(94867,["Error in configuration of TauSlice","No module named TrigTauHypo.TrigTauHypoConfig"])
         s.add(97832,["TrigSteer_EF","ERROR  Error initializing one or several sub-algorithms"])
@@ -527,38 +482,30 @@ class BugTracker:
         s.add(98082,["ToolSvc","ERROR Cannot create tool InDetTrigTrackSummaryTool"])
         s.add(98132,['WARNING IPC partition \"part_lhl2ef_AtlasCAFHLT_rel_nightly\" is not valid','ipc::_objref_partition\* ipc::util::getPartition\(...\) at ipc/src/util.cc:273'])
         s.add(98277,["Errors while decoding TrigL2BphysContainer_tlp1"])   
-        
         s.add(98377,["FATAL Failed to retrieve tool TrackSummaryTool = PublicToolHandle\('Trk::TrackSummaryTool'\)"])
         s.add(98397,["ImportError: No module named L1CaloSliceFlags"])
-        #s.add(97994,["WARNING: error in file: expert-monitoring.root","ERROR: cound not cd to directory:  TrigSteer_L2","ERROR: cound not cd to directory:  TrigSteer_EF"])
         s.add(91921,["RuntimeError: RootController is in faulty state because: Application 'EBEF-Segment-1:voatlas","has a problem that cannot be ignored."])
-
         s.add(98401,["RuntimeError: RootController did not get up/publish to IS in 60 seconds \(or it did and then got in an error state\)"])
-        ##s.add(98402,["Core dump from CoreDumpSvc on","Event counter: 0","Current algorithm: \<NONE\>","Algorithm stack: \<EMPTY\>"]) ## JK commented - too general
         s.add(98406,["Core dump from CoreDumpSvc on","Current algorithm: StreamBS","Last incident: AthenaEventLoopMgr:BeginEvent"])
-        
         s.add(94730,["efd::CoreEIssue ERROR EFD core problem","Failed terminating monitorThread"])
         s.add(98452,["ERROR Errors while decoding Trk::VxContainer_tlp2 any further ROOT messages for this class will be suppressed"])
         s.add(98453,["ImportError: No module named TrkExRungeKuttaPropagator.TrkExRungeKuttaPropagatorConf"])
         s.add(98490,["ImportError: No module named TrkExSTEP_Propagator.TrkExSTEP_PropagatorConf"])
         s.add(98531,["ERROR Errors while decoding Rec::TrackParticleContainer_tlp1 any further ROOT messages for this class will be suppressed "]) 
-        #s.add(98552,["ERROR Cannot create EFID sequence algseq"])
-        #s.add(98554,["Error in configuration of MuonSlice"])
         s.add(98577,["ERROR Algorithm of type TrigJetFeaturesUnpacker is unknown"])
-        #s.add(98590,["Error in configuration of BphysicsSlice"])
         s.add(98618,["FATAL Unchecked StatusCode in ByteStreamEventStorageOutputSvc::initDataWriter"])
         s.add(98619,["RootController is in faulty state because: Application 'ROS-Segment-1:voatlas62' has a problem that cannot be ignored"])
         s.add(98629,["ImportError: No module named DBReplicaSvc.DBReplicaSvcConf"])
         s.add(98631,["RootController is in faulty state"])
-        s.add(98640,["OH repository 'Histogramming-L2-Segment-1-1-iss' does not exist"])
-        s.add(98640,["IS repository 'Histogramming-L2-Segment-1-1-iss' does not exist"])
+        if True: # these are dangerous bugs since this particular error printout also often appears when there are other problems
+            s.add(98640,["OH repository 'Histogramming-L2-Segment-1-1-iss' does not exist"])
+            s.add(98640,["IS repository 'Histogramming-L2-Segment-1-1-iss' does not exist"])
         s.add(98688,["IS infomation name 'Histogramming-L2-Segment-1-1-issL2PU-1/EXPERT/TrigSteer_L2/NumberOfLvl1TEs' is invalid"])
         s.add(98748,["IS repository 'DF-EF-Segment-0-iss' does not exist"])
         s.add(98768,["segmentation violation","Current trigger chain: EF_j50_a4tcem_eta25_xe50_empty","Current algorithm: CellMakerFullCalo_topo"])
         s.add(98786,["Error in opening muon calibration buffer"])
         s.add(98856,["No module named HLTTestApps.application"])
         s.add(98857,["T2CaloFastJet::hltExecute","Current algorithm: T2CaloFastJet_a4TT"])
-        #s.add(98917,["line 50, in BuildTransientTrees"])
         s.add(99135,["No such file or directory: 'LVL1config_","_rel_nightly.xml"])
         s.add(92097,["nothing found for TriggerCosts_1e33.xml","prescales1000.xml"])
         s.add(99337,["Unable to determine beamType","data12_hip"])
@@ -567,7 +514,6 @@ class BugTracker:
         s.add(99421,["No module named TrigT2CaloCommon.TrigT2CaloCommonConf"])
         s.add(99422,["ToolSvc.TileBeamInfoProvider","Error retrieving","from TDS"])
         s.add(99423,["testLVL1CTPMuonAthenaTrigRDO","Could not create Rep for DataObject"])
-#        s.add(99451,["Segmentation fault","address not mapped to object"])
         s.add(99470,["No such file or directory", "LVL1config_MC_pp_v3_17.2.8.xml"])
         s.add(94152,["ERROR Upload of SMKey failed"])
         s.add(95848,["Segmentation fault","Trk::AtaStraightLineT<Trk::Charged>::~AtaStraightLineT"])
@@ -577,7 +523,6 @@ class BugTracker:
         s.add(99712,["segmentation violation","in HLT::HLTResult::serialize","in TrigMinimalEventLoopMgr::HltResultROB"])
         s.add(99751,["../src/PixelClusterCacheTool.cxx:34: error: invalid conversion","../src/SCT_ClusterCacheTool.cxx:35: error: invalid conversion"])
         s.add(99749,["error: SiClusterizationTool/SCT_ClusteringTool.h"])
-        #s.add(92277,["ToolHandle<Trk::IPatternParametersUpdator>::retrieve\(Trk::IPatternParametersUpdator","Current algorithm: InDetSiSpTrackFinder"])
         s.add(99765,["Current algorithm: CosmicCosmicsAllTeTRTxK_TRTTrkHypo_AllPhysicsTrigTRTSegFinder","TRT_DriftCircleOnTrack ../src/TRT_DriftCircleOnTrack.cxx"])
         s.add(99766,["JetRec/TrackSelectionForJets.py","DetFlags.detdescr.ID_on\(\)  and hasattr\(ToolSvc,\'InDetTrackSummaryTool\'\) "])
         s.add(99778,['Trig::TrigNtExecTool::ReadOPI','at ../src/TrigNtExecTool.cxx:354'])
@@ -592,21 +537,9 @@ class BugTracker:
         s.add(99898,['ERROR Error in configuration of EgammaSlice',"name 'L2ElectronHypo_e5_medium1_NoTrk' is not defined"])
         s.add(99903,['ERROR template chain with sig_id=g3_nocut is not defined at level EF'])
         s.add(99917,['ERROR Unknown error 2952715949','Algorithm of type  is unknown \(No factory available\)'])
+        s.add(99920,['pyAMI.exceptions.AMI_Error','Authorisation: Restricted access, please login or create an account'])
+        s.add(99930,['was caused by: ERROR TrigTRTHTHCounter'])
         return
 
 if __name__ == '__main__':
-    import sys
-    assert len(sys.argv)==2,'USAGE: %s http://url.to.logfile'
-    bugs = BugTracker()
-    bugs.prefill()
-    m = None
-    m =  bugs.match(urllib2.urlopen(sys.argv[1]).read(),ref_mismatch=False)
-    if not m:
-        m =  bugs.match(urllib2.urlopen(sys.argv[1]).read(),ref_mismatch=True)
-    if m:
-        print 'Matched: ',m.id,m.url()
-        print 'Title:',m.fetch_metadata()
-        print 'Metadata:',m.author,m.date,m.status,m.open,m.assigned
-        print 'Metadata:',m.category,m.severity,m.priority
-    else:
-        print 'No match!'
+    test_one_log()
