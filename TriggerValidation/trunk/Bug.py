@@ -516,16 +516,19 @@ class BugTracker:
         s.add(99423,["testLVL1CTPMuonAthenaTrigRDO","Could not create Rep for DataObject"])
         s.add(99470,["No such file or directory", "LVL1config_MC_pp_v3_17.2.8.xml"])
         s.add(94152,["ERROR Upload of SMKey failed"])
-        s.add(95848,["Segmentation fault","Trk::AtaStraightLineT<Trk::Charged>::~AtaStraightLineT"])
+        s.add(99993,["Segmentation fault","Trk::AtaStraightLineT<Trk::Charged>::~AtaStraightLineT"])
         s.add(99451,["Segmentation fault","in TrigMinimalEventLoopMgr::sysPrepareForRun"], "DB connection error, check for persistency")
         s.add(99695,["ES_NoEndOfFileRecord","ESLOriginalFile reported: File end record not found in file"])
         s.add(99678,["ERROR  Cannot retrieve LayersInfo histogram","ToolSvc.JetFitterNNTool"])
         s.add(99712,["segmentation violation","in HLT::HLTResult::serialize","in TrigMinimalEventLoopMgr::HltResultROB"])
+        s.add(99712,["Last incident: Lvl2EventLoopMgr:EndEvent","segmentation violation","TrigMinimalEventLoopMgr::HltResultROB"])
+        s.add(99712,["Lvl2EventLoopMgr:EndEvent","TrigMinimalEventLoopMgr::HltResultROB","../src/TrigMinimalEventLoopMgr.cxx:2178","stack trace"])
         s.add(99751,["../src/PixelClusterCacheTool.cxx:34: error: invalid conversion","../src/SCT_ClusterCacheTool.cxx:35: error: invalid conversion"])
         s.add(99749,["error: SiClusterizationTool/SCT_ClusteringTool.h"])
         s.add(99765,["Current algorithm: CosmicCosmicsAllTeTRTxK_TRTTrkHypo_AllPhysicsTrigTRTSegFinder","TRT_DriftCircleOnTrack ../src/TRT_DriftCircleOnTrack.cxx"])
         s.add(99766,["JetRec/TrackSelectionForJets.py","DetFlags.detdescr.ID_on\(\)  and hasattr\(ToolSvc,\'InDetTrackSummaryTool\'\) "])
         s.add(99778,['Trig::TrigNtExecTool::ReadOPI','at ../src/TrigNtExecTool.cxx:354'])
+        #s.add(99778,["StatusCodeSvc","FATAL Unchecked StatusCode in exit from lib /lib/libc.so.6 [Run,Evt,Lumi,Time,BunchCross,DetMask] ="])
         s.add(99802,['is bigger than my length','HLTJobLib: recoverable ERROR error processing EF_PROCESS'])
         s.add(99803,['Gaudi::Parsers::parse_real_vector<double','Caught signal 8\(Floating point exception\). Details'])
         s.add(99851,'error: VP1TrackSystems/TrackCollectionSettingsButton.h: No such file or directory')
@@ -539,7 +542,15 @@ class BugTracker:
         s.add(99917,['ERROR Unknown error 2952715949','Algorithm of type  is unknown \(No factory available\)'])
         s.add(99920,['pyAMI.exceptions.AMI_Error','Authorisation: Restricted access, please login or create an account'])
         s.add(99930,['was caused by: ERROR TrigTRTHTHCounter'])
+        s.add(100043,["NameError: name 'seed_VdM' is not defined", "ERROR Error in configuration of BeamSpotSlice"])
+        s.add(100151,["RuntimeError: Unable to determine beamType from projectName 'data13_hip'"])
+        s.add(100202, ["signal handler called","../src/root/OHRootProvider.cxx:84"])
+        s.add(100224, ["signal handler called","IS repository 'RunParams' does not exist",'"is/repository" type is not published in the "athena_mon" partition'])
+        s.add(100238, ["from AGDD2Geo.AGDD2GeoConf import AGDD2GeoSvc","No module named AGDD2Geo.AGDD2GeoConf"])
+        s.add(100352,'IncludeError: include file LArCondAthenaPool/LArCondAthenaPool_joboptions.py can not be found')
         return
+
+
 
 if __name__ == '__main__':
     test_one_log()
