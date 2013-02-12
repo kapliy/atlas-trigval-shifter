@@ -7,6 +7,7 @@
 MYEMAIL="$USER@localhost"
 DEST=$PWD
 SCPADDR=""
+DBYS="0"
 
 if [ "$HOSTNAME" == "kapliy" ]; then
     echo "Running on Anton's machine!"
@@ -48,12 +49,12 @@ echo "DEST = ${DEST}"
 echo "REL = ${rel}   PART = ${part}"
 
 # Prepare the shift report
-for dby in 0 1; do
+for dby in ${DBYS}; do
     ./run.py ${rel} ${part} ${dby} index2_dby${dby}.html &> ${DEST}/log_dby${dby}.txt &
 done
 wait
 # Back up a copy of the output
-for dby in 0 1; do
+for dby in ${DBYS}; do
     cp ${DEST}/index2_dby${dby}.html ${DEST}/index_dby${dby}_part${part}.html
     if [ "${SCPADDR}" != "" ]; then
 	scp ${DEST}/index_dby${dby}_part${part}.html ${SCPADDR}
