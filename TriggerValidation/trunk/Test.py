@@ -34,6 +34,12 @@ class Test:
         s.nicoserr = False
         s.nicoswarn = False
         s.lnicos = None
+        # marks log extracts that were actually used to match this test to a bug
+        s.uextract = False
+        s.uerror = False
+        s.utail = False
+        s.ulog = False
+        s.unicos = False
     def initAtn(s,row,nicoslogs={}):
         """ Initializes one ATN test from two pieces of information:
         - a BeautifulSoup-formatted table row
@@ -144,6 +150,7 @@ class Test:
             if not bug and s.lerror and not ref_mismatch:
                 try:
                     bug = s.bugs.match(urllib2.urlopen(s.lerror,timeout=s.URLTIMEOUT).read())
+                    if bug: s.uerror = True
                 except (urllib2.HTTPError,urllib2.URLError) as e :
                     print 'WARNING: the following error-grep link leads to "404 page not found":'
                     print '   ',s.lerror
@@ -151,6 +158,7 @@ class Test:
             if not bug and s.lextract and not ref_mismatch:
                 try:
                     bug = s.bugs.match(urllib2.urlopen(s.lextract,timeout=s.URLTIMEOUT).read())
+                    if bug: s.uextract = True
                 except (urllib2.HTTPError,urllib2.URLError) as e :
                     print 'WARNING: the following error-summary link leads to "404 page not found":'
                     print '   ',s.lextract
@@ -160,6 +168,7 @@ class Test:
             if not bug and s.ltail and not ref_mismatch:
                 try:
                     bug = s.bugs.match(urllib2.urlopen(s.ltail,timeout=s.URLTIMEOUT).read())
+                    if bug: s.utail = True
                 except (urllib2.HTTPError,urllib2.URLError) as e :
                     print 'WARNING: the following tail link leads to "404 page not found":'
                     print '   ',s.ltail
@@ -167,6 +176,7 @@ class Test:
             if not bug and s.lnicos:
                 try:
                     bug = s.bugs.match(urllib2.urlopen(s.lnicos,timeout=s.URLTIMEOUT).read(),ref_mismatch=ref_mismatch)
+                    if bug: s.unicos = True
                 except (urllib2.HTTPError,urllib2.URLError) as e :
                     print '%s: the following NICOS link leads to "404 page not found":'%('WARNING' if Test.full_enable else 'ERROR')
                     print '   ',s.lnicos
@@ -186,6 +196,7 @@ class Test:
                     if nmb < Test.full_maxsize:
                         Test.full_counter += 1
                         bug = s.bugs.match(site.read())
+                        if bug: s.ulog = True
                 except (urllib2.HTTPError,urllib2.URLError) as e :
                     print 'ERROR: the following test log link leads to "404 page not found":'
                     print '   ',s.llog

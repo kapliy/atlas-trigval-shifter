@@ -13,8 +13,11 @@ SUMMARIZE_BUGS = True
 # name of output file
 OUTNAME = 'index2.html'
 
+import sys
+print ' '.join(sys.argv)
+
 import common
-import sys,getpass,socket,datetime
+import getpass,socket,datetime
 from constants import *
 
 if len(sys.argv)>=2:

@@ -151,11 +151,17 @@ class Project:
                 # loop over tests in this bug group
                 for iorder,i in enumerate(matchedidx):
                     t = ts[i]
-                    lextract = ts[i].lextract if ts[i].lextract else DUMMY_LINK
-                    lerror = ts[i].lerror if ts[i].lerror else DUMMY_LINK
-                    llog = ts[i].llog if ts[i].llog else DUMMY_LINK
-                    ltail = ts[i].ltail if ts[i].ltail else DUMMY_LINK
-                    lnicos = ts[i].lnicos if ts[i].lnicos else DUMMY_LINK
+                    # highlight the log link that was actually used to match a bug
+                    b1,b2 = ('<b>','</b>') if ts[i].uextract else ('','')
+                    lextract = '<a href="%s">%s%s%s</a>'%(ts[i].lextract if ts[i].lextract else DUMMY_LINK,b1,ts[i].name,b2)
+                    b1,b2 = ('<b>','</b>') if ts[i].uerror else ('','')
+                    lerror = '<a href="%s">%serr%s</a>'%(ts[i].lerror if ts[i].lerror else DUMMY_LINK,b1,b2)
+                    b1,b2 = ('<b>','</b>') if ts[i].ulog else ('','')
+                    llog = '<a href="%s">%slog%s</a>'%(ts[i].llog if ts[i].llog else DUMMY_LINK,b1,b2)
+                    b1,b2 = ('<b>','</b>') if ts[i].utail else ('','')
+                    ltail = '<a href="%s">%stail%s</a>'%(ts[i].ltail if ts[i].ltail else DUMMY_LINK,b1,b2)
+                    b1,b2 = ('<b>','</b>') if ts[i].unicos else ('','')
+                    lnicos = '<a href="%s">%snicos%s</a>'%(ts[i].lnicos if ts[i].lnicos else DUMMY_LINK,b1,b2)
                     # last test with this bug id: print bug summary
                     if iorder==len(matchedidx)-1:
                         # special handling for the case of one test only affected by this bug
@@ -168,14 +174,14 @@ class Project:
                             if bugs[i].is_wontfix():
                                 wontfix_summary = WONTFIXSTATUS
                         if bugids[i] >= 0:
-                            res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>)(<a href="%s">nicos</a>):\n       [<a href="%s">bug #%s</a>] %s%s%s%s'%(offset,lextract,ts[i].name,lerror,llog,ltail,lnicos,bugurls[i],bugids[i],closed_summary,wontfix_summary,status_summary,bugtitles[i]))
+                            res.append('%s%s (%s)(%s)(%s)(%s):\n       [<a href="%s">bug #%s</a>] %s%s%s%s'%(offset,lextract,lerror,llog,ltail,lnicos,bugurls[i],bugids[i],closed_summary,wontfix_summary,status_summary,bugtitles[i]))
                         else:
-                            res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>)(<a href="%s">nicos</a>):\n       [Exit Category #%s] %s%s%s%s'%(offset,lextract,ts[i].name,lerror,llog,ltail,lnicos,bugids[i],closed_summary,wontfix_summary,status_summary,bugtitles[i]))
+                            res.append('%s%s (%s)(%s)(%s)(%s):\n       [Exit Category #%s] %s%s%s%s'%(offset,lextract,lerror,llog,ltail,lnicos,bugids[i],closed_summary,wontfix_summary,status_summary,bugtitles[i]))
  
                     # for others, just list the bugs, one per line, with comma in the end of each line
                     else:
                         offset = '    -  ' if iorder==0 else '       '
-                        res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>)(<a href="%s">nicos</a>),'%(offset,lextract,ts[i].name,lerror,llog,ltail,lnicos))
+                        res.append('%s%s (%s)(%s)(%s)(%s),'%(offset,lextract,lerror,llog,ltail,lnicos))
         return res,total
     def report(s):
         res = []
@@ -248,11 +254,17 @@ class Project:
             for iorder,i in enumerate(matchedidx):
                 t = match[i]
                 old = fixed[i]
-                lextract = old.lextract if old.lextract else DUMMY_LINK
-                lerror = old.lerror if old.lerror else DUMMY_LINK
-                llog = old.llog if old.llog else DUMMY_LINK
-                ltail = old.ltail if old.ltail else DUMMY_LINK
-                lnicos = old.lnicos if old.lnicos else DUMMY_LINK
+                # highlight the log link that was actually used to match a bug
+                b1,b2 = ('<b>','</b>') if old.uextract else ('','')
+                lextract = '<a href="%s">%s%s%s</a>'%(old.lextract if old.lextract else DUMMY_LINK,b1,old.name,b2)
+                b1,b2 = ('<b>','</b>') if old.uerror else ('','')
+                lerror = '<a href="%s">%serr%s</a>'%(old.lerror if old.lerror else DUMMY_LINK,b1,b2)
+                b1,b2 = ('<b>','</b>') if old.ulog else ('','')
+                llog = '<a href="%s">%slog%s</a>'%(old.llog if old.llog else DUMMY_LINK,b1,b2)
+                b1,b2 = ('<b>','</b>') if old.utail else ('','')
+                ltail = '<a href="%s">%stail%s</a>'%(old.ltail if old.ltail else DUMMY_LINK,b1,b2)
+                b1,b2 = ('<b>','</b>') if old.unicos else ('','')
+                lnicos = '<a href="%s">%snicos%s</a>'%(old.lnicos if old.lnicos else DUMMY_LINK,b1,b2)
                 # last test with this bug id: print bug summary
                 if iorder==len(matchedidx)-1:
                     # special handling for the case of one test only affected by this bug
@@ -265,13 +277,13 @@ class Project:
                         if bugs[i].is_wontfix():
                             wontfix_summary = WONTFIXSTATUS
                     if bugids[i] >= 0:
-                        res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>)(<a href="%s">nicos</a>):\n       [<a href="%s">bug #%s</a>] %s%s%s%s'%(offset,lextract,old.name,lerror,llog,ltail,lnicos,bugurls[i],bugids[i],closed_summary,wontfix_summary,FIXEDSTATUS,bugtitles[i]))
+                        res.append('%s%s (%s)(%s)(%s)(%s):\n       [<a href="%s">bug #%s</a>] %s%s%s%s'%(offset,lextract,lerror,llog,ltail,lnicos,bugurls[i],bugids[i],closed_summary,wontfix_summary,FIXEDSTATUS,bugtitles[i]))
                     else:
-                        res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>)(<a href="%s">nicos</a>):\n       [Exit Category #%s] %s%s%s%s'%(offset,lextract,old.name,lerror,llog,ltail,lnicos,bugids[i],closed_summary,wontfix_summary,FIXEDSTATUS,bugtitles[i]))
+                        res.append('%s%s (%s)(%s)(%s)(%s):\n       [Exit Category #%s] %s%s%s%s'%(offset,lextract,lerror,llog,ltail,lnicos,bugids[i],closed_summary,wontfix_summary,FIXEDSTATUS,bugtitles[i]))
                 # for others, just list the bugs, one per line, with comma in the end of each line
                 else:
                     offset = '    -  ' if iorder==0 else '       '
-                    res.append('%s<a href="%s">%s</a> (<a href="%s">err</a>)(<a href="%s">log</a>)(<a href="%s">tail</a>)(<a href="%s">nicos</a>),'%(offset,lextract,old.name,lerror,llog,ltail,lnicos))
+                    res.append('%s%s (%s)(%s)(%s)(%s),'%(offset,lextract,lerror,llog,ltail,lnicos))
         # don't print anything if no tests were fixed
         if len(match)==0:
             res = []

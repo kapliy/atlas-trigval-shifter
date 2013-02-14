@@ -530,12 +530,12 @@ class BugTracker:
         s.add(99778,['Trig::TrigNtExecTool::ReadOPI','at ../src/TrigNtExecTool.cxx:354'])
         #s.add(99778,["StatusCodeSvc","FATAL Unchecked StatusCode in exit from lib /lib/libc.so.6 [Run,Evt,Lumi,Time,BunchCross,DetMask] ="])
         s.add(99802,['is bigger than my length','HLTJobLib: recoverable ERROR error processing EF_PROCESS'])
-        s.add(99803,['Gaudi::Parsers::parse_real_vector<double','Caught signal 8\(Floating point exception\). Details'])
+        s.add(99949,['Gaudi::Parsers::parse_real_vector<double','Caught signal 8\(Floating point exception\). Details']) # was: 99803
         s.add(99851,'error: VP1TrackSystems/TrackCollectionSettingsButton.h: No such file or directory')
         s.add(99852,["No rule to make target `install_tfs_jop'",'Trigger/TrigFTK/TrigFTKSim'])
         s.add(99853,['WARNING Chain EF_hadCalib_trk18_L1HA8 aborting with error code ABORT_CHAIN UNKNOWN UNKNOWN',"got error back while executing first algorithm"])
         s.add(99863,['ERROR Trying to define EF item more than once EF_e9_tight1_e5_etcut'])
-        s.add(99896,['cmt/../src/TrigPhoton.cxx:225','diff\(TrigPhoton const'])
+        s.add(94873,['cmt/../src/TrigPhoton.cxx:225','diff\(TrigPhoton const']) #was: 99896
         s.add(99897,['cpp_any/MuonboyRecMaker.cxx:115','chicsc_','Current algorithm: MboyRec'])
         s.add(99898,['ERROR Error in configuration of EgammaSlice',"name 'L2ElectronHypo_e5_medium1_NoTrk' is not defined"])
         s.add(99903,['ERROR template chain with sig_id=g3_nocut is not defined at level EF'])
@@ -548,8 +548,9 @@ class BugTracker:
         s.add(100224, ["signal handler called","IS repository 'RunParams' does not exist",'"is/repository" type is not published in the "athena_mon" partition'])
         s.add(100238, ["from AGDD2Geo.AGDD2GeoConf import AGDD2GeoSvc","No module named AGDD2Geo.AGDD2GeoConf"])
         s.add(100352,'IncludeError: include file LArCondAthenaPool/LArCondAthenaPool_joboptions.py can not be found')
+        s.add(100426,['TypeError: Error when calling the metaclass bases','CfgMgr.Muon__MooSegmentCombinationFinder,ConfiguredBase'])
+        #s.add_new(100426,['kwargs.setdefault\("TriggerHitAssociator", getPublicToolClone\("TriggerHitAssociator", "DCMathSegmentMaker",Redo2DFit=False\) \)'])
         return
-
 
 
 if __name__ == '__main__':
