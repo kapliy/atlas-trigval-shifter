@@ -549,7 +549,8 @@ class BugTracker:
         s.add(100238, ["from AGDD2Geo.AGDD2GeoConf import AGDD2GeoSvc","No module named AGDD2Geo.AGDD2GeoConf"])
         s.add(100352,'IncludeError: include file LArCondAthenaPool/LArCondAthenaPool_joboptions.py can not be found')
         s.add(100426,['TypeError: Error when calling the metaclass bases','CfgMgr.Muon__MooSegmentCombinationFinder,ConfiguredBase'])
-        #s.add_new(100426,['kwargs.setdefault\("TriggerHitAssociator", getPublicToolClone\("TriggerHitAssociator", "DCMathSegmentMaker",Redo2DFit=False\) \)'])
+        #s.add(100426,['kwargs.setdefault\("TriggerHitAssociator", getPublicToolClone\("TriggerHitAssociator", "DCMathSegmentMaker",Redo2DFit=False\) \)'])
+        s.add(100444,"AttributeError: 'TrigTestMonToolAC' object has no attribute 'SelectTruthPdgId'")
         return
 
 

@@ -51,7 +51,7 @@ bugs.prefill()
 Test.bugs = bugs
 
 # Load the list of nightlies that we need to validate
-from configure_nightlies import X    
+from configure_nightlies import X,nightly_sel
 
 # Dump shift report to an html file
 if __name__=="__main__":
@@ -72,9 +72,10 @@ if __name__=="__main__":
             for bug in bugs.new_bugs():
                 print >>f,'- [<a href="%s">bug #%d</a>] : %s'%(bug.url(),bug.id,bug.fetch_metadata())
         print >>f,''
-        print >>f,'RTT memory report:'
-        print >>f,'The following tests had a >10% increase in total memory consumption with respect to the maximum memory usage in the past 6 days:'
-        print >>f,''
+        if nightly_sel not in (1,2): # RTT report is only expected in PART3
+            print >>f,'RTT memory report:'
+            print >>f,'The following tests had a >10% increase in total memory consumption with respect to the maximum memory usage in the past 6 days:'
+            print >>f,''
         print >>f,'Detailed report is below.'
         print >>f,'Failures that were NOT present in yesterday\'s release are marked with %s.'%(NEWSTATUS)
         print >>f,'Failures that were fixed between yesterday and today are marked with %s.'%(FIXEDSTATUS)
