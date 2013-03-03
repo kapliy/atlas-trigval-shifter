@@ -273,8 +273,8 @@ class BugTracker:
             s.add(-96339,["nightlies/17.X.0/","WARNING Output differs from reference for","If this change is understood, please update"],title = "WARNING Output differs from reference: don't report in Savannah per Roger's request",cat=1)
             s.add(-96340,["nightlies/17.X.0-VAL/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"],title = "WARNING Output differs from reference: don't report in Savannah per Roger's request",cat=1)
             s.add(-96340,["nightlies/17.X.0-VAL/","WARNING Output differs from reference for","If this change is understood, please update"],title = "WARNING Output differs from reference: don't report in Savannah per Roger's request",cat=1)
-            s.add(-96341,["nightlies/17.1.X.Y-VAL2-P1HLT/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"],title = "WARNING Output differs from reference: don't report in Savannah per Roger's request",cat=2)
-            s.add(-96341,["nightlies/17.1.X.Y-VAL2-P1HLT/","WARNING Output differs from reference for","If this change is understood, please update"],title = "WARNING Output differs from reference: don't report in Savannah per Roger's request",cat=1)
+            s.add(-96341,["nightlies/17.1.X.Y-VAL2-P1HLT/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"],title = "WARNING Output differs from reference: don't report in Savannah per Roger's request",cat=1)
+            s.add(-96341,["nightlies/17.1.X.Y-VAL2-P1HLT/","WARNING Output differs from reference for","If this change is understood, please update"],title = "WARNING Output differs from reference: don't report in Savannah per Roger's request",cat=2)
             s.add(-96342,["nightlies/17.1.X.Y.Z-VAL2-AtlasCAFHLT/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"],title = "WARNING Output differs from reference: don't report in Savannah per Roger's request",cat=1)
             s.add(-96342,["nightlies/17.1.X.Y.Z-VAL2-AtlasCAFHLT/","WARNING Output differs from reference for","If this change is understood, please update"],title = "WARNING Output differs from reference: don't report in Savannah per Roger's request",cat=1)
             # TIME QUOTA BUGS
@@ -518,6 +518,7 @@ class BugTracker:
         s.add(94152,["ERROR Upload of SMKey failed"])
         s.add(99993,["Segmentation fault","Trk::AtaStraightLineT<Trk::Charged>::~AtaStraightLineT"])
         s.add(99451,["Segmentation fault","in TrigMinimalEventLoopMgr::sysPrepareForRun"], "DB connection error, check for persistency")
+        s.add(99451,["segmentation violation","Allocate \(size\=3768\) at src/tcmalloc.cc:2006","AtlasP1HLT"])
         s.add(99695,["ES_NoEndOfFileRecord","ESLOriginalFile reported: File end record not found in file"])
         s.add(99678,["ERROR  Cannot retrieve LayersInfo histogram","ToolSvc.JetFitterNNTool"])
         s.add(99712,["segmentation violation","in HLT::HLTResult::serialize","in TrigMinimalEventLoopMgr::HltResultROB"])
@@ -551,6 +552,11 @@ class BugTracker:
         s.add(100426,['TypeError: Error when calling the metaclass bases','CfgMgr.Muon__MooSegmentCombinationFinder,ConfiguredBase'])
         #s.add(100426,['kwargs.setdefault\("TriggerHitAssociator", getPublicToolClone\("TriggerHitAssociator", "DCMathSegmentMaker",Redo2DFit=False\) \)'])
         s.add(100444,"AttributeError: 'TrigTestMonToolAC' object has no attribute 'SelectTruthPdgId'")
+        s.add(100507,["No such file or directory","root://eosatlas//eos/atlas/atlascerngroupdisk/proj-sit/igrabows/TrigInDetValidation_electron/"])
+        s.add(100558,["/build/atnight/localbuilds/nightlies/17.X.0-VAL/AtlasReconstruction/rel_nightly/InstallArea/jobOptions/MissingET/MissingET_jobOptions.py","ImportError: No module named MissingET.METRefGetter"]) #won't fix for rel_4
+        s.add(100577,["Core dump from CoreDumpSvc","Current algorithm: TrigL2SiTrackFinder_FullScan_ZF_OnlyA"])
+        s.add(100679,["ERROR Hypo algo should never be placed first in sequences with more than one input TE","FATAL Errors were too severe in this event will abort the job","ERROR Terminating event processing loop due to errors"])
+        s.add(100680,["Moving to AthenaTrigRDO_chainOrder_compare","differences in tests with ordered HLT chain execution","TrigSteer_L2.TrigChainMoniValidation"])
         return
 
 
