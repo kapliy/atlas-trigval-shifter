@@ -557,6 +557,13 @@ class BugTracker:
         s.add(100577,["Core dump from CoreDumpSvc","Current algorithm: TrigL2SiTrackFinder_FullScan_ZF_OnlyA"])
         s.add(100679,["ERROR Hypo algo should never be placed first in sequences with more than one input TE","FATAL Errors were too severe in this event will abort the job","ERROR Terminating event processing loop due to errors"])
         s.add(100680,["Moving to AthenaTrigRDO_chainOrder_compare","differences in tests with ordered HLT chain execution","TrigSteer_L2.TrigChainMoniValidation"])
+        s.add(100994,["Error in <DataBucketVoid>: Cannot cast class Rec::TrackParticleContainer_tlp3 to Rec::TrackParticleContainer"])
+        s.add(100994,["Cannot find transient class for Rec::TrackParticleContainer_tlp3"])
+        s.add(101026,["No valid proxy for object HLT_EFMultiMuFex  of type TrigEFBphysContainer"])
+        s.add(101027,["Unable to set the property 'do_mdttdccut_sector'"])# of 'ToolSvc\.mdtRawDataValAlg_main'","Error setting properties for tool 'ToolSvc\.mdtRawDataValAlg_main' "])
+        s.add(101042,["ImportError: No module named MuonTruthAlgs.MuonTruthAlgsConf"])#
+        
+        return
         return
 
 

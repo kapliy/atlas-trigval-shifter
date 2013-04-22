@@ -104,6 +104,8 @@ if nightly_sel in (PART2,ALL):
 
 # VAL2 nightlies finish around 11:30 AM Chicago time:
 
+#Part 3 nightlies are not necessary currently
+
 N = Nightly('17.1.X.Y-VAL2-P1HLT (32-bit)')
 N.add(Project('TrigP1Test','http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/17.1.X.Y-VAL2/AtlasP1HLT/rel_%d/NICOS_area/NICOS_atntest171XYVAL2P1HLT32BS5G4P1HLTOpt/trigp1test_testconfiguration_work/'))
 N.add(Project('TriggerTest','http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/17.1.X.Y-VAL2/AtlasP1HLT/rel_%d/NICOS_area/NICOS_atntest171XYVAL2P1HLT32BS5G4P1HLTOpt/triggertest_testconfiguration_work/'))
