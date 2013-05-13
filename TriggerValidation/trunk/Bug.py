@@ -304,6 +304,10 @@ class BugTracker:
             s.add(98691,["AllPT_mcV4","nightlies/17.1.X/","test killed as time quota spent, test warning is issued"],cat=2)
             s.add(98691,["AllPT_mcV4","nightlies/17.1.X-VAL/","test killed as time quota spent, test warning is issued"],cat=2)
             s.add(98771,["AthenaTrigAOD_TrigEDMCheck_fixedAOD","nightlies/17.1.X-VAL/","test killed as time quota spent, test warning is issued"],cat=2)
+            s.add(101328,["AthenaTrigRDO_Physics_pp_v4","nightlies/17.1.X/","test killed as time quota spent, test warning is issued"],cat=2)
+            s.add(101328,["AthenaTrigRDO_standalone","nightlies/17.1.X/","test killed as time quota spent, test warning is issued"],cat=2)
+            s.add(101328,["AthenaTrigRDO_Physics_pp_v4","nightlies/17.1.X-VAL/","test killed as time quota spent, test warning is issued"],cat=2)
+            s.add(101328,["AthenaTrigRDO_standalone","nightlies/17.1.X-VAL/","test killed as time quota spent, test warning is issued"],cat=2)
             # TOLERANCE BUGS
             s.add(-8,"checkcounts test warning : trigger counts outside tolerance:",title="ATTENTION: add a TOLERANCE BUG match string in Bug.py::prefill_nicos for this release",cat=1) #HAS to be above other tolerance  strings - this is a "catch-all" case
             s.add(-96368,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.1.X.Y-VAL-P1HLT/"],title="count mismatch warnings:bona fide bugs but don't report in Savannah per Roger's request",cat=1)
@@ -462,7 +466,7 @@ class BugTracker:
         s.add(97374,["IS repository 'Histogramming-L2-Segment-1-1-iss' does not exist","double free or corruption"])
         s.add(97394,["at \.\./src/TrigDiMuonFast.cxx:1414","in TrigDiMuonFast::processTrack"])
         s.add(97685,["UploadHIMenuKeys FAILURE"]) # JK 17/10/12 was 97650 - Duplicate of 97685
-        s.add(95848,["no ChainAcceptance_runsummary","AllPT_mcV3"],cat=2)
+        s.add(99993,["no ChainAcceptance_runsummary","AllPT_mcV3"],cat=2)
         s.add(97685,["CheckKeys FAILURE","Upload of key 1 failed"])
         s.add(97704,["Crash in TRTTrackExtAlg_Tau_EFID","FAILURE at end"])
         s.add(97705,["Crash on L2MbSpFex_SCTNoiseSup in AthenaTrigRDOtoTAG","Algorithm stack"])
@@ -509,7 +513,6 @@ class BugTracker:
         s.add(99135,["No such file or directory: 'LVL1config_","_rel_nightly.xml"])
         s.add(92097,["nothing found for TriggerCosts_1e33.xml","prescales1000.xml"])
         s.add(99337,["Unable to determine beamType","data12_hip"])
-        s.add(99338,["ERROR updateAddress","Cannot translate clID"])
         s.add(99392,["Segmentation fault","runHLT_standalone.py"])
         s.add(99421,["No module named TrigT2CaloCommon.TrigT2CaloCommonConf"])
         s.add(99422,["ToolSvc.TileBeamInfoProvider","Error retrieving","from TDS"])
@@ -562,7 +565,10 @@ class BugTracker:
         s.add(101026,["No valid proxy for object HLT_EFMultiMuFex  of type TrigEFBphysContainer"])
         s.add(101027,["Unable to set the property 'do_mdttdccut_sector'"])# of 'ToolSvc\.mdtRawDataValAlg_main'","Error setting properties for tool 'ToolSvc\.mdtRawDataValAlg_main' "])
         s.add(101042,["ImportError: No module named MuonTruthAlgs.MuonTruthAlgsConf"])#
-        
+        s.add(101217,["Analysis__JpsiFinder","object has no attribute","thresholdPt"])
+        s.add(101301,["Tool egammaTopoIso either does not implement the correct interface","or its version is incompatible"])
+        s.add(101315,["ERROR updateAddress","Cannot translate clID"])
+        s.add(101316,["Error initializing tool","LAr7_11NocorrClusterMaker.CaloRunClusterCorrectionsNocorrele7_11"])
         return
         return
 
