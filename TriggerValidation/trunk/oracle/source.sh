@@ -53,6 +53,7 @@ nfind=`find ${dest}/cx_oracle -type f -name cx_Oracle.so | wc -l`
 if [ "${nfind}" == "1" ]; then
     oraclib=`find ${dest}/cx_oracle -type f -name cx_Oracle.so`
     export PYTHONPATH=${PYTHONPATH}:`dirname ${oraclib}`
+    cp ../tnsnames.ora ${ORACLE_HOME}
     echo "cx_Oracle installed in: ${oraclib}"
     python -c "import cx_Oracle" &> /dev/null
     st=$?
