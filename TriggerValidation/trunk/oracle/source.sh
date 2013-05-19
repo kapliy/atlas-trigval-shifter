@@ -16,7 +16,7 @@ function set_oracle_env() {
 
 if [ ! -f ${dest}/libclntsh.so ]; then
     ROOTDIR=$PWD
-    mkdir -p ${dest}
+    mkdir -p ${dest}/cx_oracle
     echo "Please wait: installing Oracle bindings ..."
     tar xfj ${payload}
     cp -a payload/* ${dest}
@@ -27,8 +27,9 @@ if [ ! -f ${dest}/libclntsh.so ]; then
     set_oracle_env
     # build and install the python library
     cd cx_oracle_source
-    python setup.py build && python setup.py install --prefix=${dest}/cx_oracle
+    python setup.py build
     st=$?
+    find build -type f -name cx_Oracle.so -exec mv {} ${dest}/cx_oracle \;
     cd ${dest}
     rm -rf cx_oracle_source
     cd $ROOTDIR
