@@ -14,7 +14,6 @@ function set_oracle_env() {
     fi
 }
 
-status=0
 if [ ! -f ${dest}/libclntsh.so ]; then
     ROOTDIR=$PWD
     mkdir -p ${dest}
@@ -45,29 +44,26 @@ if [ ! -f ${dest}/libclntsh.so ]; then
 	exit 1
     else
 	echo "Compilation succeeded"
-	status=1
     fi
 fi
 
 set_oracle_env
 
-if [ "${status}" == "1" ]; then
-    nfind=`find ${dest}/cx_oracle -type f -name cx_Oracle.so | wc -l`
-    if [ "${nfind}" == "1" ]; then
-	oraclib=`find ${dest}/cx_oracle -type f -name cx_Oracle.so`
-	export PYTHONPATH=${PYTHONPATH}:`dirname ${oraclib}`
-	echo "cx_Oracle installed in: ${oraclib}"
-	python -c "import cx_Oracle" &> /dev/null
-	st=$?
-	if [ "$st" == "0" ]; then
-	    echo "GOOD: Oracle bindings are ready!"
-	else
-	    echo "ERROR: cannot use Oracle bindings. Try to run again after 'rm -rf ${dest}'"
-	fi
+nfind=`find ${dest}/cx_oracle -type f -name cx_Oracle.so | wc -l`
+if [ "${nfind}" == "1" ]; then
+    oraclib=`find ${dest}/cx_oracle -type f -name cx_Oracle.so`
+    export PYTHONPATH=${PYTHONPATH}:`dirname ${oraclib}`
+    echo "cx_Oracle installed in: ${oraclib}"
+    python -c "import cx_Oracle" &> /dev/null
+    st=$?
+    if [ "$st" == "0" ]; then
+	echo "GOOD: Oracle bindings are ready!"
     else
-	echo "ERROR: unable to find cx_Oracle.so under: ${dest}/cx_oracle"
-	return 1 2>/dev/null
-	exit 1
+	echo "ERROR: cannot use Oracle bindings. Try to run again after 'rm -rf ${dest}'"
     fi
+else
+    echo "ERROR: unable to find cx_Oracle.so under: ${dest}/cx_oracle"
+    return 1 2>/dev/null
+    exit 1
 fi
 
