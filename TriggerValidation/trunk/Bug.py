@@ -562,16 +562,19 @@ class BugTracker:
         s.add(100680,["Moving to AthenaTrigRDO_chainOrder_compare","differences in tests with ordered HLT chain execution","TrigSteer_L2.TrigChainMoniValidation"])
         s.add(100994,["Error in <DataBucketVoid>: Cannot cast class Rec::TrackParticleContainer_tlp3 to Rec::TrackParticleContainer"])
         s.add(100994,["Cannot find transient class for Rec::TrackParticleContainer_tlp3"])
-        s.add(101026,["No valid proxy for object HLT_EFMultiMuFex  of type TrigEFBphysContainer"])
+        s.add(101026,["No valid proxy for object HLT_EFMultiMuFex  of type TrigEFBphysContainer","dumpTrigElectronContainer"])
         s.add(101027,["Unable to set the property 'do_mdttdccut_sector'"])# of 'ToolSvc\.mdtRawDataValAlg_main'","Error setting properties for tool 'ToolSvc\.mdtRawDataValAlg_main' "])
         s.add(101042,["ImportError: No module named MuonTruthAlgs.MuonTruthAlgsConf"])#
         s.add(101217,["Analysis__JpsiFinder","object has no attribute","thresholdPt"])
         s.add(101301,["Tool egammaTopoIso either does not implement the correct interface","or its version is incompatible"])
         s.add(101315,["ERROR updateAddress","Cannot translate clID"])
         s.add(101316,["Error initializing tool","LAr7_11NocorrClusterMaker.CaloRunClusterCorrectionsNocorrele7_11"])
+        s.add(101534,["Trig::TrigNtExecTool::ReadOPI","PyEval_EvalFrameEx","cxx:354"])
+        s.add(101619,["No valid proxy for object HLT_EFMultiMuFex  of type TrigEFBphysContainer","TrigInDetTrackTruthMap.cxx"])
         return
         return
 
 
 if __name__ == '__main__':
     test_one_log()
+
