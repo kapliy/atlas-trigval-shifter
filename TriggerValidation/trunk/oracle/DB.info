@@ -1,0 +1,25 @@
+select nname,ngroup,ntype,val from NIGHTLIES where rownum <30 
+('17.1.X.Y.Z-VAL2-AtlasCAFHLT', 'patch', 'patch', 'yes')
+('17.2.X.Y.Z-TAGProd', 'PhysicsAnalysis', 'patch', 'Non')
+('17.X.0-DOX', 'doxygen', 'other', 'non')
+
+select N.nname,R.name,R.TCREL,R.RELTSTAMP from NIGHTLIES N inner join releases R on N.nid = R.nid where nname='17.1.X.Y.Z-VAL2-AtlasCAFHLT' order by R.RELTSTAMP
+('17.1.X.Y.Z-VAL2-AtlasCAFHLT', 'rel_6', '17.1.6.9.1', datetime.datetime(2013, 4, 13, 14, 0, 58, 555560))
+('17.1.X.Y.Z-VAL2-AtlasCAFHLT', 'rel_0', '17.1.6.9.1', datetime.datetime(2013, 4, 14, 14, 1, 6, 531213))
+('17.1.X.Y.Z-VAL2-AtlasCAFHLT', 'rel_1', '17.1.6.9.1', datetime.datetime(2013, 4, 15, 14, 1, 0, 163178))
+('17.1.X.Y.Z-VAL2-AtlasCAFHLT', 'rel_2', '17.1.6.9.1', datetime.datetime(2013, 4, 16, 14, 0, 26, 834750))
+
+select projname from projects where projname like '%Trig%'
+('AtlasTrigger',)
+('TrigMC',)
+
+select pname,contname from packages where rownum<10
+('G4AncillarySimEvent', 'Simulation/G4Utilities/G4Ancillary')
+('HitManagement', 'Simulation')
+('TBCnv', 'TestBeam')
+
+select name,tname,fname from tests where rownum<10
+('TriggerTest_TestConfiguration#AthenaTrigRDO_MC_pp_v2_tight_mc_prescale', 'AthenaTrigRDO_MC_pp_v2_tight_mc_prescale', 'TriggerTest_TestConfiguration')
+('TriggerTest_TestConfiguration#AthenaTrigRDO_Physics_pp_v2', 'AthenaTrigRDO_Physics_pp_v2', 'TriggerTest_TestConfiguration')
+('TriggerTest_TestConfiguration#AthenaTrigRDO_cosmic_default', 'AthenaTrigRDO_cosmic_default', 'TriggerTest_TestConfiguration')
+('TriggerTest_TestConfiguration#AthenaTrigBS_standalone', 'AthenaTrigBS_standalone', 'TriggerTest_TestConfiguration')
