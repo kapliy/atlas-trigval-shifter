@@ -571,6 +571,7 @@ class BugTracker:
         s.add(101316,["Error initializing tool","LAr7_11NocorrClusterMaker.CaloRunClusterCorrectionsNocorrele7_11"])
         s.add(101534,["Trig::TrigNtExecTool::ReadOPI","PyEval_EvalFrameEx","cxx:354"])
         s.add(101619,["No valid proxy for object HLT_EFMultiMuFex  of type TrigEFBphysContainer","TrigInDetTrackTruthMap.cxx"])
+        s.add(101684,["ALFA_GeometryReader::GetUFiberCentreXPos","ERROR Invalid coordinate system","reached for ALFA_GeometryReader::GetODFiberCentreYPos. Suppressing further output."])
         return
         return
 
