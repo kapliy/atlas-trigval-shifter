@@ -82,7 +82,11 @@ class Project:
                     break # break out on the last row
                 # only look at tests that correspond to current Project
                 tname_full = (links[0].string).strip()
-                if not re.match(s.name,tname_full):
+                # If s.name == TriggerTest-SLC6-GCC46, separate out the first part: sname_pt1 = TriggerTest
+                sname_pt1 = s.name
+                if len(s.name.split('-'))>=2:
+                    sname_pt1 = s.name.split('-')[0]
+                if not (re.match(s.name,tname_full) or re.match(sname_pt1,tname_full)):
                     continue
                 tname = tname_full.split('#')[1]
                 nicosdir = os.path.dirname(nicoslink)
