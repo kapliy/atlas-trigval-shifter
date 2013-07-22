@@ -308,6 +308,9 @@ class BugTracker:
             s.add(101328,["AthenaTrigRDO_standalone","nightlies/17.1.X/","test killed as time quota spent, test warning is issued"],cat=2)
             s.add(101328,["AthenaTrigRDO_Physics_pp_v4","nightlies/17.1.X-VAL/","test killed as time quota spent, test warning is issued"],cat=2)
             s.add(101328,["AthenaTrigRDO_standalone","nightlies/17.1.X-VAL/","test killed as time quota spent, test warning is issued"],cat=2)
+            s.add(101328,["AthenaTrigRDO_chainOrder_compare","nightlies/17.1.X/","test killed as time quota spent, test warning is issued"],cat=2)
+            s.add(96547,["AllPT_MC_run_stop_run","nightlies/17.1.X-VAL/","test killed as time quota spent, test warning is issued"],cat=2)
+            s.add(101328,["AthenaTrigRDO_chainOrder_compare","nightlies/17.1.X-VAL/","test killed as time quota spent, test warning is issued"],cat=2)
             # TOLERANCE BUGS
             s.add(-8,"checkcounts test warning : trigger counts outside tolerance:",title="ATTENTION: add a TOLERANCE BUG match string in Bug.py::prefill_nicos for this release",cat=1) #HAS to be above other tolerance  strings - this is a "catch-all" case
             s.add(-96368,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.1.X.Y-VAL-P1HLT/"],title="count mismatch warnings:bona fide bugs but don't report in Savannah per Roger's request",cat=1)
@@ -572,7 +575,9 @@ class BugTracker:
         s.add(101534,["Trig::TrigNtExecTool::ReadOPI","PyEval_EvalFrameEx","cxx:354"])
         s.add(101619,["No valid proxy for object HLT_EFMultiMuFex  of type TrigEFBphysContainer","TrigInDetTrackTruthMap.cxx"])
         s.add(101684,["ALFA_GeometryReader::GetUFiberCentreXPos","ERROR Invalid coordinate system","reached for ALFA_GeometryReader::GetODFiberCentreYPos. Suppressing further output."])
-        return
+        s.add(101831,["could not get handle to embremcollectionbuilder"])
+        #s.add(101764,["Unchecked StatusCode in exit from lib /lib64/libc.so.6"])
+        #s.add(101928,["Alert! WARNING no lines matching REGTEST were found for <fullregtest> in log file","trigtest.pl: FAILURE at end","RootTrigAOD_TDT"])
         return
 
 
