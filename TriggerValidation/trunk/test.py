@@ -47,6 +47,7 @@ cmd = """ select P.PROJNAME,PK.PNAME,PK.CONTNAME,CR.Res,CR.ERRTEXT,CR.NAMELN fro
 # test results TODO
 cmd = """ select P.PROJNAME,PK.PNAME,PK.CONTNAME,TR.Ecode,TR.CODE,TR.RES,TR.NAME,TR.NAMELN,TR.WDIRLN from testresults TR inner join PROJECTS P on P.projid=TR.projid inner join PACKAGES PK on PK.pid=TR.PID where TR.jid=%d and P.PROJNAME='AtlasAnalysis' and TR.Res>-10 """%(jid)
 
+cmd = """ select J.jid,N.nid,R.relid from JOBS J inner join Nightlies N on N.nid=J.nid inner join Releases R on R.relid=J.relid where N.nname='18.X.0-VAL' and J.arch='x86_64' and J.opt='opt' and R.name='rel_3' and R.RELTSTAMP > sysdate - interval '6' day"""
 
 print cmd
 cursor.execute(cmd)
