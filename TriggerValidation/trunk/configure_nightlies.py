@@ -89,7 +89,7 @@ N = Nightly('18.X.0 (64-bit)')
 N.add(Project('TriggerTest','http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/dev/AtlasTrigger/rel_%d/NICOS_area/NICOS_atntest18X064BS6G47TrgOpt/triggertest_testconfiguration_work/'))
 N.add(Project('TrigAnalysisTest','http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/dev/AtlasAnalysis/rel_%d/NICOS_area/NICOS_atntest18X064BS6G47AnlOpt/triganalysistest_testconfiguration_work/'))
 N.add(Project('TrigP1Test','http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/dev/AtlasHLT/rel_%d/NICOS_area/NICOS_atntest18X064BS6G47AtlasHLTOpt/trigp1test_testconfiguration_work/'))
-if nightly_sel in (PART2,ALL,PART4):
+if nightly_sel in (PART2,ALL):
     X.append(N)
 
 N = Nightly('18.X.0-VAL (64-bit)')
