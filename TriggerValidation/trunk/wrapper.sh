@@ -41,6 +41,14 @@ else
     part=3
 fi
 
+verbose=0
+if [ "$#" == "2" ]; then
+    rel=$1
+    part=$2
+    verbose=1
+    echo "Over-riding rel and part from command line: ${rel} and ${part}"
+fi
+
 # get the latest version of the code:
 svn update
 
@@ -50,7 +58,11 @@ echo "REL = ${rel}   PART = ${part}"
 
 # Prepare the shift report
 for dby in ${DBYS}; do
-    ./run.py ${rel} ${part} ${dby} index2_dby${dby}.html &> ${DEST}/log_dby${dby}.txt &
+    if [ "${verbose}" == "1" ]; then
+	./run.py ${rel} ${part} ${dby} index2_dby${dby}.html
+    else
+	./run.py ${rel} ${part} ${dby} index2_dby${dby}.html &> ${DEST}/log_dby${dby}_part${part}.txt &
+    fi;
 done
 wait
 # Back up a copy of the output
@@ -80,14 +92,14 @@ if [ "${DO_RTT}" -eq "1" ]; then
     ./rtt.py 2 1.1 ${rel} >> ${DEST}/rtt.txt
 fi
 
-nskip=`grep -c 'skipping release' ${DEST}/log_dby0.txt`
+nskip=`grep -c 'skipping release' ${DEST}/log_dby0_part${part}.txt`
 if [ "${nskip}" == "0" ]; then
-    echo "All nightlies finished successfully on `date`" >> ${DEST}/log_dby0.txt
-    echo "Top link:  http://hep.uchicago.edu/~antonk/VAL" >> ${DEST}/log_dby0.txt
-    echo "This test: http://hep.uchicago.edu/~antonk/VAL/index_dby0_part${part}.html" >> ${DEST}/log_dby0.txt
-    echo "" >> ${DEST}/log_dby0.txt
-    echo "Cheers," >> ${DEST}/log_dby0.txt
-    echo "Your faithful AutoShifter" >> ${DEST}/log_dby0.txt
-    cat ${DEST}/log_dby0.txt | mail -s "`date +%D`: TrigVal shifts: REL = ${rel} PART = ${part}" ${MYEMAIL}
+    echo "All nightlies finished successfully on `date`" >> ${DEST}/log_dby0_part${part}.txt
+    echo "Top link:  http://hep.uchicago.edu/~antonk/VAL" >> ${DEST}/log_dby0_part${part}.txt
+    echo "This test: http://hep.uchicago.edu/~antonk/VAL/index_dby0_part${part}.html" >> ${DEST}/log_dby0_part${part}.txt
+    echo "" >> ${DEST}/log_dby0_part${part}.txt
+    echo "Cheers," >> ${DEST}/log_dby0_part${part}.txt
+    echo "Your faithful AutoShifter" >> ${DEST}/log_dby0_part${part}.txt
+    cat ${DEST}/log_dby0_part${part}.txt | mail -s "`date +%D`: TrigVal shifts: REL = ${rel} PART = ${part}" ${MYEMAIL}
 fi
 echo "DONE"

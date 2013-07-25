@@ -241,14 +241,15 @@ class BugTracker:
         s.add(94697,['href="#prblm"\>ls: \*rel_\[0-6\].data.xml: No such file or directory'],'NICOS HARMLESS WARNING: missing *rel_[0-6].data.xml')
         s.add(94970,['href="#prblm"\>python: can\'t open file \'checkFileTrigSize_RTT.py\''],'NICOS HARMLESS WARNING: cannot find checkFileTrigSize_RTT.py')
         s.add(94775,['href="#prblm"\>sh: voms-proxy-info: command not found'],'NICOS HARMLESS WARNING: voms-proxy-info command not found')
-        if False: # missing references
+        if False: # missing references (catch-all)
             s.add(-5, ['\.reference: No such file or directory','wc:','old/reference'],'NICOS: MISSING REFERENCE FILE')
             s.add(-5, ['\.reference: No such file or directory\</A\>\<BR\>'],'NICOS: MISSING REFERENCE FILE')
             s.add(-5, ['\.reference: No such file or directory','wc:','checkcounts test warning: Unable to open reference'],'NICOS: MISSING REFERENCE FILE')
-        else:
+        else:     # missing references (per-nightly)
             s.add(96295,[".reference: No such file or directory","nightly 17.2.X.Y-VAL-Prod/"])
             s.add(96296,[".reference: No such file or directory","nightly 17.2.X/"])
             s.add(96297,[".reference: No such file or directory","nightly 17.2.X-VAL/"])
+            s.add(102114,[".reference: No such file or directory","nightly 18.X.0-VAL/"])
         if True: # reference count mismatch - only matched if a test is a WARNING but not an ERROR
             # REFERENCE BUGS
             s.add(-96332,["nightlies/17.1.X.Y-VAL-P1HLT/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"],title = "WARNING Output differs from reference: don't report in Savannah per Roger's request", cat=1)
@@ -336,7 +337,8 @@ class BugTracker:
             s.add(96494,["checkcounts test warning: Unable to open reference file","nightlies/17.1.X-VAL/",".root"],cat=1)
             s.add(96496,["checkcounts test warning: Unable to open reference file","nightlies/17.1.X.Y-VAL2-P1HLT/",".root"],cat=1)
             s.add(96715,["checkcounts test warning: Unable to open reference file","nightlies/17.1.X.Y-VAL-P1HLT/",".root"],cat=1)
-
+            s.add(102117,["checkcounts test warning: Unable to open reference file","nightlies/18.X.0/",".root"],cat=1)
+            s.add(102118,["checkcounts test warning: Unable to open reference file","nightlies/18.X.0-VAL/",".root"],cat=1)
     def prefill(s):
         """ 
         Note that bugs will be matched bottom-up. That is, newer bugs should be put at the bottom and will get matched first
@@ -504,7 +506,7 @@ class BugTracker:
         s.add(98619,["RootController is in faulty state because: Application 'ROS-Segment-1:voatlas62' has a problem that cannot be ignored"])
         s.add(98629,["ImportError: No module named DBReplicaSvc.DBReplicaSvcConf"])
         s.add(98631,["RootController is in faulty state"])
-        if True: # these are dangerous bugs since this particular error printout also often appears when there are other problems
+        if False: # these are dangerous bugs since this particular error printout also often appears when there are other problems
             s.add(98640,["OH repository 'Histogramming-L2-Segment-1-1-iss' does not exist"])
             s.add(98640,["IS repository 'Histogramming-L2-Segment-1-1-iss' does not exist"])
         s.add(98688,["IS infomation name 'Histogramming-L2-Segment-1-1-issL2PU-1/EXPERT/TrigSteer_L2/NumberOfLvl1TEs' is invalid"])
@@ -557,6 +559,7 @@ class BugTracker:
         s.add(100352,'IncludeError: include file LArCondAthenaPool/LArCondAthenaPool_joboptions.py can not be found')
         s.add(100426,['TypeError: Error when calling the metaclass bases','CfgMgr.Muon__MooSegmentCombinationFinder,ConfiguredBase'])
         #s.add(100426,['kwargs.setdefault\("TriggerHitAssociator", getPublicToolClone\("TriggerHitAssociator", "DCMathSegmentMaker",Redo2DFit=False\) \)'])
+        s.add(100442,['lib/libtcmalloc.so does not exist'])
         s.add(100444,"AttributeError: 'TrigTestMonToolAC' object has no attribute 'SelectTruthPdgId'")
         s.add(100507,["No such file or directory","root://eosatlas//eos/atlas/atlascerngroupdisk/proj-sit/igrabows/TrigInDetValidation_electron/"])
         s.add(100558,["/build/atnight/localbuilds/nightlies/17.X.0-VAL/AtlasReconstruction/rel_nightly/InstallArea/jobOptions/MissingET/MissingET_jobOptions.py","ImportError: No module named MissingET.METRefGetter"]) #won't fix for rel_4
@@ -565,7 +568,7 @@ class BugTracker:
         s.add(100680,["Moving to AthenaTrigRDO_chainOrder_compare","differences in tests with ordered HLT chain execution","TrigSteer_L2.TrigChainMoniValidation"])
         s.add(100994,["Error in <DataBucketVoid>: Cannot cast class Rec::TrackParticleContainer_tlp3 to Rec::TrackParticleContainer"])
         s.add(100994,["Cannot find transient class for Rec::TrackParticleContainer_tlp3"])
-        s.add(101026,["No valid proxy for object HLT_EFMultiMuFex  of type TrigEFBphysContainer","dumpTrigElectronContainer"])
+        s.add(94873,["No valid proxy for object HLT_EFMultiMuFex  of type TrigEFBphysContainer","dumpTrigElectronContainer"]) # was: 101026, but closed and re-assigned
         s.add(101027,["Unable to set the property 'do_mdttdccut_sector'"])# of 'ToolSvc\.mdtRawDataValAlg_main'","Error setting properties for tool 'ToolSvc\.mdtRawDataValAlg_main' "])
         s.add(101042,["ImportError: No module named MuonTruthAlgs.MuonTruthAlgsConf"])#
         s.add(101217,["Analysis__JpsiFinder","object has no attribute","thresholdPt"])
@@ -576,8 +579,21 @@ class BugTracker:
         s.add(101619,["No valid proxy for object HLT_EFMultiMuFex  of type TrigEFBphysContainer","TrigInDetTrackTruthMap.cxx"])
         s.add(101684,["ALFA_GeometryReader::GetUFiberCentreXPos","ERROR Invalid coordinate system","reached for ALFA_GeometryReader::GetODFiberCentreYPos. Suppressing further output."])
         s.add(101831,["could not get handle to embremcollectionbuilder"])
-        #s.add(101764,["Unchecked StatusCode in exit from lib /lib64/libc.so.6"])
+        s.add(101764,["Xrd: PhyConnection: Can't run reader thread: out of system resources"]) # old string too generic: ["Unchecked StatusCode in exit from lib /lib64/libc.so.6"])
         #s.add(101928,["Alert! WARNING no lines matching REGTEST were found for <fullregtest> in log file","trigtest.pl: FAILURE at end","RootTrigAOD_TDT"])
+        s.add(102115,['Py:inputFilePeeker WARNING Unable to fill inputFileSummary from file ../AthenaTrigRDOtoESDAOD/AOD.pool.root. File is probably empty. Will try again with next','ERROR No RunNumber stored in InputFile'])
+        s.add(102115,['Error in \<AthenaROOTAccess::TChainROOTAccess::LoadTree\>: Cannot find tree with name CollectionTree in file ../AthenaTrigRDOtoESDAOD/AOD.pool.root','ReferenceError: attempt to access a null-pointer'])
+        s.add(102115,['Py:inputFilePeeker WARNING Unable to fill inputFileSummary from file ../AthenaTrigRDOtoAOD/AOD.pool.root. File is probably empty. Will try again with next','ERROR No RunNumber stored in InputFile'])
+        s.add(102115,['Py:inputFilePeeker WARNING Unable to fill inputFileSummary from file ../AthenaTrigRDOtoESDAOD/ESD.pool.root. File is probably empty. Will try again with next','ERROR No RunNumber stored in InputFile'])
+        s.add(102115,['WARNING Bytestream input: guessing that evt_type=IS_DATA, but this is not 100\% certain. Using auto-configuration is not safe if this info is wrong.','MagFieldUtils.getFieldForRun ERROR accessing /TDAQ/RunCtrl/SOR_Params']) # not sure
+        s.add(102116,['ERROR Problems preloading IOVRanges','ERROR Standard std::exception is caught handling incident','self.getHandle\(\)._evtpro.executeRun\( nEvt \)','RuntimeError: \(file "", line 0\) std::exception \(C\+\+ exception\)'])
+        s.add(102119,["JetTrigger                                        ERROR TriggerType not registered","FATAL  Standard std::exception is caught","ERROR Terminating event processing loop due to errors"])
+        if True: # temporary bugs - if they persist, file an entry in bug tracker.
+            s.add(-190002,["hasattr\( svcMgr.EventSelector, 'RunNumber'\)","AttributeError: '<class 'AthenaCommon.AppMgr.AthServiceManager'>' object has no attribute 'EventSelector'"],title='Severe athena error: svcMgr not configured, probably due to build problems. Will re-check tomorrow')
+            s.add(-190003,["sh: athenaMT.py: command not found"],title='Severe environment error: athenaMT not found. Will re-check tomorrow')
+            s.add(-190004,["sh: athenaPT.py: command not found"],title='Severe environment error: athenaMT not found. Will re-check tomorrow')
+            s.add(-190005,['The database does not exist \(C\+\+ exception\)','db=dbSvc.openDatabase\(connstr,readOnly\)'],title='Severe database error: oracle connection failed. Will re-check tomorrow')
+            s.add(-100006,["AttributeError: type object 'Trig' has no attribute 'TrigDecisionToolARA'"],title='Build error in ARA')
         return
 
 
