@@ -10,23 +10,39 @@ class Nightly:
     nicos = URL_TO_NICOS_PAGE (make sure to substitute release number with %d)
     PS - nicos URL is optional
     """
+    USE_ORACLE = False
     rel = 0
-    def __init__(s,name):
+    def __init__(s,name,details=''):
         s.name = name
+        s.details = details
         s.projects = []
         # link and contents of the NICOS *build* page
-        s.nicoslinks = None
+        s.nicoslinks = []
         s.errorpackages = []
         s.errorlinks    = []
+        # additional metadata from oracle DB
+        nid,relid,jid = None,None,None
+        if USE_ORACLE:
+            from db_helpers import oracle
+            #todo xtra 
+            oracle.fetch(" select J.jid,N.nid,R.relid from JOBS J inner join Nightlies N on N.nid=J.nid inner join Releases R on R.relid=J.relid where N.nname='%s' and J.arch='%s' and J.opt='%s' and R.name='rel_%d' and R.RELTSTAMP > sysdate - interval '6' day " % (s.name,s.arch,s.opt,s.rel) )
+        s.nid = nid
+        s.relid = relid
+        s.jid = jid
         # keep track of new bug reports
         s.new_bugs = []
     def add(s,project):
         s.projects.append(project)
     def load(s):
         assert len(s.projects)>0,'Detected empty nightly without any projects associated with it'
-        print 'Working on nightly:',s.name,'rel_%d'%s.rel
+        print 'Working on nightly:',s.name+s.details,'rel_%d'%s.rel
         status = [p.load() for p in s.projects]
-        # extract a NICOS link to be able to detect build errors.
+        # Query build errors directly from the database
+        if s.USE_ORACLE:
+            from db_helpers import oracle
+            pass
+            return
+        # OR: extract a NICOS link to be able to detect build errors.
         # If this throws errors, you'll have to check for build errors manually
         try:
             nicoslinks = []
@@ -66,8 +82,8 @@ class Nightly:
             rel = '(rel_%d)'%s.rel + ' | build links: ' + ' '.join( ['<a href="%s">%d</a>'%(nicoslink,i+1) for i,nicoslink in enumerate(s.nicoslinks)] )
         else:
             rel = '(rel_%d)'
-        res.append('%s %s'%(s.name,rel))
-        res.append( '' + '='*len(s.name) )
+        res.append('%s %s'%(s.name+s.details,rel))
+        res.append( '' + '='*len(s.name+s.details) )
         if len(s.errorpackages)>0:
             res.append('<font color="#FF6666">Build errors:</font>')
             iprinted=0

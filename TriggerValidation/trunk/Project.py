@@ -12,12 +12,21 @@ class Project:
     atn = URL_TO_ATN_PAGE (make sure to substitute release number with %d)
     """
     rel = 0
+    USE_ORACLE = False
     URLTIMEOUT = 60
     SKIP_ERRORS = True
     dby = False
-    def __init__(s,name,atn):
+    def __init__(s,name,atn,project=None,arch=None,opt=None,linuxos=None,comp=None):
+        """ Most attributes can be bootstrapped from the atn URL """
         s.name = name
         s.atn = atn
+        # optional metadata for Oracle access that can be used to narrow down particular arch
+        s.project = project if project else s.project_from_atn(atn)  # AtlasTrigger, AtlasHLT
+        s.arch = arch if arch else s.arch_from_atn(atn)              # x86_64, i686
+        s.opt = opt if opt else s.opt_from_atn(atn)                  # opt, dbg
+        s.linuxos = linuxos                                          # slc5, slc6
+        s.comp = comp                                                # gcc43
+        # derived quantities
         s.pres_nicoslink = None
         s.last_nicoslink = None
         s.pres = []
@@ -25,6 +34,34 @@ class Project:
         s.pres_soup = None
         s.last_soup = None
         s.new_bugs = []
+    def project_from_atn(s,atn):
+        parts = atn.split('/')
+        for part in parts:
+            if part[:5] == 'Atlas':
+                return part
+        raise ValueError("project_from_atn: failed to detect project substring (AtlasBLABLA) in url %s"%atn)
+    def arch_from_atn(s,atn):
+        parts = atn.split('/')
+        for part in parts:
+            if re.search('64B',part):
+                return 'x86_64'
+            elif re.search('32B',part):
+                return 'i686'
+        raise ValueError("arch_from_atn: failed to detect arch substring (64B or 32B) in url %s"%atn)
+    def opt_from_atn(s,atn):
+        parts = atn.split('/')
+        for part in parts:
+            if part[-3:] == 'Opt':
+                return 'opt'
+            elif part[-3:] == 'Dbg':
+                return 'dbg'
+        raise ValueError("opt_from_atn: failed to detect compiler opt substring (Opt or Dbg) in %s"%atn)
+    def project_from_atn(s,atn):
+        parts = atn.split('/')
+        for part in parts:
+            if part[:5] == 'Atlas':
+                return part
+        raise ValueError("project_from_atn failed on %s"%atn)
     def prel(s,r):
         """ A simple function to return previous release """
         if not s.dby: # use yesterday:

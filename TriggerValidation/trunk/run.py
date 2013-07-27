@@ -12,6 +12,8 @@ dby = False
 SUMMARIZE_BUGS = True
 # name of output file
 OUTNAME = 'index2.html'
+# access experimental Nicos database from Oracle?
+USE_ORACLE = False
 
 import sys
 print ' '.join(sys.argv)
@@ -34,10 +36,19 @@ if len(sys.argv)>=4:
 if len(sys.argv)>=5:
     OUTNAME = sys.argv[4]
 
+try:
+    import cx_Oracle
+except ImportError:
+    if USE_ORACLE:
+        print 'ERROR: USE_ORACLE is set to True, but cx_Oracle extension is missing. Disabling it...'
+        USE_ORACLE = False
+
 import Nightly
 Nightly.Nightly.rel = rel
+Nightly.USE_ORACLE = USE_ORACLE
 import Project
 Project.Project.rel = rel
+Project.USE_ORACLE = USE_ORACLE
 Project.Project.dby = dby
 Project.Project.SKIP_ERRORS = SKIP_ERRORS
 from Test import Test
@@ -49,6 +60,7 @@ from Bug import BugTracker
 bugs = BugTracker()
 bugs.prefill()
 Test.bugs = bugs
+
 
 # Load the list of nightlies that we need to validate
 from configure_nightlies import X,nightly_sel
@@ -93,7 +105,7 @@ if __name__=="__main__":
         try:
             N.load()
         except:
-            print 'WARNING: skipping release',N.name
+            print 'WARNING: skipping release',N.name+N.details
             if not SKIP_ERRORS:
                 raise
             continue
