@@ -231,7 +231,6 @@ class BugTracker:
         s.add(-5,["ERROR Unable to open ROOT file \"root://eosatlas//eos/atlas/atlascerngroupdisk"],"EOS problem OR file does not exist")
         s.add(-5,["ESLOriginalFile reported: File end record not found in file"],"Failed to read end of file, most likely a transient problem, submit bug if persists. ")
         s.add(-5,["Error in <TXNetSystem::Connect>: some severe error occurred while opening the connection at root://eosatlas//eos/"],"Failed to open eos file, most likely a transient problem, submit bug if persists. ")
-
     def prefill_nicos(s):
         """ Special bugs that are only picked up by NICOS - and are not present in the ATN summary page """
         s.add(97313,["AllPT_physicsV4.reference.new: No such file or directory"]) #LT 9/6 PT/MT
@@ -339,6 +338,8 @@ class BugTracker:
             s.add(96715,["checkcounts test warning: Unable to open reference file","nightlies/17.1.X.Y-VAL-P1HLT/",".root"],cat=1)
             s.add(102117,["checkcounts test warning: Unable to open reference file","nightlies/18.X.0/",".root"],cat=1)
             s.add(102118,["checkcounts test warning: Unable to open reference file","nightlies/18.X.0-VAL/",".root"],cat=1)
+        # OTHER NICOS FAILURES
+        s.add(-10,'trigtest.pl info: pre-conditions failed so test cannot be run. This is not a test failure.',title='Pre-conditions failed so test cannot run.')
     def prefill(s):
         """ 
         Note that bugs will be matched bottom-up. That is, newer bugs should be put at the bottom and will get matched first
