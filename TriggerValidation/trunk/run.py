@@ -45,10 +45,9 @@ except ImportError:
 
 import Nightly
 Nightly.Nightly.rel = rel
-Nightly.USE_ORACLE = USE_ORACLE
 import Project
 Project.Project.rel = rel
-Project.USE_ORACLE = USE_ORACLE
+Project.Project.USE_ORACLE = USE_ORACLE
 Project.Project.dby = dby
 Project.Project.SKIP_ERRORS = SKIP_ERRORS
 from Test import Test

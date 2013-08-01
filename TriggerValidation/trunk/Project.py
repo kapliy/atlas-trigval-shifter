@@ -20,12 +20,22 @@ class Project:
         """ Most attributes can be bootstrapped from the atn URL """
         s.name = name
         s.atn = atn
-        # optional metadata for Oracle access that can be used to narrow down particular arch
+        s.parent = None  # back-navigation to the Nightly
+        # optional *input* metadata for Oracle access that can be used to narrow down particular arch
         s.project = project if project else s.project_from_atn(atn)  # AtlasTrigger, AtlasHLT
         s.arch = arch if arch else s.arch_from_atn(atn)              # x86_64, i686
         s.opt = opt if opt else s.opt_from_atn(atn)                  # opt, dbg
         s.linuxos = linuxos                                          # slc5, slc6
         s.comp = comp                                                # gcc43
+        # derived metadata from oracle DB
+        nid,relid,jid = None,None,None
+        s.nid = nid
+        s.relid = relid
+        s.jid = jid
+        # link and contents of the NICOS *build* page
+        s.nicoslinks = []
+        s.errorpackages,s.errorlinks = [],[]
+        s.warnpackages,s.warnlinks = [],[]
         # derived quantities
         s.pres_nicoslink = None
         s.last_nicoslink = None
@@ -96,7 +106,6 @@ class Project:
         if delta>4:
             print '(delta>4): DELTA =',delta
             print 'See URL =',url
-            
         assert delta<=4,"Results on this page are older than 5 days - probably, the test hasn't finished yet"
         # retrieve links to NICOS logs that are grepped before truncation
         # the following parameters exploit the layout of NICOS summary page as seen in May 2012
@@ -150,11 +159,76 @@ class Project:
         return res,soup,nicoslink
     def load(s):
         print '--> Loading ATN project:',s.name
-        #print "PRES URL:  ",s.pres_url() # for debug
-        #print "LAST URL:  ",s.last_url() # for debug
+        if Project.USE_ORACLE:
+            s.load_oracle_keys()
         s.pres,s.pres_soup,s.pres_nicoslink = s.get_tests_from_url(s.pres_url())
         s.last,s.last_soup,s.last_nicoslink = s.get_tests_from_url(s.last_url())
+        if Project.USE_ORACLE:
+            s.load_build_oracle()
+        else:
+            s.load_build_soup()
         return True
+    def load_oracle_keys(s):
+        """ Loads primary keys from the oracle DB """
+        from db_helpers import oracle
+        xtra = ''
+        if s.linuxos:
+            xtra += " and J.os='%s'"%s.linuxos
+        if s.comp:
+            xtra += " and J.comp='%s'"%s.comp
+        cmd = " select J.jid,N.nid,R.relid from JOBS J inner join Nightlies N on N.nid=J.nid inner join Releases R on R.relid=J.relid where N.nname='%s' and J.arch='%s' and J.opt='%s' %s and R.name='rel_%d' and R.RELTSTAMP > sysdate - interval '6' day " % (s.parent.name,s.arch,s.opt,xtra,s.rel)
+        res = oracle.fetch(cmd)
+        assert len(res)>0,'ERROR: cannot locate %s in the oracle DB'%s.name
+        assert len(res)<2,'ERROR: multiple entries found in oracle DB for %s. Consider adding linuxos and comp options in configure_nightlies to specialize to a particular compiler or scientific linux version'%(s.name)
+        assert len(res[0])==3,'ERROR: buggy query in Project::load_oracle_keys()'
+        s.jid,s.nid,s.relid = res[0]
+        return
+    def load_build_oracle(s):
+        """ Query build errors directly from the database 
+        Results are saved in s.errorpackages and s.errorlinks
+        """
+        from db_helpers import oracle
+        assert s.jid,'ERROR: s.jid not populated, which should happen in Project::load_oracle_keys()'
+        cmd = """ select PK.PNAME,CR.NAMELN,CR.Res from compresults CR inner join PROJECTS P on P.projid=CR.projid inner join PACKAGES PK on PK.pid=CR.PID where CR.jid=%d and P.PROJNAME='%s' and CR.Res>0 """%(s.jid,s.project)
+        res = oracle.fetch(cmd)
+        # errors: status code = 3
+        s.errorpackages = [ x[0] for x in res if x[2]>=3 ]
+        s.errorlinks = [ x[1] for x in res if x[2]>=3 ]
+        # serious warnings: status code = 2
+        s.warnpackages = [ x[0] for x in res if x[2]==2 ]
+        s.warnlinks = [ x[1] for x in res if x[2]==2 ]
+        return
+    def load_build_soup(s):
+        """Extract a NICOS link to be able to detect build errors.
+        If this throws errors, you'll have to check for build errors manually
+        """
+        try:
+            nicos = str(s.pres_soup.findAll('script')[-2].string.split(',')[1].replace('"','').replace(')',''))
+            nicoslinks = [nicos,]
+            nicoslinks = list(set(nicoslinks))
+            # this also acts as a validation for user's input of ATN links for this nightly:
+            assert len(nicoslinks)>0,'Unable to locate a link to NICOS build summary table'
+            s.nicoslinks = nicoslinks
+            for nicoslink in s.nicoslinks:
+                # now check nicos page for any build errors (those don't get reported by ATN!)
+                data = urllib2.urlopen(nicoslink)
+                # fix some buggy html (align tag outside of parent tag) before parsing
+                soup = bs.BeautifulSoup(data.read().replace('<align=center >',''))
+                table = soup.find('table',{'cellspacing':'10%'})
+                rows = table.findAll('tr')
+                assert len(rows)>0,'Cannot find any records in NICOS build summary table'
+                errorpackages = []
+                errorlinks = []
+                for row in rows[1:]:
+                    if row.find('img',src='cross_red.gif'):
+                        errorpackages.append( row.contents[0].a.string )
+                        nicosdir = os.path.dirname(nicoslink)
+                        errorlinks.append( nicosdir + '/' + row.contents[0].a['href'] )
+                s.errorpackages += errorpackages
+                s.errorlinks += errorlinks
+        except:
+            print 'WARNING: unable to parse the NICOS build page. Build errors will NOT be detected!'
+            raise # enable for debugging
     def dump(s):
         if s.pres_soup:
             print s.soup.prettify()
@@ -228,6 +302,8 @@ class Project:
         res = []
         res.append('')
         res.append( '%s [<a href="%s">ATN</a> , <a href="%s">NICOS</a>]   +yesterday\'s links: [<a href="%s">ATN</a> , <a href="%s">NICOS</a>]:'%(s.name,s.pres_url(),s.pres_nicoslink,s.last_url(),s.last_nicoslink))
+        res += s.report_build()
+        header_len = len(res)
         total = 0
         # athena errors
         err = [t for t in s.pres if t.is_error_athena()]
@@ -257,13 +333,30 @@ class Project:
             res += msg; total+=tot
         # if there were no errors of any kind, just say so
         if total==0:
-            res = res[0:2]
+            res = res[0:header_len]
             res.append('  All OK!')
         # summarize bugs that were fixed since previous release
-        res += s.fixed_error_report()
+        res += s.report_fixed()
         return res
-    def fixed_error_report(s):
-        """ Returns a list of tests that were fixed between previous and current releases """
+    def report_build(s):
+        """ Reports a summary of build failures """
+        res = []
+        if len(s.nicoslinks)>0:
+            res.append( 'Build links: ' + ' '.join( ['<a href="%s">%d</a>'%(nicoslink,i+1) for i,nicoslink in enumerate(s.nicoslinks)] ) )
+        if len(s.errorpackages)>0:
+            pout = '<font color="#FF6666">Build errors:</font>'
+            iprinted = 0
+            for package,blink in sorted( zip(s.errorpackages,s.errorlinks) , key = lambda t: t[0] ):
+                # see if s.errorlinks are already wrapped around "a href" tags
+                pout += ' %s'%blink if re.search('a href',blink) else ' <a href="%s">%s</a>'%(blink,package)
+                iprinted += 1
+                if iprinted>=20:
+                    pout += ' and others'
+                    break
+            res.append(pout)
+        return res
+    def report_fixed(s):
+        """ Returns a summary of tests that were fixed between previous and current releases """
         res = []
         # yesterday's errors:
         err = [t for t in s.last if t.is_error_athena() or t.is_error_exit() or t.is_warning()]

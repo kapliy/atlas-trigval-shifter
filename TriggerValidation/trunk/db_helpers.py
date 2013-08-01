@@ -10,15 +10,22 @@ class DB:
     def __init__(s):
         s.ps='nghtldb_ru'
         s.connection = cx_Oracle.connect("ATLAS_NICOS_RUSER", s.ps, "ATLR")
-        s.cursor = connection.cursor()
+        s.cursor = s.connection.cursor()
         s.cursor.execute('ALTER SESSION SET current_schema = ATLAS_NICOS')
-    def fetch(s,cmd):
+    def fetch(s,cmd,verbose=False):
         res = []
+        if verbose:
+            print 'ORACLE:',cmd
         s.cursor.execute(cmd)
-        for row in cursor.fetchall():
+        for row in s.cursor.fetchall():
             res.append(row)
         return res
-    def close():
-        connection.close()
+    def close(s):
+        s.connection.close()
 
 oracle = DB()
+
+import atexit
+def close_connection():
+    oracle.close()
+atexit.register(close_connection)
