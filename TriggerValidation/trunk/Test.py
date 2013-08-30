@@ -15,7 +15,7 @@ class Test:
     urlbase=''
     CHECK_NICOS = True
     URLTIMEOUT = 60
-    def __init__(s,urlbase):
+    def __init__(s,urlbase=''):
         s.urlbase=urlbase
         s.name = 'EMPTY'
         # exit status
@@ -40,7 +40,7 @@ class Test:
         s.utail = False
         s.ulog = False
         s.unicos = False
-    def initAtn(s,row,nicoslogs={}):
+    def initSoup(s,row,nicoslogs={}):
         """ Initializes one ATN test from two pieces of information:
         - a BeautifulSoup-formatted table row
         - a map (indexed by test name), containing for each test its NICOS info: (iserror,iswarning,nicoslink)
@@ -78,6 +78,38 @@ class Test:
         else:
             # assert False
             pass
+    def initOracle(s,row):
+        """ Initializes one ATN test from oracle DB:
+        - ( TR.NAME,TR.TNAME,TR.Ecode,TR.CODE,TR.RES,TR.NAMELN,TR.WDIRLN )
+        EXAMPLE:
+        ('TriggerTest_TestConfiguration#AthenaTrigRDO_L2EFMerging_merge', 'AthenaTrigRDO_L2EFMerging_merge', 40, 2, 3, '<a href="http://cern.ch/atlas-computing/links/distDirectory/nightlies/developmentWebArea/nicos_web_area18X0VAL64BS6G47TrgOpt/NICOS_TestLog_rel_1/Trigger_TrigValidation_TriggerTest_60__TriggerTest_TestConfiguration__AthenaTrigRDO_L2EFMerging_merge__x.html">TriggerTest_TestConfiguration#AthenaTrigRDO_L2EFMerging_merge</a>', 'http://cern.ch/atlas-computing/links/buildDirectory/nightlies/devval/AtlasTrigger/rel_1/NICOS_area/NICOS_atntest18X0VAL64BS6G47TrgOpt/triggertest_testconfiguration_work')
+        """
+        import BeautifulSoup
+        s.name = row[1]
+        soup = BeautifulSoup.BeautifulSoup(row[5])
+        try:
+            x = soup.find("a")['href']
+            s.lnicos = str(x)
+        except:
+            pass
+        tpair = row[0].split('#')
+        assert len(tpair)==2, 'ERROR: unepxected PROJNAME. Expected something like [%s] but found [%s], which is missing a hashtag'%('TrigP1Test_TestConfiguration#AllMT_physicsV4_run_stop_run',row[0])
+        s.lextract = row[-1]+'/%s__%s.log'%(tpair[0],tpair[1])
+        s.ldir = wdir = row[-1]+'/'+s.name+'/'
+        s.lerror = wdir+'checklog.log'
+        s.ltail = wdir+'atn_tail.log'
+        s.llog = wdir+'atn_test.log'
+        # populate result codes
+        ecode,res = row[2],row[4]
+        s.overall = 'OK' if res != 3 else 'ERROR'
+        s.exit = 'OK' if ecode==0 else 'ERROR'
+        s.error = 'OK' if res==0 else 'ERROR'
+        s.warn = res in (1,2)
+        s.exitcode = ecode
+        s.nicoswarn = res in (1,2)
+        s.nicoserr = res in (3,)
+        print s.name,ecode,res
+        pass
     def __str__(s):
         return '%s\t %s %s %s'%(s.name,s.overall,s.exit,s.error)
     def is_error_athena_nonicos(s):
@@ -99,6 +131,7 @@ class Test:
     def is_error_post(s):
         if s.is_error_athena(): return False
         if s.is_error_exit(): return False
+        #print 'is_error_post',s.name,s.overall  #FIXMEAK
         return True if re.match('ERROR',s.overall) else False
     def is_warning(s):
         """ Only report warnings if it is not also an athena error, exit error, or log parse error """

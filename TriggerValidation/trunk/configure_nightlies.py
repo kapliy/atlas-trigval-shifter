@@ -3,15 +3,6 @@
 # ATTENTION: make sure to replace the release string with rel_%d
 # so that the script can automatically substitute the correct value!
 
-"""
-# TEMPLATE TO ADD A NIGHTLY:
-N = Nightly('','')
-N.add(Project('TrigP1Test',''))
-N.add(Project('TriggerTest',''))
-N.add(Project('TrigAnalysisTest',''))
-X.append(N)
-"""
-
 # allow the user to select a subset of nightlies to be processed
 # ALL - run over all enabled nightliers
 # PART1 - CAFHLT and P1HLT that finished at 11 PM Chicago time

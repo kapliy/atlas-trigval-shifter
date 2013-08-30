@@ -36,6 +36,8 @@ cmd=""" select name,tname,fname,type from tests where tests.type='INT' and rownu
 cmd = """select nname,ngroup,ntype,val from NIGHTLIES where nname='%s'  """%nname
 # select release
 cmd = """select R.nid,R.relid,N.nname,R.name,R.TCREL,R.RELTSTAMP from NIGHTLIES N inner join releases R on N.nid = R.nid where nname='%s' and R.RELTSTAMP > sysdate - interval '6' day order by R.RELTSTAMP"""%nname
+# select jid,nid,relid
+cmd = " select J.jid,N.nid,R.relid from JOBS J inner join Nightlies N on N.nid=J.nid inner join Releases R on R.relid=J.relid where N.nname='18.X.0-VAL' and J.arch='x86_64' and J.opt='opt' and R.name='rel_3' and R.RELTSTAMP > sysdate - interval '6' day"
 # select jobid (for a given nightly+release, contains various architecture+gcc tags)
 cmd = """ select * from JOBS where nid=%d and relid=%d and OPT='opt' and ARCH='x86_64' """%(nid,relid)
 # jobstat for a jobid (repeated for each project) - USELESS
@@ -44,10 +46,10 @@ cmd = """ select JS.projid,P.projname from JOBSTAT JS inner join projects P on P
 cmd = """ select P.PROJNAME,C.NPACK,C.NPB,C.NER from CSTAT C inner join PROJECTS P on P.projid=C.projid where C.jid=%d and P.PROJNAME='AtlasAnalysis' """%(jid)
 # compilation results: list of packages with a warning or error
 cmd = """ select P.PROJNAME,PK.PNAME,PK.CONTNAME,CR.Res,CR.ERRTEXT,CR.NAMELN from compresults CR inner join PROJECTS P on P.projid=CR.projid inner join PACKAGES PK on PK.pid=CR.PID where CR.jid=%d and P.PROJNAME='AtlasAnalysis' and CR.Res>0 """%(jid)
-# test results TODO
-cmd = """ select P.PROJNAME,PK.PNAME,PK.CONTNAME,TR.Ecode,TR.CODE,TR.RES,TR.NAME,TR.NAMELN,TR.WDIRLN from testresults TR inner join PROJECTS P on P.projid=TR.projid inner join PACKAGES PK on PK.pid=TR.PID where TR.jid=%d and P.PROJNAME='AtlasAnalysis' and TR.Res>-10 """%(jid)
-
-cmd = " select J.jid,N.nid,R.relid from JOBS J inner join Nightlies N on N.nid=J.nid inner join Releases R on R.relid=J.relid where N.nname='18.X.0-VAL' and J.arch='x86_64' and J.opt='opt' and R.name='rel_3' and R.RELTSTAMP > sysdate - interval '6' day"
+# test results (full)
+cmd = """ select P.PROJNAME,PK.PNAME,PK.CONTNAME,TR.Ecode,TR.CODE,TR.RES,TR.NAME,TR.TNAME,TR.NAMELN,TR.WDIRLN from testresults TR inner join PROJECTS P on P.projid=TR.projid inner join PACKAGES PK on PK.pid=TR.PID where TR.jid=%d and P.PROJNAME='AtlasAnalysis' and TR.Res>-10 """%(jid)
+# test results (minimum)
+cmd = """ select TR.NAME,TR.TNAME,TR.Ecode,TR.CODE,TR.RES,TR.NAMELN,TR.WDIRLN from testresults TR inner join PROJECTS P on P.projid=TR.projid where TR.jid=%d and P.PROJNAME='AtlasAnalysis' and TR.Res>-10 and TR.NAME like 'TrigAnalysisTest%%' """%(jid)
 
 print cmd
 cursor.execute(cmd)

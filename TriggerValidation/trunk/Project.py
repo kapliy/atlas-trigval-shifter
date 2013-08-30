@@ -16,10 +16,11 @@ class Project:
     URLTIMEOUT = 60
     SKIP_ERRORS = True
     dby = False
-    def __init__(s,name,atn,project=None,arch=None,opt=None,linuxos=None,comp=None):
+    def __init__(s,name,atn,grep=None,project=None,arch=None,opt=None,linuxos=None,comp=None):
         """ Most attributes can be bootstrapped from the atn URL """
         s.name = name
         s.atn = atn
+        s.grep = name if grep==None else grep  # grep string to select a subset of tests (eg: TrigAnalysisTest)
         s.parent = None  # back-navigation to the Nightly
         # optional *input* metadata for Oracle access that can be used to narrow down particular arch
         s.project = project if project else s.project_from_atn(atn)  # AtlasTrigger, AtlasHLT
@@ -28,10 +29,8 @@ class Project:
         s.linuxos = linuxos                                          # slc5, slc6
         s.comp = comp                                                # gcc43
         # derived metadata from oracle DB
-        nid,relid,jid = None,None,None
-        s.nid = nid
-        s.relid = relid
-        s.jid = jid
+        s.cur_nid,s.cur_relid,s.cur_jid = None,None,None
+        s.last_nid,s.last_relid,s.last_jid = None,None,None
         # link and contents of the NICOS *build* page
         s.nicoslinks = []
         s.errorpackages,s.errorlinks = [],[]
@@ -78,12 +77,14 @@ class Project:
             return r-1 if r>0 else 6
         else:         # use day-before-yesterday:
             return r-2 if r>1 else (5 if r==0 else 6)
+    def last_rel(s):
+        return s.prel(s.rel)
     def pres_url(s):
         return s.atn%s.rel
     def any_url(s,r):
         return s.atn%r
     def last_url(s):
-        return s.any_url(s.prel(s.rel))
+        return s.any_url(s.last_rel())
     def get_tests_from_url(s,url):
         res = []
         page = urllib2.urlopen(url,timeout=s.URLTIMEOUT)
@@ -130,9 +131,9 @@ class Project:
                 tname_full = (links[0].string).strip()
                 # If s.name == TriggerTest-SLC6-GCC46, separate out the first part: sname_pt1 = TriggerTest
                 sname_pt1 = s.name
-                if len(s.name.split('-'))>=2:
-                    sname_pt1 = s.name.split('-')[0]
-                if not (re.match(s.name,tname_full) or re.match(sname_pt1,tname_full)):
+                if len(s.grep.split('-'))>=2:
+                    sname_pt1 = s.grep.split('-')[0]
+                if not (re.match(s.grep,tname_full) or re.match(sname_pt1,tname_full)):
                     continue
                 tname = tname_full.split('#')[1]
                 nicosdir = os.path.dirname(nicoslink)
@@ -154,21 +155,44 @@ class Project:
         rows = table.findAll('tr',{ "class" : "hi" })
         for row in rows:
             t = Test(urlbase=url)
-            t.initAtn(row,nicoslogs)
+            t.initSoup(row,nicoslogs)
             res.append(t)
         return res,soup,nicoslink
+    def get_tests_from_oracle(s,jid):
+        """ returns a list of failed Tests using direct queries to Oracle """
+        from db_helpers import oracle
+        res = []
+        cmd = """ select TR.NAME,TR.TNAME,TR.Ecode,TR.CODE,TR.RES,TR.NAMELN,TR.WDIRLN from testresults TR inner join PROJECTS P on P.projid=TR.projid where TR.jid=%d and P.PROJNAME='%s' """%(jid,s.project)
+        if s.grep:
+            cmd += " and TR.NAME like '%s%%' "%s.grep  # and TR.Res>0 
+        q = oracle.fetch(cmd)
+        q.sort(key = lambda x: x[0])
+        for x in q:
+            st = x[3] # Status code: 0 - initialization, 1 - ongoing (in progress), 2 - completion
+            if st!=2:
+                print 'WARNING: skipping test [%s], which is still %s: '%(x[0],'initializing' if st==0 else 'running')
+                continue
+            t = Test()
+            t.initOracle(x)
+            res.append(t)
+        return res
     def load(s):
         print '--> Loading ATN project:',s.name
         if Project.USE_ORACLE:
-            s.load_oracle_keys()
-        s.pres,s.pres_soup,s.pres_nicoslink = s.get_tests_from_url(s.pres_url())
-        s.last,s.last_soup,s.last_nicoslink = s.get_tests_from_url(s.last_url())
-        if Project.USE_ORACLE:
-            s.load_build_oracle()
+            # tests from today's rel
+            s.load_oracle_keys(False)
+            s.pres = s.get_tests_from_oracle(s.cur_jid)
+            # tets from yesterday's rel
+            s.load_oracle_keys(True)
+            s.last = s.get_tests_from_oracle(s.last_jid)
+            # build errors
+            s.load_build_oracle(s.cur_jid)
         else:
+            s.pres,s.pres_soup,s.pres_nicoslink = s.get_tests_from_url(s.pres_url())
+            s.last,s.last_soup,s.last_nicoslink = s.get_tests_from_url(s.last_url())
             s.load_build_soup()
         return True
-    def load_oracle_keys(s):
+    def load_oracle_keys(s,last=False):
         """ Loads primary keys from the oracle DB """
         from db_helpers import oracle
         xtra = ''
@@ -176,20 +200,24 @@ class Project:
             xtra += " and J.os='%s'"%s.linuxos
         if s.comp:
             xtra += " and J.comp='%s'"%s.comp
-        cmd = " select J.jid,N.nid,R.relid from JOBS J inner join Nightlies N on N.nid=J.nid inner join Releases R on R.relid=J.relid where N.nname='%s' and J.arch='%s' and J.opt='%s' %s and R.name='rel_%d' and R.RELTSTAMP > sysdate - interval '6' day " % (s.parent.name,s.arch,s.opt,xtra,s.rel)
+        rel = s.last_rel() if last else s.rel
+        cmd = " select J.jid,N.nid,R.relid from JOBS J inner join Nightlies N on N.nid=J.nid inner join Releases R on R.relid=J.relid where N.nname='%s' and J.arch='%s' and J.opt='%s' %s and R.name='rel_%d' and R.RELTSTAMP > sysdate - interval '6' day " % (s.parent.name,s.arch,s.opt,xtra,rel)
         res = oracle.fetch(cmd)
-        assert len(res)>0,'ERROR: cannot locate %s in the oracle DB'%s.name
-        assert len(res)<2,'ERROR: multiple entries found in oracle DB for %s. Consider adding linuxos and comp options in configure_nightlies to specialize to a particular compiler or scientific linux version'%(s.name)
+        assert len(res)>0,'ERROR: cannot locate %s in the oracle DB. Query: [%s]'%(s.name,cmd)
+        assert len(res)<2,'ERROR: multiple entries found in oracle DB for %s. Consider adding linuxos and comp options in configure_nightlies to specialize to a particular compiler or scientific linux version. Query: [%s]'%(s.name,cmd)
         assert len(res[0])==3,'ERROR: buggy query in Project::load_oracle_keys()'
-        s.jid,s.nid,s.relid = res[0]
+        if last:
+            s.last_jid,s.last_nid,s.last_relid = res[0]
+        else:
+            s.cur_jid,s.cur_nid,s.cur_relid = res[0]
         return
-    def load_build_oracle(s):
+    def load_build_oracle(s,jid):
         """ Query build errors directly from the database 
         Results are saved in s.errorpackages and s.errorlinks
         """
         from db_helpers import oracle
-        assert s.jid,'ERROR: s.jid not populated, which should happen in Project::load_oracle_keys()'
-        cmd = """ select PK.PNAME,CR.NAMELN,CR.Res from compresults CR inner join PROJECTS P on P.projid=CR.projid inner join PACKAGES PK on PK.pid=CR.PID where CR.jid=%d and P.PROJNAME='%s' and CR.Res>0 """%(s.jid,s.project)
+        assert jid,'ERROR: s.jid not populated, which should happen in Project::load_oracle_keys()'
+        cmd = """ select PK.PNAME,CR.NAMELN,CR.Res from compresults CR inner join PROJECTS P on P.projid=CR.projid inner join PACKAGES PK on PK.pid=CR.PID where CR.jid=%d and P.PROJNAME='%s' and CR.Res>0 """%(jid,s.project)
         res = oracle.fetch(cmd)
         # errors: status code = 3
         s.errorpackages = [ x[0] for x in res if x[2]>=3 ]
