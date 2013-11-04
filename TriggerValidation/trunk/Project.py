@@ -33,8 +33,12 @@ class Project:
         s.last_nid,s.last_relid,s.last_jid = None,None,None
         # link and contents of the NICOS *build* page
         s.nicoslinks = []
-        s.errorpackages,s.errorlinks = [],[]
-        s.warnpackages,s.warnlinks = [],[]
+        # tests that failed to build
+        s.errBuildPackages,s.errBuildLinks = [],[]
+        # tests that built OK but failed build unit tests
+        s.errUnitPackages, s.errUnitLinks    = [],[]
+        # tests that had build warnings
+        s.warnBuildPackages,s.warnBuildLinks = [],[]
         # derived quantities
         s.pres_nicoslink = None
         s.last_nicoslink = None
@@ -87,7 +91,13 @@ class Project:
         return s.any_url(s.last_rel())
     def get_tests_from_url(s,url):
         res = []
-        page = urllib2.urlopen(url,timeout=s.URLTIMEOUT)
+        try:
+            page = urllib2.urlopen(url,timeout=s.URLTIMEOUT)
+        except:
+            # sometimes web page was not created and this can cause the skipping some release
+            print 'OOPS: check web page availability (maybe not yet available): '
+            print '     ',url
+            pass    
         soup = bs.BeautifulSoup(page)
         # make sure we are not accidentally looking at last week's results
         # (e.g., if we are fetching the page before it's been updated)
@@ -213,18 +223,18 @@ class Project:
         return
     def load_build_oracle(s,jid):
         """ Query build errors directly from the database 
-        Results are saved in s.errorpackages and s.errorlinks
+        Results are saved in s.errBuildPackages and s.errBuildLinks (etc)
         """
         from db_helpers import oracle
         assert jid,'ERROR: s.jid not populated, which should happen in Project::load_oracle_keys()'
         cmd = """ select PK.PNAME,CR.NAMELN,CR.Res from compresults CR inner join PROJECTS P on P.projid=CR.projid inner join PACKAGES PK on PK.pid=CR.PID where CR.jid=%d and P.PROJNAME='%s' and CR.Res>0 """%(jid,s.project)
         res = oracle.fetch(cmd)
         # errors: status code = 3
-        s.errorpackages = [ x[0] for x in res if x[2]>=3 ]
-        s.errorlinks = [ x[1] for x in res if x[2]>=3 ]
+        s.errBuildPackages = [ x[0] for x in res if x[2]>=3 ]
+        s.errBuildLinks = [ x[1] for x in res if x[2]>=3 ]
         # serious warnings: status code = 2
-        s.warnpackages = [ x[0] for x in res if x[2]==2 ]
-        s.warnlinks = [ x[1] for x in res if x[2]==2 ]
+        s.warnBuildPackages = [ x[0] for x in res if x[2]==2 ]
+        s.warnBuildLinks = [ x[1] for x in res if x[2]==2 ]
         return
     def load_build_soup(s):
         """Extract a NICOS link to be able to detect build errors.
@@ -245,15 +255,36 @@ class Project:
                 table = soup.find('table',{'cellspacing':'10%'})
                 rows = table.findAll('tr')
                 assert len(rows)>0,'Cannot find any records in NICOS build summary table'
-                errorpackages = []
-                errorlinks = []
+                errBuildPackages = []
+                errBuildLinks = []
+                errUnitPackages = []
+                errUnitLinks = []
+                # locate the column containing unit test results
+                idxUnit = None
+                try:
+                    for ititle,title in enumerate(rows[0].findAll('td')):
+                        if title.find('b') and title.find('b').text=='Unit Test':
+                            idxUnit = ititle
+                            break
+                except:
+                    idxUnit = None
+                nicosdir = os.path.dirname(nicoslink)
                 for row in rows[1:]:
+                    # build errors
                     if row.find('img',src='cross_red.gif'):
-                        errorpackages.append( row.contents[0].a.string )
-                        nicosdir = os.path.dirname(nicoslink)
-                        errorlinks.append( nicosdir + '/' + row.contents[0].a['href'] )
-                s.errorpackages += errorpackages
-                s.errorlinks += errorlinks
+                        errBuildPackages.append( row.contents[0].a.string )
+                        errBuildLinks.append( nicosdir + '/' + row.contents[0].a['href'] )
+                    # unit test errors in builds
+                    failUnit = idxUnit!=None and len(row.findAll('td'))>idxUnit and row.findAll('td')[idxUnit]
+                    if failUnit:
+                        alink = row.findAll('td')[idxUnit].find('a')
+                        if alink and alink.text=='FAIL':
+                            errUnitPackages.append( row.contents[0].a.string )
+                            errUnitLinks.append( nicosdir + '/' + alink['href'] )
+                s.errBuildPackages += errBuildPackages
+                s.errBuildLinks += errBuildLinks
+                s.errUnitPackages += errUnitPackages
+                s.errUnitLinks += errUnitLinks
         except:
             print 'WARNING: unable to parse the NICOS build page. Build errors will NOT be detected!'
             raise # enable for debugging
@@ -371,15 +402,25 @@ class Project:
         res = []
         if len(s.nicoslinks)>0:
             res.append( 'Build links: ' + ' '.join( ['<a href="%s">%d</a>'%(nicoslink,i+1) for i,nicoslink in enumerate(s.nicoslinks)] ) )
-        if len(s.errorpackages)>0:
+        if len(s.errBuildPackages)>0:
             pout = '<font color="#FF6666">Build errors:</font>'
             iprinted = 0
-            for package,blink in sorted( zip(s.errorpackages,s.errorlinks) , key = lambda t: t[0] ):
-                # see if s.errorlinks are already wrapped around "a href" tags
+            for package,blink in sorted( zip(s.errBuildPackages,s.errBuildLinks) , key = lambda t: t[0] ):
+                # see if s.errBuildLinks are already wrapped around "a href" tags
                 pout += ' %s'%blink if re.search('a href',blink) else ' <a href="%s">%s</a>'%(blink,package)
                 iprinted += 1
-                if iprinted>=20:
-                    pout += ' and others'
+                if iprinted>=15:
+                    pout += ' ... and others (check build links above)'
+                    break
+            res.append(pout)
+        if len(s.errUnitPackages)>0:
+            pout = '<font color="#FF00BF">Unit test errors (in builds):</font>'
+            iprinted=0
+            for package,blink in sorted( zip(s.errUnitPackages,s.errUnitLinks) , key = lambda t: t[0] ):
+                pout += ' %s'%blink if re.search('a href',blink) else ' <a href="%s">%s</a>'%(blink,package)
+                iprinted += 1
+                if iprinted>=15:
+                    res.append( ' ... and others (check build links above)' )
                     break
             res.append(pout)
         return res
