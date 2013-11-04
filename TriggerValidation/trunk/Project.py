@@ -414,7 +414,7 @@ class Project:
                     break
             res.append(pout)
         if len(s.errUnitPackages)>0:
-            pout = '<font color="#FF00BF">Unit test errors (in builds):</font>'
+            pout = '<font color="#FF00BF">Unit errors:</font>'
             iprinted=0
             for package,blink in sorted( zip(s.errUnitPackages,s.errUnitLinks) , key = lambda t: t[0] ):
                 pout += ' %s'%blink if re.search('a href',blink) else ' <a href="%s">%s</a>'%(blink,package)

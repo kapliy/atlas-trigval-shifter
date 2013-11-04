@@ -131,7 +131,7 @@ class Test:
     def is_error_post(s):
         if s.is_error_athena(): return False
         if s.is_error_exit(): return False
-        #print 'is_error_post',s.name,s.overall  #FIXMEAK
+        #print 'is_error_post',s.name,s.overall  # TODO: DEBUG Oracle case here
         return True if re.match('ERROR',s.overall) else False
     def is_warning(s):
         """ Only report warnings if it is not also an athena error, exit error, or log parse error """
