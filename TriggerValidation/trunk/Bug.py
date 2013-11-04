@@ -245,9 +245,9 @@ class BugTracker:
             s.add(-5, ['\.reference: No such file or directory\</A\>\<BR\>'],'NICOS: MISSING REFERENCE FILE')
             s.add(-5, ['\.reference: No such file or directory','wc:','checkcounts test warning: Unable to open reference'],'NICOS: MISSING REFERENCE FILE')
         else:     # missing references (per-nightly)
-            s.add(96295,[".reference: No such file or directory","nightly 17.2.X.Y-VAL-Prod/"])
-            s.add(96296,[".reference: No such file or directory","nightly 17.2.X/"])
-            s.add(96297,[".reference: No such file or directory","nightly 17.2.X-VAL/"])
+            #s.add(96295,[".reference: No such file or directory","nightly 17.2.X.Y-VAL-Prod/"])
+            #s.add(96296,[".reference: No such file or directory","nightly 17.2.X/"])
+            #s.add(96297,[".reference: No such file or directory","nightly 17.2.X-VAL/"])
             s.add(102114,[".reference: No such file or directory","nightly 18.X.0-VAL/"])
         if True: # reference count mismatch - only matched if a test is a WARNING but not an ERROR
             # REFERENCE BUGS
@@ -277,6 +277,8 @@ class BugTracker:
             s.add(-96341,["nightlies/17.1.X.Y-VAL2-P1HLT/","WARNING Output differs from reference for","If this change is understood, please update"],title = "WARNING Output differs from reference: don't report in Savannah per Roger's request",cat=2)
             s.add(-96342,["nightlies/17.1.X.Y.Z-VAL2-AtlasCAFHLT/","ATHENA_REGTEST_FAILED \(64\) ROOTCOMP_MISMATCH \(4\)"],title = "WARNING Output differs from reference: don't report in Savannah per Roger's request",cat=1)
             s.add(-96342,["nightlies/17.1.X.Y.Z-VAL2-AtlasCAFHLT/","WARNING Output differs from reference for","If this change is understood, please update"],title = "WARNING Output differs from reference: don't report in Savannah per Roger's request",cat=1)
+            s.add(-96340,["nightlies/19.X.0/","ATHENA_REGTEST_FAILED \(64\)"],title = "WARNING Output differs from reference: don't report in Savannah per Roger's request",cat=1)
+            s.add(-96340,["nightlies/19.X.0-VAL/","ATHENA_REGTEST_FAILED \(64\)"],title = "WARNING Output differs from reference: don't report in Savannah per Roger's request",cat=1)
             # TIME QUOTA BUGS
             s.add(-7,["test killed as time quota spent, test warning is issued"],title="ATTENTION: add a TIME QUOTA BUG match string in Bug.py::prefill_nicos for this test and release - but ONLY if it recurs",cat=2) # HAS to be above other time quota strings - this is a "catch-all" case
             s.add(96366,["AthenaTrigRDO_MC_pp_v2_loose_mc_prescale","nightlies/17.1.X.Y-VAL-P1HLT/","test killed as time quota spent, test warning is issued"],cat=2)
@@ -311,6 +313,8 @@ class BugTracker:
             s.add(101328,["AthenaTrigRDO_chainOrder_compare","nightlies/17.1.X/","test killed as time quota spent, test warning is issued"],cat=2)
             s.add(96547,["AllPT_MC_run_stop_run","nightlies/17.1.X-VAL/","test killed as time quota spent, test warning is issued"],cat=2)
             s.add(101328,["AthenaTrigRDO_chainOrder_compare","nightlies/17.1.X-VAL/","test killed as time quota spent, test warning is issued"],cat=2)
+            s.add(102649,["AthenaTrigRDO_L2EFMerging_compare","nightlies/18.X.0-VAL/","test killed as time quota spent, test warning is issued"],cat=2)
+            s.add(102649,["AthenaTrigRDO_L2EFMerging_compare","nightlies/18.X.0/","test killed as time quota spent, test warning is issued"],cat=2)
             # TOLERANCE BUGS
             s.add(-8,"checkcounts test warning : trigger counts outside tolerance:",title="ATTENTION: add a TOLERANCE BUG match string in Bug.py::prefill_nicos for this release",cat=1) #HAS to be above other tolerance  strings - this is a "catch-all" case
             s.add(-96368,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.1.X.Y-VAL-P1HLT/"],title="count mismatch warnings:bona fide bugs but don't report in Savannah per Roger's request",cat=1)
@@ -326,6 +330,9 @@ class BugTracker:
             s.add(-96407,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.1.X.Y-VAL2-P1HLT/"],title="count mismatch warnings:bona fide bugs but don't report in Savannah per Roger's request",cat=1)
             s.add(-96408,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.1.X.Y.Z-VAL2-AtlasCAFHLT/"],title="count mismatch warnings:bona fide bugs but don't report in Savannah per Roger's request",cat=1)
             s.add(-96420,["checkcounts test warning : trigger counts outside tolerance:","nightlies/17.2.X/"],title="count mismatch warnings:bona fide bugs but don't report in Savannah per Roger's request",cat=1)
+            s.add(-103072,["checkcounts test warning : trigger counts outside tolerance:","nightlies/19.X.0/"],title="count mismatch warnings:bona fide bugs but don't report in Savannah per Roger's request",cat=1)
+            s.add(-103072,["checkcounts test warning : trigger counts outside tolerance:","nightlies/19.X.0-VAL/"],title="count mismatch warnings:bona fide bugs but don't report in Savannah per Roger's request",cat=1)
+
             # CHECKCOUNT MISSING REFERENCE BUGS
             s.add(-9,["checkcounts test warning: Unable to open reference file",".root"],title='ATTENTION: add a CHECKCOUNTS BUG match string in Bug.py::prefill_nicos for this release',cat=1) #HAS to be above other checkcounts strings - this is a "catch-all" case
             s.add(96372,["checkcounts test warning: Unable to open reference file","nightlies/17.1.X.Y.Z-VAL-AtlasCAFHLT/",".root"],cat=1)
@@ -338,8 +345,15 @@ class BugTracker:
             s.add(96715,["checkcounts test warning: Unable to open reference file","nightlies/17.1.X.Y-VAL-P1HLT/",".root"],cat=1)
             s.add(102117,["checkcounts test warning: Unable to open reference file","nightlies/18.X.0/",".root"],cat=1)
             s.add(102118,["checkcounts test warning: Unable to open reference file","nightlies/18.X.0-VAL/",".root"],cat=1)
+            s.add(103073,["checkcounts test warning: Unable to open reference file","nightlies/19.X.0/",".root"],cat=1)
+            s.add(103073,["checkcounts test warning: Unable to open reference file","nightlies/19.X.0-VAL/",".root"],cat=1)
         # OTHER NICOS FAILURES
         s.add(-10,'trigtest.pl info: pre-conditions failed so test cannot be run. This is not a test failure.',title='Pre-conditions failed so test cannot run.')
+        s.add(102518,["No such file or directory","missing reference","17.1.X.Y"],"Note: this bug is only valid for the missing references beginning on 9/7--submit new bug if this bug is closed") ## Note, this is a bad match string and will need to be removed as soon as this bug is filled.
+        s.add(102539,["No such file or directory","17.2.X.Y-VAL"],"Note: this bug is only valid for the missing references beginning on 9/10 17.2.X.Y-VAL--submit new bug if this bug is closed") ## Note, this is a bad match string and will need to be removed as soon as this bug is filled.
+        s.add(103070,["Output differs from reference for TrigSteer_EF.ResultBuilder"],cat=1)
+        s.add(103071,["ATHENA_REGTEST_FAILED","ecodes_TrigSteer_EF.ResultBuilder.reference.new"])
+        
     def prefill(s):
         """ 
         Note that bugs will be matched bottom-up. That is, newer bugs should be put at the bottom and will get matched first
@@ -378,7 +392,7 @@ class BugTracker:
         s.add(93741,["ERROR Unable to build inputFileSummary from any of the specified input files","TimeoutError","KeyError: 'eventdata_itemsDic'"])
         s.add(93886,'At least one of the jobs \(ascending/descending chain counter\) has not been completed\! Exit.')
         s.add(93897,['LArL2ROBListWriter_j10_empty_larcalib','L1CaloTileHackL2ROBListWriter_j10_empty_larcalib','ERROR Could not find RoI descriptor - labels checked : TrigT2CaloEgamma initialRoI'])
-        s.add(93990,["TriggerMenuSQLite","sqlite' file is NOT found in DATAPATH, exiting"],"NB: This is usually due to a build error in Trigger XML")
+        #s.add(93990,["TriggerMenuSQLite","sqlite' file is NOT found in DATAPATH, exiting"],"NB: This is usually due to a build error in Trigger XML")
         s.add(94033,["ATLAS_DBA.LOGON_AUDIT_TRIGGER' is invalid and failed re-validation"])
         s.add(94084,["LVL1CTP::CTPSLink::getCTPToRoIBWords","Current algorithm: RoIBuilder"])
         s.add(96606,["ToolSvc.TrigTSerializer","MuonFeatureContainer_p3","ERROR Errors while decoding"])
@@ -567,6 +581,7 @@ class BugTracker:
         s.add(100577,["Core dump from CoreDumpSvc","Current algorithm: TrigL2SiTrackFinder_FullScan_ZF_OnlyA"])
         s.add(100679,["ERROR Hypo algo should never be placed first in sequences with more than one input TE","FATAL Errors were too severe in this event will abort the job","ERROR Terminating event processing loop due to errors"])
         s.add(100680,["Moving to AthenaTrigRDO_chainOrder_compare","differences in tests with ordered HLT chain execution","TrigSteer_L2.TrigChainMoniValidation"])
+        s.add(100801,["ERROR.*The object \"RunParams\" of the \"is/repository\" type is not published"],title="TrigP1Test fails in 17.2.X VAL (rel_0): The object \"RunParams\" of the \"is/repository\" type is not published")
         s.add(100994,["Error in <DataBucketVoid>: Cannot cast class Rec::TrackParticleContainer_tlp3 to Rec::TrackParticleContainer"])
         s.add(100994,["Cannot find transient class for Rec::TrackParticleContainer_tlp3"])
         s.add(94873,["No valid proxy for object HLT_EFMultiMuFex  of type TrigEFBphysContainer","dumpTrigElectronContainer"]) # was: 101026, but closed and re-assigned
@@ -574,7 +589,7 @@ class BugTracker:
         s.add(101042,["ImportError: No module named MuonTruthAlgs.MuonTruthAlgsConf"])#
         s.add(101217,["Analysis__JpsiFinder","object has no attribute","thresholdPt"])
         s.add(101301,["Tool egammaTopoIso either does not implement the correct interface","or its version is incompatible"])
-        s.add(101315,["ERROR updateAddress","Cannot translate clID"])
+        s.add(101480,["ERROR updateAddress","Cannot translate clID"])
         s.add(101316,["Error initializing tool","LAr7_11NocorrClusterMaker.CaloRunClusterCorrectionsNocorrele7_11"])
         s.add(101534,["Trig::TrigNtExecTool::ReadOPI","PyEval_EvalFrameEx","cxx:354"])
         s.add(101619,["No valid proxy for object HLT_EFMultiMuFex  of type TrigEFBphysContainer","TrigInDetTrackTruthMap.cxx"])
@@ -589,12 +604,65 @@ class BugTracker:
         s.add(102115,['WARNING Bytestream input: guessing that evt_type=IS_DATA, but this is not 100\% certain. Using auto-configuration is not safe if this info is wrong.','MagFieldUtils.getFieldForRun ERROR accessing /TDAQ/RunCtrl/SOR_Params']) # not sure
         s.add(102116,['ERROR Problems preloading IOVRanges','ERROR Standard std::exception is caught handling incident','self.getHandle\(\)._evtpro.executeRun\( nEvt \)','RuntimeError: \(file "", line 0\) std::exception \(C\+\+ exception\)'])
         s.add(102119,["JetTrigger                                        ERROR TriggerType not registered","FATAL  Standard std::exception is caught","ERROR Terminating event processing loop due to errors"])
+        s.add(102184,["ImportError: No module named TrackInCaloToolsConf"],title='Failure to import TrackInCaloToolsConf')
+        s.add(102185,['reg.AddConverter \("TauJetContainer_p1_old_cnv"\)','transientTree.py", line 899, in <module>'],title='Failure in AddConverter transientTree.py')
+        s.add(102187,["AttributeError: '<class 'AthenaCommon.AppMgr.AthServiceManager'>' object has no attribute 'AtlasTrackingGeometrySvc'"],title='failure in getting AtlasTrackingGeometrySvc')
+        s.add(102188,["ERROR setWriteCatalog",'basic_string::_S_construct null not valid \( POOL : "pool::FC::XMLFileCatalog::connect" from "FileCatalog" \)'],title='Failure in setWriteCatalog from PoolSvc')            
+        s.add(102194,["GeoModel","FATAL in sysInitialize\(\):","std::exception is caught","ERROR basic_string::_S_construct null not valid"],title='Failure in GeoModel sysInitialize')
+        s.add(102214,["PyCintex.loadDictionary\('egammaEnumsDict'\)",'raise RuntimeError\("Error Loading dictionary"\)'],title='Exception raised when loading egammaEnums dict')
+        s.add(102227,["No such file or directory: 'LVL1config_MC_pp_v4_loose_mc_prescale_rel.xml'"],title='failure to find file LVL1config_MC_pp_v4_loose_mc_prescale_rel.xml')
+        s.add(101928,["Segmentation fault \(invalid memory reference\)","AthenaTrigRDOtoESDAOD"],title="Crash in RootTrigAOD_TDT")
+        s.add(102227,["No such file or directory: 'LVL1config_MC_pp_v4_loose_mc_prescale_17.1.7.xml'"],title='failure to find file LVL1config_MC_pp_v4_loose_mc_prescale_rel.xml') # different message but same error as #102227
+        s.add(102261,["/afs/cern.ch/sw/lcg/external/Python/2.6.5/x86_64-slc5-gcc43-opt/bin/python: symbol lookup error: /afs/cern.ch/atlas/software/builds/AtlasReconstruction/17.2.11/InstallArea/x86_64-slc5-gcc43-opt/lib/libJetTagToolsLib.so: undefined symbol: _ZNK15TTrainedNetwork21calculateOutputValuesERSt6vectorIdSaIdEE"],title="Undefined symbol in shared object of libJetTagToolsLib.so")
+        s.add(102293,["ERROR uncheckedSetTypePackageForID: LArRawConditions-01-16-06 can not set CLID"],title="ERROR uncheckedSetTypePackageForID: LArRawConditions-01-16-06")
+        s.add(102301,["HLTMonManager","0x7f060fd1e342 fatalDump ../src/SealSignal.cxx:1429","0x7f060fd1e63d fatal ../src/SealSignal.cxx:930"])
+        s.add(102307,["CellMakerFullCalo_topo","/build/atnight/localbuilds/nightlies/18.X.0-VAL/AtlasCore/rel_nightly/InstallArea/jobOptions/AthenaCommon/runbatch.py","runs until theApp.EvtMax events reached"])
+        #s.add(102315,["ImportError: No module named SCT_Monitoring.SCT_MonitoringConf","from SCT_Monitoring.SCT_MonitoringConf import SCTHitsNoiseMonTool"])
+        #s.add(102330,"LVL1config_MC_pp_v4_loose_mc_prescale_18.0.0.xml")
+        s.add(102331,"SCT_RawDataByteStreamCnv.SCT_RawDataByteStreamCnvConf")
+        s.add(102359,"SiSpacePointTool.SiSpacePointToolConf")
+        s.add(102360,"SiTrigSpacePointFormation.SiTrigSpacePointFormationConf")
+        s.add(102361,"TrigDecisionTool.TrigDecisionToolConf")
+        s.add(102362,"TrigValAlgsCon")
+        s.add(102522,["TriggerMenuSQLite","sqlite' file is NOT found in DATAPATH, exiting"])
+        s.add(102540,["THistSvc::finalize()","Segmentation fault"])
+        s.add(102540,["THistSvc::finalize()","segmentation violation"])
+        s.add(102541,["invalid permissions for mapped object","DEBUG closing: name:"])
+        s.add(102543,[".reference: No such file or directory","nightly 18.X.0/"])
+        s.add(102544,["rm: cannot remove","No such file or directory"])
+        s.add(102542,["IOError: \[Errno 2\] No such file or directory: 'LVL1config"],"Note: this is usually a TriggerMenuXML build error, if not investigate further")
+        s.add(102557,["ImportError: No module named TrigT1CTPConf"])
+        s.add(102577,["KeyError: 'LFN:top_GEO-10-00-00_RDO_extract.pool'","ERROR Unable to build inputFileSummary from any of the specified input files"])
+        s.add(102310,["ERROR Cannot register COOL callback for folder '/TDAQ/OLC/ALFA'"],"COOL callback error")
+        s.add(102647,["TrigErrorExpertMonitor/ErrorsActionTotalCount' is invalid"])
+        s.add(102661,["GeoModelSvc.PixelDetectorTool","Problems calling GeoModelSvc"])
+
+        s.add(102954,["StreamESD.StreamESDTool","ERROR Could not create Rep for DataObject","FATAL streamObjects failed."],title="Errors in test BackCompAthenaTrigBStoESDAOD from StreamESD.StreamESDTool")
+        s.add(83162,["TrigEDMChecker","ERROR The method dumpTrigMissingET\(\) failed"],title="Error in method at TrigEDMChecker - TrigAnalysisTest")
+        s.add(102955,["IOError: \[Errno 2\] No such file or directory:","testAthenaTrigRDO_standalone_test"],title="Failure to find input in AthenaTrigRDO_standalone test")
+        s.add(102954,["StreamESD.StreamESDTool"],title="Errors in test BackCompAthenaTrigBStoESDAOD from StreamESD.StreamESDTool")
+        s.add(102114,["No such file or directory","/17.1.X.Y/20120808/merged_TrigSteer_HLT.ResultBuilder.reference"])
+        s.add(103070,["ATHENA_REGTEST_FAILED","RootTrigAOD_TDT.reference.new"])
+        s.add(103071,["ATHENA_REGTEST_FAILED","ecodes_TrigSteer_EF.ResultBuilder.reference.new"])
+        s.add(103074,["Unable to open file","/afs/cern.ch/atlas/project/trigger/pesa-sw/validation/validation-data/mc10_7TeV.105001.pythia_minbias.digit.RDO.e574_s932_s946_d369/RDO.197112._000001.pool.root.1"])
+        s.add(103075,["ERROR Unable to initialize Algorithm StreamDESDM_CALJET_AcceptEvent"])
+        s.add(103076,["Unable to open file","root://eosatlas//eos/atlas/atlascerngroupdisk/proj-sit/vchavda/TrigInDetValidation_electron/mc10_14TeV.106046.PythiaZee_no_filter.digit.RDO.e662_s1107_d459_tid285219_00/RDO.285219._000087.pool.root.1"])
+        
+        #If this bug shows up as NEW, it is likely a build failure so check for new problems
         if True: # temporary bugs - if they persist, file an entry in bug tracker.
+            s.add(-190006,["Py:GenerateMenu.py   ERROR Error in configuration"],"This is usually a build failure problem.  Check to see if there is an associated build failure, if not investigate further")
+            s.add(-190006,["ImportError: No module named TrigConfigSvcConf"],"This is usually a build failure problem.  Check to see if there is an associated build failure, if not investigate further")
             s.add(-190002,["hasattr\( svcMgr.EventSelector, 'RunNumber'\)","AttributeError: '<class 'AthenaCommon.AppMgr.AthServiceManager'>' object has no attribute 'EventSelector'"],title='Severe athena error: svcMgr not configured, probably due to build problems. Will re-check tomorrow')
             s.add(-190003,["sh: athenaMT.py: command not found"],title='Severe environment error: athenaMT not found. Will re-check tomorrow')
-            s.add(-190004,["sh: athenaPT.py: command not found"],title='Severe environment error: athenaMT not found. Will re-check tomorrow')
             s.add(-190005,['The database does not exist \(C\+\+ exception\)','db=dbSvc.openDatabase\(connstr,readOnly\)'],title='Severe database error: oracle connection failed. Will re-check tomorrow')
             s.add(-100006,["AttributeError: type object 'Trig' has no attribute 'TrigDecisionToolARA'"],title='Build error in ARA')
+            s.add(-190007,["Dynamic library libTrigServices not found."],title='Build error affecting TrigServices')
+            s.add(-190008,["FAILURE failed to set write permission for TDTExampleJO_test.py: No such file or directory"],title='Usually associated with a build error, investigate further if no build error exists')
+            s.add(-190009,["sh: ./TDTExampleARA.py: No such file or directory"],title='Usually associated with a build error, investigate further if no build error exists')
+            
+            s.add(102237,["sh: athenaPT.py: command not found"],title="HelloWorldPT_run_stop_run test crashed on Athena exit")
+            s.add(102428,["AthenaTrigESD_HLTMonitoring_fixedESD","unrecognized option `--select=L1Jet_L2Jet_dEt'"])
+            
         return
 
 

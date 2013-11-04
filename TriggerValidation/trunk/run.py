@@ -3,7 +3,6 @@
 
 # Set to false to die on first exception (and print detailed error summary)
 SKIP_ERRORS = True
-SKIP_ERRORS = False
 # choose default release (may be over-ridden on command line)
 rel = 5
 # compare with the dby(day-before-yesterday) release, rather than yesterday?
