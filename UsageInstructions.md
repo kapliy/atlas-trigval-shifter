@@ -1,0 +1,80 @@
+
+
+# Introduction #
+
+This package includes two scripts:
+  * **./run.py** - generates an HTML page that will form the basis of your shift report. This includes some introductory sentences and a detailed report of all failed tests and corresponding bugs, as well as tests (and bugs) that were fixed between yesterday's and today's releases.
+  * **./rtt.py** - parses the RTT summary page and reports all tests that showed a memory usage regression.
+
+# Prerequisites #
+  * A unix machine (either Linux or Mac)
+  * A recent Python installation (2.6 or above)
+  * svn client (to be able to check out the code and check in new bugs)
+
+# Suggested procedure #
+  1. Make sure _configure\_nightlies.py_ contains all nightlies that you are expected to check, per instructions posted on the trigger [twiki](https://twiki.cern.ch/twiki/bin/viewauth/Atlas/TriggerValidation)
+  1. Make sure there are no "unswept" bugs in **Bug.py**. Basically, you can look at the last few lines of the _BugTracker.prefill_ function in **Bug.py** and make sure all bugs are added via the **add()** method, rather than **add\_new()**. If that's not true, just change all **add\_new()** instances to a simple **add()**.
+  1. Run _./run.py REL (PART) (DBY)_. REL is release number (from 0 = Sunday, until 6=Saturday). PART is an optional integer argument that selects only a subset of nightlies. Selecting PART=1 runs over the two nightlies that usually finish by midnight Chicago time. Selecting PART=2 runs over several nightlies that finish by 8 AM Chicago time. Selecting PART=3 runs over the last two nightlies that finish around 1 PM Chicago time. Selecting PART=0 runs over all nightlies, and is functionally equivalent to running without the optional PART argument. Lastly, DBY is an optional argument that, when set to 1, instructs the script to compare today's ATN test results with the Day-Before-Yesterday's (DBY) results. If DBY is not specified (i.e. the default case), today's results are compared with Yesterday's cache. DBY option is useful in cases when yesterday's caches were not built, thus preventing generation of today's report because it cannot access yesterday's results needed to generate the "fixed bugs" portion of the report.
+  1. Note that if some nightlies haven't actually finished, the _./run.py_ script will simply skip them and produce a report only for those nightlies that have finished. The output is saved directly to an html file, which can be copied to a local machined and viewed through a web browser (e.g., Google Chrome).
+  1. Check the generated shift report inside _index2.html_. Pay particular attention to sections labeled <font color='yellow'><b>FIXME</b></font> - these are the test failures that could not be matched against known bugs. For each of those cases, you need to either manually find a similar bug in the Savannah, or create a new bug. In either case, you need to let the script know about these previously unknown bugs. The preferred way is to add them at the bottom of _Bug.py_ via the _add\_new_ function, which will result in these bugs being summarized at the beginning of your shift report. Remember to rename these **add\_new()** instances to a simple **add()** in the end of your shift - otherwise, the same bugs will be reported as new in the following shift report, too.
+    1. It is good practice check "by-hand" all tests that are matched as "new" - even if they are matched to an existing bug. The strings used for the bug matching could be loose enough to catch unrelated bugs.
+  1. If you have a bug that can only be matched with a string in the full log file, you have two options. The preferred option is to report that bug "by-hand". The lazy option is to enable experimental _full-log matching_ functionality, which works OK as long as there aren't too many bugs that require full log matching. Because full logs are very large and take forever to download, run.py limits you to 10 full-log matches per invocation. Please avoid using full-log matching whenever possible, because full logs often trigger unrelated bugs simply because they are so large and cover a huge phase space of potential warning/error printouts.
+  1. You may find it convenient to iterate a couple of times when running run.py. Once you've identified and added the first batch of new bugs, simply rerun _./run.py_ again to generate the updated report. At this point, you can add any remaining unidentified bugs to the list and re-run to generate the final report.
+  1. Also, if you find tests that have bug number -8 and -9, they are "tolerance bugs" and "checkcount missing reference bugs" coming from nightlies that have not had this bugs reported before. You need to report them and specify the names of the nightlies at the titles of the reports. In _Bug.py_, there are places that are especially assigned for these two types of bugs (just search "TOLERANCE BUGS" and "CHECKOUT MISSING REFERENCE BUGS" in _Bug.py_ and you will see). Please add the bugs under the proper categories. Beware that the commend line with -8 in _Bug.py_ has to be always on top of other tolerance bugs. The same rule applies to -9 in the checkcount missing reference bugs section too. Similar comments apply to special bug -7.
+  1. In _Bug.py_, there is a section dedicated to "missing references" bugs. Because the matching lines used in the missing references bugs are very common and the bugs show up even though they are not the major causes of the test failure, it is recommended that you check the nicos pages of the tests whenever they are tagged with "WARNING Output differs from reference in (name of a nightley)" in _index2.html_ to make sure that those bugs are the real cause of the problem.
+  1. At the end of the shift, run _./rtt.py 0_, and then repeat with an argument _1_ and _2_ to parse the other two RTT reports. Each time, it will print a report containing all memory usage regressions. Note that the output is dumped to screen - you will need to manually copy it into your shift report. By default, this script will identify the tests with a memory usage that's at least 10% higher than the _maximum_ usage in the past 6 days.
+
+# Further automation #
+If you are really lazy, you can automate pretty much all of the steps outlined above, excepting the addition of new bugs that always require human attention.
+
+To do that, make a copy of the **cron.tab** script and modify the path to the atlas-trigval-shfiter folder. Also, put your email address in the beginning of wrapper.sh to ensure that a notification email is sent to your inbox whenever automatic reports are generated. Finally, submit a cron job via:
+```
+crontab -r
+crontab cron.tab
+crontab -l
+```
+If everything worked correctly, the last command will print a summary of the cron job, which will run automatically every 30 minutes to generate the run.py and rtt.py reports.
+
+Note that the actual running is accomplished via the **wrapper.sh** script, which automatically bootstraps the correct REL and PART numbers depending on the current PC time.
+
+The results for the most recent PART 1 .. 3 runs are backed up in index\_part%d.html files.
+
+# Code organization #
+
+**Nightly --> Project --> Test <-- Bug**
+
+  * **Nightly (Nightly.py)** - refers to one ATLAS nightly (17.1.X.Y-VAL-P1HLT, 17.X.0 etc). You can find a complete list of all available nightlies on the [NICOS global page](http://atlas-computing.web.cern.ch/atlas-computing/links/distDirectory/nightlies/global/nightly.html) ("Nightly Title" column). The nightlies that are the subject of your validation shift should be listed in _configure\_nightlies.py_.
+  * **Project (Project.py)** - refers to a test suit project associated with a given nightly (TrigP1Test, TriggerTest, or TrigAnalysisTest). For each project in a given nightly, you must provide a link to its ATN test summary page in _configure\_nightlies.py_.
+  * **Test (Test.py)** - refers to one unit test within a Project. For example, this [ATN page](http://atlas-computing.web.cern.ch/atlas-computing/links/buildDirectory/nightlies/17.1.X.Y.Z-VAL/AtlasCAFHLT/rel_4/NICOS_area/NICOS_atntest171XYZVALAtlasCAFHLT32BS5G4AtlasCAFHLTOpt/triggertest_testconfiguration_work/) for TriggerTest project shows several unit tests that should be checked by the shifter.
+  * **Bug (Bug.py)** - refers to a specific bug on the [Savannah](https://savannah.cern.ch/bugs/?group=atlas-trig) bug tracker.
+  * **BugTracker (Bug.py)** - refers to a local repository of bugs hardcoded in Bug.py. Basically, all common bugs that appeared in the last few days are entered into this local bug database along with unique "greppable" strings that can be used to identify each bug from the log files.
+
+# Adding new bugs #
+If you detect a test failure that could not be matched against the existing bug database in _Bug.py_, please add a corresponding entry for future users. It is also likely that this would save you time tomorrow, because bugs are rarely fixed within one day of appearance.
+
+For each serious ATN failure, run.py provides five links: ATN-grep, error-grep, full-log, log-tail, nicos-grep. I normally start checking the "nicos" link, followed by "err", followed by "tail". On average, this seems to be the fastest path to finding the relevant log fragment.
+
+Basically, once you identify a unique pattern in one of the log files, you can add it inside **Bug.py** at the bottom of the _BugTracker.prefill()_ function via _bugs.add\_new()_.
+
+A useful note: once you add a bug to the _BugTracker.prefill()_ function, you can quickly test if it matches a given log file (in other words, that the pattern you chose for this bug is not too restrictive) by running:
+```
+./Bug.py http://www.link.to/bug/log/fragment
+```
+If the pattern was entered correctly, you should see a match.
+
+Be very careful not to add too-general patterns that might match the wrong bug. If unsure, you can always include multiple pattern fragments - the pattern matching machinery will require that **all** fragments must match in a given log file. Also, make sure to escape "[","]","(",")" and other special regex characters.
+
+You usually don't need to give a human-readable description of the bug; that information (i.e., the bug title) is automatically fetched from the Savannah tracker. However, sometimes it's useful to provide an explicit note. In that case, just set the "comment=" variable when you add an entry for a new bug.
+```
+bugs.add(88554,['Moving to AthenaTrigRDO_chainOrder_compare','differences in tests with ordered HLT chain execution','TrigSteer_EF.TrigChainMoniValidation'],comment='Bugtracker says this bug reports small changes in HLT chain execution, which are expected.')
+```
+
+# In case of problems #
+By default, the code is configured to gracefully skip all nightlies that cause a fatal error. In this case, a message similar to the following one is printed to screen:
+```
+WARNING: skipping release 17.1.X.Y.Z-VAL2-AtlasCAFHLT (32-bit)
+```
+Most often, this happens when one of the test suites hasn't finished running yet. In particular, the VAL2-AtlasCAFHLT sometimes only finishes around noon (Chicago time).
+Sometimes, you will see a failure because of a problem in yesterday's nightly rather than today's. In that case, consider re-running run.py for that nightly with the DBY (Day-Before-Yesterday) option, as described above.
+
+If you waited long enough and still cannot process a particular release, you can enable a detailed traceback by re-raising the exception, which can be accomplished by setting SKIP\_ERRORS=False at the top of run.py. It will print a line number that caused the crash, and you'll be able to add additional debug printouts just before it to further understand the cause of the problem.

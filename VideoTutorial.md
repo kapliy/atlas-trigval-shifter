@@ -1,0 +1,13 @@
+# Introduction #
+
+Chicago recorded a few video tutorials describing Trigger Validation scripts, including the use of our automated scripts.
+
+The videos are hosted on youtube. It's highly recommended that you change the video quality to "720P" and then watch the videos in full-screen, which will let you read the text in the videos.
+
+# Links #
+
+Watch the videos in the following order:
+  * [Part 1 - nightlies, NICOS, Savannah, and logs](http://www.youtube.com/watch?v=ZYwX7xX-5sA)
+  * [Part 2 - Chicago scripts](http://www.youtube.com/watch?v=nRgA8XPm3GI)
+  * [Part 3 - examining index2.html](http://www.youtube.com/watch?v=y8e2l47et_8)
+  * [Part 4 - options and tricky details](http://www.youtube.com/watch?v=Lpz5SiSSjiQ)
